@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bavapi"
+version = "0.4.0"
+authors = [
+    { name = "Ignacio Maiz Vilches", email = "ignacio.maiz@bavgroup.com" },
+]
+description = "Python consumer for the WPPBAV Fount API."
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["bavapi", "bavgroup", "bav", "wppbav"]
+license = { text = "BSD-3-Clause" }
+classifiers = ["Programming Language :: Python :: 3"]
+dependencies = [
+    "httpx >= 0.20",
+    "pandas >= 0.16.2",
+    "pydantic >= 1.10, < 2",
+    "tqdm >= 4.62",
+    "nest-asyncio >= 1.5.6",
+    "typing-extensions >= 3.10; python_version < '3.10'",
+]
+
+[project.optional-dependencies]
+dev = ["black", "nox", "pip-tools", "pylint"]
+test = ["coverage", "pytest", "pytest-asyncio", "python-dotenv"]
+lint = ["pylint", "mypy", "pandas-stubs"]
+
+[project.scripts]
+bavapi-get-refs = "bavapi.reference.generate_reference:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["bavapi*"]
+
+[tool.coverage.paths]
+source = ["bavapi", "/home/runner/work/*/bavapi", "D:/a/*/*/bavapi"]
+tests = ["tests", "*/tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["bavapi", "tests"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
+exclude_lines = ["pragma: no cover", "@overload", "TYPE_CHECKING", "Protocol"]
+
+[tool.mypy]
+plugins = "pydantic.mypy"
+
+[tool.pytest.ini_options]
+markers = [
+    "e2e: tests that require an authenticated connection with the Fount.",
+]
