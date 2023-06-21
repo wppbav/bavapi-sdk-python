@@ -1,0 +1,69 @@
+# pylint: disable=missing-module-docstring, missing-function-docstring
+# pylint: disable=protected-access
+
+import asyncio
+from typing import Any, TypeVar
+from unittest import mock
+
+import pytest
+
+from bavapi import sync
+from bavapi.query import Query
+
+from .helpers import wraps
+
+T = TypeVar("T")
+
+
+@mock.patch(
+    "bavapi.sync.asyncio.new_event_loop", return_value=asyncio.new_event_loop()
+)
+def test_coro_new_loop(mock_new_loop: mock.AsyncMock):
+    @sync._coro
+    async def mock_func():
+        pass
+
+    with mock.patch(
+        "bavapi.sync.asyncio.get_event_loop_policy", wraps=wraps(raises=RuntimeError)
+    ) as mock_get_loop:
+        mock_func()
+
+    mock_get_loop.assert_called_once()
+    mock_new_loop.assert_called_once()
+
+
+@mock.patch("bavapi.sync.patch_loop")
+@mock.patch("bavapi.sync.running_in_jupyter", return_value=True)
+def test_coro_jupyter(mock_running_in_jupyter: mock.Mock, mock_enabled_nested: mock.Mock):
+    @sync._coro
+    async def mock_func():
+        pass
+
+    mock_func()
+
+    mock_enabled_nested.assert_called_once()
+    mock_running_in_jupyter.assert_called_once()
+
+
+def test_raw_query():
+    with mock.patch("bavapi.sync.Client.raw_query", wraps=wraps()) as mock_raw_query:
+        sync.raw_query("TOKEN", "companies", Query())
+
+    mock_raw_query.assert_called_with("companies", Query())
+
+
+@pytest.mark.parametrize(
+    ("endpoint", "filters"),
+    (
+        ("audiences", {}),
+        ("brands", {}),
+        ("brandscape_data", {"studies": 1}),
+        ("studies", {}),
+    ),
+)
+def test_function(endpoint: str, filters: dict[str, Any]):
+    func = getattr(sync, endpoint)
+    with mock.patch(f"bavapi.sync.Client.{endpoint}", wraps=wraps()) as mock_endpoint:
+        func("TOKEN", filters=filters)
+
+    mock_endpoint.assert_called()

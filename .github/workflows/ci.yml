@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python: ["3.9", "3.10", "3.11"]
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup nox
+        uses: wntrblm/nox@2022.11.21
+        with:
+          python-versions: ${{ matrix.python }}
+
+      - name: Run unit tests
+        run: nox -s tests-${{ matrix.python }}
+
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-data
+          path: ".coverage.*"
+  
+  end-to-end:
+    needs: unit
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup nox
+        uses: wntrblm/nox@2022.11.21
+        with:
+          python-versions: "3.11"
+
+      - name: Run end-to-end tests
+        env:
+          FOUNT_API_KEY: ${{ secrets.FOUNT_API_KEY }}
+        run: nox -s tests_e2e
+
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-data
+          path: ".coverage.*"
+
+  coverage:
+    needs: [unit, end-to-end]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup nox
+        uses: wntrblm/nox@2022.11.21
+        with:
+          python-versions: "3.11"
+
+      - name: Download coverage data
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-data
+
+      - name: Combine and report coverage
+        run: nox -s coverage
+
+      - name: Make badge
+        if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+        uses: schneegans/dynamic-badges-action@v1.6.0
+        with:
+          auth: ${{ secrets.COV_GIST_TOKEN }}
+          gistID: 325c52d8f996801f615921912c08195d
+          filename: covbadge.json
+          label: coverage
+          message: ${{ env.total }}%
+          minColorRange: 50
+          maxColorRange: 90
+          valColorRange: ${{ env.total }}
