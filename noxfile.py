@@ -153,6 +153,7 @@ def lint(session: nox.Session) -> None:
 @nox.session(python=None)
 def requirements(session: nox.Session) -> None:
     """Run pip-tools to prepare `requirements.txt` files."""
+
     # nox should only run this function in python 3.11 so this should be safe
     import tomllib  # pylint: disable=import-outside-toplevel
 
@@ -182,6 +183,15 @@ def requirements(session: nox.Session) -> None:
 
 @nox.session(python=None)
 def build(session: nox.Session) -> None:
+    """Build package wheel and source distribution into dist folder."""
     session.install("build")
 
     session.run("python -m build")
+
+
+@nox.session(python=None)
+def publish(session: nox.Session) -> None:
+    """Publish package wheel and source distribution to PyPI."""
+    session.install("twine")
+
+    session.run("twine", "upload", "--repository", "wpp-bavapi", "dist/*")
