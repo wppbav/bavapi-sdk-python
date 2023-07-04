@@ -377,7 +377,7 @@ async def brandscape_data(
 async def studies(
     token: str,
     country_codes: OptionalListOr[str] = None,
-    year_numbers: Optional[int] = None,
+    year_numbers: OptionalListOr[int] = None,
     full_year: Literal[0, 1] = 0,
     study_id: Optional[int] = None,
     *,
@@ -397,9 +397,9 @@ async def studies(
         ISO-3166-1 alpha-2 country codes, by default None
     year_numbers : int or list[int], optional
         Study years, by default None
-    full_year : Literal[0, 1]
+    full_year : Literal[0, 1], optional
         Include or exclude studies which are not "full year" studies,
-        such as US quarterly studies or special studies.
+        such as US quarterly studies or special studies, by default 0
 
         A value of 1 will filter non-full-year studies.
     study_id : int, optional
