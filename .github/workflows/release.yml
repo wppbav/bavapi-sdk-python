@@ -1,0 +1,24 @@
+# This workflow will upload a Python Package using Twine when a release is created
+# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+
+name: release
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: release
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: wntrblm/nox@2022.11.21
+      with:
+        python-versions: '3.11'
+    - name: Build dist
+      run: nox -s build
+    - name: Publish dist
+      run: nox -s publish

@@ -2,9 +2,9 @@
 
 [![CI status](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml/badge.svg)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml)
 [![coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/nachomaiz/32196acdc05431cd2bc7a8c73a587a8d/raw/covbadge.json)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml)
-[![docs](https://img.shields.io/badge/docs-passing-brightgreen)](https://fountapi-documentation.vercel.app/)
-[![version](https://img.shields.io/badge/version-v0.4.1-blue)](https://github.com/wppbav/bavapi-sdk-python)
-[![py-versions](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11-blue)](https://github.com/wppbav/bavapi-sdk-python)
+[![PyPI](https://img.shields.io/pypi/v/wpp-bavapi)](https://pypi.org/project/wpp-bavapi/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/wpp-bavapi)
+](https://pypi.org/project/wpp-bavapi/)
 
 `bavapi` is a Python SDK for the WPP BAV API.
 
@@ -33,7 +33,7 @@ You will also need a BAV API token. For more information, go to the [Authenticat
 
 ## Installation
 
-`bavapi` can be installed using `pip`.
+`bavapi` can be installed from [PyPI](https://pypi.org/project/wpp-bavapi/) using `pip`.
 
 ```prompt
 pip install wpp-bavapi

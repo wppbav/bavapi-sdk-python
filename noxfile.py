@@ -194,4 +194,4 @@ def publish(session: nox.Session) -> None:
     """Publish package wheel and source distribution to PyPI."""
     session.install("twine")
 
-    session.run("twine", "upload", "--repository", "wpp-bavapi", "dist/*")
+    session.run("twine", "upload", "dist/*")
