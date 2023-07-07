@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wpp-bavapi"
-version = "0.4.1"
+version = "0.5.0"
 authors = [
     { name = "Ignacio Maiz Vilches", email = "ignacio.maiz@bavgroup.com" },
 ]
 description = "Python consumer for the WPPBAV Fount API."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.8"
 keywords = [
     "wpp-bavapi",
     "bavapi",
@@ -24,12 +24,13 @@ keywords = [
 ]
 license = { text = "Apache 2.0" }
 classifiers = [
-    'Development Status :: 3 - Alpha',
+    'Development Status :: 4 - Beta',
     'Intended Audience :: Developers',
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: Apache Software License',
     'Operating System :: OS Independent',
     'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
@@ -48,11 +49,19 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["black", "nox", "pip-tools", "pylint"]
+doc = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "mkdocs-gen-files",
+    "mkdocs-literate-nav",
+    "mkdocs-section-index",
+]
 test = ["coverage", "pytest", "pytest-asyncio", "python-dotenv"]
 lint = ["pylint", "mypy", "pandas-stubs"]
 
 [project.scripts]
-bavapi-get-refs = "bavapi.reference.generate_reference:main"
+bavapi-gen-refs = "bavapi.reference.generate_reference:main"
 
 [tool.setuptools]
 include-package-data = true
