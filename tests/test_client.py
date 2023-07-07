@@ -1,7 +1,7 @@
 # pylint: disable=missing-function-docstring, missing-module-docstring
 # pylint: disable=protected-access, redefined-outer-name
 
-from typing import Optional, TypeVar, Union
+from typing import List, Optional, Set, TypeVar, Union
 from unittest import mock
 
 import pytest
@@ -59,6 +59,7 @@ async def test_aclose(fount: Client):
         await fount.aclose()
 
     mock_aclose.assert_called_once()
+
 
 @pytest.mark.anyio
 async def test_raw_query(fount: Client):
@@ -123,7 +124,7 @@ async def test_studies(fount: Client):
     ),
 )
 def test_brandscape_query_default_include(
-    value: Optional[Union[str, list[str]]], expected: set[str]
+    value: Optional[Union[str, List[str]]], expected: Set[str]
 ):
     assert set(_default_brandscape_include(value)) == expected  # type: ignore
 

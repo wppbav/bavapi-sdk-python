@@ -1,7 +1,7 @@
 """Functions to parse parameter values."""
 
 import datetime as dt
-from typing import Mapping, Sequence, TypeVar, Union, cast
+from typing import Dict, Mapping, Sequence, TypeVar, Union, cast
 
 from bavapi.typing import BaseMutableParamsMapping, BaseMutableParamsMappingValues
 
@@ -32,7 +32,7 @@ def parse_date(value: Union[str, dt.datetime, dt.date]) -> str:
         return dt.datetime.fromisoformat(value).strftime(fmt_out)
 
 
-def to_fount_params(data: Mapping[str, T], param: str) -> dict[str, T]:
+def to_fount_params(data: Mapping[str, T], param: str) -> Dict[str, T]:
     """Constructs dictionary keys for special Fount API formatting.
 
     The resulting dictionary keys will be formatted to include `param` as the

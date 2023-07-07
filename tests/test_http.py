@@ -2,18 +2,14 @@
 # pylint: disable=protected-access, redefined-outer-name
 
 from dataclasses import asdict, dataclass
-from typing import Any, Optional, TypeVar, Union
+from typing import Any, Dict, List, Optional, TypeVar, Union
 from unittest import mock
 
 import httpx
 import pytest
 
-from bavapi.http import (
-    APIError,
-    DataNotFoundError,
-    HTTPClient,
-    RateLimitExceededError,
-)
+from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
+from bavapi.http import HTTPClient
 from bavapi.query import Query
 
 from .helpers import wraps
@@ -27,11 +23,11 @@ T = TypeVar("T")
 class QueryResult:
     """Model for WPPBAV Fount query results"""
 
-    data: Union[dict[str, Any], list[dict[str, Any]]]
-    links: dict[str, str]
-    meta: dict[str, Any]
+    data: Union[Dict[str, Any], List[Dict[str, Any]]]
+    links: Dict[str, str]
+    meta: Dict[str, Any]
 
-    def dict(self) -> dict[str, Any]:
+    def dict(self) -> Dict[str, Any]:
         return asdict(self)
 
 
@@ -53,11 +49,11 @@ def response(
 
 
 def sample_data(
-    data: Optional[Union[dict[str, Any], list[dict[str, Any]]]] = None,
+    data: Optional[Union[Dict[str, Any], List[Dict[str, Any]]]] = None,
     per_page: int = 25,
     on_page: int = 25,
     total: int = 2000,
-) -> dict[str, Any]:
+) -> Dict[str, Any]:
     return QueryResult(
         data=data if data is not None else {},
         links={},
@@ -102,12 +98,16 @@ async def test_context_manager():
 
     assert client.client.is_closed
 
+
 @pytest.mark.anyio
 async def test_aclose(client: HTTPClient):
-    with mock.patch("bavapi.http.httpx.AsyncClient.aclose", wraps=wraps()) as mock_aclose:
+    with mock.patch(
+        "bavapi.http.httpx.AsyncClient.aclose", wraps=wraps()
+    ) as mock_aclose:
         await client.aclose()
 
     mock_aclose.assert_called_once()
+
 
 @pytest.mark.anyio
 @mock.patch("bavapi.http.httpx.AsyncClient.get", wraps=wraps(response()))

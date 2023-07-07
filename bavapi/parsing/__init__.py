@@ -1,3 +1,3 @@
-"""Module for parsing parameters and responses."""
+"""Modules for parsing parameters and responses."""
 
 from bavapi.parsing import params, responses

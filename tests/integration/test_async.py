@@ -3,7 +3,7 @@
 
 import os
 import ssl
-from typing import Any, AsyncGenerator, Callable, Coroutine
+from typing import Any, AsyncGenerator, Callable, Coroutine, Dict, List
 
 import pandas as pd
 import pytest
@@ -26,7 +26,7 @@ async def fount() -> AsyncGenerator[Client, None]:
 @pytest.mark.e2e
 @pytest.mark.anyio
 async def test_raw_query(fount: Client):
-    result: list[dict[str, Any]] = []
+    result: List[Dict[str, Any]] = []
     for _ in range(5):  # pragma: no cover
         try:
             result = await fount.raw_query(
@@ -76,7 +76,7 @@ async def test_with_filters_one_page(fount: Client):
         ("studies", {}),
     ),
 )
-async def test_endpoints(fount: Client, endpoint: str, filters: dict[str, Any]):
+async def test_endpoints(fount: Client, endpoint: str, filters: Dict[str, Any]):
     func: Callable[..., Coroutine[Any, Any, pd.DataFrame]] = getattr(fount, endpoint)
 
     result = await func(filters=filters, max_pages=2, per_page=25)

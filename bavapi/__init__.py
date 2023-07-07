@@ -1,6 +1,6 @@
 """
 bavapi
---------
+------
 Python consumer for the WPPBAV Fount API.
 
 With `bavapi` you can access the full BAV data catalog, the largest and
@@ -19,7 +19,7 @@ Example usage
 ...     result = await client.brands(name="Facebook")
 """
 
-import importlib.metadata
+from importlib.metadata import version, PackageNotFoundError
 
 from bavapi import filters
 from bavapi.client import Client
@@ -42,6 +42,6 @@ __all__ = (
 )
 
 try:
-    __version__ = importlib.metadata.version(__package__ or __name__)
-except importlib.metadata.PackageNotFoundError:  # pragma: no cover
+    __version__ = version(__package__ or __name__)
+except PackageNotFoundError:  # pragma: no cover
     pass

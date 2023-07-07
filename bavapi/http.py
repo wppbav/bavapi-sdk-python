@@ -5,7 +5,17 @@
 import asyncio
 import math
 from json import JSONDecodeError
-from typing import Iterator, Optional, Protocol, TypeVar, Union, cast, overload
+from typing import (
+    Dict,
+    Iterator,
+    List,
+    Optional,
+    Protocol,
+    TypeVar,
+    Union,
+    cast,
+    overload,
+)
 
 import httpx
 from tqdm.asyncio import tqdm
@@ -64,7 +74,7 @@ class HTTPClient:
         timeout: float = 5.0,
         verify: Union[bool, str] = True,
         *,
-        headers: Optional[dict[str, str]] = None,
+        headers: Optional[Dict[str, str]] = None,
     ) -> None:
         ...
 
@@ -79,7 +89,7 @@ class HTTPClient:
         timeout: float = 5.0,
         verify: Union[bool, str] = True,
         *,
-        headers: Optional[dict[str, str]] = None,
+        headers: Optional[Dict[str, str]] = None,
         client: Optional[httpx.AsyncClient] = None,
     ) -> None:
         self.per_page = per_page
@@ -145,7 +155,7 @@ class HTTPClient:
 
     async def get_pages(
         self, endpoint: str, params: Query, n_pages: int
-    ) -> list[httpx.Response]:
+    ) -> List[httpx.Response]:
         """Perform GET requests for a given number of pages on an endpoint.
 
         Parameters
@@ -168,7 +178,7 @@ class HTTPClient:
         ]
         try:
             return cast(
-                list[httpx.Response],
+                List[httpx.Response],
                 await tqdm.gather(*tasks, desc=f"{endpoint} query"),
             )
         except Exception as exc:
@@ -203,7 +213,7 @@ class HTTPClient:
         """
         resp = await self.get(endpoint, params=params)
 
-        payload: dict[str, JSONData] = resp.json()
+        payload: Dict[str, JSONData] = resp.json()
         data: JSONData = payload["data"]
 
         if not data:

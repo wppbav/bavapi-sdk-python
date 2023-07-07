@@ -1,0 +1,98 @@
+site_name: BAV API Python SDK documentation
+site_url: https://bavapi-sdk-python.github.io
+
+repo_name: wppbav/bavapi-sdk-python
+repo_url: https://github.com/wppbav/bavapi-sdk-python
+
+copyright: Copyright &copy; 2023 WPPBAV
+
+theme:
+  name: material
+  # custom_dir: docs/overrides
+  logo: assets/wpp-bav-logo.svg
+  # logo_dark_mode: assets/wpp-bav-logo-dark-mode.svg
+  # logo_light_mode: assets/wpp-bav-logo-light-mode.svg
+  favicon: assets/favicon.svg
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - content.code.annotate
+    - navigation.footer
+    - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: teal
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+extra_css: [extra.css]
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Authentication: getting-started/authentication.md
+      - Installation: getting-started/installation.md
+      - Install Reference classes: getting-started/reference-classes.md
+  - Usage:
+      - Basic Usage: usage/basic.md
+      - Advanced Usage: usage/advanced.md
+  - Endpoints: endpoints/
+  - Code Reference: reference/
+  - Contributing: contributing.md
+  - Fount API Reference: https://developer.wppbav.com/docs/2.x/intro
+
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - docs/gen_ref_pages.py
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - section-index
+  - mkdocstrings:
+      handlers:
+        python:
+          import:
+            - https://docs.python-requests.org/en/master/objects.inv
+          paths: [bavapi]
+          options:
+            docstring_style: numpy
+
+watch:
+  - bavapi

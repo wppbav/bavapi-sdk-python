@@ -2,7 +2,7 @@
 # pylint: disable=protected-access
 
 import asyncio
-from typing import Any, TypeVar
+from typing import Any, Dict, TypeVar
 from unittest import mock
 
 import pytest
@@ -15,9 +15,7 @@ from .helpers import wraps
 T = TypeVar("T")
 
 
-@mock.patch(
-    "bavapi.sync.asyncio.new_event_loop", return_value=asyncio.new_event_loop()
-)
+@mock.patch("bavapi.sync.asyncio.new_event_loop", return_value=asyncio.new_event_loop())
 def test_coro_new_loop(mock_new_loop: mock.AsyncMock):
     @sync._coro
     async def mock_func():
@@ -34,7 +32,9 @@ def test_coro_new_loop(mock_new_loop: mock.AsyncMock):
 
 @mock.patch("bavapi.sync.patch_loop")
 @mock.patch("bavapi.sync.running_in_jupyter", return_value=True)
-def test_coro_jupyter(mock_running_in_jupyter: mock.Mock, mock_enabled_nested: mock.Mock):
+def test_coro_jupyter(
+    mock_running_in_jupyter: mock.Mock, mock_enabled_nested: mock.Mock
+):
     @sync._coro
     async def mock_func():
         pass
@@ -61,7 +61,7 @@ def test_raw_query():
         ("studies", {}),
     ),
 )
-def test_function(endpoint: str, filters: dict[str, Any]):
+def test_function(endpoint: str, filters: Dict[str, Any]):
     func = getattr(sync, endpoint)
     with mock.patch(f"bavapi.sync.Client.{endpoint}", wraps=wraps()) as mock_endpoint:
         func("TOKEN", filters=filters)

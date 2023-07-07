@@ -10,6 +10,7 @@ from enum import IntEnum as IntEnum
 __all__ = ("IntEnum",)
 
 if sys.version_info < (3, 11):
+
     def _int_enum_str(self: IntEnum) -> str:
         return str(self.value)
 

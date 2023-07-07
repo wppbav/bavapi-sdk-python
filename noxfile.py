@@ -3,11 +3,14 @@
 import json
 import os
 import pathlib
+from typing import Dict, List
 
 import nox
 
+python_versions = ("3.8", "3.9", "3.10", "3.11")
 
-@nox.session(python=("3.9", "3.10", "3.11"))
+
+@nox.session(python=python_versions)
 def tests(session: nox.Session) -> None:
     """Run tests on CI/CD pipeline."""
     session.install("-e", ".[test]")
@@ -24,7 +27,7 @@ def tests(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=("3.9", "3.10", "3.11"))
+@nox.session(python=python_versions)
 def tests_nocov(session: nox.Session) -> None:
     """Run tests on CI/CD pipeline with no coverage."""
     session.install("-e", ".[test]")
@@ -57,7 +60,7 @@ def tests_e2e_nocov(session: nox.Session) -> None:
     session.run("pytest", "-m", "e2e", *session.posargs)
 
 
-@nox.session(python=("3.9", "3.10", "3.11"), venv_backend="mamba", reuse_venv=True)
+@nox.session(python=python_versions, venv_backend="mamba", reuse_venv=True)
 def tests_mamba(session: nox.Session) -> None:
     """Run tests locally with `mamba` as the backend."""
     session.conda_install("--file", "requirements.txt")
@@ -76,7 +79,7 @@ def tests_mamba(session: nox.Session) -> None:
     )
 
 
-@nox.session(python=("3.9", "3.10", "3.11"), venv_backend="mamba", reuse_venv=True)
+@nox.session(python=python_versions, venv_backend="mamba", reuse_venv=True)
 def tests_mamba_nocov(session: nox.Session) -> None:
     """Run tests locally with `mamba` as the backend with no coverage."""
     session.conda_install("--file", "requirements.txt")
@@ -166,7 +169,7 @@ def requirements(session: nox.Session) -> None:
     else:
         session.posargs.remove("all-extras")
         with open("pyproject.toml", "rb") as file:
-            deps: dict[str, list[str]] = tomllib.load(file)["project"].get(
+            deps: Dict[str, List[str]] = tomllib.load(file)["project"].get(
                 "optional-dependencies", {}
             )
 

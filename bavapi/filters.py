@@ -2,7 +2,7 @@
 
 # pylint: disable=no-name-in-module, too-few-public-methods
 
-from typing import Literal, Mapping, Optional, TypeVar, Union
+from typing import Dict, Literal, Mapping, Optional, Type, TypeVar, Union
 
 from pydantic import BaseModel, root_validator, validator
 
@@ -29,7 +29,7 @@ FiltersOrMapping = Union[F, InputParamsMapping]
 
 class FountFilters(BaseModel):
     """Base class for Fount API Filters.
-    
+
     Can be used with `raw_query` endpoints.
 
     Attributes
@@ -43,7 +43,7 @@ class FountFilters(BaseModel):
 
     updated_since: DTValues = None
 
-    class Config:
+    class Config:  #pylint: disable=missing-class-docstring
         extra = "allow"
 
     @validator("updated_since", pre=True)
@@ -55,13 +55,13 @@ class FountFilters(BaseModel):
 
     @classmethod
     def ensure(
-        cls: type[F],
+        cls: Type[F],
         filters: Optional[FiltersOrMapping["FountFilters"]],
         **addl_filters: InputSequenceOrValues,
     ) -> Optional[F]:
         """Ensure FountFilters class from dictionary or other FountFilters class.
 
-        If `filters` is None, return None.
+        If `filters` is None, returns None.
 
         Parameters
         ----------
@@ -82,13 +82,14 @@ class FountFilters(BaseModel):
                 return None
             return cls(**addl_filters)  # type: ignore[arg-type]
 
-        if isinstance(filters, Mapping):
-            return cls(**(addl_filters | filters))  # type: ignore[arg-type]
+        new_filters = addl_filters.copy()
 
-        return cls(
-            **addl_filters  # type: ignore[arg-type]
-            | filters.dict(exclude_defaults=True)
-        )
+        if isinstance(filters, Mapping):
+            new_filters.update(filters)
+        else:
+            new_filters.update(filters.dict(exclude_defaults=True))
+
+        return cls(**new_filters)  # type: ignore[arg-type]
 
 
 class AudiencesFilters(FountFilters):
@@ -235,7 +236,7 @@ class BrandscapeFilters(FountFilters):
 
     @root_validator(pre=True)
     @classmethod
-    def _check_params(cls, values: dict[str, object]) -> dict[str, object]:
+    def _check_params(cls, values: Dict[str, object]) -> Dict[str, object]:
         if not (
             "brands" in values
             or "brand_name" in values

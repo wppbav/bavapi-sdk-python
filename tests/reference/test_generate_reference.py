@@ -2,7 +2,7 @@
 
 import datetime
 from pathlib import Path
-from typing import Callable, Optional, TypeVar
+from typing import Callable, Dict, Optional, TypeVar
 from unittest import mock
 
 import pandas as pd
@@ -52,7 +52,7 @@ def test_parse_reference():
 
 @pytest.mark.anyio
 async def test_get_references(fount: Client):
-    def func(x: pd.Series) -> dict[str, str]:
+    def func(x: pd.Series) -> Dict[str, str]:
         return {str(k): str(v) for k, v in x.to_dict().items()}  # pragma: no cover
 
     items = await uref.get_references(fount, [uref.RefConfig("test", "", func)])

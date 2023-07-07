@@ -1,7 +1,16 @@
 """Common parameter types"""
 
 import datetime
-from typing import Mapping, MutableMapping, Optional, Sequence, TypeVar, Union
+from typing import (
+    Dict,
+    List,
+    Mapping,
+    MutableMapping,
+    Optional,
+    Sequence,
+    TypeVar,
+    Union,
+)
 
 T = TypeVar("T")
 
@@ -30,9 +39,9 @@ InputMutableParamsMapping = MutableParamsMapping[InputSequenceOrValues]
 
 # MUTABLE CONCRETE COLLECTIONS
 
-ListOrValues = Union[T, list[T]]
+ListOrValues = Union[T, List[T]]
 
-ParamsDict = dict[str, T]
+ParamsDict = Dict[str, T]
 
 BaseListOrValues = ListOrValues[BaseValues]
 InputListOrValues = Union[BaseListOrValues, DTValues]
@@ -45,10 +54,10 @@ InputParamsDict = ParamsDict[InputListOrValues]
 # USER-FACING
 
 OptionalSequenceOr = Optional[Union[T, Sequence[T]]]
-OptionalListOr = Optional[Union[T, list[T]]]
+OptionalListOr = Optional[Union[T, List[T]]]
 
-JSONDict = dict[str, ListOrValues[Union[BaseValues, "JSONDict"]]]
-JSONData = Union[JSONDict, list[JSONDict]]
+JSONDict = Dict[str, ListOrValues[Union[BaseValues, "JSONDict"]]]
+JSONData = Union[JSONDict, List[JSONDict]]
 
-FlatJSONDict = dict[str, BaseSequenceOrValues]
-FlatJSONDictValues = dict[str, BaseValues]
+FlatJSONDict = Dict[str, BaseSequenceOrValues]
+FlatJSONDictValues = Dict[str, BaseValues]

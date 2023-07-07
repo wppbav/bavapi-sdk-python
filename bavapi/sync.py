@@ -12,7 +12,16 @@ Use `bavapi.Client` for more advanced usage and performance benefits.
 import asyncio
 import functools
 import sys
-from typing import TYPE_CHECKING, Any, Callable, Coroutine, Literal, Optional, TypeVar
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Coroutine,
+    List,
+    Literal,
+    Optional,
+    TypeVar,
+)
 
 from bavapi import filters as _filters
 from bavapi.client import Client, OptionalFiltersOrMapping
@@ -54,7 +63,7 @@ def _coro(func: Callable[P, Coroutine[Any, Any, T]]) -> Callable[P, T]:
 
 
 @_coro
-async def raw_query(token: str, endpoint: str, params: Query[F]) -> list[JSONDict]:
+async def raw_query(token: str, endpoint: str, params: Query[F]) -> List[JSONDict]:
     """Perform a raw GET query to the Fount API, returning the response JSON data
     instead of a `pandas` DataFrame.
 
