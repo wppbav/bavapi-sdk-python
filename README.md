@@ -8,6 +8,8 @@
 
 `bavapi` is a Python SDK for the WPP BAV API.
 
+It is published on [PyPI](https://pypi.org/project/wpp-bavapi/) as `wpp-bavapi`.
+
 With `bavapi` you can access the full BAV data catalog, the largest and most comprehensive database of brand data in the world.
 
 Queries are validated automatically thanks to `pydantic` and retrieved asynchronously via the `httpx` package.
@@ -16,7 +18,7 @@ For more information about the API, go to the [WPPBAV Developer Hub](https://dev
 
 ## Prerequisites
 
-`bavapi` requires Python 3.9 or higher to run.
+`bavapi` requires Python 3.8 or higher to run.
 
 If you don't have Python installed, you can find it from the [official](https://www.python.org/downloads/) website or via [Anaconda](https://www.anaconda.com/).
 
@@ -29,11 +31,11 @@ You will also need a BAV API token. For more information, go to the [Authenticat
 - `pandas >= 0.16.2`
 - `pydantic >= 1.10, < 2.0`
 - `tqdm >= 4.62`
-- `typing-extensions >= 3.10` for Python 3.9
+- `typing-extensions >= 3.10` for Python < 3.10
 
 ## Installation
 
-`bavapi` can be installed from [PyPI](https://pypi.org/project/wpp-bavapi/) using `pip`.
+`bavapi` can be installed using `pip`:
 
 ```prompt
 pip install wpp-bavapi
@@ -64,10 +66,10 @@ Once you have acquired a token, you can start using this library directly in pyt
 >>> result
 ```
 
-|     | sector_id | sector_name           |  id | name   | ... |
-| --: | --------: | --------------------- | --: | ------ | --- |
-|   0 |        11 | Apparel & Accessories | 342 | Swatch | ... |
-| ... |       ... | ...                   | ... | ...    | ... |
+|     | sector_id | sector_name           | id   | name   | ... |
+| --: | :-------- | :-------------------- | :--- | :----- | :-- |
+|   0 | 233       | Apparel & Accessories | 8635 | Swatch | ... |
+| ... | ...       | ...                   | ...  | ...    | ... |
 
 ## Features
 
@@ -77,6 +79,7 @@ Once you have acquired a token, you can start using this library directly in pyt
   - Provides type hints for better IDE support.
 - Retrieve multiple pages of data simultaneously.
   - Monitors and prevents exceeding API rate limit.
+- Both synchronous and asynchronous APIs for accessing BAV data.
 
 ## Documentation
 
