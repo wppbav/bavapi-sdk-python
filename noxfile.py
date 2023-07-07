@@ -189,7 +189,7 @@ def build(session: nox.Session) -> None:
     """Build package wheel and source distribution into dist folder."""
     session.install("build")
 
-    session.run("python -m build")
+    session.run("python", "-m", "build")
 
 
 @nox.session(python=None)
