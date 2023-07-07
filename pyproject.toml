@@ -24,7 +24,7 @@ keywords = [
 ]
 license = { text = "Apache 2.0" }
 classifiers = [
-    'Development Status :: 4 - Beta',
+    'Development Status :: 3 - Alpha',
     'Intended Audience :: Developers',
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: Apache Software License',
@@ -46,6 +46,9 @@ dependencies = [
     "nest-asyncio >= 1.5.6",
     "typing-extensions >= 3.10; python_version < '3.10'",
 ]
+
+[project.urls]
+homepage = "https://github.com/wppbav/bavapi-sdk-python"
 
 [project.optional-dependencies]
 dev = ["black", "nox", "pip-tools", "pylint"]
@@ -84,6 +87,7 @@ exclude_lines = ["pragma: no cover", "@overload", "TYPE_CHECKING", "Protocol"]
 
 [tool.mypy]
 plugins = "pydantic.mypy"
+mypy_path = "type_stubs"
 
 [tool.pytest.ini_options]
 markers = [
