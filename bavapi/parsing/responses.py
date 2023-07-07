@@ -1,6 +1,16 @@
 """Functions for parsing Fount API responses"""
 
-from typing import Iterable, Iterator, Mapping, Optional, TypeVar, Union, cast
+from typing import (
+    Dict,
+    Iterable,
+    Iterator,
+    List,
+    Mapping,
+    Optional,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import pandas as pd
 
@@ -12,7 +22,7 @@ def flatten_mapping(
     parent: str = "",
     sep: str = "_",
     prefix: str = "",
-) -> dict[str, T]:
+) -> Dict[str, T]:
     """Recursively flattens all nested dictionaries into top level key-value pairs.
 
     Include prefixes or suffixes if nested keys clash with top-level keys.
@@ -35,7 +45,7 @@ def flatten_mapping(
     dict[str, Any]
         Flattened dictionary.
     """
-    new: dict[str, T] = {}
+    new: Dict[str, T] = {}
 
     for key, value in mapping.items():
         if parent:
@@ -49,7 +59,7 @@ def flatten_mapping(
             ):
                 key = f"{prefix}{sep}{key}"
 
-            new |= flatten_mapping(value, key, sep, prefix)
+            new = {**new, **flatten_mapping(value, key, sep, prefix)}
         else:
             new[key] = value
 
@@ -62,7 +72,7 @@ def flatten(
     sep: str = "_",
     prefix: str = "",
     expand: bool = False,
-) -> Iterator[dict[str, T]]:
+) -> Iterator[Dict[str, T]]:
     """Recursively flatten all nested mappings and lists in the given mapping.
 
     Returns an iterator because it expands any nested lists into new dictionaries,
@@ -99,8 +109,8 @@ def flatten(
         If expand is True and any nested lists are present, yield each resulting
         flattened dictionary.
     """
-    new: dict[str, T] = flatten_mapping(mapping, parent, sep, prefix)
-    expand_keys: list[str] = (
+    new: Dict[str, T] = flatten_mapping(mapping, parent, sep, prefix)
+    expand_keys: List[str] = (
         [k for k, v in new.items() if isinstance(v, list)] if expand else []
     )
 
@@ -108,13 +118,11 @@ def flatten(
         yield new
     else:
         for key in expand_keys:
-            values = cast(list[Mapping[str, T]], new[key])
+            values = cast(List[Mapping[str, T]], new[key])
             print(key)
             for val in values:
-                yield from (
-                    {k: v for k, v in new.items() if k != key} | i
-                    for i in flatten(val, key, sep, prefix, expand)
-                )
+                for i in flatten(val, key, sep, prefix, expand):
+                    yield {**{k: v for k, v in new.items() if k != key}, **i}
 
 
 def parse_response(

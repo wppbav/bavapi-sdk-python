@@ -2,11 +2,20 @@
 
 # pylint: disable=too-many-arguments
 
-from typing import TYPE_CHECKING, Final, Literal, Optional, TypeVar, Union, overload
+from typing import (
+    TYPE_CHECKING,
+    Final,
+    List,
+    Literal,
+    Optional,
+    TypeVar,
+    Union,
+    overload,
+)
 
 from bavapi import filters as _filters
-from bavapi import parsing as _parsing
 from bavapi.http import HTTPClient
+from bavapi.parsing.responses import parse_response
 from bavapi.query import Query
 from bavapi.typing import BaseListOrValues, JSONDict, OptionalListOr
 
@@ -64,51 +73,19 @@ class Client:
 
     Examples
     --------
-    There are two main ways to use Client:
+    Use `async with` to get data and close the connection.
 
-    1. Using it in a `with` statement (`async with` since Client is async-based).
-
-    This is the recommended usage. Ideally you want to use Client to get some data,
-    close the connection, and continue your analysis.
-
-    The benefits of this approach are:
-
-    - The client can reuse one single connection for multiple requests, which brings
-    significant performance gains.
-    - The client pattern ensures the HTTP connection is closed when the request(s)
-    are finished.
+    This way you get the benefits from `httpx` speed improvements
+    and closes the connection when exiting the async with block.
 
     >>> async with Client("TOKEN") as fount:
     ...     data = await fount.brands("Swatch")
 
-    When the `with` block ends, the Client instance will close the connection, and
-    you will have to create a new instance of Client to use it again:
+    When not using `async with`, close the connection manually by awaiting `aclose`.
 
-    >>> fount = Client("TOKEN")
-    >>> async with fount as fount:
-    ...     data = await fount.brands("Swatch")  # ok
-    ... ...
-    >>> data = await fount.brands("Swatch")  # error, with block is already closed
-    >>> # create new instance to make a new request
-    >>> async with Client("TOKEN") as fount:
-    ...     data = await fount.brands("Swatch")  # should work again
-
-    2. Calling its methods as you would with any other class.
-    This will work, but is not ideal as it misses some of the benefits of using the
-    `with` version.
-
-    >>> fount = Client("TOKEN")
+    >>> client = Client("TOKEN")
     >>> data = await fount.brands("Swatch")
-    >>> data2 = await fount.brands("Facebook")  # still works
-
-    Calling the last two lines in the same file or Jupyter notebook cell may reuse
-    the HTTP connection (connections will remain open for 5s), but otherwise
-    will open a new connection for each call. It is also possible that the
-    connection remains open, and this pattern won't ensure that it is closed.
-
-    To close all open connections, you can use the `aclose` method:
-
-    >>> await fount.aclose()  # will close all connections
+    >>> await client.aclose()
     """
 
     @overload
@@ -179,7 +156,7 @@ class Client:
         """Close existing HTTP connections."""
         return await self._client.aclose()
 
-    async def raw_query(self, endpoint: str, params: Query[F]) -> list[JSONDict]:
+    async def raw_query(self, endpoint: str, params: Query[F]) -> List[JSONDict]:
         """Perform a raw GET query to the Fount API, returning the response JSON data
         instead of a `pandas` DataFrame.
 
@@ -291,7 +268,7 @@ class Client:
 
         items = await self._client.query("audiences", query)
 
-        return _parsing.responses.parse_response(items, expand=stack_data)
+        return parse_response(items, expand=stack_data)
 
     async def brands(
         self,
@@ -379,7 +356,7 @@ class Client:
 
         items = await self._client.query("brands", query)
 
-        return _parsing.responses.parse_response(items, expand=stack_data)
+        return parse_response(items, expand=stack_data)
 
     async def brandscape_data(
         self,
@@ -501,7 +478,7 @@ class Client:
         items = await self._client.query("brandscape-data", query)
 
         # Prefix 'global' to avoid clashing with 'brand_name' on 'brand' includes
-        return _parsing.responses.parse_response(items, "global", expand=stack_data)
+        return parse_response(items, "global", expand=stack_data)
 
     async def studies(
         self,
@@ -586,11 +563,11 @@ class Client:
 
         items = await self._client.query("studies", query)
 
-        return _parsing.responses.parse_response(items, expand=stack_data)
+        return parse_response(items, expand=stack_data)
 
 
 def _default_brandscape_include(value: OptionalListOr[str]) -> OptionalListOr[str]:
-    default: Final[list[str]] = ["study", "brand", "category", "audience"]
+    default: Final[List[str]] = ["study", "brand", "category", "audience"]
 
     if value is None:
         return default

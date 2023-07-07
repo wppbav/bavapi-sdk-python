@@ -1,6 +1,6 @@
 # pylint: disable=missing-function-docstring, missing-module-docstring
 
-from typing import Any
+from typing import Any, Dict, List
 from unittest import mock
 
 import pandas as pd
@@ -13,7 +13,7 @@ def test_flatten_mapping():
     assert responses.flatten_mapping(
         {
             "other_a": None,
-            "test": {"1": 1, "2": 2, "nested": {"a": 3}}, # type: ignore
+            "test": {"1": 1, "2": 2, "nested": {"a": 3}},  # type: ignore
             "flat": 4,
             "other": {"a": 5},
         },
@@ -66,7 +66,7 @@ def test_flatten_mapping():
         ),
     ),
 )
-def test_flatten(value: dict[str, Any], expected: list[dict[str, Any]]):
+def test_flatten(value: Dict[str, Any], expected: List[Dict[str, Any]]):
     assert list(responses.flatten(value, prefix="pre", expand=True)) == expected
 
 

@@ -3,7 +3,7 @@
 
 import os
 import ssl
-from typing import Any, Callable, Generator
+from typing import Any, Callable, Dict, Generator, List
 
 import pandas as pd
 import pytest
@@ -22,7 +22,7 @@ def load_env() -> Generator[None, None, None]:
 
 @pytest.mark.e2e
 def test_raw_query():
-    result: list[dict[str, Any]] = []
+    result: List[Dict[str, Any]] = []
     for _ in range(5):  # pragma: no cover
         try:
             result = bavapi.raw_query(
@@ -58,7 +58,7 @@ def test_with_filters_one_page():
             continue
 
     assert "country_id" in result
-    assert result["is_active"].unique()[0] == 1
+    assert result["is_active"].unique()[0] == 1  # type: ignore
     assert result.shape[0] == 25
 
 
@@ -72,10 +72,12 @@ def test_with_filters_one_page():
         ("studies", {}),
     ),
 )
-def test_endpoints(endpoint: str, filters: dict[str, Any]):
+def test_endpoints(endpoint: str, filters: Dict[str, Any]):
     func: Callable[..., pd.DataFrame] = getattr(bavapi, endpoint)
 
-    result = func(os.environ["FOUNT_API_KEY"], filters=filters, max_pages=2, per_page=25)
+    result = func(
+        os.environ["FOUNT_API_KEY"], filters=filters, max_pages=2, per_page=25
+    )
 
     assert result.shape[0] == 50
     assert "id" in result

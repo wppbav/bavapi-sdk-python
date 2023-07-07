@@ -8,7 +8,7 @@ import datetime
 import functools
 import os
 from pathlib import Path
-from typing import Callable, NamedTuple, Optional
+from typing import Callable, Dict, List, NamedTuple, Optional, Tuple
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -17,7 +17,7 @@ from bavapi import Client, Query
 from bavapi.parsing.responses import parse_response
 from bavapi.typing import JSONDict
 
-ReferenceParser = Callable[[pd.Series], dict[str, str]]
+ReferenceParser = Callable[[pd.Series], Dict[str, str]]
 
 
 class Args:
@@ -33,7 +33,7 @@ class Args:
 class RefConfig(NamedTuple):
     """Config information for updating Fount references
 
-    Parameters
+    Attributes
     ----------
     endpoint : str
         Fount API resource endpoint to use for updating references.
@@ -41,8 +41,8 @@ class RefConfig(NamedTuple):
         Path to write the updated references to.
     parser : Callable[[pd.Series], dict[str, str]]
         Function to parse the reference in pandas form to a dict of strings.
-    resource_col : str
-        Column to get the names for each item in the reference.
+    resource_col : str, optional
+        Column to get the names for each item in the reference, by default "name"
     """
 
     endpoint: str
@@ -52,19 +52,17 @@ class RefConfig(NamedTuple):
 
 
 async def get_references(
-    fount: Client, configs: list[RefConfig]
-) -> list[list[JSONDict]]:
+    fount: Client, configs: List[RefConfig]
+) -> List[List[JSONDict]]:
     """Download items for the reference from the Fount.
 
     Parameters
     ----------
     fount : Client
         Client instance to perform requests with.
-    config : RefConfig
+    configs : list[RefConfig]
         Reference config object, with information about the filepath, endpoint
         resource parser function and the resource column.
-    loop : asyncio.AbstractEventLoop
-        Loop to execute the requests.
 
     Returns
     -------
@@ -80,8 +78,8 @@ async def get_references(
 
 
 def parse_reference(
-    fetched: pd.Series, symbols: dict[str, str], norm: dict[str, str]
-) -> dict[str, str]:
+    fetched: pd.Series, symbols: Dict[str, str], norm: Dict[str, str]
+) -> Dict[str, str]:
     """Parse reference information from the Fount.
 
     Parameters
@@ -119,7 +117,7 @@ parse_countries = functools.partial(
 )
 
 
-def process_items(data: list[JSONDict], config: RefConfig) -> dict[str, str]:
+def process_items(data: List[JSONDict], config: RefConfig) -> Dict[str, str]:
     """Process raw Fount response into a dictionary of name to filter code pairs.
 
     Parameters
@@ -145,9 +143,9 @@ def process_items(data: list[JSONDict], config: RefConfig) -> dict[str, str]:
 
 def generate_source(
     ref_name: str,
-    ref_items: dict[str, str],
+    ref_items: Dict[str, str],
     updated: datetime.datetime,
-    import_items: tuple[str, str] = ("bavapi.reference._int_enum", "IntEnum"),
+    import_items: Tuple[str, str] = ("bavapi.reference._int_enum", "IntEnum"),
 ) -> str:
     """Generate updated module source from reference items.
 
@@ -203,7 +201,7 @@ def write_to_file(source: str, filepath: Path) -> None:
         file.write(source)
 
 
-def parse_args(argv: Optional[list[str]] = None) -> Args:
+def parse_args(argv: Optional[List[str]] = None) -> Args:
     """Parse arguments given to the script.
 
     Returns
@@ -235,7 +233,7 @@ def parse_args(argv: Optional[list[str]] = None) -> Args:
     return Args(parser.parse_args(argv))
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: Optional[List[str]] = None) -> int:
     """Main function to generate reference classes.
 
     Returns
@@ -251,7 +249,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     base_path = Path.cwd() / "bavapi_refs"
     print(base_path)
 
-    ref_configs: dict[str, RefConfig] = {
+    ref_configs: Dict[str, RefConfig] = {
         "audiences": RefConfig("audiences", "audiences", parse_audiences),
         "countries": RefConfig(
             "studies",

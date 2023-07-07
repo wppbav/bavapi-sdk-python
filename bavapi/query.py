@@ -2,7 +2,7 @@
 
 # pylint: disable=no-name-in-module, too-few-public-methods
 
-from typing import Final, Generic, Iterator, Optional, TypeVar, cast
+from typing import Final, Generic, Iterator, Optional, Set, TypeVar, cast
 
 from pydantic import BaseModel, Field
 
@@ -74,7 +74,7 @@ class Query(BaseModel, Generic[F]):
         dict[str, Any]
             Fount-compatible dictionary of the query.
         """
-        exclude: Final[set[str]] = {"filters", "fields", "max_pages"}
+        exclude: Final[Set[str]] = {"filters", "fields", "max_pages"}
 
         filters: BaseParamsDict = {}
         fields: BaseMutableParamsMapping = {}
@@ -86,11 +86,11 @@ class Query(BaseModel, Generic[F]):
             {endpoint: self.fields} if self.fields else fields, "fields"
         )
 
-        params = (
-            self.dict(exclude=exclude, by_alias=True, exclude_defaults=True)
-            | filters
-            | fields
-        )
+        params = {
+            **self.dict(exclude=exclude, by_alias=True, exclude_defaults=True),
+            **filters,
+            **fields,
+        }
 
         return cast(BaseParamsDictValues, list_to_str(params))
 

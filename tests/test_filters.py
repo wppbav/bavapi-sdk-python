@@ -9,7 +9,7 @@ from bavapi import filters
 
 
 def test_filters_any_extra_params():
-    filters_ = filters.FountFilters(**{"test_param": 1})
+    filters_ = filters.FountFilters(**{"test_param": 1})  # type: ignore[arg-type]
 
     assert getattr(filters_, "test_param") == 1
 

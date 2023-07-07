@@ -1,3 +1,9 @@
+"""Functions to check whether `bavapi` is being run from a `jupyter` notebook.
+
+These functions enable `bavapi` to be run from a `jupyter` notebook more easily,
+avoiding the use of `async with` and `await` statements.
+"""
+
 import sys
 from typing import TYPE_CHECKING
 
@@ -26,9 +32,7 @@ def running_in_jupyter() -> bool:
 
     # if IPython hasn't been imported, there's nothing to check
     if "IPython" in sys.modules:
-        get_ipython = sys.modules["IPython"].__dict__["get_ipython"]
-
-        ipython = get_ipython()
+        ipython: object = sys.modules["IPython"].__dict__["get_ipython"]()
         in_ipython = ipython is not None
 
     if in_ipython:

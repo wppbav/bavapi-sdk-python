@@ -30,7 +30,7 @@ def test_paginated():
     "query",
     (
         Query(filters={"name": 1}),
-        Query(filters=filters.FountFilters(**{"name": 1})),
+        Query(filters=filters.FountFilters(**{"name": 1})),  # type: ignore[arg-type]
     ),
 )
 def test_to_params_filters(query: Query):
