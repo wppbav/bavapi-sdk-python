@@ -43,7 +43,7 @@ class FountFilters(BaseModel):
 
     updated_since: DTValues = None
 
-    class Config:
+    class Config:  #pylint: disable=missing-class-docstring
         extra = "allow"
 
     @validator("updated_since", pre=True)
