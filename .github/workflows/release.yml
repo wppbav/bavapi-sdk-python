@@ -8,17 +8,22 @@ on:
     types: [released]
 
 jobs:
-  deploy:
+  pypi-publish:
+    name: upload release to PyPI
     runs-on: ubuntu-latest
     environment: release
+    permissions:
+      id-token: write
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Python
-      uses: wntrblm/nox@2022.11.21
-      with:
-        python-versions: '3.11'
-    - name: Build dist
-      run: nox -s build
-    - name: Publish dist
-      run: nox -s publish
+      - name: Set up Python
+        uses: wntrblm/nox@2022.11.21
+        with:
+          python-versions: '3.11'
+
+      - name: Build dist
+        run: nox -s build
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
