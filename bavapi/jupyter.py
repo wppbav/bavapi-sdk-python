@@ -5,7 +5,7 @@ avoiding the use of `async with` and `await` statements.
 """
 
 import sys
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 import nest_asyncio
 
@@ -28,11 +28,11 @@ def running_in_jupyter() -> bool:
     """
     in_ipython = False
     in_ipython_kernel = False
-    ipython = None
+    ipython: Optional[object] = None
 
     # if IPython hasn't been imported, there's nothing to check
     if "IPython" in sys.modules:
-        ipython: object = sys.modules["IPython"].__dict__["get_ipython"]()
+        ipython = sys.modules["IPython"].__dict__["get_ipython"]()
         in_ipython = ipython is not None
 
     if in_ipython:
