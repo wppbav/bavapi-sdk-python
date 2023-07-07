@@ -1,3 +1,5 @@
+"""Exceptions for handling errors with the Fount API."""
+
 class APIError(Exception):
     """Exception for errors interacting with APIs."""
 
