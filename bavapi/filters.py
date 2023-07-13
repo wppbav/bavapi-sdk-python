@@ -4,7 +4,7 @@
 
 from typing import Dict, Literal, Mapping, Optional, Type, TypeVar, Union
 
-from pydantic import BaseModel, root_validator, validator
+from pydantic import BaseModel, field_validator, model_validator
 
 from bavapi.parsing.params import parse_date
 from bavapi.typing import (
@@ -41,12 +41,12 @@ class FountFilters(BaseModel):
         the response data.
     """
 
+    # Allow arbitrary filters for compatibility with raw_query
+    model_config = {"extra": "allow"}
+
     updated_since: DTValues = None
 
-    class Config:  #pylint: disable=missing-class-docstring
-        extra = "allow"
-
-    @validator("updated_since", pre=True)
+    @field_validator("updated_since", mode="before")
     @classmethod
     def _parse_date(cls, value: DTValues) -> Optional[str]:
         if value is None:
@@ -87,7 +87,7 @@ class FountFilters(BaseModel):
         if isinstance(filters, Mapping):
             new_filters.update(filters)
         else:
-            new_filters.update(filters.dict(exclude_defaults=True))
+            new_filters.update(filters.model_dump(exclude_defaults=True))
 
         return cls(**new_filters)  # type: ignore[arg-type]
 
@@ -234,7 +234,7 @@ class BrandscapeFilters(FountFilters):
     brands: OptionalListOr[int] = None
     categories: OptionalListOr[int] = None
 
-    @root_validator(pre=True)
+    @model_validator(mode="before")
     @classmethod
     def _check_params(cls, values: Dict[str, object]) -> Dict[str, object]:
         if not (
@@ -312,7 +312,7 @@ class StudiesFilters(FountFilters):
     countries: OptionalListOr[int] = None
     regions: OptionalListOr[int] = None
 
-    @validator("data_updated_since", pre=True)
+    @field_validator("data_updated_since", mode="before")
     @classmethod
     def _parse_date(cls, value: DTValues) -> Optional[str]:
         if value is None:

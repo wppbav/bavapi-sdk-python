@@ -12,6 +12,7 @@ from bavapi.typing import (
     BaseMutableParamsMapping,
     BaseParamsDict,
     BaseParamsDictValues,
+    BaseParamsMapping,
     OptionalListOr,
 )
 
@@ -76,18 +77,20 @@ class Query(BaseModel, Generic[F]):
         """
         exclude: Final[Set[str]] = {"filters", "fields", "max_pages"}
 
-        filters: BaseParamsDict = {}
+        filters: BaseParamsMapping = {}
         fields: BaseMutableParamsMapping = {}
 
         if isinstance(self.filters, _filters.FountFilters):
-            filters = self.filters.dict(by_alias=True, exclude_defaults=True)
+            filters = self.filters.model_dump(by_alias=True, exclude_defaults=True)
+        elif self.filters is not None:
+            filters = cast(BaseParamsDict, self.filters)
         filters = to_fount_params(filters, "filter")
         fields = to_fount_params(
             {endpoint: self.fields} if self.fields else fields, "fields"
         )
 
         params = {
-            **self.dict(exclude=exclude, by_alias=True, exclude_defaults=True),
+            **self.model_dump(exclude=exclude, by_alias=True, exclude_defaults=True),
             **filters,
             **fields,
         }
@@ -114,12 +117,12 @@ class Query(BaseModel, Generic[F]):
         if self.page and self.per_page:
             return self
 
-        return self.__class__.construct(
-            self.__fields_set__.union({"page", "per_page"}),
+        return self.__class__.model_construct(
+            self.model_fields_set.union({"page", "per_page"}),
             page=self.page or page,
             per_page=self.per_page or per_page,
             filters=self.filters,  # avoid turning filters into dictionary
-            **self.dict(
+            **self.model_dump(
                 by_alias=True,
                 exclude={"page", "per_page", "filters"},
                 exclude_defaults=True,

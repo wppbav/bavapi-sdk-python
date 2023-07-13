@@ -4,7 +4,9 @@
 #
 #    pip-compile --resolver=backtracking pyproject.toml
 #
-anyio==3.7.0
+annotated-types==0.5.0
+    # via pydantic
+anyio==3.7.1
     # via httpcore
 certifi==2023.5.7
     # via
@@ -14,22 +16,24 @@ colorama==0.4.6
     # via tqdm
 h11==0.14.0
     # via httpcore
-httpcore==0.17.2
+httpcore==0.17.3
     # via httpx
 httpx==0.24.1
-    # via bavapi (pyproject.toml)
+    # via wpp-bavapi (pyproject.toml)
 idna==3.4
     # via
     #   anyio
     #   httpx
 nest-asyncio==1.5.6
-    # via bavapi (pyproject.toml)
-numpy==1.24.3
+    # via wpp-bavapi (pyproject.toml)
+numpy==1.25.1
     # via pandas
-pandas==2.0.2
-    # via bavapi (pyproject.toml)
-pydantic==1.10.9
-    # via bavapi (pyproject.toml)
+pandas==2.0.3
+    # via wpp-bavapi (pyproject.toml)
+pydantic==2.0.2
+    # via wpp-bavapi (pyproject.toml)
+pydantic-core==2.1.2
+    # via pydantic
 python-dateutil==2.8.2
     # via pandas
 pytz==2023.3
@@ -42,6 +46,10 @@ sniffio==1.3.0
     #   httpcore
     #   httpx
 tqdm==4.65.0
-    # via bavapi (pyproject.toml)
-typing-extensions==4.6.3
-    # via pydantic
+    # via wpp-bavapi (pyproject.toml)
+typing-extensions==4.7.1
+    # via
+    #   pydantic
+    #   pydantic-core
+tzdata==2023.3
+    # via pandas
