@@ -2,7 +2,7 @@
 
 import datetime
 from pathlib import Path
-from typing import Callable, Dict, Optional, TypeVar
+from typing import Dict
 from unittest import mock
 
 import pandas as pd
@@ -12,17 +12,9 @@ from bavapi.client import Client
 from bavapi.query import Query
 from bavapi.reference import generate_reference as uref
 
+from ..helpers import wraps
+
 TEST_DT = datetime.datetime(2023, 1, 1, 12, 0, 0)
-
-
-T = TypeVar("T")
-
-
-def wraps(return_value: Optional[T] = None) -> Callable[..., Optional[T]]:
-    def _wraps(*_, **__):
-        return return_value
-
-    return _wraps
 
 
 @pytest.fixture(scope="session")
@@ -52,8 +44,8 @@ def test_parse_reference():
 
 @pytest.mark.anyio
 async def test_get_references(fount: Client):
-    def func(x: pd.Series) -> Dict[str, str]:
-        return {str(k): str(v) for k, v in x.to_dict().items()}  # pragma: no cover
+    def func(val: pd.Series) -> Dict[str, str]:
+        return {str(k): str(v) for k, v in val.to_dict().items()}  # pragma: no cover
 
     items = await uref.get_references(fount, [uref.RefConfig("test", "", func)])
 
