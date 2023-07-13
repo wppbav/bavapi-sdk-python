@@ -78,6 +78,35 @@ These functions will return a list of JSON dictionaries, one for each entry retr
 !!! tip
     These methods are meant to be used for custom processing of data (not resulting in a `pandas` DataFrame), but it is also possible to use some of the parsing functions available in [bavapi.parsing.responses][parsing.responses].
 
+## The `Query` class
+
+[`bavapi.Query`][query.Query] is a `pydantic`-powered class that holds and validates all the common (aside from endpoint-specific filters) query parameters to pass to the Fount API.
+
+The default values for the class are the same as the default values in the Fount API itself, so an empty `Query` object can be used to get all entries for a specific endpoint:
+
+```py
+query = bavapi.Query()
+
+async with bavapi.Client("TOKEN") as fount:
+    res = fount.raw_query("brand-metrics", query) # (1)
+```
+
+1. :material-expand-all: Returns all entries for `brand-metrics`. Similar to making a `GET` request with no parameters.
+
+`Query` can be used to set limits on the number of pages retrieved, or to request a specific page from a query:
+
+```py
+bavapi.Query(
+    per_page = 200,  # (1)
+    max_pages = 50,
+    ...  # Other params
+)
+```
+
+1. !!! tip "Stick with defaults"
+
+        The default `per_page` value (`100`) has been set after testing various options for the best download speed. :rocket:
+
 ### `Query` parameters
 
 All Fount queries performed with [`bavapi.Query`][query.Query] support the following parameters:
@@ -92,3 +121,24 @@ All Fount queries performed with [`bavapi.Query`][query.Query] support the follo
 - `updated_since`: Only return items that have been updated since this timestamp.
 
 For more information on the behavior of each of these parameters, see the [Fount API docs](https://developer.wppbav.com/docs/2.x/customizing/fields).
+
+### Raw parameter dictionary
+
+The `to_params` method can be used to parse the parameters into a dictionary of what will be sent to the Fount API:
+
+```py
+>>> bavapi.Query(
+...     filters=BrandscapeFilters(
+...         brand_name="Facebook",
+...         year_numbers=[2012, 2013, 2014, 2015]
+...     ),
+...     include=["company"]
+... ).to_params(endpoint="brandscape-data")
+{
+    "include[brandscape-data]": "company",  # (1)
+    "filter[brand_name]": "Facebook",
+    "year_numbers": "2012,2013,2014,2015",
+}
+```
+
+1. :bulb: Parses `filters` and `include` into the correct format for the Fount API, and parses all elements in lists of parameters to their string representation.

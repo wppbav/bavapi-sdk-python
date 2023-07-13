@@ -44,7 +44,7 @@ TOKEN = os.environ["FOUNT_API_TOKEN"]  # (2)
 ```
 
 1. Load variables from `.env` into the system's environment
-2. Assign "FOUNT_API_TOKEN" environment variable to `TOKEN`
+2. Assign the `"FOUNT_API_TOKEN"` environment variable to our `TOKEN` local variable
 
 Now you can use `TOKEN` in your API requests:
 

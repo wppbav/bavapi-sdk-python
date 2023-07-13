@@ -1,8 +1,3 @@
----
-hide:
-    - navigation
----
-
 # BAV API Python SDK - `bavapi`
 
 [![CI status](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml/badge.svg)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml)

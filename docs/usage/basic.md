@@ -73,9 +73,9 @@ Some of the more common filters for each endpoint have been added directly to th
 
 However, less commonly used filters, as well as [value filters](#value-filters) must be specified by using the `filters` parameters in each function.
 
-Filters can be specified using a Python dictionary (if you know the name of the filters you need), or directly creating a Filters instance (recommended method):
+Filters can be specified using a Python dictionary (if you know the name of the filters you need), or directly creating a Filters instance:
 
-=== "Filters class"
+=== "Filters class (recommended)"
 
     ```py
     result = bavapi.brands(
@@ -102,7 +102,7 @@ Filters can be specified using a Python dictionary (if you know the name of the 
 
 ### Value filters
 
-"Value" filters refer to filtering on the values of the data returned by the endpoint, as opposed to filtering via query parameters specified in the Fount API [documentation](https://developer.wppbav.com/docs/2.x/customizing-respons). For example, filtering by category name or by sector in the `brandscape-data` endpoint.
+"Value" filters refer to filtering on the values of the data returned by the endpoint, as opposed to filtering via query parameters specified in the Fount API [documentation](https://developer.wppbav.com/docs/2.x/customizing/fields). For example, filtering by category name or by sector in the `brandscape-data` endpoint.
 
 These value filters **must** be specified in the `filters` parameter. If they are added to the function call as regular keyword arguments, a `ValidationError` will be raised.
 
@@ -143,6 +143,8 @@ uk22 = bavapi.brandscape_data(
 
 ### Fields
 
+!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/customizing/fields)"
+
 It is possible to specify which fields a response should contain. If so, the API will **only** return those fields.
 
 ```py
@@ -151,6 +153,8 @@ result.columns  # will only have ["id", "name"] as columns
 ```
 
 ### Sorting
+
+!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/customizing/filters#sorting-results)"
 
 It is possible to sort the data by a column from the response.
 
@@ -165,6 +169,8 @@ result = bavapi.brands(name="Swatch", sort="-name")
 Responses are sorted by item id, in ascending order, by default.
 
 ### Related data (includes)
+
+!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/customizing/includes)"
 
 Aside from the data directly available for each of the resources in the Fount, these resources can also be connected across endpoints.
 
@@ -230,4 +236,4 @@ For now, parse datetime values manually using `pandas` instead.
 !!! tip
     The functions shown in the "Basic usage" section are meant for easy use in Jupyter notebooks, experimentation, one-off scripts, etc.
 
-    For more advanced uses and significant performance benefits, see [Advanced Usage](advanced) next.
+    For more advanced uses and significant performance benefits, see [Advanced Usage](advanced.md) next.
