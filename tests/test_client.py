@@ -1,7 +1,7 @@
 # pylint: disable=missing-function-docstring, missing-module-docstring
 # pylint: disable=protected-access, redefined-outer-name
 
-from typing import List, Optional, Set, TypeVar, Union
+from typing import Set
 from unittest import mock
 
 import pytest
@@ -9,10 +9,9 @@ import pytest
 from bavapi.client import Client, _default_brandscape_include
 from bavapi.http import HTTPClient
 from bavapi.query import Query
+from bavapi.typing import OptionalListOr
 
 from .helpers import wraps
-
-T = TypeVar("T")
 
 # CLASS INIT TESTS
 
@@ -32,6 +31,31 @@ def test_init_no_token():
         Client()
 
     assert excinfo.value.args[0] == "You must provide `auth_token` or `client`."
+
+
+# PRIVATE TESTS
+
+
+@pytest.mark.parametrize(
+    ("value", "expected"),
+    (
+        ("test", {"brand", "study", "category", "audience", "test"}),
+        (None, {"brand", "study", "category", "audience"}),
+        (["test"], {"brand", "study", "category", "audience", "test"}),
+    ),
+)
+def test_brandscape_query_default_include(
+    value: OptionalListOr[str], expected: Set[str]
+):
+    assert set(_default_brandscape_include(value)) == expected  # type: ignore
+
+
+def test_brandscape_query_default_include_partial():
+    assert _default_brandscape_include("brand") == "brand"
+
+
+def test_brandscape_query_no_default_include():
+    assert _default_brandscape_include("no_default") is None
 
 
 # PUBLIC TESTS
@@ -113,25 +137,3 @@ async def test_studies(fount: Client):
         assert (await fount.studies(study_id=1)).shape == (1, 2)
 
     mock_base_query.assert_awaited_once_with("studies", Query(id=1))
-
-
-@pytest.mark.parametrize(
-    ("value", "expected"),
-    (
-        ("test", {"brand", "study", "category", "audience", "test"}),
-        (None, {"brand", "study", "category", "audience"}),
-        (["test"], {"brand", "study", "category", "audience", "test"}),
-    ),
-)
-def test_brandscape_query_default_include(
-    value: Optional[Union[str, List[str]]], expected: Set[str]
-):
-    assert set(_default_brandscape_include(value)) == expected  # type: ignore
-
-
-def test_brandscape_query_default_include_partial():
-    assert _default_brandscape_include("brand") == "brand"
-
-
-def test_brandscape_query_no_default_include():
-    assert _default_brandscape_include("no_default") is None

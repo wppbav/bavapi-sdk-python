@@ -8,6 +8,7 @@ from typing import (
     List,
     Literal,
     Optional,
+    Type,
     TypeVar,
     Union,
     overload,
@@ -20,6 +21,8 @@ from bavapi.query import Query
 from bavapi.typing import BaseListOrValues, JSONDict, OptionalListOr
 
 if TYPE_CHECKING:
+    from types import TracebackType
+
     from pandas import DataFrame
 
 __all__ = ("Client",)
@@ -149,8 +152,13 @@ class Client:
         await self._client.__aenter__()
         return self
 
-    async def __aexit__(self, *args, **kwargs):
-        await self._client.__aexit__(*args, **kwargs)
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BaseException]] = None,
+        exc_value: Optional[BaseException] = None,
+        traceback: "Optional[TracebackType]" = None,
+    ) -> None:
+        await self._client.__aexit__(exc_type, exc_value, traceback)
 
     async def aclose(self) -> None:
         """Close existing HTTP connections."""

@@ -8,10 +8,7 @@ copyright: Copyright &copy; 2023 WPPBAV
 
 theme:
   name: material
-  # custom_dir: docs/overrides
   logo: assets/wpp-bav-logo.svg
-  # logo_dark_mode: assets/wpp-bav-logo-dark-mode.svg
-  # logo_light_mode: assets/wpp-bav-logo-light-mode.svg
   favicon: assets/favicon.svg
   icon:
     repo: fontawesome/brands/github
@@ -51,6 +48,9 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
   - pymdownx.details
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
@@ -68,7 +68,10 @@ markdown_extensions:
       permalink: true
 
 nav:
-  - Home: index.md
+  - Home: 
+      - Introduction: index.md
+      - Release Notes: release-notes.md
+      - Roadmap: roadmap.md
   - Getting Started:
       - Authentication: getting-started/authentication.md
       - Installation: getting-started/installation.md

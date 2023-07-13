@@ -2,7 +2,7 @@
 # pylint: disable=protected-access
 
 import asyncio
-from typing import Any, Dict, TypeVar
+from typing import Any, Dict
 from unittest import mock
 
 import pytest
@@ -11,8 +11,6 @@ from bavapi import sync
 from bavapi.query import Query
 
 from .helpers import wraps
-
-T = TypeVar("T")
 
 
 @mock.patch("bavapi.sync.asyncio.new_event_loop", return_value=asyncio.new_event_loop())

@@ -6,11 +6,13 @@ import asyncio
 import math
 from json import JSONDecodeError
 from typing import (
+    TYPE_CHECKING,
     Dict,
     Iterator,
     List,
     Optional,
     Protocol,
+    Type,
     TypeVar,
     Union,
     cast,
@@ -22,6 +24,9 @@ from tqdm.asyncio import tqdm
 
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
 from bavapi.typing import BaseParamsMapping, JSONData, JSONDict
+
+if TYPE_CHECKING:
+    from types import TracebackType
 
 __all__ = ("HTTPClient",)
 
@@ -108,8 +113,13 @@ class HTTPClient:
         await self.client.__aenter__()
         return self
 
-    async def __aexit__(self, *args, **kwargs) -> None:
-        await self.client.__aexit__(*args, **kwargs)
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BaseException]] = None,
+        exc_value: Optional[BaseException] = None,
+        traceback: "Optional[TracebackType]" = None,
+    ) -> None:
+        await self.client.__aexit__(exc_type, exc_value, traceback)
 
     async def aclose(self) -> None:
         """Asynchronously close all client connections."""

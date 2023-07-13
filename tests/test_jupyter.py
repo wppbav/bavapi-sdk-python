@@ -11,6 +11,8 @@ import pytest
 
 from bavapi import jupyter
 
+SetIpythonFunc = Callable[[Optional[bool]], None]
+
 
 class IPython(ModuleType):
     """Mock IPython module attributes and functions"""
@@ -24,7 +26,7 @@ class IPython(ModuleType):
         return self
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="function")
 def set_ipython():
     def _set_ipython(kernel: Optional[bool] = None) -> None:
         sys.modules["IPython"] = IPython(kernel)
@@ -34,10 +36,16 @@ def set_ipython():
     del sys.modules["IPython"]
 
 
-def test_running_in_jupyter(set_ipython: Callable):
+def test_running_in_jupyter(set_ipython: SetIpythonFunc):
     set_ipython(True)
 
     assert jupyter.running_in_jupyter()
+
+
+def test_not_running_in_jupyter(set_ipython: SetIpythonFunc):
+    set_ipython(None)
+
+    assert not jupyter.running_in_jupyter()
 
 
 @mock.patch("bavapi.jupyter.nest_asyncio.apply")

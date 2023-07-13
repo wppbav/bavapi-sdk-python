@@ -2,7 +2,7 @@
 # pylint: disable=protected-access, redefined-outer-name
 
 from dataclasses import asdict, dataclass
-from typing import Any, Dict, List, Optional, TypeVar, Union
+from typing import Dict, Optional
 from unittest import mock
 
 import httpx
@@ -11,10 +11,9 @@ import pytest
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
 from bavapi.http import HTTPClient
 from bavapi.query import Query
+from bavapi.typing import JSONData, JSONDict
 
 from .helpers import wraps
-
-T = TypeVar("T")
 
 # HELPERS
 
@@ -23,11 +22,11 @@ T = TypeVar("T")
 class QueryResult:
     """Model for WPPBAV Fount query results"""
 
-    data: Union[Dict[str, Any], List[Dict[str, Any]]]
+    data: JSONData
     links: Dict[str, str]
-    meta: Dict[str, Any]
+    meta: JSONDict
 
-    def dict(self) -> Dict[str, Any]:
+    def dict(self) -> JSONDict:
         return asdict(self)
 
 
@@ -35,7 +34,7 @@ def response(
     status_code: int = 200,
     message: str = "ok",
     *,
-    json: Optional[Any] = None,
+    json: Optional[JSONData] = None,
     request_url: str = "http://test_url/request",
     headers: Optional[httpx.Headers] = None,
 ) -> httpx.Response:
@@ -49,11 +48,11 @@ def response(
 
 
 def sample_data(
-    data: Optional[Union[Dict[str, Any], List[Dict[str, Any]]]] = None,
+    data: Optional[JSONData] = None,
     per_page: int = 25,
     on_page: int = 25,
     total: int = 2000,
-) -> Dict[str, Any]:
+) -> JSONDict:
     return QueryResult(
         data=data if data is not None else {},
         links={},
@@ -100,11 +99,9 @@ async def test_context_manager():
 
 
 @pytest.mark.anyio
-async def test_aclose(client: HTTPClient):
-    with mock.patch(
-        "bavapi.http.httpx.AsyncClient.aclose", wraps=wraps()
-    ) as mock_aclose:
-        await client.aclose()
+@mock.patch("bavapi.http.httpx.AsyncClient.aclose", wraps=wraps())
+async def test_aclose(mock_aclose: mock.AsyncMock, client: HTTPClient):
+    await client.aclose()
 
     mock_aclose.assert_called_once()
 
