@@ -19,7 +19,7 @@ Example usage
 ...     result = await client.brands(name="Facebook")
 """
 
-from importlib.metadata import version, PackageNotFoundError
+from importlib.metadata import PackageNotFoundError, version
 
 from bavapi import filters
 from bavapi.client import Client
@@ -28,20 +28,20 @@ from bavapi.query import Query
 from bavapi.sync import audiences, brands, brandscape_data, raw_query, studies
 
 __all__ = (
-    "raw_query",
     "audiences",
     "brands",
     "brandscape_data",
+    "raw_query",
     "studies",
     "Client",
+    "Query",
+    "filters",
     "APIError",
     "DataNotFoundError",
     "RateLimitExceededError",
-    "Query",
-    "filters",
 )
 
 try:
     __version__ = version(__package__ or __name__)
 except PackageNotFoundError:  # pragma: no cover
-    pass
+    __version__ = "not_found"
