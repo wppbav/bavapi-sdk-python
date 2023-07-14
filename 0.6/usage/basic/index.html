@@ -1221,6 +1221,12 @@
 <div class="language-py highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">bavapi</span>
 </span></code></pre></div>
 <h2 id="using-bavapi">Using bavapi<a class="headerlink" href="#using-bavapi" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">SSL Issues</p>
+<p>It's possible that you get <code>SSL_CERTIFICATE_VERIFY_FAILED</code> errors when performing requests with <code>bavapi</code>. At the moment, it is not clear to <code>bavapi</code> maintainers what the issue is as it only happens sometimes and other tested URLs don't show this issue.</p>
+<p>Usually, making the request again solves the issue, but you might have to make the request a couple of times if the issue persists.</p>
+<p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4a1.svg" title=":bulb:" /> If you have any thoughts on how to solve this, please open an <a href="https://github.com/wppbav/bavapi-sdk-python/issues/">issue</a> on GitHub.</p>
+</div>
 <p>You can query the available <a href="../../endpoints/">endpoints</a> with their corresponding methods:</p>
 <div class="language-py highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">swatch</span> <span class="o">=</span> <span class="n">bavapi</span><span class="o">.</span><span class="n">brands</span><span class="p">(</span><span class="s2">&quot;TOKEN&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Swatch&quot;</span><span class="p">)</span>  <span class="c1"># (1)</span>
 </span></code></pre></div>
