@@ -94,7 +94,7 @@ As a result, you will see a set of columns, extracted from the `"brand"` include
 
 ## Metric keys
 
-`brandscape-data` provides a special filter to specify the data *columns* that the response should contain: `metric_keys`.
+`brandscape-data` functions and methods provide a parameter to specify the data *columns* that the response should contain: `metric_keys`.
 
 You can specify the metrics that your response should contain, and the API will include all score types for that metric.
 
@@ -107,3 +107,9 @@ You can specify the metrics that your response should contain, and the API will 
     - `relevance_rank`
     - Brand information such as `id`, `brand_name`, and `category_name`
     - Any additional columns from the `include` parameter
+
+    ```py
+    bavapi.brandscape_data(studies=111, metric_keys="differentiation") # (1)
+    ```
+
+    1. Will only return `differentiation_c` and `differentiation_rank` data.
