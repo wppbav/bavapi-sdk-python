@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wpp-bavapi"
-version = "0.6.0"
+version = "0.6.1"
 authors = [
     { name = "Ignacio Maiz Vilches", email = "ignacio.maiz@bavgroup.com" },
 ]
@@ -51,7 +51,7 @@ dependencies = [
 homepage = "https://github.com/wppbav/bavapi-sdk-python"
 
 [project.optional-dependencies]
-dev = ["black", "nox", "pip-tools", "pylint"]
+dev = ["black", "nox", "pip-tools"]
 doc = [
     "mkdocs",
     "mkdocs-material",
@@ -61,7 +61,7 @@ doc = [
     "mkdocs-section-index",
 ]
 test = ["coverage", "pytest", "pytest-asyncio", "python-dotenv"]
-lint = ["pylint", "mypy", "pandas-stubs"]
+lint = ["isort", "mypy", "pylint", "pandas-stubs"]
 
 [project.scripts]
 bavapi-gen-refs = "bavapi.reference.generate_reference:main"
