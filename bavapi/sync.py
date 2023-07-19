@@ -1,6 +1,7 @@
-"""Convenience functions to perform queries to the Fount synchronously.
+"""
+Convenience functions to perform queries to the Fount synchronously.
 
-Can be used directly without using `asyncio`.
+Can be used directly without `asyncio`.
 
 Meant for experimentation, Jupyter notebooks, one-off scripts, etc.
 
@@ -332,6 +333,8 @@ async def brandscape_data(
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
         Additional resources to include in API response, by default None
+    metric_keys: str or list[str], optional
+        Key or list of keys for the metrics included in the response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     **kwargs
