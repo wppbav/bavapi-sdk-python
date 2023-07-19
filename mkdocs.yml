@@ -8,6 +8,7 @@ copyright: Copyright &copy; 2023 WPPBAV
 
 theme:
   name: material
+  custom_dir: docs/overrides
   logo: assets/wpp-bav-logo.svg
   favicon: assets/favicon.svg
   icon:
