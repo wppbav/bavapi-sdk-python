@@ -460,6 +460,47 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#version-061-july-19th-2023" class="md-nav__link">
+    Version 0.6.1 (July 19th, 2023)
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.6.1 (July 19th, 2023)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix" class="md-nav__link">
+    Fix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal" class="md-nav__link">
+    Internal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    Tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs" class="md-nav__link">
+    Docs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#version-060-july-13th-2023" class="md-nav__link">
     Version 0.6.0 (July 13th, 2023)
   </a>
@@ -468,7 +509,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#internal" class="md-nav__link">
+  <a href="#internal_1" class="md-nav__link">
     Internal
   </a>
   
@@ -1081,6 +1122,47 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#version-061-july-19th-2023" class="md-nav__link">
+    Version 0.6.1 (July 19th, 2023)
+  </a>
+  
+    <nav class="md-nav" aria-label="Version 0.6.1 (July 19th, 2023)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix" class="md-nav__link">
+    Fix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal" class="md-nav__link">
+    Internal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    Tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs" class="md-nav__link">
+    Docs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#version-060-july-13th-2023" class="md-nav__link">
     Version 0.6.0 (July 13th, 2023)
   </a>
@@ -1089,7 +1171,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#internal" class="md-nav__link">
+  <a href="#internal_1" class="md-nav__link">
     Internal
   </a>
   
@@ -1132,8 +1214,26 @@
 
 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
 <h2 id="version-06">Version 0.6<a class="headerlink" href="#version-06" title="Permanent link">&para;</a></h2>
-<h3 id="version-060-july-13th-2023">Version 0.6.0 (July 13th, 2023)<a class="headerlink" href="#version-060-july-13th-2023" title="Permanent link">&para;</a></h3>
+<h3 id="version-061-july-19th-2023">Version 0.6.1 (July 19th, 2023)<a class="headerlink" href="#version-061-july-19th-2023" title="Permanent link">&para;</a></h3>
+<h4 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f41b.svg" title=":bug:" /> Fix <code>metric_keys</code> incorrectly categorized as a filter instead of a top-level parameter within the <code>Query</code> class.</li>
+</ul>
 <h4 id="internal">Internal<a class="headerlink" href="#internal" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🔧" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f527.svg" title=":wrench:" /> Changed the custom <code>IntEnum</code> implementation to not override the standard lib's <code>IntEnum.__str__</code>.</li>
+<li><img alt="🔨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f528.svg" title=":hammer:" /> Added <code>nox</code> session for deploying docs.</li>
+</ul>
+<h4 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f9ea.svg" title=":test_tube:" /> Added tests for checking that filters and parameters are assigned correctly in <code>Client</code> methods.</li>
+</ul>
+<h4 id="docs">Docs<a class="headerlink" href="#docs" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4d3.svg" title=":notebook:" /> Added warning about potential SSL errors outside of <code>bavapi</code> when using the Fount API.</li>
+</ul>
+<h3 id="version-060-july-13th-2023">Version 0.6.0 (July 13th, 2023)<a class="headerlink" href="#version-060-july-13th-2023" title="Permanent link">&para;</a></h3>
+<h4 id="internal_1">Internal<a class="headerlink" href="#internal_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f680.svg" title=":rocket:" /> Upgraded <a href="https://pypi.org/project/pydantic/"><code>pydantic</code></a> to v2. Use <code>bavapi</code> v0.5 for compatibility with <code>pydantic</code> v1.</li>
 </ul>
