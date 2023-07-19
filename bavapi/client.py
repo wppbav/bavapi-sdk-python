@@ -383,14 +383,14 @@ class Client:
     ) -> "DataFrame":
         """Query the Fount `brandscape-data` endpoint.
 
-        This endpoint requires at least one of the following combinations of parameters:
+        This endpoint requires at least one of the following combinations of filters:
 
         - `studies`
         - `brand_name`
         - `brands`
-        - `year_number` and `brands`/`brand_name`
-        - `country_code` and `brands`/`brand_name`
-        - `year_number` and `country_code`
+        - `year_number`/`years` and `brands`/`brand_name`
+        - `country_code`/`countries` and `brands`/`brand_name`
+        - `year_number`/`years` and `country_code`/`countries`
 
         An audience filter is also highly recommended, as otherwise the API will return
         data for all audiences (there are more than 30 standard audiences).
@@ -432,6 +432,8 @@ class Client:
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
             Additional resources to include in API response, by default None
+        metric_keys: str or list[str], optional
+            Key or list of keys for the metrics included in the response, by default None
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -473,13 +475,13 @@ class Client:
             audiences=audiences,
             brand_name=brand_name,
             studies=studies,
-            metric_keys=metric_keys,
         )
 
         query: Query[_filters.BrandscapeFilters] = Query(
             filters=filters,
             fields=fields,
             include=_default_brandscape_include(include),
+            metric_keys=metric_keys,
             **kwargs,  # type: ignore[arg-type]
         )
 

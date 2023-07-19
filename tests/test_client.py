@@ -6,6 +6,7 @@ from unittest import mock
 
 import pytest
 
+from bavapi import filters
 from bavapi.client import Client, _default_brandscape_include
 from bavapi.http import HTTPClient
 from bavapi.query import Query
@@ -86,54 +87,54 @@ async def test_aclose(fount: Client):
 
 
 @pytest.mark.anyio
-async def test_raw_query(fount: Client):
-    with mock.patch.object(
-        fount._client, "query", wraps=wraps([{"t": 1}])
-    ) as mock_base_query:
-        assert await fount.raw_query("request", Query()) == [{"t": 1}]
+@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1}]))
+async def test_raw_query(mock_query: mock.AsyncMock, fount: Client):
+    await fount.raw_query("request", Query())
 
-    mock_base_query.assert_awaited_once_with("request", Query())
+    mock_query.assert_awaited_once_with("request", Query())
 
 
 @pytest.mark.anyio
-async def test_audiences(fount: Client):
-    with mock.patch.object(
-        fount._client, "query", wraps=wraps([{"1": 1}])
-    ) as mock_base_query:
-        assert (await fount.audiences(audience_id=1)).shape == (1, 1)
+@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1}]))
+async def test_audiences(mock_query: mock.AsyncMock, fount: Client):
+    await fount.audiences(active=1, include="test")
 
-    mock_base_query.assert_awaited_once_with("audiences", Query(id=1))
-
-
-@pytest.mark.anyio
-async def test_brands(fount: Client):
-    with mock.patch.object(
-        fount._client, "query", wraps=wraps([{"1": 1}])
-    ) as mock_base_query:
-        assert (await fount.brands(brand_id=1)).shape == (1, 1)
-
-    mock_base_query.assert_awaited_once_with("brands", Query(id=1))
-
-
-@pytest.mark.anyio
-async def test_brandscape_data(fount: Client):
-    with mock.patch.object(
-        fount._client, "query", wraps=wraps([{"1": 1, "2": 2}])
-    ) as mock_base_query:
-        res = await fount.brandscape_data(fields="")
-        assert res.shape == (1, 2)
-
-    mock_base_query.assert_awaited_once_with(
-        "brandscape-data",
-        Query(fields="", include=["study", "brand", "category", "audience"]),
+    mock_query.assert_awaited_once_with(
+        "audiences", Query(filters=filters.AudiencesFilters(active=1), include="test")
     )
 
 
 @pytest.mark.anyio
-async def test_studies(fount: Client):
-    with mock.patch.object(
-        fount._client, "query", wraps=wraps([{"1": 1, "2": 2}])
-    ) as mock_base_query:
-        assert (await fount.studies(study_id=1)).shape == (1, 2)
+@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
+async def test_brands(mock_query: mock.AsyncMock, fount: Client):
+    await fount.brands(country_codes="test", fields="test")
 
-    mock_base_query.assert_awaited_once_with("studies", Query(id=1))
+    mock_query.assert_awaited_once_with(
+        "brands",
+        Query(filters=filters.BrandsFilters(country_codes="test"), fields="test"),
+    )
+
+
+@pytest.mark.anyio
+@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
+async def test_brandscape_data(mock_query: mock.AsyncMock, fount: Client):
+    await fount.brandscape_data(studies=1, metric_keys="test")
+
+    mock_query.assert_awaited_once_with(
+        "brandscape-data",
+        Query(
+            filters=filters.BrandscapeFilters(studies=1),
+            metric_keys="test",
+            include=["study", "brand", "category", "audience"],
+        ),
+    )
+
+
+@pytest.mark.anyio
+@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
+async def test_studies(mock_query: mock.AsyncMock, fount: Client):
+    await fount.studies(include="test", full_year=1)
+
+    mock_query.assert_awaited_once_with(
+        "studies", Query(filters=filters.StudiesFilters(full_year=1), include="test")
+    )
