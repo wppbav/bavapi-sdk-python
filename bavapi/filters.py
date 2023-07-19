@@ -61,8 +61,6 @@ class FountFilters(BaseModel):
     ) -> Optional[F]:
         """Ensure FountFilters class from dictionary or other FountFilters class.
 
-        If `filters` is None, returns None.
-
         Parameters
         ----------
         filters : FountFilters or dict of filter values, optional
@@ -73,7 +71,11 @@ class FountFilters(BaseModel):
         Returns
         -------
         FountFilters, optional
-            FountFilters class or None.
+            FountFilters class or None if `filters` is None and no additional filters are passed.
+
+        Notes
+        -----
+        Defaults to values passed to `filters` when any additional filters overlap.
         """
         addl_filters = {k: v for k, v in addl_filters.items() if v}
 
@@ -201,8 +203,6 @@ class BrandscapeFilters(FountFilters):
         The `Audiences` class can help with using audience IDs.
     brand_name : str, optional
         Perform a search on the brand name, by default None
-    metric_keys : str or list[str], optional
-        Metric keys to return as columns, by default None
     brands : int or list[int], optional
         Fount brand ID or list of brand IDs, by default None
     categories : int or list[int], optional
@@ -227,7 +227,6 @@ class BrandscapeFilters(FountFilters):
     year_number: OptionalListOr[int] = None
     audiences: OptionalListOr[int] = None
     brand_name: Optional[str] = None
-    metric_keys: OptionalListOr[str] = None
     studies: OptionalListOr[int] = None
     countries: OptionalListOr[int] = None
     years: OptionalListOr[int] = None
