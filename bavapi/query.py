@@ -34,11 +34,14 @@ class Query(BaseModel, Generic[F]):
         Specific fields to retrieve from the query, by default None
     include: str or list[str], optional
         Additional resources to retrieve from the query, by default None
+    metric_keys: str or list[str], optional
+        Key or list of keys for the metrics included in the response, by default None
+
+        Currently, this parameter is only available for the `brandscape-data` endpoint.
     sort: str, optional
         Sort response by field, by default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
-
         `sort="-differentiation_rank"`
 
         Sorts by item ID by default.
@@ -62,6 +65,7 @@ class Query(BaseModel, Generic[F]):
     filters: Optional[_filters.FiltersOrMapping[F]] = None
     fields: OptionalListOr[str] = None
     include: OptionalListOr[str] = None
+    metric_keys: OptionalListOr[str] = None
     sort: Optional[str] = None
     page: Optional[int] = None
     per_page: Optional[int] = None
@@ -86,7 +90,8 @@ class Query(BaseModel, Generic[F]):
             filters = cast(BaseParamsDict, self.filters)
         filters = to_fount_params(filters, "filter")
         fields = to_fount_params(
-            {endpoint: self.fields} if self.fields else fields, "fields"
+            {endpoint.replace("-", "_"): self.fields} if self.fields else fields,
+            "fields",
         )
 
         params = {
@@ -118,7 +123,9 @@ class Query(BaseModel, Generic[F]):
             return self
 
         return self.__class__.model_construct(
-            self.model_fields_set.union({"page", "per_page"}),
+            self.model_fields_set.union(   # pylint: disable=no-member
+                {"page", "per_page"}
+            ),
             page=self.page or page,
             per_page=self.per_page or per_page,
             filters=self.filters,  # avoid turning filters into dictionary
