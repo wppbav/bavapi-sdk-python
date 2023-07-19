@@ -649,6 +649,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#metric-keys" class="md-nav__link">
+    Metric keys
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1179,6 +1186,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#metric-keys" class="md-nav__link">
+    Metric keys
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1223,7 +1237,7 @@
 <h2 id="using-bavapi">Using bavapi<a class="headerlink" href="#using-bavapi" title="Permanent link">&para;</a></h2>
 <div class="admonition info">
 <p class="admonition-title">SSL Issues</p>
-<p>It's possible that you get <code>SSL_CERTIFICATE_VERIFY_FAILED</code> errors when performing requests with <code>bavapi</code>. At the moment, it is not clear to <code>bavapi</code> maintainers what the issue is; as it only happens sometimes, and other tested URLs don't show this issue.</p>
+<p>It's possible that you get <code>SSL: CERTIFICATE_VERIFY_FAILED</code> errors when performing requests with <code>bavapi</code>. At the moment, it is not clear to what might be the source of the issue; as it only happens sometimes, and the error doesn't appear to happen with other tested URLs.</p>
 <p>Usually, making the request again solves the issue, but you might have to do so a couple of times if the issue persists.</p>
 <p><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/svg/1f4a1.svg" title=":bulb:" /> If you have any thoughts on how to solve this, please open an <a href="https://github.com/wppbav/bavapi-sdk-python/issues/">issue</a> on GitHub.</p>
 </div>
@@ -1324,7 +1338,7 @@
 </div>
 <p>However, less commonly used filters, as well as <a href="#value-filters">value filters</a> must be specified by using the <code>filters</code> parameters in each function.</p>
 <p>Filters can be specified using a Python dictionary (if you know the name of the filters you need), or directly creating a Filters instance:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Filters class (recommended)</label><label for="__tabbed_1_2">Dictionary</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Filters instances (recommended)</label><label for="__tabbed_1_2">Dictionary</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-py highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">result</span> <span class="o">=</span> <span class="n">bavapi</span><span class="o">.</span><span class="n">brands</span><span class="p">(</span>
@@ -1421,6 +1435,14 @@
 <p>The maximum number of elements per page allowed by the Fount API is <code>1000</code>.</p>
 </div>
 <p>You can also set a custom number of <code>max_pages</code> for the request, or directly specify the <code>page</code> parameter to get a single page of results.</p>
+<h3 id="metric-keys">Metric keys<a class="headerlink" href="#metric-keys" title="Permanent link">&para;</a></h3>
+<p><code>metric_keys</code> is a special filter to specify the data <em>columns</em> that the response should contain.</p>
+<p>The API response will include all score types for that metric.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Currently, only the <code>brandscape-data</code> endpoint supports the use of metric keys. All other endpoints will ignore this parameter.</p>
+<p>More info in the <a href="../../endpoints/brandscape-data/"><code>brandscape-data</code></a> endpoint section.</p>
+</div>
 <h2 id="formatting-output">Formatting output<a class="headerlink" href="#formatting-output" title="Permanent link">&para;</a></h2>
 <p>It is possible that some of the data retrieved from the Fount includes multiple items.</p>
 <div class="admonition example">

@@ -1198,7 +1198,7 @@
 <p>This may change in future versions of <code>bavapi</code> as the parsing logic is upgraded.</p>
 </div>
 <h2 id="metric-keys">Metric keys<a class="headerlink" href="#metric-keys" title="Permanent link">&para;</a></h2>
-<p><code>brandscape-data</code> provides a special filter to specify the data <em>columns</em> that the response should contain: <code>metric_keys</code>.</p>
+<p><code>brandscape-data</code> functions and methods provide a parameter to specify the data <em>columns</em> that the response should contain: <code>metric_keys</code>.</p>
 <p>You can specify the metrics that your response should contain, and the API will include all score types for that metric.</p>
 <div class="admonition example">
 <p class="admonition-title">Example</p>
@@ -1211,6 +1211,11 @@
 <li>Brand information such as <code>id</code>, <code>brand_name</code>, and <code>category_name</code></li>
 <li>Any additional columns from the <code>include</code> parameter</li>
 </ul>
+<div class="language-py highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">bavapi</span><span class="o">.</span><span class="n">brandscape_data</span><span class="p">(</span><span class="n">studies</span><span class="o">=</span><span class="mi">111</span><span class="p">,</span> <span class="n">metric_keys</span><span class="o">=</span><span class="s2">&quot;differentiation&quot;</span><span class="p">)</span> <span class="c1"># (1)</span>
+</span></code></pre></div>
+<ol>
+<li>Will only return <code>differentiation_c</code> and <code>differentiation_rank</code> data.</li>
+</ol>
 </div>
 
 
