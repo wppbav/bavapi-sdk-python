@@ -8,6 +8,13 @@ import bavapi
 
 ## Using bavapi
 
+!!! info "SSL Issues"
+    It's possible that you get `SSL: CERTIFICATE_VERIFY_FAILED` errors when performing requests with `bavapi`. At the moment, it is not clear to what might be the source of the issue; as it only happens sometimes, and the error doesn't appear to happen with other tested URLs.
+
+    Usually, making the request again solves the issue, but you might have to do so a couple of times if the issue persists.
+
+    :bulb: If you have any thoughts on how to solve this, please open an [issue](https://github.com/wppbav/bavapi-sdk-python/issues/) on GitHub.
+
 You can query the available [endpoints](../endpoints/index.md) with their corresponding methods:
 
 ```py
@@ -75,7 +82,7 @@ However, less commonly used filters, as well as [value filters](#value-filters) 
 
 Filters can be specified using a Python dictionary (if you know the name of the filters you need), or directly creating a Filters instance:
 
-=== "Filters class (recommended)"
+=== "Filters instances (recommended)"
 
     ```py
     result = bavapi.brands(
@@ -202,6 +209,17 @@ result = bavapi.brands(name="Swatch", per_page=1000)
     The maximum number of elements per page allowed by the Fount API is `1000`.
 
 You can also set a custom number of `max_pages` for the request, or directly specify the `page` parameter to get a single page of results.
+
+### Metric keys
+
+`metric_keys` is a special filter to specify the data *columns* that the response should contain.
+
+The API response will include all score types for that metric.
+
+!!! note
+    Currently, only the `brandscape-data` endpoint supports the use of metric keys. All other endpoints will ignore this parameter.
+
+    More info in the [`brandscape-data`](../endpoints/brandscape-data.md) endpoint section.
 
 ## Formatting output
 
