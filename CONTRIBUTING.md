@@ -12,9 +12,7 @@ The easiest way to contribute when you see something wrong is to open an issue o
 
 Please read the instructions in the issue template and fill out as much information as possible.
 
-:::info
 This should be your first stop to start contributing to `bavapi`. We kindly ask that you let us know if you would like to contribute any changes to the code base by opening an issue on GitHub.
-:::
 
 Please return to this page once you have opened an issue on GitHub and are ready to start contributing.
 
