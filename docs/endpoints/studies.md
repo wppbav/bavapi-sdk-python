@@ -10,6 +10,14 @@ For more information on available filters and functionality, see the Fount docum
 
 ## Usage
 
+=== "Sync"
+
+    ```py title="Using top-level functions"
+    import bavapi
+
+    result = bavapi.studies("TOKEN", country_codes="US")
+    ```
+
 === "Async"
 
     ```py title="Using Client asynchronously"
@@ -17,12 +25,4 @@ For more information on available filters and functionality, see the Fount docum
 
     async with bavapi.Client("TOKEN") as bav:
         result = await bav.studies(country_codes="US")
-    ```
-
-=== "Sync"
-
-    ```py title="Using top-level functions"
-    import bavapi
-
-    result = bavapi.studies("TOKEN", country_codes="US")
     ```

@@ -11,7 +11,6 @@ from pathlib import Path
 from typing import Callable, Dict, List, NamedTuple, Optional, Tuple
 
 import pandas as pd
-from dotenv import load_dotenv
 
 from bavapi import Client, Query
 from bavapi.parsing.responses import parse_response
@@ -23,11 +22,12 @@ ReferenceParser = Callable[[pd.Series], Dict[str, str]]
 class Args:
     """Basic namespace for arguments with typing."""
 
-    __slots__ = ("all", "name", "folder")
+    __slots__ = ("all", "name", "folder", "token")
 
     def __init__(self, namespace: argparse.Namespace) -> None:
         self.all: bool = namespace.all
         self.name: str = namespace.name
+        self.token: str = namespace.token
 
 
 class RefConfig(NamedTuple):
@@ -220,6 +220,7 @@ def parse_args(argv: Optional[List[str]] = None) -> Args:
         "Existing reference files will be overwritten.",
         epilog="DON'T PUSH REFERENCES TO GIT! Add `bavapi_refs/` to `.gitignore`.",
     )
+    parser.add_argument("-t", "--token", default="", help="Fount API token.")
     parser.add_argument(
         "-a", "--all", action="store_true", help="Generate all reference files."
     )
@@ -241,13 +242,21 @@ def main(argv: Optional[List[str]] = None) -> int:
     int
         CLI exit code
     """
-    load_dotenv()
-
     args = parse_args(argv)
-    fount = Client(os.getenv("FOUNT_API_KEY", "no_key"))
+    if not args.token:
+        try:
+            from dotenv import load_dotenv  # pylint: disable=import-outside-toplevel
+
+            load_dotenv()
+        except ImportError as exc:
+            raise ValueError(
+                "You must specify a Fount API token with the `-t`/`--token` argument, "
+                "or install `python-dotenv` and set `FOUNT_API_KEY` in a `.env` file."
+            ) from exc
+
+    fount = Client(os.getenv("FOUNT_API_KEY", args.token))
 
     base_path = Path.cwd() / "bavapi_refs"
-    print(base_path)
 
     ref_configs: Dict[str, RefConfig] = {
         "audiences": RefConfig("audiences", "audiences", parse_audiences),

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wpp-bavapi"
-version = "0.6.1"
+version = "0.7.0"
 authors = [
     { name = "Ignacio Maiz Vilches", email = "ignacio.maiz@bavgroup.com" },
 ]
@@ -59,6 +59,7 @@ doc = [
     "mkdocs-gen-files",
     "mkdocs-literate-nav",
     "mkdocs-section-index",
+    "mike",
 ]
 test = ["coverage", "pytest", "pytest-asyncio", "python-dotenv"]
 lint = ["isort", "mypy", "pylint", "pandas-stubs"]

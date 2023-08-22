@@ -79,6 +79,7 @@ To see a list of all available `nox` commands, run `nox -l` in your terminal. He
 - `requirements`: update `requirements.txt` with latest dependencies from `pyproject.toml`.
 - `build`: build distributable files for `bavapi`. Suitable for CI/CD pipeline.
 - `publish`: publish `bavapi` to PyPI. Suitable for CI/CD pipeline.
+- `docs_deploy`: publish `bavapi` documentation to GitHub Pages. Suitable for local development and CI/CD pipelines.
 
 ## Code Style Guidelines
 

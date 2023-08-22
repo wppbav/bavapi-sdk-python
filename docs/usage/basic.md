@@ -129,7 +129,7 @@ bavapi.brands(filters=BrandsFilters(name="Swatch", sector_name="Watches"))
 
 `bavapi` provides reference classes to make API queries easier to construct.
 
-These reference classes must be generated on your machine after installation. Please follow the instructions in the [Installation](../getting-started/installation.md#installing-bavapi-reference-classes) section.
+These reference classes must be generated on your machine after installation. Please follow the instructions in the [Installing Reference Classes](../getting-started/reference-classes.md) section.
 
 The following reference classes are available:
 
@@ -196,6 +196,8 @@ result = bavapi.brands(name="Swatch", includes="company")
 
 ### Pagination
 
+!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/pagination)"
+
 All requests to the Fount are "paginated", meaning that one must request and receive from the server one page at a time. `bavapi` then combines all responses into one data table.
 
 While the default value for `bavapi` is 100, it is possible to set a custom number of `per_page` elements for each request:
@@ -219,7 +221,7 @@ The API response will include all score types for that metric.
 !!! note
     Currently, only the `brandscape-data` endpoint supports the use of metric keys. All other endpoints will ignore this parameter.
 
-    More info in the [`brandscape-data`](../endpoints/brandscape-data.md) endpoint section.
+    More info in the [`brandscape-data`](../endpoints/brandscape-data.md#metric-keys) endpoint section.
 
 ## Formatting output
 

@@ -17,11 +17,6 @@ from ..helpers import wraps
 TEST_DT = datetime.datetime(2023, 1, 1, 12, 0, 0)
 
 
-@pytest.fixture(scope="session")
-def anyio_backend() -> str:
-    return "asyncio"
-
-
 @pytest.fixture
 def fount(monkeypatch: pytest.MonkeyPatch) -> Client:
     _fount = Client("TOKEN")
@@ -118,8 +113,12 @@ def test_parse_args_all():
     assert args.name == ""
 
 
-def test_main_no_args():
+@mock.patch(
+        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+    )
+def test_main_no_args(mock_getenv: mock.Mock):
     assert uref.main([]) == 1
+    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "")
 
 
 @mock.patch(
@@ -130,10 +129,14 @@ def test_main_no_args():
 def test_main(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
     args = ["-n", "audiences"]
 
-    uref.main(args)
+    with mock.patch(
+        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+    ) as mock_getenv:
+        uref.main(args)
 
     mock_write_to_file.assert_called_once()
     mock_raw_query.assert_awaited_once_with("audiences", Query())
+    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "")
 
 
 @mock.patch(
@@ -149,7 +152,45 @@ def test_main(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
 def test_main_all(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
     args = ["-a"]
 
-    uref.main(args)
+    with mock.patch(
+        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+    ) as mock_getenv:
+        uref.main(args)
 
     assert len(mock_write_to_file.call_args_list) == 2
     assert len(mock_raw_query.call_args_list) == 2
+    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "")
+
+
+@mock.patch("dotenv.load_dotenv", wraps=wraps(raises=ImportError))
+def test_main_no_token_no_dotenv(mock_load_dotenv: mock.Mock):
+    args = ["-a"]
+
+    with pytest.raises(ValueError) as excinfo:
+        uref.main(args)
+
+    assert excinfo.value.args == (
+        "You must specify a Fount API token with the `-t`/`--token` argument, "
+        "or install `python-dotenv` and set `FOUNT_API_KEY` in a `.env` file.",
+    )
+    mock_load_dotenv.assert_called_once()
+
+
+@mock.patch(
+    "bavapi.reference.generate_reference.Client.raw_query",
+    wraps=wraps([{"id": 1, "name": "A"}, {"id": 2, "name": "B"}]),
+)
+@mock.patch("dotenv.load_dotenv", wraps=wraps(raises=ImportError))
+def test_main_with_token_arg(
+    mock_load_dotenv: mock.Mock, mock_raw_query: mock.AsyncMock
+):
+    args = ["-n", "audiences", "-t", "test_token"]
+
+    with mock.patch(
+        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+    ) as mock_getenv:
+        uref.main(args)
+
+    mock_load_dotenv.assert_not_called()
+    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "test_token")
+    mock_raw_query.assert_awaited_once_with("audiences", Query())

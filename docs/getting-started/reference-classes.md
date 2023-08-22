@@ -37,11 +37,26 @@ And could be used to have better visibility when filtering API responses:
 !!! warning
     Don't commit reference classes to public repositories. Add `bavapi_refs/` to your `.gitignore` file.
 
-To generate these reference classes, run the following command:
+## Generate Reference classes
 
-```prompt
-bavapi-gen-refs --all
-```
+To generate these reference classes, there are two options for authenticating your requests:
+
+- Specify the Fount API token via the `-t`/`--token` argument
+- Use a `.env` file to store your Fount API token and install `python-dotenv` to read the file into your environment. See the [Authentication](authentication.md#recommended-way-to-manage-api-keys) section for more info.
+
+To generate the reference files, run the following command:
+
+=== "With a `.env` file"
+
+    ```prompt
+    bavapi-gen-refs --all
+    ```
+
+=== "Using the `-f`/`--fount` argument"
+
+    ```prompt
+    bavapi-gen-refs --all -f your_token
+    ```
 
 Alternatively, you can specify the name of the reference class to generate:
 

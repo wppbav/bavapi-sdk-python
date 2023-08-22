@@ -24,3 +24,4 @@ Eventually, the plan is to support all endpoints. This is the current priority l
 ## Stretch goals
 
 - Smarter flattening of JSON responses, possibly through `pandas.json_normalize`.
+- Parse datetime values to `pandas` datetime.

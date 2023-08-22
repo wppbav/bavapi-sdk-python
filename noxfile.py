@@ -1,3 +1,5 @@
+# pylint: disable=import-outside-toplevel
+
 """Package tooling session definitions for `nox`"""
 
 import json
@@ -198,8 +200,8 @@ def build(session: nox.Session) -> None:
 def docs_deploy(session: nox.Session) -> None:
     """Build and deploy documentation with version handling.
 
-    If package minor version is latest, deploy docs version and assign to `latest`.
     If package minor version is not latest, deploy docs version.
+    If package minor version is latest, deploy docs version and assign to `latest`.
     If package minor version exists, update docs version.
 
     Arguments
@@ -226,10 +228,14 @@ def docs_deploy(session: nox.Session) -> None:
 
     # Get current package version
 
+    if os.getenv("CI"):
+        session.run("pip", "install", "-e", ".[doc]")
+
     try:
         import tomllib
     except ImportError:
-        session.install("tomli")
+        print("`tomllib` not found in system. Installing `tomli`...")
+        session.run("pip", "install", "tomli")
         import tomli as tomllib
 
     def version_tuple(string: str) -> tuple[int, ...]:
@@ -241,7 +247,7 @@ def docs_deploy(session: nox.Session) -> None:
         with open("pyproject.toml", "rb") as file:
             version = version_tuple(tomllib.load(file)["project"]["version"])
     else:
-        version = version_tuple(version_args[0].rpartition("=")[-1])
+        version = version_tuple(version_args[0].rpartition("=")[2])
 
     minor_str = ".".join(str(i) for i in version[:2])
 
@@ -252,19 +258,16 @@ def docs_deploy(session: nox.Session) -> None:
 
     # Get deployed versions from branch
     out = cast(str, session.run("mike", "list", *list_args, silent=True))
-    versions = [
+    versions = {
         tuple(int(i) for i in v.partition(" ")[0].split(".")) for v in out.splitlines()
-    ]
+    }
 
     if version[:2] in versions:
         print(f"Updating docs {remote_str}for version {minor_str}...")
-
-    elif all(version[:2] > v for v in versions):
-        print(f"Deploying docs {remote_str}for version {minor_str} as latest...")
-        deploy_args.extend(("--update-aliases", "latest"))
+    elif not all(version[:2] > v for v in versions):
+        print(f"Deploying docs {remote_str}for version {minor_str}...")
     else:
         print(f"Deploying docs {remote_str}for version {minor_str} as latest...")
-        deploy_args.append("latest")
+        deploy_args.extend(("--update-aliases", "latest"))
 
-    print(f"Calling deploy with args: {deploy_args}")
-    # session.run("mike", "deploy", *deploy_args)
+    session.run("mike", "deploy", *deploy_args)

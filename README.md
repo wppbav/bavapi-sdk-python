@@ -3,8 +3,7 @@
 [![CI status](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml/badge.svg)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml)
 [![coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/nachomaiz/32196acdc05431cd2bc7a8c73a587a8d/raw/covbadge.json)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/wpp-bavapi)](https://pypi.org/project/wpp-bavapi/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/wpp-bavapi)
-](https://pypi.org/project/wpp-bavapi/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/wpp-bavapi)](https://pypi.org/project/wpp-bavapi/)
 
 `bavapi` is a Python SDK for the WPP BAV API.
 
@@ -83,7 +82,7 @@ Once you have acquired a token, you can start using this library directly in pyt
 
 ## Documentation
 
-Read more about `bavapi` in the [documentation](https://fountapi-documentation.vercel.app/).
+Read more about `bavapi` in the [documentation](https://wppbav.github.io/bavapi-sdk-python/).
 
 ## Issues
 
@@ -91,4 +90,4 @@ Please file an issue on GitHub [here](https://github.com/wppbav/bavapi-sdk-pytho
 
 ## Contributing
 
-Please see the [Contributing](https://fountapi-documentation.vercel.app/contributing/) section of the documentation for more information.
+Please see the [Contributing](https://wppbav.github.io/bavapi-sdk-python/contributing/) section of the documentation for more information.

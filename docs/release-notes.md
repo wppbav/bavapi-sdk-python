@@ -1,5 +1,27 @@
 # Release Notes
 
+## Version 0.7
+
+### Version 0.7.0 (August 22nd, 2023)
+
+#### Feature
+
+- :rocket: It is now possible to specify a token with `-t`/`--token` when generating reference files via the `bavapi-gen-refs` command.
+
+#### Fix
+
+- :bug: `bavapi-gen-refs` would not run if `python-dotenv` was not installed. Now it will require an explicit token with `-t`/`--token` or, if `dotenv` is not installed, will prompt the user to install it and set the right environment variables.
+
+#### Docs
+
+- :bug: Fixed some links not pointing to the correct documentation pages.
+- :bulb: Added a "Usage Tips" section describing how to save queries for later use.
+
+#### CI
+
+- :rocket: Set up automatic building of docs using `mike` and Github Actions.
+- :bug: Fix `deploy_docs` nox session to install dependencies and actually run the deploy command.
+
 ## Version 0.6
 
 ### Version 0.6.1 (July 19th, 2023)
