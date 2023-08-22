@@ -80,6 +80,7 @@ nav:
   - Usage:
       - Basic Usage: usage/basic.md
       - Advanced Usage: usage/advanced.md
+      - Usage Tips for Projects: usage/project-tips.md
   - Endpoints: endpoints/
   - Code Reference: reference/
   - Contributing: contributing.md
