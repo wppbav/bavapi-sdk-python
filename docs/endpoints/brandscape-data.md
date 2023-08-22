@@ -12,6 +12,14 @@ For more information on available filters and functionality, see the Fount docum
 
 ## Usage
 
+=== "Sync"
+
+    ```py title="Using top-level functions"
+    import bavapi
+
+    result = bavapi.brandscape_data("TOKEN", name="Facebook")
+    ```
+
 === "Async"
 
     ```py title="Using Client asynchronously"
@@ -19,14 +27,6 @@ For more information on available filters and functionality, see the Fount docum
 
     async with bavapi.Client("TOKEN") as bav:
         result = await bav.brandscape_data(name="Facebook")
-    ```
-
-=== "Sync"
-
-    ```py title="Using top-level functions"
-    import bavapi
-
-    result = bavapi.brandscape_data("TOKEN", name="Facebook")
     ```
 
 !!! warning
