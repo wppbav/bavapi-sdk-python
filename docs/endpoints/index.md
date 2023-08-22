@@ -4,7 +4,7 @@ sidebar_label: Overview
 
 # Endpoints
 
-As of `v0.6`, there are four endpoints that have been fully implemented in `bavapi`:
+As of `v0.7`, there are four endpoints that have been fully implemented in `bavapi`:
 
 - [`audiences`](audiences.md)
 - [`brands`](brands.md)
@@ -17,7 +17,7 @@ If an existing endpoint does not appear in the list above, you can still perform
 
 Examples for each endpoint are available in each of their individual sections, both for the top-level, synchronous functions, and the asynchronous methods in `bavapi.Client`.
 
-For a summary of all existing Fount endpoints, as well as their parameters and supported filters, please see the [Resources](https://developer.wppbav.com/docs/2.x/intro.md) section of the Fount API documentation.
+For a summary of all existing Fount endpoints, as well as their parameters and supported filters, please see the [Resources](https://developer.wppbav.com/docs/2.x/intro) section of the Fount API documentation.
 
 ## Other endpoints
 
