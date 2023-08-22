@@ -1,0 +1,27 @@
+name: docs
+
+on:
+  release:
+      types: [published]
+
+jobs:
+  docs-build:
+      name: Build documentation
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+          with:
+            fetch-depth: 0
+  
+        - name: Set up nox
+          uses: wntrblm/nox@2022.11.21
+          with:
+            python-versions: '3.11'
+        
+        - name: Set up deploy git user
+          run: |
+            git config --global user.name docs-deploy
+            git config --global user.email docs@bavapi-sdk-python.wppbav.com
+  
+        - name: Release docs website
+          run: nox -s docs_deploy -- --push
