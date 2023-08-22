@@ -113,8 +113,12 @@ def test_parse_args_all():
     assert args.name == ""
 
 
-def test_main_no_args():
+@mock.patch(
+        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+    )
+def test_main_no_args(mock_getenv: mock.Mock):
     assert uref.main([]) == 1
+    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "")
 
 
 @mock.patch(
@@ -125,10 +129,14 @@ def test_main_no_args():
 def test_main(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
     args = ["-n", "audiences"]
 
-    uref.main(args)
+    with mock.patch(
+        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+    ) as mock_getenv:
+        uref.main(args)
 
     mock_write_to_file.assert_called_once()
     mock_raw_query.assert_awaited_once_with("audiences", Query())
+    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "")
 
 
 @mock.patch(
@@ -144,10 +152,14 @@ def test_main(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
 def test_main_all(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
     args = ["-a"]
 
-    uref.main(args)
+    with mock.patch(
+        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+    ) as mock_getenv:
+        uref.main(args)
 
     assert len(mock_write_to_file.call_args_list) == 2
     assert len(mock_raw_query.call_args_list) == 2
+    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "")
 
 
 @mock.patch("dotenv.load_dotenv", wraps=wraps(raises=ImportError))
