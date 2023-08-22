@@ -270,5 +270,4 @@ def docs_deploy(session: nox.Session) -> None:
         print(f"Deploying docs {remote_str}for version {minor_str} as latest...")
         deploy_args.extend(("latest", "--update-aliases"))
 
-    print(deploy_args)
-    # session.run("mike", "deploy", *deploy_args)
+    session.run("mike", "deploy", *deploy_args)
