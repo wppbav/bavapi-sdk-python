@@ -249,12 +249,12 @@ def docs_deploy(session: nox.Session) -> None:
     else:
         version = version_tuple(version_args[0].rpartition("=")[2])
 
-    minor_str = ".".join(str(i) for i in version[:2])
+   minor = ".".join(str(i) for i in version[:2])
 
     remote = "--push" in session.posargs
     remote_str = "remotely " if remote else ""
     list_args = ("-b", "gh-pages") if remote else ()
-    deploy_args = ["--push", minor_str] if remote else [minor_str]
+    deploy_args = ["--push", "--version", minor] if remote else ["--version", minor]
 
     # Get deployed versions from branch
     out = cast(str, session.run("mike", "list", *list_args, silent=True))
@@ -263,11 +263,11 @@ def docs_deploy(session: nox.Session) -> None:
     }
 
     if version[:2] in versions:
-        print(f"Updating docs {remote_str}for version {minor_str}...")
+        print(f"Updating docs {remote_str}for version {minor}...")
     elif not all(version[:2] > v for v in versions):
-        print(f"Deploying docs {remote_str}for version {minor_str}...")
+        print(f"Deploying docs {remote_str}for version {minor}...")
     else:
-        print(f"Deploying docs {remote_str}for version {minor_str} as latest...")
+        print(f"Deploying docs {remote_str}for version {minor} as latest...")
         deploy_args.extend(("--update-aliases", "latest"))
 
     session.run("mike", "deploy", *deploy_args)
