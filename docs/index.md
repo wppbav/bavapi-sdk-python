@@ -64,9 +64,9 @@ After going through the "Getting Started" section, please see [Basic Usage](usag
 
 For more advanced topics, see the [Advanced Usage](usage/advanced.md) section.
 
-Each Fount API endpoint may behave slightly differently. You can find detailed explanations in the [Endpoints](python/endpoints/) section.
+Each Fount API endpoint may behave slightly differently. You can find detailed explanations in the [Endpoints](endpoints/) section.
 
-You can also find a detailed SDK reference in the [Code Reference](reference/) section.
+You can also find a detailed SDK reference in the [Code Reference](reference/client.md) section.
 
 ## Issues
 
