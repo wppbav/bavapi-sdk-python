@@ -220,9 +220,7 @@ def parse_args(argv: Optional[List[str]] = None) -> Args:
         "Existing reference files will be overwritten.",
         epilog="DON'T PUSH REFERENCES TO GIT! Add `bavapi_refs/` to `.gitignore`.",
     )
-    parser.add_argument(
-        "-t", "--token", default="", help="Fount API token."
-    )
+    parser.add_argument("-t", "--token", default="", help="Fount API token.")
     parser.add_argument(
         "-a", "--all", action="store_true", help="Generate all reference files."
     )
@@ -248,6 +246,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     if not args.token:
         try:
             from dotenv import load_dotenv  # pylint: disable=import-outside-toplevel
+
             load_dotenv()
         except ImportError as exc:
             raise ValueError(
