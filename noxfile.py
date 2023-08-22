@@ -249,7 +249,7 @@ def docs_deploy(session: nox.Session) -> None:
     else:
         version = version_tuple(version_args[0].rpartition("=")[2])
 
-   minor_str = ".".join(str(i) for i in version[:2])
+    minor_str = ".".join(str(i) for i in version[:2])
 
     remote = "--push" in session.posargs
     remote_str = "remotely " if remote else ""
@@ -268,7 +268,7 @@ def docs_deploy(session: nox.Session) -> None:
         print(f"Deploying docs {remote_str}for version {minor_str}...")
     else:
         print(f"Deploying docs {remote_str}for version {minor_str} as latest...")
-        deploy_args.extend(("--update-aliases", "latest"))
+        deploy_args.extend(("latest", "--update-aliases"))
 
     print(deploy_args)
     # session.run("mike", "deploy", *deploy_args)
