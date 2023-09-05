@@ -77,6 +77,7 @@ tests = ["tests", "*/tests"]
 [tool.coverage.run]
 branch = true
 source = ["bavapi", "tests"]
+omit = ["tests/test_integration.py"]
 
 [tool.coverage.report]
 show_missing = true
