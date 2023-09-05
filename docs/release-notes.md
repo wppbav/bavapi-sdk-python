@@ -15,6 +15,11 @@
 #### Docs
 
 - :notebook: Documentation for `timeout` usage.
+- :rocket: Automatically sync top level `CONTRIBUTING.md` file with the docs version.
+
+#### CI
+
+- :gear: Removed end-to-end tests from CI pipeline due to various issues. They will have to be run manually in the near future.
 
 ## Version 0.7
 
