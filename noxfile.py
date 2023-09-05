@@ -167,9 +167,7 @@ def requirements(session: nox.Session) -> None:
     session.install("pip-tools")
 
     if "all-extras" not in session.posargs:
-        session.run(
-            "pip-compile", "--resolver=backtracking", "pyproject.toml", *session.posargs
-        )
+        session.run("pip-compile", "pyproject.toml", *session.posargs)
     else:
         session.posargs.remove("all-extras")
         with open("pyproject.toml", "rb") as file:
@@ -182,7 +180,6 @@ def requirements(session: nox.Session) -> None:
                 "pip-compile",
                 f"--extra={dep}",
                 f"--output-file={dep}-requirements.txt",
-                "--resolver=backtracking",
                 "pyproject.toml",
                 *session.posargs,
             )
