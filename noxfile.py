@@ -5,7 +5,7 @@
 import json
 import os
 import pathlib
-from typing import Dict, List, cast
+from typing import cast
 
 import nox
 
@@ -155,34 +155,6 @@ def lint(session: nox.Session) -> None:
     session.run("pylint", "tests")
     session.run("isort", "-l", "100", ".")
     session.run("black", ".")
-
-
-@nox.session(python=None)
-def requirements(session: nox.Session) -> None:
-    """Run pip-tools to prepare `requirements.txt` files."""
-
-    # nox should only run this function in python 3.11 so this should be safe
-    import tomllib  # pylint: disable=import-outside-toplevel
-
-    session.install("pip-tools")
-
-    if "all-extras" not in session.posargs:
-        session.run("pip-compile", "pyproject.toml", *session.posargs)
-    else:
-        session.posargs.remove("all-extras")
-        with open("pyproject.toml", "rb") as file:
-            deps: Dict[str, List[str]] = tomllib.load(file)["project"].get(
-                "optional-dependencies", {}
-            )
-
-        for dep in deps:
-            session.run(
-                "pip-compile",
-                f"--extra={dep}",
-                f"--output-file={dep}-requirements.txt",
-                "pyproject.toml",
-                *session.posargs,
-            )
 
 
 @nox.session(python=None)
