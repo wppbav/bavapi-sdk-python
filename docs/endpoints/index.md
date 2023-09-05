@@ -4,7 +4,7 @@ sidebar_label: Overview
 
 # Endpoints
 
-As of `v0.7`, there are four endpoints that have been fully implemented in `bavapi`:
+As of `v0.8`, there are four endpoints that have been fully implemented in `bavapi`:
 
 - [`audiences`](audiences.md)
 - [`brands`](brands.md)
