@@ -181,8 +181,9 @@ def test_main_no_token_no_dotenv(mock_load_dotenv: mock.Mock):
     wraps=wraps([{"id": 1, "name": "A"}, {"id": 2, "name": "B"}]),
 )
 @mock.patch("dotenv.load_dotenv", wraps=wraps(raises=ImportError))
+@mock.patch("bavapi.reference.generate_reference.write_to_file")
 def test_main_with_token_arg(
-    mock_load_dotenv: mock.Mock, mock_raw_query: mock.AsyncMock
+    mock_write_to_file: mock.Mock, mock_load_dotenv: mock.Mock, mock_raw_query: mock.AsyncMock
 ):
     args = ["-n", "audiences", "-t", "test_token"]
 
@@ -191,6 +192,7 @@ def test_main_with_token_arg(
     ) as mock_getenv:
         uref.main(args)
 
+    mock_write_to_file.assert_called_once()
     mock_load_dotenv.assert_not_called()
     mock_getenv.assert_called_once_with("FOUNT_API_KEY", "test_token")
     mock_raw_query.assert_awaited_once_with("audiences", Query())

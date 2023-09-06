@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  unit:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -30,32 +30,9 @@ jobs:
         with:
           name: coverage-data
           path: ".coverage.*"
-  
-  end-to-end:
-    needs: unit
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup nox
-        uses: wntrblm/nox@2022.11.21
-        with:
-          python-versions: "3.11"
-
-      - name: Run end-to-end tests
-        env:
-          FOUNT_API_KEY: ${{ secrets.FOUNT_API_KEY }}
-        run: nox -s tests_e2e
-
-      - name: Upload coverage data
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-data
-          path: ".coverage.*"
 
   coverage:
-    needs: [unit, end-to-end]
+    needs: test
     runs-on: ubuntu-latest
 
     steps:

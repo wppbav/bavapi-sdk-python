@@ -46,11 +46,11 @@ In order to run integration tests, you will need to use an `.env` file to store 
 
 - Fully type-hinted and tested with [`mypy`](https://www.mypy-lang.org/).
 - Unit and integration tests using [`pytest`](https://docs.pytest.org/en/stable/contents.html).
-- Full test coverage using [`coverage`](https://coverage.readthedocs.io/en/7.2.5/).
+- Full test coverage using [`coverage`](https://coverage.readthedocs.io/en/).
 - Run development scripts in multiple Python versions with [`nox`](https://nox.thea.codes/en/stable/).
+- Documentation using [`mkdocs-material`](https://squidfunk.github.io/mkdocs-material/).
 - Code auto-formatting with [`black`](https://black.readthedocs.io/en/stable/).
 - Linting with [`pylint`](https://docs.pylint.org/).
-- Requirements management with [`pip-tools`](https://pip-tools.readthedocs.io/en/latest/).
 
 Please familiarize yourself with using these libraries in order to get started with contributing to `bavapi`.
 
@@ -73,12 +73,10 @@ nox -s {command_name}
 To see a list of all available `nox` commands, run `nox -l` in your terminal. Here is a quick summary:
 
 - `tests` and `tests_e2e`: run `pytest` unit (or end-to-end) tests and collect `coverage` information. Suitable for CI/CD pipeline and for Linux (would require `pyenv` to manage Python versions).
-- `tests_mamba` and `tests_mamba_e2e`: run `pytest` unit (or end-to-end) tests and collect `coverage` information, using `mamba` to run multiple versions of Python. Suitable for testing on Windows.
+- `tests_mamba` and `tests_mamba_e2e`: run `pytest` unit (or end-to-end) tests and collect `coverage` information, using `mamba` to run multiple versions of Python. Suitable for local testing on Windows.
 - The commands above, ending with `_nocov`: run `pytest` unit (or end-to-end) tests without collecting `coverage` information.
 - `coverage`: combine and report coverage results.
-- `requirements`: update `requirements.txt` with latest dependencies from `pyproject.toml`.
 - `build`: build distributable files for `bavapi`. Suitable for CI/CD pipeline.
-- `publish`: publish `bavapi` to PyPI. Suitable for CI/CD pipeline.
 - `docs_deploy`: publish `bavapi` documentation to GitHub Pages. Suitable for local development and CI/CD pipelines.
 
 ## Code Style Guidelines

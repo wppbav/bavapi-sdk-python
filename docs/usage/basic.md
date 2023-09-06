@@ -46,6 +46,27 @@ all_adults = bavapi.audiences("TOKEN", name="All Adults")
 
     See the [Other endpoints](advanced.md#other-endpoints) section in Advanced Usage.
 
+## Timeout
+
+By default, API requests will timeout after 30 seconds in order to avoid hangups.
+
+This may happen more commonly when performing requests with more than 50-100 pages. If you get a `TimeoutError`, you can change this parameter to allow for longer timeouts.
+
+It is possible to set the time before timeout when performing requests with `bavapi`:
+
+=== "Sync"
+
+    ```py
+    bavapi.brands(TOKEN, "Facebook", timeout=60)
+    ```
+
+=== "Async"
+
+    ```py
+    async with bavapi.Client(TOKEN, timeout=60) as client:
+        await client.brands("Facebook")
+    ```
+
 ## Filtering responses
 
 In order to validate the request parameters before sending a bad request, `bavapi` will automatically check that the parameters from your query and filters are of the type expected by the Fount API. If any parameter doesn't conform to the API requirements, `bavapi` will raise a `ValidationError`.

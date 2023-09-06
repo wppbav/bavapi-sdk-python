@@ -64,7 +64,9 @@ def _coro(func: Callable[P, Coroutine[Any, Any, T]]) -> Callable[P, T]:
 
 
 @_coro
-async def raw_query(token: str, endpoint: str, params: Query[F]) -> List[JSONDict]:
+async def raw_query(
+    token: str, endpoint: str, params: Query[F], timeout: float = 30.0
+) -> List[JSONDict]:
     """Perform a raw GET query to the Fount API, returning the response JSON data
     instead of a `pandas` DataFrame.
 
@@ -76,6 +78,8 @@ async def raw_query(token: str, endpoint: str, params: Query[F]) -> List[JSONDic
         Endpoint name
     params : Query
         Query `pydantic` model with query parameters.
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
 
     Returns
     -------
@@ -83,7 +87,7 @@ async def raw_query(token: str, endpoint: str, params: Query[F]) -> List[JSONDic
         List of JSON response data
     """
 
-    async with Client(token) as fount:
+    async with Client(token, timeout=timeout) as fount:
         return await fount.raw_query(endpoint, params)
 
 
@@ -102,6 +106,7 @@ async def audiences(
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
     stack_data: bool = False,
+    timeout: float = 30.0,
     **kwargs: BaseListOrValues,
 ) -> "DataFrame":
     """Query the Fount `audiences` endpoint.
@@ -137,6 +142,8 @@ async def audiences(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -164,7 +171,7 @@ async def audiences(
         DataFrame with `brands` endpoint results
     """
 
-    async with Client(token) as fount:
+    async with Client(token, timeout=timeout) as fount:
         return await fount.audiences(
             name,
             audience_id,
@@ -194,6 +201,7 @@ async def brands(
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
     stack_data: bool = False,
+    timeout: float = 30.0,
     **kwargs: BaseListOrValues,
 ) -> "DataFrame":
     """Query the Fount `brands` endpoint
@@ -225,6 +233,8 @@ async def brands(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -252,7 +262,7 @@ async def brands(
         DataFrame with `brands` endpoint results
     """
 
-    async with Client(token) as fount:
+    async with Client(token, timeout=timeout) as fount:
         return await fount.brands(
             name,
             country_codes,
@@ -281,6 +291,7 @@ async def brandscape_data(
     include: OptionalListOr[str] = None,
     metric_keys: OptionalListOr[str] = None,
     stack_data: bool = False,
+    timeout: float = 30.0,
     **kwargs: BaseListOrValues,
 ) -> "DataFrame":
     """Query the Fount `brandscape-data` endpoint.
@@ -337,6 +348,8 @@ async def brandscape_data(
         Key or list of keys for the metrics included in the response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -369,7 +382,7 @@ async def brandscape_data(
         If used with an invalid combination of parameters (see above)
     """
 
-    async with Client(token) as fount:
+    async with Client(token, timeout=timeout) as fount:
         return await fount.brandscape_data(
             country_code,
             year_number,
@@ -397,6 +410,7 @@ async def studies(
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
     stack_data: bool = False,
+    timeout: float = 30.0,
     **kwargs: BaseListOrValues,
 ) -> "DataFrame":
     """Query the Fount `studies` endpoint.
@@ -428,6 +442,8 @@ async def studies(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -455,7 +471,7 @@ async def studies(
         DataFrame with `studies` endpoint results
     """
 
-    async with Client(token) as fount:
+    async with Client(token, timeout=timeout) as fount:
         return await fount.studies(
             country_codes,
             year_numbers,

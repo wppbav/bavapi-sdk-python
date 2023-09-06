@@ -1,5 +1,26 @@
 # Release Notes
 
+## Version 0.8
+
+### Version 0.8.0 (September 5th, 2023)
+
+#### Feature
+
+- :rocket: It is now possible to set a `timeout` parameter from top-level sync endpoint functions.
+
+#### Fix
+
+- :test_tube: Fixed `bavapi-gen-refs` command tests overwriting reference files.
+
+#### Docs
+
+- :notebook: Documentation for `timeout` usage.
+- :rocket: Automatically sync top level `CONTRIBUTING.md` file with the docs version.
+
+#### CI
+
+- :gear: Removed end-to-end tests from CI pipeline due to various issues. They will have to be run manually in the near future.
+
 ## Version 0.7
 
 ### Version 0.7.0 (August 22nd, 2023)

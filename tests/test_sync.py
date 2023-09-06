@@ -45,7 +45,7 @@ def test_coro_jupyter(
 
 def test_raw_query():
     with mock.patch("bavapi.sync.Client.raw_query", wraps=wraps()) as mock_raw_query:
-        sync.raw_query("TOKEN", "companies", Query())
+        sync.raw_query("TOKEN", "companies", Query(), timeout=10.0)
 
     mock_raw_query.assert_called_with("companies", Query())
 
@@ -62,6 +62,6 @@ def test_raw_query():
 def test_function(endpoint: str, filters: Dict[str, Any]):
     func = getattr(sync, endpoint)
     with mock.patch(f"bavapi.sync.Client.{endpoint}", wraps=wraps()) as mock_endpoint:
-        func("TOKEN", filters=filters)
+        func("TOKEN", filters=filters, timeout=10.0)
 
     mock_endpoint.assert_called()
