@@ -66,6 +66,10 @@ class Client:
         Verify SSL credentials, by default True
 
         Also accepts a path string to an SSL certificate file.
+    user_agent : str, optional
+        The name of the User-Agent to send to the Fount API, by default `''`.
+
+        If no user_agent is set, `bavapi` will use `"BAVAPI SDK Python"` by default.
     client : HTTPClient, optional
         Authenticated async client from `bavapi.http`, by default None
 
@@ -102,6 +106,7 @@ class Client:
         per_page: int = 100,
         timeout: float = 30.0,
         verify: Union[bool, str] = True,
+        user_agent: str = "",
     ) -> None:
         ...
 
@@ -120,6 +125,7 @@ class Client:
         per_page: int = 100,
         timeout: float = 30.0,
         verify: Union[bool, str] = True,
+        user_agent: str = "",
         *,
         client: Optional[HTTPClient] = None,
     ) -> None:
@@ -136,6 +142,7 @@ class Client:
                 headers={
                     "Authorization": f"Bearer {auth_token}",
                     "Accept": "application/json",
+                    "User-Agent": user_agent or "BAVAPI SDK Python",
                 },
             )
 
