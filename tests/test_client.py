@@ -34,6 +34,12 @@ def test_init_no_token():
     assert excinfo.value.args[0] == "You must provide `auth_token` or `client`."
 
 
+def test_init_user_agent():
+    fount = Client("test_token", user_agent="TEST_AGENT")
+
+    assert fount._client.client.headers["User-Agent"] == "TEST_AGENT"
+
+
 # PRIVATE TESTS
 
 
