@@ -2,15 +2,20 @@
 
 ## Version 0.8
 
-### Version 0.8.0 (September 5th, 2023)
+### Version 0.8.0 (September 15th, 2023)
 
 #### Feature
 
 - :rocket: It is now possible to set a `timeout` parameter from top-level sync endpoint functions.
+- :female_detective: It is now possible to set a `user_agent` parameter when creating a `bavapi.Client` instance.
 
 #### Fix
 
 - :test_tube: Fixed `bavapi-gen-refs` command tests overwriting reference files.
+
+#### Internal
+
+- :male_detective: `'BAVAPI SDK Python'` is now the default `User-Agent` for `bavapi`.
 
 #### Docs
 
