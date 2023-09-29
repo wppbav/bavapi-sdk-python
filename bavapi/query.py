@@ -123,7 +123,7 @@ class Query(BaseModel, Generic[F]):
             return self
 
         return self.__class__.model_construct(
-            self.model_fields_set.union(   # pylint: disable=no-member
+            self.model_fields_set.union(  # pylint: disable=no-member
                 {"page", "per_page"}
             ),
             page=self.page or page,
