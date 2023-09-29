@@ -2,6 +2,25 @@
 
 ## Version 0.8
 
+### Version 0.8.1 (September XXth, 2023)
+
+#### Performance
+
+- :rocket: Improved response parsing performance by ~4x (about 0.6 seconds faster per Fount query).
+
+#### Fix
+
+- :bug: Fix required filters in `brandscape_data` functions and methods.
+- :broom: Remove buried print statement in response flattening logic.
+
+#### Docs
+
+- :notebook: Fixed and clarified required filters in `brandscape_data` functions and methods.
+
+#### Internal
+
+- :lock: Renamed `jupyter` compatibility module as private. This will remove it from the code reference docs.
+
 ### Version 0.8.0 (September 15th, 2023)
 
 #### Feature
