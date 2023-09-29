@@ -2,7 +2,7 @@
 
 ## Version 0.8
 
-### Version 0.8.1 (September XXth, 2023)
+### Version 0.8.1 (September 29th, 2023)
 
 #### Performance
 
