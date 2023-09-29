@@ -1,4 +1,4 @@
-# pylint: disable=import-outside-toplevel
+# pylint: disable=import-outside-toplevel, invalid-name
 
 """Package tooling session definitions for `nox`"""
 
@@ -10,6 +10,7 @@ from typing import cast
 import nox
 
 python_versions = ("3.8", "3.9", "3.10", "3.11")
+python_latest = python_versions[-1]
 
 
 @nox.session(python=python_versions)
@@ -37,7 +38,7 @@ def tests_nocov(session: nox.Session) -> None:
     session.run("pytest", "-m", "not e2e", *session.posargs)
 
 
-@nox.session(python="3.11")
+@nox.session(python=python_latest)
 def tests_e2e(session: nox.Session) -> None:
     """Run end to end tests on CI/CD pipeline."""
     session.install("-e", ".[test]")
@@ -54,7 +55,7 @@ def tests_e2e(session: nox.Session) -> None:
     )
 
 
-@nox.session(python="3.11")
+@nox.session(python=python_latest)
 def tests_e2e_nocov(session: nox.Session) -> None:
     """Run end to end tests on CI/CD pipeline with no coverage."""
     session.install("-e", ".[test]")
@@ -90,7 +91,7 @@ def tests_mamba_nocov(session: nox.Session) -> None:
     session.run("pytest", "-m", "not e2e", *session.posargs, external=True)
 
 
-@nox.session(python="3.11", venv_backend="mamba", reuse_venv=True)
+@nox.session(python=python_latest, venv_backend="mamba", reuse_venv=True)
 def tests_mamba_e2e(session: nox.Session) -> None:
     """Run end to end tests locally with `mamba` as the backend."""
     session.conda_install("--file", "requirements.txt", channel="conda-forge")
@@ -109,7 +110,7 @@ def tests_mamba_e2e(session: nox.Session) -> None:
     )
 
 
-@nox.session(python="3.11", venv_backend="mamba", reuse_venv=True)
+@nox.session(python=python_latest, venv_backend="mamba", reuse_venv=True)
 def tests_mamba_e2e_nocov(session: nox.Session) -> None:
     """Run end to end tests locally with `mamba` as the backend with no coverage."""
     session.conda_install("--file", "requirements.txt", channel="conda-forge")
@@ -118,7 +119,7 @@ def tests_mamba_e2e_nocov(session: nox.Session) -> None:
     session.run("pytest", "-m", "e2e", *session.posargs, external=True)
 
 
-@nox.session(python="3.11")
+@nox.session(python=python_latest)
 def coverage(session: nox.Session) -> None:
     """Compile and process coverage reports."""
     args = session.posargs or ["report"]
@@ -145,7 +146,7 @@ def coverage(session: nox.Session) -> None:
             file.write(f"### Total coverage: {total}%")
 
 
-@nox.session(python="3.11")
+@nox.session(python=python_latest)
 def lint(session: nox.Session) -> None:
     """Lint package."""
     session.install("-e", ".[lint]")
@@ -196,7 +197,6 @@ def docs_deploy(session: nox.Session) -> None:
     """
 
     # Get current package version
-
     if os.getenv("CI"):
         session.run("pip", "install", "-e", ".[doc]")
 
@@ -240,3 +240,14 @@ def docs_deploy(session: nox.Session) -> None:
         deploy_args.extend(("latest", "--update-aliases"))
 
     session.run("mike", "deploy", *deploy_args)
+
+
+@nox.session(python=False)
+def docs_serve(session: nox.Session) -> None:
+    session.run("mike", "serve")
+
+
+@nox.session(python=False)
+def docs_build_and_serve(session: nox.Session) -> None:
+    session.notify("docs_deploy")
+    session.notify("docs_serve")

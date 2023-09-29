@@ -392,15 +392,18 @@ class Client:
 
         This endpoint requires at least one of the following combinations of filters:
 
-        - `studies`
-        - `brand_name`
-        - `brands`
-        - `year_number`/`years` and `brands`/`brand_name`
-        - `country_code`/`countries` and `brands`/`brand_name`
-        - `year_number`/`years` and `country_code`/`countries`
+        - Study + Audience + Brand + Category
+        - Country + Year + Audience
+        - Brand + Audience + Country + Year
+
+        You should read these from left to right. A combination of "Study + Audience"
+        worksjust as well as "Study + Audience + Brand".
+        However, "Category + Audience" will not.
+
+        If you use Country or Year filters, you must use both filters together.
 
         An audience filter is also highly recommended, as otherwise the API will return
-        data for all audiences (there are more than 30 standard audiences).
+        data for all audiences (there are more than 100 standard audiences).
 
         The `Audiences` class is provided to make it easier to filter audiences.
 

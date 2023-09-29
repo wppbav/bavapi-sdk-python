@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wpp-bavapi"
-version = "0.8.0"
+version = "0.8.1"
 authors = [
     { name = "Ignacio Maiz Vilches", email = "ignacio.maiz@bavgroup.com" },
 ]
@@ -34,21 +34,23 @@ classifiers = [
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
     'Topic :: Database :: Database Engines/Servers',
     'Topic :: Scientific/Engineering :: Information Analysis',
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 dependencies = [
     "httpx >= 0.20",
+    "nest-asyncio >= 1.5.6",
     "pandas >= 0.16.2",
     "pydantic >= 2",
     "tqdm >= 4.62",
-    "nest-asyncio >= 1.5.6",
     "typing-extensions >= 3.10; python_version < '3.10'",
 ]
 
 [project.urls]
-homepage = "https://github.com/wppbav/bavapi-sdk-python"
+homepage = "https://wppbav.github.io/bavapi-sdk-python/"
+repository = "https://github.com/wppbav/wpp-bavapi/"
 
 [project.optional-dependencies]
 dev = ["black", "nox", "pip-tools"]
@@ -61,8 +63,8 @@ doc = [
     "mkdocs-section-index",
     "mike",
 ]
-test = ["coverage", "pytest", "pytest-asyncio", "python-dotenv"]
 lint = ["isort", "mypy", "pylint", "pandas-stubs"]
+test = ["coverage", "pytest", "pytest-asyncio", "python-dotenv"]
 
 [project.scripts]
 bavapi-gen-refs = "bavapi.reference.generate_reference:main"

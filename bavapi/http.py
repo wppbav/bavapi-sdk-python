@@ -242,10 +242,10 @@ class HTTPClient:
             (total) / (params.per_page or self.per_page)
         )
 
-        if n_pages > int(resp.headers["x-ratelimit-remaining"]):
+        if n_pages > (limit_remaining := int(resp.headers["x-ratelimit-remaining"])):
             raise RateLimitExceededError(
                 f"Number of pages ({n_pages}) for this request "
-                f"exceeds the rate limit ({resp.headers['x-ratelimit-remaining']}, "
+                f"exceeds the rate limit ({limit_remaining}, "
                 f"total={resp.headers['x-ratelimit-limit']})."
             )
 

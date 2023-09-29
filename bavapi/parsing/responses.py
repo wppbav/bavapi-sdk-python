@@ -16,12 +16,11 @@ import pandas as pd
 
 T = TypeVar("T")
 
+Entry = Mapping[str, Union[T, Dict[str, T]]]
+
 
 def flatten_mapping(
-    mapping: Mapping[str, Union[T, Mapping[str, T]]],
-    parent: str = "",
-    sep: str = "_",
-    prefix: str = "",
+    mapping: Entry[T], parent: str = "", sep: str = "_", prefix: str = ""
 ) -> Dict[str, T]:
     """Recursively flattens all nested dictionaries into top level key-value pairs.
 
@@ -29,7 +28,7 @@ def flatten_mapping(
 
     Parameters
     ----------
-    mapping : dict[str, Any] or mapping
+    mapping : dict[str, Any]
         Dictionary with potential nested dictionaries
     parent : str
         Parent key for generating children keys, by default ""
@@ -45,29 +44,36 @@ def flatten_mapping(
     dict[str, Any]
         Flattened dictionary.
     """
-    new: Dict[str, T] = {}
-
+    res: Dict[str, T] = {}
+    to_expand: Dict[str, Dict[str, T]] = {}
     for key, value in mapping.items():
         if parent:
             key = f"{parent}{sep}{key}"
 
-        if isinstance(value, Mapping):
-            if prefix and any(
-                k.startswith(key)
-                for k, v in mapping.items()
-                if not isinstance(v, Mapping)
-            ):
-                key = f"{prefix}{sep}{key}"
-
-            new = {**new, **flatten_mapping(value, key, sep, prefix)}
+        if isinstance(value, dict):
+            to_expand[key] = value
         else:
-            new[key] = value
+            res[key] = value
 
-    return new
+    with_prefix: set[str] = (
+        {k for k in to_expand if any(_k.startswith(k) for _k in res)}
+        if prefix
+        else set()
+    )
+
+    expanded: Dict[str, T] = {}
+    for key, value in to_expand.items():
+        if key in with_prefix:
+            key = f"{prefix}{sep}{key}"
+
+        expanded.update(flatten_mapping(value, key, sep, prefix))
+
+    res.update(expanded)
+    return res
 
 
 def flatten(
-    mapping: Mapping[str, Union[T, Mapping[str, T]]],
+    mapping: Entry[T],
     parent: str = "",
     sep: str = "_",
     prefix: str = "",
@@ -88,7 +94,7 @@ def flatten(
 
     Parameters
     ----------
-    mapping : dict[str, Any] or mapping
+    mapping : dict[str, Any]
         Dictionary with potential nested dictionaries and lists of dictionaries
     parent : str
         Parent key for generating children keys, by default ""
@@ -118,15 +124,14 @@ def flatten(
         yield new
     else:
         for key in expand_keys:
-            values = cast(List[Mapping[str, T]], new[key])
-            print(key)
+            values = cast(List[Dict[str, T]], new[key])
             for val in values:
                 for i in flatten(val, key, sep, prefix, expand):
                     yield {**{k: v for k, v in new.items() if k != key}, **i}
 
 
 def parse_response(
-    page: Iterable[Mapping[str, object]],
+    page: Iterable[Entry[T]],
     prefix: str = "",
     index: Optional[str] = None,
     expand: bool = False,
@@ -135,7 +140,7 @@ def parse_response(
 
     Parameters
     ----------
-    page : iterable of dicts with keys of type str
+    page : Iterable[dict[str, Any]]
         Page from API response.
     prefix : str, optional
         Prefix to prepend to columns with clashing names, by default `""`

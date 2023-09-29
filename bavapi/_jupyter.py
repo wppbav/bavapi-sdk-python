@@ -12,8 +12,6 @@ import nest_asyncio
 if TYPE_CHECKING:
     from asyncio import AbstractEventLoop
 
-__all__ = ("running_in_jupyter", "patch_loop")
-
 
 def running_in_jupyter() -> bool:
     """

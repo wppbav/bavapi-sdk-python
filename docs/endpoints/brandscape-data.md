@@ -43,11 +43,13 @@ For more information on available filters and functionality, see the Fount docum
 
 Thus, the `brandscape-data` endpoint has been restricted to require at least one of these specific set of filters:
 
-- `studies`
-- `brand_name`/`brands`
-- `year_number`/`years` and `brands`/`brand_name`
-- `country_code`/`countries` and `brands`/`brand_name`
-- `year_number`/`years` and `country_code`/`countries`
+- Study + Audience + Brand + Category
+- Country + Year + Audience
+- Brand + Audience + Country + Year
+
+You should read these from left to right. A combination of "Study + Audience" works just as well as "Study + Audience + Brand". However, "Category + Audience" will not.
+
+If you use Country or Year filters, you must use both filters together.
 
 If a query does not have any of these combinations of filters, it will raise a `ValidationError`:
 
@@ -58,7 +60,7 @@ bavapi.brandscape_data("TOKEN", year_number=2022) # Error, not enough filters
 
 bavapi.brandscape_data("TOKEN", brand_name="Facebook") # OK
 
-bavapi.brandscape_data("TOKEN", country_code="UK", brands=123)  # OK
+bavapi.brandscape_data("TOKEN", audience=22, brands=123)  # OK
 ```
 
 ## Default includes
@@ -70,15 +72,14 @@ If you add any of these values in the `include` field by themselves, the default
 If, on the other hand, you request an `include` that is *not* part of the default values, `bavapi` will append that new value to the default `include` values.
 
 ```py
-# All default includes will be requested
+# All default (study, brand, category and audience) includes will be requested
 bavapi.brandscape_data("TOKEN", brand_name="Facebook")
 
 # Only the "brand" include will be requested
 bavapi.brandscape_data("TOKEN", brand_name="Facebook", include="brand")
 
-# The "company" include will be appended to the default "include" values
+# The "company" include will be appended to the default `include` values
 bavapi.brandscape_data("TOKEN", brand_name="Facebook", include="company")
-
 ```
 
 ## Clashing column names
@@ -106,7 +107,7 @@ You can specify the metrics that your response should contain, and the API will 
     - `relevance_c`
     - `relevance_rank`
     - Brand information such as `id`, `brand_name`, and `category_name`
-    - Any additional columns from the `include` parameter
+    - Any additional columns from the `include` parameter (see default behavior [above](#default-includes))
 
     ```py
     bavapi.brandscape_data(studies=111, metric_keys="differentiation") # (1)

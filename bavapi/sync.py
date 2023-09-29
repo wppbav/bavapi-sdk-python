@@ -13,20 +13,11 @@ Use `bavapi.Client` for more advanced usage and performance benefits.
 import asyncio
 import functools
 import sys
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Coroutine,
-    List,
-    Literal,
-    Optional,
-    TypeVar,
-)
+from typing import TYPE_CHECKING, Awaitable, Callable, List, Literal, Optional, TypeVar
 
 from bavapi import filters as _filters
+from bavapi._jupyter import patch_loop, running_in_jupyter
 from bavapi.client import Client, OptionalFiltersOrMapping
-from bavapi.jupyter import patch_loop, running_in_jupyter
 from bavapi.query import Query
 from bavapi.typing import BaseListOrValues, JSONDict, OptionalListOr
 
@@ -45,7 +36,7 @@ P = ParamSpec("P")
 F = TypeVar("F", bound=_filters.FountFilters)
 
 
-def _coro(func: Callable[P, Coroutine[Any, Any, T]]) -> Callable[P, T]:
+def _coro(func: Callable[P, Awaitable[T]]) -> Callable[P, T]:
     @functools.wraps(func)
     def wrapper(*args: P.args, **kwargs: P.kwargs):
         try:
@@ -298,13 +289,18 @@ async def brandscape_data(
 
     This endpoint requires at least one of the following combinations of parameters:
 
-    - `studies`
-    - `brand_name` or `brands`
-    - `country_code` or `countries` and `brands` or `brand_name`
-    - `year_number` or `years` and `country_code` or `countries`
+    - Study + Audience + Brand + Category
+    - Country + Year + Audience
+    - Brand + Audience + Country + Year
+
+    You should read these from left to right. A combination of "Study + Audience"
+    worksjust as well as "Study + Audience + Brand".
+    However, "Category + Audience" will not.
+
+    If you use Country or Year filters, you must use both filters together.
 
     An audience filter is also highly recommended, as otherwise the API will return
-    data for all audiences (there are more than 30 standard audiences).
+    data for all audiences (there are more than 100 standard audiences).
 
     The `Audiences` class is provided to make it easier to filter audiences.
 

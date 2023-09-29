@@ -48,10 +48,6 @@ def test_studies_skip_parse_date():
         {"brands": [0]},
         {"studies": [0]},
         {"country_code": "", "year_number": 0},
-        {"brands": [0], "country_code": ""},
-        {"brands": [0], "year_number": 0},
-        {"brand_name": "", "country_code": ""},
-        {"brand_name": "", "year_number": 0},
         {"brand_name": ""},
     ),
 )
