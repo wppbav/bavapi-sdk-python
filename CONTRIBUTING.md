@@ -58,7 +58,7 @@ Please familiarize yourself with using these libraries in order to get started w
 
 It is highly recommended that you use [`mamba`](https://mamba.readthedocs.io/en/latest/) to manage Python environments in Windows. It is a faster implementation of `conda` and testing of `bavapi` on multiple versions of Python is set up to use `mamba` on Windows.
 
-Once you have `mamba` installed in your system, you should be able to run `nox` commands.
+Once you have `mamba` installed in your system, and you have set up an environment with `nox`, you should be able to run the `nox` commands for `bavapi`.
 
 ## Nox commands
 
@@ -78,6 +78,8 @@ To see a list of all available `nox` commands, run `nox -l` in your terminal. He
 - `coverage`: combine and report coverage results.
 - `build`: build distributable files for `bavapi`. Suitable for CI/CD pipeline.
 - `docs_deploy`: publish `bavapi` documentation to GitHub Pages. Suitable for local development and CI/CD pipelines.
+- `docs_serve`: serve `bavapi` documentation with `mike`. Suitable for local development.
+- `docs_build_and_serve`: run both `docs_deploy` and `docs_serve`. Suitable for local development.
 
 ## Code Style Guidelines
 
@@ -85,7 +87,7 @@ To see a list of all available `nox` commands, run `nox -l` in your terminal. He
 
 1. Run `black bavapi` after writing or modifying code. This way the code style of the whole project will remain consistent.
 2. Run `mypy bavapi` after writing or modifying code to make sure type hints are correctly defined.
-3. Fully test your code using `pytest` and make sure you covered all your changes in the repository by running `nox -s tests_mamba`, `nox -s tests_mamba_e2e` and `nox -s coverage`.
+3. Fully test your code using `pytest` and make sure you covered all your changes in the repository by running all `tests_mamba`, `tests_mamba_e2e` and `coverage` sessions from `nox`.
 
 ## Documentation
 
