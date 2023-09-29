@@ -9,7 +9,7 @@ from unittest import mock
 
 import pytest
 
-from bavapi import jupyter
+from bavapi import _jupyter
 
 SetIpythonFunc = Callable[[Optional[bool]], None]
 
@@ -39,19 +39,19 @@ def set_ipython():
 def test_running_in_jupyter(set_ipython: SetIpythonFunc):
     set_ipython(True)
 
-    assert jupyter.running_in_jupyter()
+    assert _jupyter.running_in_jupyter()
 
 
 def test_not_running_in_jupyter(set_ipython: SetIpythonFunc):
     set_ipython(None)
 
-    assert not jupyter.running_in_jupyter()
+    assert not _jupyter.running_in_jupyter()
 
 
-@mock.patch("bavapi.jupyter.nest_asyncio.apply")
+@mock.patch("bavapi._jupyter.nest_asyncio.apply")
 def test_enabled_nested(mock_apply: mock.Mock):
     loop = asyncio.new_event_loop()
 
-    jupyter.patch_loop(loop)
+    _jupyter.patch_loop(loop)
 
     mock_apply.assert_called_once_with(loop)
