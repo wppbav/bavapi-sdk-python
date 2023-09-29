@@ -399,7 +399,7 @@ class Client:
         You should read these from left to right. A combination of "Study + Audience"
         worksjust as well as "Study + Audience + Brand".
         However, "Category + Audience" will not.
-        
+
         If you use Country or Year filters, you must use both filters together.
 
         An audience filter is also highly recommended, as otherwise the API will return
