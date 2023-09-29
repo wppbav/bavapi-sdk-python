@@ -181,10 +181,13 @@ class BrandscapeFilters(FountFilters):
 
     The `brandscape-data` endpoint requires the use of, at minimum, these filters:
 
-    - `studies`
-    - `brand_name` or `brands`
-    - `country_code` or `countries` and `brands` or `brand_name`
-    - `year_number` or `years` and `country_code` or `countries`
+    - Study + Audience + Brand + Category
+    - Country + Year + Audience
+    - Brand + Audience + Country + Year
+
+    You should read these from left to right. A combination of "Study + Audience"
+    worksjust as well as "Study + Audience + Brand".
+    However, "Category + Audience" will not.
 
     An audience filter is also highly recommended, as otherwise the API will return
     data for all audiences (there are more than 30 standard audiences).
@@ -236,20 +239,33 @@ class BrandscapeFilters(FountFilters):
     @model_validator(mode="before")
     @classmethod
     def _check_params(cls, values: Dict[str, object]) -> Dict[str, object]:
+        using_country_year = bool(
+            set(values).intersection(
+                ("country_code", "countries", "year_number", "years")
+            )
+        )
+
         if not (
             "brands" in values
             or "brand_name" in values
             or "studies" in values
-            or (
-                ("country_code" in values or "countries" in values)
-                and ("year_number" in values or "years" in values)
-            )
+            or using_country_year
         ):
             raise ValueError(
                 "You need to apply either the `brands`, or `studies`, or `brand_name` "
                 "filters, or the `country_code`/`countries` "
                 "and `year_number`/`years` filters together."
             )
+
+        if using_country_year:
+            if not (
+                ("country_code" in values or "countries" in values)
+                and ("year_number" in values or "years" in values)
+            ):
+                raise ValueError(
+                    "`country_code`/`countries` and `year_number`/`years` "
+                    "filters must be used together."
+                )
 
         return values
 
