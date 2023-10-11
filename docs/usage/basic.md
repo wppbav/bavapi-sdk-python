@@ -46,27 +46,6 @@ all_adults = bavapi.audiences("TOKEN", name="All Adults")
 
     See the [Other endpoints](advanced.md#other-endpoints) section in Advanced Usage.
 
-## Timeout
-
-By default, API requests will timeout after 30 seconds in order to avoid hangups.
-
-This may happen more commonly when performing requests with more than 50-100 pages. If you get a `TimeoutError`, you can change this parameter to allow for longer timeouts.
-
-It is possible to set the time before timeout when performing requests with `bavapi`:
-
-=== "Sync"
-
-    ```py
-    bavapi.brands(TOKEN, "Facebook", timeout=60)
-    ```
-
-=== "Async"
-
-    ```py
-    async with bavapi.Client(TOKEN, timeout=60) as client:
-        await client.brands("Facebook")
-    ```
-
 ## Filtering responses
 
 In order to validate the request parameters before sending a bad request, `bavapi` will automatically check that the parameters from your query and filters are of the type expected by the Fount API. If any parameter doesn't conform to the API requirements, `bavapi` will raise a `ValidationError`.
@@ -94,7 +73,7 @@ Each endpoint has a filter class associated with it, as each endpoint has its ow
 
 These classes are available in the `bavapi.filters` module.
 
-Some of the more common filters for each endpoint have been added directly to the `bavapi` functions.
+Some of the more common filters for each endpoint have been added directly to the `bavapi` functions. More info in the [endpoints](../endpoints/index.md) section.
 
 !!! example
     `bavapi.brands` has parameters such as `name`, `country_codes`, `year_numbers`, `brand_id` or `studies`, which you can use directly from the function without creating a filters instance.
@@ -165,6 +144,48 @@ uk22 = bavapi.brandscape_data(
     countries=Countries.UNITED_KINGDOM,
     audiences=Audiences.ALL_ADULTS,
 )
+```
+
+## Timeout
+
+!!! abstract "New in `v0.8`"
+
+By default, API requests will timeout after 30 seconds in order to avoid hangups.
+
+This may happen more commonly when performing requests with more than 50-100 pages. If you get a `TimeoutError`, you can change this parameter to allow for longer timeouts.
+
+It is possible to set the time before timeout when performing requests with `bavapi`:
+
+=== "Sync"
+
+    ```py
+    bavapi.brands(TOKEN, "Facebook", timeout=60)
+    ```
+
+=== "Async"
+
+    ```py
+    async with bavapi.Client(TOKEN, timeout=60) as client:
+        await client.brands("Facebook")
+    ```
+
+## Suppressing progress bars
+
+!!! abstract "New in `v0.9`"
+
+`bavapi` displays progress bars to show download progress. Each tick in the progress bar refers to individual pages being downloaded.
+
+It's possible to supress progress bar outputs via the `verbose` parameter in function calls and `Client` init methods:
+
+=== Sync (Won't show progress bar)
+    ```py
+    bavapi.brands(TOKEN, "Facebook", verbose=False)
+```
+
+=== Async (Won't show progress bar)
+    ```py
+    async with bavapi.Client(TOKEN, verbose=False) as client:
+        client.brands("Facebook")
 ```
 
 ## Other query parameters
