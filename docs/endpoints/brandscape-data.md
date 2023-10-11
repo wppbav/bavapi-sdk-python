@@ -37,6 +37,18 @@ For more information on available filters and functionality, see the Fount docum
 
     This is to maintain parity with the way the API is structured. Using the wrong spelling of these parameters will likely result in an error.
 
+## Available filters in function calls
+
+These filters are available directly within the function/method:
+
+- `country_code`
+- `year_number`
+- `audiences`
+- `brand_name` (will perform a search on brand name)
+- `studies`
+
+For other filters, passing a `BrandscapeFilters` instance to the `filters` parameter is required.
+
 ## Required filters
 
 `brandscape-data` can retrieve brand datasets from an arbitrary combination of studies, audiences and years, so it is possible that the request becomes too large for the server to deliver effectively for all users.
@@ -60,7 +72,9 @@ bavapi.brandscape_data("TOKEN", year_number=2022) # Error, not enough filters
 
 bavapi.brandscape_data("TOKEN", brand_name="Facebook") # OK
 
-bavapi.brandscape_data("TOKEN", audience=22, brands=123)  # OK
+bavapi.brandscape_data(
+    "TOKEN", filters=bavapi.filters.BrandscapeFilters(audience=22, brands=123)
+)  # OK
 ```
 
 ## Default includes

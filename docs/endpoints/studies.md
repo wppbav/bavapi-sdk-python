@@ -26,3 +26,14 @@ For more information on available filters and functionality, see the Fount docum
     async with bavapi.Client("TOKEN") as bav:
         result = await bav.studies(country_codes="US")
     ```
+
+## Available filters in function calls
+
+These filters are available directly within the function/method:
+
+- `country_codes`
+- `year_numbers`
+- `full_year`
+- `study_id`
+
+For other filters, passing a `StudiesFilters` instance to the `filters` parameter is required.

@@ -26,3 +26,15 @@ For more information on available filters and functionality, see the Fount docum
     async with bavapi.Client("TOKEN") as bav:
         result = await bav.brands(name="Facebook")
     ```
+
+## Available filters in function calls
+
+These filters are available directly within the function/method:
+
+- `name`
+- `country_codes`
+- `year_numbers`
+- `brand_id`
+- `studies`
+
+For other filters, passing a `BrandsFilters` instance to the `filters` parameter is required.
