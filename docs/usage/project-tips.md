@@ -1,5 +1,23 @@
 # Tips for using `bavapi` in your projects
 
+## Retry failed requests
+
+There's a sporadic issue where some requests may raise an `SSL: CERTIFICATE_VERIFY_FAILED` error.
+
+While we will continue investigating solutions to the issue, you can use the [`retry`](https://github.com/invl/retry) package to automatically retry requests upon failure.
+
+Here's an example snippet:
+
+```py
+from retry.api import retry_call
+import ssl
+import bavapi
+
+retry_call(bavapi.brands, ("TOKEN", "Facebook"), exceptions=ssl.SSLError, tries=3)
+```
+
+This will attempt to make the request 3 times upon failure. If none of the tries succeeds, it will raise an exception.
+
 ## Save & load filters and queries
 
 One beneficial side-effect of using `bavapi` is the ability to save specific queries or filters in order to be able to reproduce them later on.
