@@ -18,11 +18,10 @@ from bavapi import filters as _filters
 from bavapi.http import HTTPClient
 from bavapi.parsing.responses import parse_response
 from bavapi.query import Query
-from bavapi.typing import BaseListOrValues, JSONDict, OptionalListOr
+from bavapi.typing import JSONDict, OptionalListOr, Unpack, CommonQueryParams
 
 if TYPE_CHECKING:
     from types import TracebackType
-
     from pandas import DataFrame
 
 __all__ = ("Client",)
@@ -45,7 +44,7 @@ class Client:
 
     To use the Client class, you will need to precede calls with `await`:
 
-    ```python
+    ```py
     fount = Client("TOKEN")  # creating instance does not use `await`
     data = await fount.brands("Swatch")  # must use `await`
     ```
@@ -72,6 +71,8 @@ class Client:
         If no user_agent is set, `bavapi` will use `"BAVAPI SDK Python"` by default.
     client : HTTPClient, optional
         Authenticated async client from `bavapi.http`, by default None
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
 
     Raises
     ------
@@ -107,6 +108,8 @@ class Client:
         timeout: float = 30.0,
         verify: Union[bool, str] = True,
         user_agent: str = "",
+        *,
+        verbose: bool = True,
     ) -> None:
         ...
 
@@ -116,6 +119,7 @@ class Client:
         *,
         client: HTTPClient = ...,
         per_page: int = 100,
+        verbose: bool = True,
     ) -> None:
         ...
 
@@ -128,6 +132,7 @@ class Client:
         user_agent: str = "",
         *,
         client: Optional[HTTPClient] = None,
+        verbose: bool = True,
     ) -> None:
         if client is not None:
             self._client = client
@@ -144,6 +149,7 @@ class Client:
                     "Accept": "application/json",
                     "User-Agent": user_agent or "BAVAPI SDK Python",
                 },
+                verbose=verbose,
             )
 
     @property
@@ -154,6 +160,15 @@ class Client:
     @per_page.setter
     def per_page(self, value: int) -> None:
         self._client.per_page = value
+
+    @property
+    def verbose(self) -> bool:
+        """Show progress bar when making requests."""
+        return self._client.verbose
+
+    @verbose.setter
+    def verbose(self, value: bool) -> None:
+        self._client.verbose = value
 
     async def __aenter__(self) -> "Client":
         await self._client.__aenter__()
@@ -203,7 +218,7 @@ class Client:
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
         stack_data: bool = False,
-        **kwargs: BaseListOrValues,
+        **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
         """Query the Fount `audiences` endpoint.
 
@@ -297,7 +312,7 @@ class Client:
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
         stack_data: bool = False,
-        **kwargs: BaseListOrValues,
+        **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
         """Query the Fount `brands` endpoint.
 
@@ -386,7 +401,7 @@ class Client:
         include: OptionalListOr[str] = None,
         metric_keys: OptionalListOr[str] = None,
         stack_data: bool = False,
-        **kwargs: BaseListOrValues,
+        **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
         """Query the Fount `brandscape-data` endpoint.
 
@@ -511,7 +526,7 @@ class Client:
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
         stack_data: bool = False,
-        **kwargs: BaseListOrValues,
+        **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
         """Query the Fount `studies` endpoint.
 
