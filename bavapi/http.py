@@ -67,7 +67,11 @@ class HTTPClient:
         Collection of headers to send with each request, by default None
     client : httpx.AsyncClient, optional
         Authenticated `httpx.AsyncClient`, by default None
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
     """
+
+    __slots__ = ("client", "per_page", "verbose")
 
     C = TypeVar("C", bound="HTTPClient")
 
@@ -80,11 +84,18 @@ class HTTPClient:
         verify: Union[bool, str] = True,
         *,
         headers: Optional[Dict[str, str]] = None,
+        verbose: bool = True,
     ) -> None:
         ...
 
     @overload
-    def __init__(self, *, client: httpx.AsyncClient = ..., per_page: int = 100) -> None:
+    def __init__(
+        self,
+        *,
+        client: httpx.AsyncClient = ...,
+        per_page: int = 100,
+        verbose: bool = True,
+    ) -> None:
         ...
 
     def __init__(
@@ -96,8 +107,10 @@ class HTTPClient:
         *,
         headers: Optional[Dict[str, str]] = None,
         client: Optional[httpx.AsyncClient] = None,
+        verbose: bool = True,
     ) -> None:
         self.per_page = per_page
+        self.verbose = verbose
 
         if client is not None:
             self.client = client
@@ -189,7 +202,9 @@ class HTTPClient:
         try:
             return cast(
                 List[httpx.Response],
-                await tqdm.gather(*tasks, desc=f"{endpoint} query"),
+                await tqdm.gather(
+                    *tasks, desc=f"{endpoint} query", disable=not self.verbose
+                ),
             )
         except Exception as exc:
             for task in tasks:
