@@ -204,6 +204,11 @@ def write_to_file(source: str, filepath: Path) -> None:
 def parse_args(argv: Optional[List[str]] = None) -> Args:
     """Parse arguments given to the script.
 
+    Parameters
+    ----------
+    argv : Optional[List[str]]
+        Arguments from CLI command, by default None
+
     Returns
     -------
     argparse.Namespace
@@ -237,10 +242,20 @@ def parse_args(argv: Optional[List[str]] = None) -> Args:
 def main(argv: Optional[List[str]] = None) -> int:
     """Main function to generate reference classes.
 
+    Parameters
+    ----------
+    argv : Optional[List[str]]
+        Arguments from CLI command, by default None
+
     Returns
     -------
     int
         CLI exit code
+
+    Raises
+    ______
+    ValueError
+        If Fount API token is not set or `python-dotenv` is not installed
     """
     args = parse_args(argv)
     if not args.token:
@@ -255,8 +270,6 @@ def main(argv: Optional[List[str]] = None) -> int:
             ) from exc
 
     fount = Client(os.getenv("FOUNT_API_KEY", args.token))
-
-    base_path = Path.cwd() / "bavapi_refs"
 
     ref_configs: Dict[str, RefConfig] = {
         "audiences": RefConfig("audiences", "audiences", parse_audiences),
@@ -280,8 +293,10 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     for name, data, config in zip(names, results, configs):
         items = process_items(data, config)
-        source = generate_source(name, items, datetime.datetime.utcnow())
-        path = base_path / f"{name}.py"
+        source = generate_source(
+            name, items, datetime.datetime.now(datetime.timezone.utc)
+        )
+        path = Path.cwd() / f"bavapi_refs/{name}.py"
 
         print(f"Writing {name} file with {len(items)} items to {path}")
         write_to_file(source, path)
