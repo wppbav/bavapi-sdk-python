@@ -3,6 +3,9 @@ hide:
     - navigation
 ---
 
+<!--If linking to a docs page, must be linked to /latest/ version-->
+<!--If linking to a section with an index page, must add "/index" to URL-->
+
 # Contributing to `bavapi`
 
 `bavapi` is an open source library provided by WPPBAV, and we're happy to accept contributions from the community.
@@ -41,9 +44,9 @@ This will install all optional dependencies which are necessary for contributing
 
 You will need a Fount API key to perform requests to the API through `bavapi`.
 
-To get and use an API key, see the [Authentication](../getting-started/authentication) section of the Getting Started guide.
+To get and use an API key, see the [Authentication](getting-started/authentication.md) section of the Getting Started guide.
 
-In order to run integration tests, you will need to use an `.env` file to store your Fount API key. See the [instructions](../getting-started/authentication/#using-dotenv-files) for more details.
+In order to run integration tests, you will need to use an `.env` file to store your Fount API key as `FOUNT_API_KEY` (you can also set the environment variable directly). See the [instructions](getting-started/authentication.md#recommended-way-to-manage-api-keys) for more details.
 
 ## Tools and frameworks
 
@@ -63,7 +66,7 @@ Please familiarize yourself with using these libraries in order to get started w
 
 It is highly recommended that you use [`mamba`](https://mamba.readthedocs.io/en/latest/) to manage Python environments in Windows. It is a faster implementation of `conda` and testing of `bavapi` on multiple versions of Python is set up to use `mamba` on Windows.
 
-Once you have `mamba` installed in your system, you should be able to run `nox` commands.
+Once you have `mamba` installed in your system, and you have set up an environment with `nox`, you should be able to run the `nox` commands for `bavapi`.
 
 ## Nox commands
 
@@ -83,6 +86,8 @@ To see a list of all available `nox` commands, run `nox -l` in your terminal. He
 - `coverage`: combine and report coverage results.
 - `build`: build distributable files for `bavapi`. Suitable for CI/CD pipeline.
 - `docs_deploy`: publish `bavapi` documentation to GitHub Pages. Suitable for local development and CI/CD pipelines.
+- `docs_serve`: serve `bavapi` documentation with `mike`. Suitable for local development.
+- `docs_build_and_serve`: run both `docs_deploy` and `docs_serve`. Suitable for local development.
 
 ## Code Style Guidelines
 
@@ -90,7 +95,7 @@ To see a list of all available `nox` commands, run `nox -l` in your terminal. He
 
 1. Run `black bavapi` after writing or modifying code. This way the code style of the whole project will remain consistent.
 2. Run `mypy bavapi` after writing or modifying code to make sure type hints are correctly defined.
-3. Fully test your code using `pytest` and make sure you covered all your changes in the repository by running `nox -s tests_mamba`, `nox -s tests_mamba_e2e` and `nox -s coverage`.
+3. Fully test your code using `pytest` and make sure you covered all your changes in the repository by running all `tests_mamba`, `tests_mamba_e2e` and `coverage` sessions from `nox`.
 
 ## Documentation
 
