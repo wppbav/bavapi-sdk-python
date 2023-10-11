@@ -74,6 +74,11 @@ class Query(BaseModel, Generic[F]):
     def to_params(self, endpoint: str) -> BaseParamsDictValues:
         """Return Fount-compatible dictionary of the query.
 
+        Parameters
+        ----------
+        endpoint : str
+            The endpoint for which to format the query
+
         Returns
         -------
         dict[str, Any]
@@ -140,6 +145,13 @@ class Query(BaseModel, Generic[F]):
         """Yield `Query` instances with page parameters for each page in `n_pages`.
 
         For performing multiple paginated requests.
+
+        Parameters
+        ----------
+        per_page : int
+            Number of results per page
+        n_pages : int
+            Number of pages for which to generate paginated `Query` instances
 
         Yields
         ------

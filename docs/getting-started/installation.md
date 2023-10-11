@@ -31,7 +31,7 @@ Once you have your virtual environment activated, you can install `bavapi` with 
 pip install wpp-bavapi
 ```
 
-!!! info "Installing with `conda`"
+!!! tip "Installing with `conda`"
     `bavapi` is not currently available from `conda` directly, though it should be possible to install and use it within a `conda` environment.
 
     Use the following commands to maximize compatibility between `conda` and `pip`:

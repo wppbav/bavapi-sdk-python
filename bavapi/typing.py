@@ -1,6 +1,9 @@
 """Common parameter types"""
 
+# pylint: disable=missing-class-docstring, unused-import
+
 import datetime
+import sys
 from typing import (
     Dict,
     List,
@@ -9,8 +12,19 @@ from typing import (
     Optional,
     Sequence,
     TypeVar,
+    TypedDict,
     Union,
 )
+
+if sys.version_info < (3, 12):
+    from typing_extensions import Unpack
+else:
+    from typing import Unpack
+
+if sys.version_info < (3, 10):
+    from typing_extensions import ParamSpec
+else:
+    from typing import ParamSpec
 
 T = TypeVar("T")
 
@@ -61,3 +75,10 @@ JSONData = Union[JSONDict, List[JSONDict]]
 
 FlatJSONDict = Dict[str, BaseSequenceOrValues]
 FlatJSONDictValues = Dict[str, BaseValues]
+
+
+class CommonQueryParams(TypedDict, total=False):
+    page: Optional[int]
+    per_page: Optional[int]
+    max_pages: Optional[int]
+    sort: Optional[str]

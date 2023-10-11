@@ -9,7 +9,7 @@ from typing import cast
 
 import nox
 
-python_versions = ("3.8", "3.9", "3.10", "3.11")
+python_versions = ("3.8", "3.9", "3.10", "3.11", "3.12")
 python_latest = python_versions[-1]
 
 
@@ -151,11 +151,11 @@ def lint(session: nox.Session) -> None:
     """Lint package."""
     session.install("-e", ".[lint]")
 
+    session.run("isort", "-l", "100", ".")
+    session.run("black", ".")
     session.run("mypy", "bavapi")
     session.run("pylint", "bavapi")
     session.run("pylint", "tests")
-    session.run("isort", "-l", "100", ".")
-    session.run("black", ".")
 
 
 @nox.session(python=None)
@@ -244,10 +244,12 @@ def docs_deploy(session: nox.Session) -> None:
 
 @nox.session(python=False)
 def docs_serve(session: nox.Session) -> None:
+    """Serve documentation. Suitable for local development."""
     session.run("mike", "serve")
 
 
 @nox.session(python=False)
 def docs_build_and_serve(session: nox.Session) -> None:
+    """Build and serve documentation. Suitable for local development."""
     session.notify("docs_deploy")
     session.notify("docs_serve")

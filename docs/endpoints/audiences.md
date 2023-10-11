@@ -26,3 +26,16 @@ For more information on available filters and functionality, see the Fount docum
     async with bavapi.Client("TOKEN") as bav:
         result = await bav.audiences(name="All Adults")
     ```
+
+## Available filters in function calls
+
+These filters are available directly within the function/method:
+
+- `audience_id`
+- `active`
+- `inactive`
+- `public`
+- `private`
+- `groups`
+
+For other filters, passing an `AudienceFilters` instance to the `filters` parameter is required.

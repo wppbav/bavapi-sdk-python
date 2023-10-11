@@ -1,3 +1,6 @@
+<!--If linking to a docs page, must be linked to /latest/ version-->
+<!--If linking to a section with an index page, must add "/index" to URL-->
+
 # Contributing to `bavapi`
 
 `bavapi` is an open source library provided by WPPBAV, and we're happy to accept contributions from the community.
@@ -36,9 +39,9 @@ This will install all optional dependencies which are necessary for contributing
 
 You will need a Fount API key to perform requests to the API through `bavapi`.
 
-To get and use an API key, see the [Authentication](../getting-started/authentication) section of the Getting Started guide.
+To get and use an API key, see the [Authentication](https://wppbav.github.io/bavapi-sdk-python/latest/getting-started/authentication) section of the Getting Started guide.
 
-In order to run integration tests, you will need to use an `.env` file to store your Fount API key. See the [instructions](../getting-started/authentication/#using-dotenv-files) for more details.
+In order to run integration tests, you will need to use an `.env` file to store your Fount API key as `FOUNT_API_KEY` (you can also set the environment variable directly). See the [instructions](https://wppbav.github.io/bavapi-sdk-python/latest/getting-started/authentication#recommended-way-to-manage-api-keys) for more details.
 
 ## Tools and frameworks
 

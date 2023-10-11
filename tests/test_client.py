@@ -75,6 +75,13 @@ def test_per_page():
     assert _fount._client.per_page == 1000
 
 
+def test_verbose():
+    _fount = Client("token")
+    assert _fount.verbose == True
+    _fount.verbose = False
+    assert _fount._client.verbose == False
+
+
 @pytest.mark.anyio
 async def test_context_manager():
     _fount = Client(client=HTTPClient())

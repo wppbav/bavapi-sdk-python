@@ -8,23 +8,17 @@ Meant for experimentation, Jupyter notebooks, one-off scripts, etc.
 Use `bavapi.Client` for more advanced usage and performance benefits.
 """
 
-# pylint: disable=redefined-outer-name, too-many-arguments
+# pylint: disable=redefined-outer-name, too-many-arguments, too-many-locals
 
 import asyncio
 import functools
-import sys
 from typing import TYPE_CHECKING, Awaitable, Callable, List, Literal, Optional, TypeVar
 
 from bavapi import filters as _filters
 from bavapi._jupyter import patch_loop, running_in_jupyter
 from bavapi.client import Client, OptionalFiltersOrMapping
 from bavapi.query import Query
-from bavapi.typing import BaseListOrValues, JSONDict, OptionalListOr
-
-if sys.version_info < (3, 10):
-    from typing_extensions import ParamSpec
-else:
-    from typing import ParamSpec
+from bavapi.typing import JSONDict, OptionalListOr, Unpack, CommonQueryParams, ParamSpec
 
 if TYPE_CHECKING:
     from pandas import DataFrame
@@ -56,7 +50,12 @@ def _coro(func: Callable[P, Awaitable[T]]) -> Callable[P, T]:
 
 @_coro
 async def raw_query(
-    token: str, endpoint: str, params: Query[F], timeout: float = 30.0
+    token: str,
+    endpoint: str,
+    params: Query[F],
+    timeout: float = 30.0,
+    *,
+    verbose: bool = True,
 ) -> List[JSONDict]:
     """Perform a raw GET query to the Fount API, returning the response JSON data
     instead of a `pandas` DataFrame.
@@ -71,6 +70,8 @@ async def raw_query(
         Query `pydantic` model with query parameters.
     timeout : float
         Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
 
     Returns
     -------
@@ -78,8 +79,8 @@ async def raw_query(
         List of JSON response data
     """
 
-    async with Client(token, timeout=timeout) as fount:
-        return await fount.raw_query(endpoint, params)
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.raw_query(endpoint, params)
 
 
 @_coro
@@ -98,7 +99,8 @@ async def audiences(
     include: OptionalListOr[str] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
-    **kwargs: BaseListOrValues,
+    verbose: bool = True,
+    **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `audiences` endpoint.
 
@@ -135,6 +137,8 @@ async def audiences(
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float
         Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -162,8 +166,8 @@ async def audiences(
         DataFrame with `brands` endpoint results
     """
 
-    async with Client(token, timeout=timeout) as fount:
-        return await fount.audiences(
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.audiences(
             name,
             audience_id,
             active,
@@ -193,7 +197,8 @@ async def brands(
     include: OptionalListOr[str] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
-    **kwargs: BaseListOrValues,
+    verbose: bool = True,
+    **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brands` endpoint
 
@@ -226,6 +231,8 @@ async def brands(
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float
         Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -253,8 +260,8 @@ async def brands(
         DataFrame with `brands` endpoint results
     """
 
-    async with Client(token, timeout=timeout) as fount:
-        return await fount.brands(
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.brands(
             name,
             country_codes,
             year_numbers,
@@ -283,7 +290,8 @@ async def brandscape_data(
     metric_keys: OptionalListOr[str] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
-    **kwargs: BaseListOrValues,
+    verbose: bool = True,
+    **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brandscape-data` endpoint.
 
@@ -346,6 +354,8 @@ async def brandscape_data(
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float
         Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -378,8 +388,8 @@ async def brandscape_data(
         If used with an invalid combination of parameters (see above)
     """
 
-    async with Client(token, timeout=timeout) as fount:
-        return await fount.brandscape_data(
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.brandscape_data(
             country_code,
             year_number,
             audiences,
@@ -407,7 +417,8 @@ async def studies(
     include: OptionalListOr[str] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
-    **kwargs: BaseListOrValues,
+    verbose: bool = True,
+    **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `studies` endpoint.
 
@@ -440,6 +451,8 @@ async def studies(
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float
         Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -467,8 +480,8 @@ async def studies(
         DataFrame with `studies` endpoint results
     """
 
-    async with Client(token, timeout=timeout) as fount:
-        return await fount.studies(
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.studies(
             country_codes,
             year_numbers,
             full_year,

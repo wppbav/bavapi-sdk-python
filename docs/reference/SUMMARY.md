@@ -2,7 +2,6 @@
 * [exceptions](exceptions.md)
 * [filters](filters.md)
 * [http](http.md)
-* [jupyter](jupyter.md)
 * [parsing](parsing/index.md)
     * [params](parsing/params.md)
     * [responses](parsing/responses.md)

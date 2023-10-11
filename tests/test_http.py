@@ -126,14 +126,16 @@ async def test_get_with_id(mock_get: mock.AsyncMock, client: HTTPClient):
 
 
 @pytest.mark.anyio
-@mock.patch("bavapi.http.httpx.AsyncClient.get", wraps=wraps(response(400, "bad.")))
-async def test_get_blah(mock_get: mock.AsyncMock, client: HTTPClient):
+@mock.patch("bavapi.http.httpx.AsyncClient.get", wraps=wraps(response(400, "bad")))
+async def test_get_bad_request_with_error_msg(
+    mock_get: mock.AsyncMock, client: HTTPClient
+):
     with pytest.raises(APIError) as excinfo:
         await client.get("request", Query())
 
     mock_get.assert_awaited_once_with("request", params={})
 
-    assert excinfo.value.args == ("Error 400:\nbad.\nurl=http://test_url/request",)
+    assert excinfo.value.args == ("Error 400:\nbad\nurl=http://test_url/request",)
 
 
 @pytest.mark.anyio
@@ -141,7 +143,9 @@ async def test_get_blah(mock_get: mock.AsyncMock, client: HTTPClient):
     "bavapi.http.httpx.AsyncClient.get",
     wraps=wraps(response(400, json={"data": "bad"})),
 )
-async def test_get_bad_error(mock_get: mock.AsyncMock, client: HTTPClient):
+async def test_get_bad_request_with_unformatted_error(
+    mock_get: mock.AsyncMock, client: HTTPClient
+):
     with pytest.raises(APIError) as excinfo:
         await client.get("request", Query())
 
@@ -154,10 +158,28 @@ async def test_get_bad_error(mock_get: mock.AsyncMock, client: HTTPClient):
 
 @pytest.mark.anyio
 @mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(["page"]))
-async def test_get_pages(mock_get: mock.AsyncMock, client: HTTPClient):
+async def test_get_pages(
+    mock_get: mock.AsyncMock, client: HTTPClient, capsys: pytest.CaptureFixture
+):
     res = await client.get_pages("request", Query(), 1)
+    captured = capsys.readouterr()
 
     assert res == [["page"]]
+    assert captured.err
+    mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
+
+
+@pytest.mark.anyio
+@mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(["page"]))
+async def test_get_pages_no_pbar(
+    mock_get: mock.AsyncMock, capsys: pytest.CaptureFixture
+):
+    client = HTTPClient("test", verbose=False)
+    res = await client.get_pages("request", Query(), 1)
+    captured = capsys.readouterr()
+
+    assert res == [["page"]]
+    assert not captured.err
     mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
 
 

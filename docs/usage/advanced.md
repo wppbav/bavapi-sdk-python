@@ -142,3 +142,17 @@ The `to_params` method can be used to parse the parameters into a dictionary of 
 ```
 
 1. :bulb: Parses `filters` and `include` into the correct format for the Fount API, and parses all elements in lists of parameters to their string representation.
+
+## User Agent
+
+!!! abstract "New in `v0.8.0`"
+
+It is possible to set the `User Agent` parameter for HTTP requests.
+
+The default user agent is `"BAVAPI SDK Python"`.
+
+If you want to change the user agent for your application, you can set it when instantiating a `Client`:
+
+```py
+client = bavapi.Client(user_agent="Your User Agent")
+```
