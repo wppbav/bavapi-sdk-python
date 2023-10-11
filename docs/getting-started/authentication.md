@@ -24,7 +24,7 @@ my-project-folder
 Create this `.env` file (note the leading dot) in the top level of your working directory, and write down your token like so:
 
 ```env
-FOUNT_API_TOKEN = "your_token_here"
+FOUNT_API_KEY = "your_token_here"
 ```
 
 To now use this file, you will need to install the [`python-dotenv`](https://github.com/theskumar/python-dotenv) package:
@@ -40,11 +40,11 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()  # (1)
-TOKEN = os.environ["FOUNT_API_TOKEN"]  # (2)
+TOKEN = os.environ["FOUNT_API_KEY"]  # (2)
 ```
 
 1. Load variables from `.env` into the system's environment
-2. Assign the `"FOUNT_API_TOKEN"` environment variable to our `TOKEN` local variable
+2. Assign the `"FOUNT_API_KEY"` environment variable to our `TOKEN` local variable
 
 Now you can use `TOKEN` in your API requests:
 
