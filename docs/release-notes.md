@@ -2,7 +2,7 @@
 
 ## Version 0.9
 
-### Version 0.9.0 (October XXth, 2023)
+### Version 0.9.0 (October 11th, 2023)
 
 #### Feature
 
