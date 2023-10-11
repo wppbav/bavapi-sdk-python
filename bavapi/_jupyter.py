@@ -40,5 +40,12 @@ def running_in_jupyter() -> bool:
 
 
 def patch_loop(loop: "AbstractEventLoop") -> None:
-    """Patch asyncio loop with `nest_asyncio`."""
+    """Patch asyncio loop with `nest_asyncio`.
+
+    Parameters
+    ----------
+    loop: asyncio.AbstractEventLoop
+        Loop to patch to allow nested loops
+
+    """
     nest_asyncio.apply(loop)
