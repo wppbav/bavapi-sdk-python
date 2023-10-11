@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wpp-bavapi"
-version = "0.8.1"
+version = "0.9.0"
 authors = [
     { name = "Ignacio Maiz Vilches", email = "ignacio.maiz@bavgroup.com" },
 ]
@@ -45,7 +45,7 @@ dependencies = [
     "pandas >= 0.16.2",
     "pydantic >= 2",
     "tqdm >= 4.62",
-    "typing-extensions >= 3.10; python_version < '3.10'",
+    "typing-extensions >= 4.6; python_version < '3.12'",
 ]
 
 [project.urls]
