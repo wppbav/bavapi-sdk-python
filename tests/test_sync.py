@@ -54,8 +54,13 @@ def test_raw_query():
     ("endpoint", "filters"),
     (
         ("audiences", {}),
+        ("brand_metrics", {}),
+        ("brand_metric_groups", {}),
         ("brands", {}),
         ("brandscape_data", {"studies": 1}),
+        ("categories", {}),
+        ("collections", {}),
+        ("sectors", {}),
         ("studies", {}),
     ),
 )

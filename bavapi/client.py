@@ -1,6 +1,6 @@
 """Fount API interface."""
 
-# pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments, too-many-lines
 
 from typing import (
     TYPE_CHECKING,
@@ -293,10 +293,190 @@ class Client:
             filters=filters,
             fields=fields,
             include=include,
-            **kwargs,  # type: ignore[arg-type]
+            **kwargs,
         )
 
         items = await self._client.query("audiences", query)
+
+        return parse_response(items, expand=stack_data)
+
+    async def brand_metrics(
+        self,
+        name: Optional[str] = None,
+        metric_id: Optional[int] = None,
+        active: Literal[0, 1] = 0,
+        inactive: Literal[0, 1] = 0,
+        public: Literal[0, 1] = 0,
+        private: Literal[0, 1] = 0,
+        groups: OptionalListOr[int] = None,
+        *,
+        filters: OptionalFiltersOrMapping[_filters.BrandMetricsFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `brand-metrics` endpoint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search brand metrics by name, by default None
+        metric_id : int, optional
+            Fount metric ID, by default None
+
+            If an metric ID is provided, only that metric will be returned
+        active : Literal[0, 1]
+            Return active brand metrics only if set to `1`, by default 0
+        inactive : Literal[0, 1]
+            Return inactive brand metrics only if set to `1`, by default 0
+        public : Literal[0, 1]
+            Return active brand metrics only if set to `1`, by default 0
+        private : Literal[0, 1]
+            Return inactive brand metrics only if set to `1`, by default 0
+        groups : int or list[int], optional
+            Brand metrics group ID or list of Brand metrics group IDs, by default None
+        filters : BrandMetricsFilters or dict of filters, optional
+            BrandMetricsFilters object or dictionary of filter parameters, by default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, by default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, by default None
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, by default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, by default None
+        per_page : int, optional
+            Number of results per page, by default None
+        max_pages : int, optional
+            Max number of results to return, by default None
+        sort : str, optional
+            Sort response by field, by default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `brand-metrics` endpoint results.
+        """
+
+        filters = _filters.BrandMetricsFilters.ensure(
+            filters,
+            name=name,
+            active=active,
+            inactive=inactive,
+            public=public,
+            private=private,
+            groups=groups,
+        )
+
+        query: Query[_filters.BrandMetricsFilters] = Query(
+            id=metric_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("brand-metrics", query)
+
+        return parse_response(items, expand=stack_data)
+
+    async def brand_metric_groups(
+        self,
+        name: Optional[str] = None,
+        group_id: Optional[int] = None,
+        active: Literal[0, 1] = 0,
+        inactive: Literal[0, 1] = 0,
+        *,
+        filters: OptionalFiltersOrMapping[_filters.BrandMetricGroupsFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `brand-metric-groups` endpoint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search brand metric groups by name, by default None
+        group_id : int, optional
+            Fount metric group ID, by default None
+
+            If an metric group ID is provided, only that metric group will be returned
+        active : Literal[0, 1]
+            Return active brand metric groups only if set to `1`, by default 0
+        inactive : Literal[0, 1]
+            Return inactive brand metric groups only if set to `1`, by default 0
+        filters : BrandMetricGroupsFilters or dict of filters, optional
+            BrandMetricGroupsFilters object or dictionary of filter parameters, by default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, by default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, by default None
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, by default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, by default None
+        per_page : int, optional
+            Number of results per page, by default None
+        max_pages : int, optional
+            Max number of results to return, by default None
+        sort : str, optional
+            Sort response by field, by default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `brand-metric-groups` endpoint results.
+        """
+
+        filters = _filters.BrandMetricGroupsFilters.ensure(
+            filters,
+            name=name,
+            active=active,
+            inactive=inactive,
+        )
+
+        query: Query[_filters.BrandMetricGroupsFilters] = Query(
+            id=group_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("brand-metric-groups", query)
 
         return parse_response(items, expand=stack_data)
 
@@ -381,7 +561,7 @@ class Client:
             filters=filters,
             fields=fields,
             include=include,
-            **kwargs,  # type: ignore[arg-type]
+            **kwargs,
         )
 
         items = await self._client.query("brands", query)
@@ -433,6 +613,8 @@ class Client:
         If any of the default includes are used in `include`, then only that resource
         will be retrieved. This is to allow requesting individual includes if they are
         part of the default.
+
+        To suppress default includes, set `include` to `"no_default"`.
 
         Parameters
         ----------
@@ -505,15 +687,279 @@ class Client:
         query: Query[_filters.BrandscapeFilters] = Query(
             filters=filters,
             fields=fields,
-            include=_default_brandscape_include(include),
+            include=_default_include(
+                include, ["study", "brand", "category", "audience"]
+            ),
             metric_keys=metric_keys,
-            **kwargs,  # type: ignore[arg-type]
+            **kwargs,
         )
 
         items = await self._client.query("brandscape-data", query)
 
         # Prefix 'global' to avoid clashing with 'brand_name' on 'brand' includes
         return parse_response(items, "global", expand=stack_data)
+
+    async def categories(
+        self,
+        name: Optional[str] = None,
+        category_id: Optional[int] = None,
+        sector: OptionalListOr[int] = None,
+        *,
+        filters: OptionalFiltersOrMapping[_filters.CategoriesFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `categories` endpoint.
+        
+        Note that this endpoint has a default set of `include` resources:
+        - `sector`
+
+        Any additional valid includes will be added to the default set.
+
+        If any of the default includes are used in `include`, then only that resource
+        will be retrieved. This is to allow requesting individual includes if they are
+        part of the default.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search categories by name, by default None
+        category_id : int, optional
+            Fount category ID, by default None
+
+            If an category ID is provided, only that category will be returned
+        sector : int or list[int], optional
+            Filter categories by sector ID, by default 0
+        filters : CategoriesFilters or dict of filters, optional
+            CategoriesFilters object or dictionary of filter parameters, by default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, by default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, by default None
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, by default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, by default None
+        per_page : int, optional
+            Number of results per page, by default None
+        max_pages : int, optional
+            Max number of results to return, by default None
+        sort : str, optional
+            Sort response by field, by default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `categories` endpoint results.
+        """
+
+        filters = _filters.CategoriesFilters.ensure(
+            filters,
+            name=name,
+            sector=sector,
+        )
+
+        query: Query[_filters.CategoriesFilters] = Query(
+            id=category_id,
+            filters=filters,
+            fields=fields,
+            include=_default_include(include, ["sector"]),
+            **kwargs,
+        )
+
+        items = await self._client.query("categories", query)
+
+        return parse_response(items, expand=stack_data)
+
+    async def collections(
+        self,
+        name: Optional[str] = None,
+        collection_id: Optional[int] = None,
+        public: Literal[0, 1] = 0,
+        shared_with_me: Literal[0, 1] = 0,
+        mine: Literal[0, 1] = 0,
+        *,
+        filters: OptionalFiltersOrMapping[_filters.CollectionsFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `collections` endpoint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search collections by name, by default None
+        collection_id : int, optional
+            Fount collection ID, by default None
+
+            If an collection ID is provided, only that collection will be returned
+        public : Literal[0, 1], optional
+            Return public collections only, by default 0
+        shared_with_me : Literal[0, 1], optional
+            Only return collections that have been shared with the user, by default 0
+        mine : Literal[0, 1], optional
+            Only return collections created by the user, by default 0
+
+        filters : CollectionsFilters or dict of filters, optional
+            CollectionsFilters object or dictionary of filter parameters, by default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, by default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, by default None
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, by default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, by default None
+        per_page : int, optional
+            Number of results per page, by default None
+        max_pages : int, optional
+            Max number of results to return, by default None
+        sort : str, optional
+            Sort response by field, by default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `collections` endpoint results.
+        """
+
+        filters = _filters.CollectionsFilters.ensure(
+            filters,
+            name=name,
+            public=public,
+            shared_with_me=shared_with_me,
+            mine=mine,
+        )
+
+        query: Query[_filters.CollectionsFilters] = Query(
+            id=collection_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("collections", query)
+
+        return parse_response(items, expand=stack_data)
+
+    async def sectors(
+        self,
+        name: Optional[str] = None,
+        sector_id: Optional[int] = None,
+        in_most_influential: Literal[0, 1] = 0,
+        not_in_most_influential: Literal[0, 1] = 0,
+        *,
+        filters: OptionalFiltersOrMapping[_filters.SectorsFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `sectors` endpoint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search sectors by name, by default None
+        sector_id : int, optional
+            Fount sectors ID, by default None
+
+            If a sector ID is provided, only that sector will be returned
+        in_most_influential : Literal[0, 1], optional
+            Sectors that are part of the Most Influential lists, by default 0
+        not_in_most_influential : Literal[0, 1], optional
+            Sectors that are not part of the Most Influential lists, by default 0
+        filters : SectorsFilters or dict of filters, optional
+            SectorsFilters object or dictionary of filter parameters, by default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, by default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, by default None
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, by default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, by default None
+        per_page : int, optional
+            Number of results per page, by default None
+        max_pages : int, optional
+            Max number of results to return, by default None
+        sort : str, optional
+            Sort response by field, by default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `sectors` endpoint results.
+        """
+
+        filters = _filters.SectorsFilters.ensure(
+            filters,
+            name=name,
+            in_most_influential=in_most_influential,
+            not_in_most_influential=not_in_most_influential,
+        )
+
+        query: Query[_filters.SectorsFilters] = Query(
+            id=sector_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("sectors", query)
+
+        return parse_response(items, expand=stack_data)
 
     async def studies(
         self,
@@ -593,7 +1039,7 @@ class Client:
             filters=filters,
             fields=fields,
             include=include,
-            **kwargs,  # type: ignore[arg-type]
+            **kwargs,
         )
 
         items = await self._client.query("studies", query)
@@ -601,9 +1047,9 @@ class Client:
         return parse_response(items, expand=stack_data)
 
 
-def _default_brandscape_include(value: OptionalListOr[str]) -> OptionalListOr[str]:
-    default: Final[List[str]] = ["study", "brand", "category", "audience"]
-
+def _default_include(
+    value: OptionalListOr[str], default: List[str]
+) -> OptionalListOr[str]:
     if value is None:
         return default
     if isinstance(value, list):
