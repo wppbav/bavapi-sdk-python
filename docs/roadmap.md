@@ -1,7 +1,7 @@
 # `bavapi` Roadmap
 
 !!! warning
-    `bavapi` is currently in alpha stage of development.
+    `bavapi` is currently in alpha stage of development. Future updates may break existing functionality while the interface becomes fully mature.
 
 This is a non-exhaustive list of potential features & changes to `bavapi` before it is ready for full release:
 
