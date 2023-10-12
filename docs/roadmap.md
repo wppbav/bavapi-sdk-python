@@ -18,11 +18,11 @@ This is a non-exhaustive list of potential features & changes to `bavapi` before
 
 Eventually, the plan is to support all endpoints. This is the current priority list:
 
-1. Categories
-2. Collections
-3. Brand Metrics
-4. Sectors
-5. Brand Metric Groups
+1. ~~Categories~~ :white_check_mark: `v0.10.0`
+2. ~~Collections~~ :white_check_mark: `v0.10.0`
+3. ~~Brand Metrics~~ :white_check_mark: `v0.10.0`
+4. ~~Sectors~~ :white_check_mark: `v0.10.0`
+5. ~~Brand Metric Groups~~ :white_check_mark: `v0.10.0`
 
 ## Stretch goals
 
