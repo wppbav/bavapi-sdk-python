@@ -4,16 +4,21 @@ sidebar_label: Overview
 
 # Endpoints
 
-As of `v0.9`, there are four endpoints that have been fully implemented in `bavapi`:
+As of `v0.10`, there are four endpoints that have been fully implemented in `bavapi`:
 
 - [`audiences`](audiences.md)
+- [`brand-metrics`](brand-metrics.md)
+- [`brand-metric-groups`](brand-metric-groups.md)
 - [`brands`](brands.md)
 - [`brandscape-data`](brandscape-data.md)
+- [`categories`](categories.md)
+- [`collections`](collections.md)
+- [`sectors`](sectors.md)
 - [`studies`](studies.md)
 
 "Implemented" meaning that the endpoint has a corresponding function, `Client` method, and filters class associated with them. More info in each endpoint's respective section linked above.
 
-If an existing endpoint does not appear in the list above, you can still perform queries to them using the `raw_query` methods (see [below](#other-endpoints)), but `bavapi` won't validate filter parameters.
+If an existing endpoint does not appear in the list above, you can still perform queries to it using the `raw_query` function/method (see [below](#other-endpoints)), but `bavapi` won't validate filter parameters.
 
 Examples for each endpoint are available in each of their individual sections, both for the top-level, synchronous functions, and the asynchronous methods in `bavapi.Client`.
 
