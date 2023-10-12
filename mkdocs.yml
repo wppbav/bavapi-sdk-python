@@ -17,6 +17,7 @@ theme:
     - content.code.annotate
     - navigation.footer
     - navigation.instant
+    - navigation.instant.progress
     - navigation.sections
     - navigation.tabs
     - navigation.tabs.sticky
