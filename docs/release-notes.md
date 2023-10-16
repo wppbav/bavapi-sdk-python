@@ -2,7 +2,7 @@
 
 ## Version 0.10
 
-### Version 0.10.0 (October XXth, 2023)
+### Version 0.10.0 (October 16th, 2023)
 
 #### Feature
 
