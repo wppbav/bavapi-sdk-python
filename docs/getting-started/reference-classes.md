@@ -25,13 +25,13 @@ And could be used to have better visibility when filtering API responses:
 === "Using Reference class"
 
     ```py title="Explicit audience filter"
-    fountapi.brandscape_data(country_code="US", year=2022, audiences=Audiences.ALL_ADULTS)
+    bavapi.brandscape_data(country_code="US", year=2022, audiences=Audiences.ALL_ADULTS)
     ```
 
 === "Not using Reference class"
 
     ```py title="Audience filter not human-readable"
-    fountapi.brandscape_data(country_code="US", year=2022, audiences=27)
+    bavapi.brandscape_data(country_code="US", year=2022, audiences=27)
     ```
 
 !!! warning

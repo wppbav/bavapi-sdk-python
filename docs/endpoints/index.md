@@ -46,8 +46,8 @@ Queries from `raw_query` functions and methods return a list of JSON dictionarie
     ```py
     import bavapi
 
-    async with bavapi.Client("TOKEN") as fount:
-        result = await fount.raw_query("companies", bavapi.Query())
+    async with bavapi.Client("TOKEN") as bav:
+        result = await bav.raw_query("companies", bavapi.Query())
     ```
 
 === "Sync"
@@ -64,8 +64,8 @@ Since the result of these queries will be a list of JSON dictionaries, you can u
 import bavapi
 from bavapi.parsing.responses import parse_response
 
-async with bavapi.Client("TOKEN") as fount:
-    result = await fount.raw_query("companies", bavapi.Query())
+async with bavapi.Client("TOKEN") as bav:
+    result = await bav.raw_query("companies", bavapi.Query())
 
 parsed = parse_response(result)  # will return a DataFrame
 ```

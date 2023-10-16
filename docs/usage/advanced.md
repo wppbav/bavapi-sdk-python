@@ -39,9 +39,9 @@ async with bavapi.Client("TOKEN") as bav:
 Otherwise, it is possible to use `Client` methods outside of an `async with` block, but it might be slightly less performant.
 
 ```py
-client = bavapi.Client("TOKEN")
-result = await client.brands("Swatch")
-await client.aclose()  # (1)
+bav = bavapi.Client("TOKEN")
+result = await bav.brands("Swatch")
+await bav.aclose()  # (1)
 ```
 
 1. :recycle: Close the connection by awaiting `aclose` after you're done with your requests.
@@ -61,8 +61,8 @@ Because of the large number of available endpoints in the Fount and the highly c
 These `raw_query` methods require the use of [`bavapi.Query`][query.Query] instances to make the request:
 
 ```py
-async with bavapi.Client("TOKEN") as fount:
-    res = fount.raw_query("companies", Query(filters=FountFilters(name="Facebook")))
+async with bavapi.Client("TOKEN") as bav:
+    res = bav.raw_query("companies", Query(filters=FountFilters(name="Facebook")))
 ```
 
 These functions will return a list of JSON dictionaries, one for each entry retrieved from the Fount:
@@ -87,8 +87,8 @@ The default values for the class are the same as the default values in the Fount
 ```py
 query = bavapi.Query()
 
-async with bavapi.Client("TOKEN") as fount:
-    res = fount.raw_query("brand-metrics", query) # (1)
+async with bavapi.Client("TOKEN") as bav:
+    res = bav.raw_query("brand-metrics", query) # (1)
 ```
 
 1. :material-expand-all: Returns all entries for `brand-metrics`. Similar to making a `GET` request with no parameters.
@@ -154,5 +154,5 @@ The default user agent is `"BAVAPI SDK Python"`.
 If you want to change the user agent for your application, you can set it when instantiating a `Client`:
 
 ```py
-client = bavapi.Client(user_agent="Your User Agent")
+bav = bavapi.Client(user_agent="Your User Agent")
 ```
