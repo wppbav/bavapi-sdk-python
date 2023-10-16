@@ -96,6 +96,8 @@ bavapi.brandscape_data("TOKEN", brand_name="Facebook", include="brand")
 bavapi.brandscape_data("TOKEN", brand_name="Facebook", include="company")
 ```
 
+To suppress default includes, set `include` to `"no_default"`.
+
 ## Clashing column names
 
 Some includes can have clashing column names with the original data. This happens, for example, with the `"brand"` include, which when expanded will have column names such as `"brand_name"`, which is already present in the `brandscape-data` table.

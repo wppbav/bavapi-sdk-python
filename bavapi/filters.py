@@ -18,7 +18,12 @@ __all__ = (
     "FountFilters",
     "AudiencesFilters",
     "BrandsFilters",
+    "BrandMetricsFilters",
+    "BrandMetricGroupsFilters",
     "BrandscapeFilters",
+    "CategoriesFilters",
+    "CollectionsFilters",
+    "SectorsFilters",
     "StudiesFilters",
 )
 
@@ -61,6 +66,8 @@ class FountFilters(BaseModel):
     ) -> Optional[F]:
         """Ensure FountFilters class from dictionary or other FountFilters class.
 
+        Defaults to values passed to `filters` when any additional filters overlap.
+
         Parameters
         ----------
         filters : FountFilters or dict of filter values, optional
@@ -72,10 +79,6 @@ class FountFilters(BaseModel):
         -------
         FountFilters, optional
             FountFilters class or None if `filters` is None and no additional filters are passed.
-
-        Notes
-        -----
-        Defaults to values passed to `filters` when any additional filters overlap.
         """
         addl_filters = {k: v for k, v in addl_filters.items() if v}
 
@@ -168,6 +171,70 @@ class BrandsFilters(FountFilters):
     sectors: OptionalListOr[int] = None
     studies: OptionalListOr[int] = None
     years: OptionalListOr[int] = None
+
+
+class BrandMetricsFilters(FountFilters):
+    """Filters for the `brand-metrics` endpoint.
+
+    `groups` filters by the Fount IDs of the specific resources.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/brand-metrics>
+    for more info.
+
+    Attributes
+    ----------
+    active : Literal[0, 1], optional
+        Return active brand metrics when set to `1`, by default 0
+    inactive : Literal[0, 1], optional
+        Return inactive brand metrics when set to `1`, by default 0
+    public : Literal[0, 1], optional
+        Return public brand metrics when set to `1`, by default 0
+    private : Literal[0, 1], optional
+        Return private brand metrics when set to `1`, by default 0
+    groups : int or list[int], optional
+        Fount brand metric group ID or list of group IDs, by default None
+    current : Literal[0, 1], optional
+        Return current brand metrics when set to `1`, by default 0
+    legacy : Literal[0, 1], optional
+        Return legacy brand metrics when set to `1`, by default 0
+    core : Literal[0, 1], optional
+        Return core brand metrics when set to `1`, by default 0
+    custom : Literal[0, 1], optional
+        Return custom brand metrics when set to `1`, by default 0
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, by default None
+    """
+
+    active: Literal[0, 1] = 0
+    inactive: Literal[0, 1] = 0
+    public: Literal[0, 1] = 0
+    private: Literal[0, 1] = 0
+    groups: OptionalListOr[int] = None
+    current: Literal[0, 1] = 0
+    legacy: Literal[0, 1] = 0
+    core: Literal[0, 1] = 0
+    custom: Literal[0, 1] = 0
+
+
+class BrandMetricGroupsFilters(FountFilters):
+    """Filters for the `brand-metric-groups` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/brand-metric-groups>
+    for more info.
+
+    Attributes
+    ----------
+    active : Literal[0, 1], optional
+        Return active brand metrics when set to `1`, by default 0
+    inactive : Literal[0, 1], optional
+        Return inactive brand metrics when set to `1`, by default 0
+    """
+
+    active: Literal[0, 1] = 0
+    inactive: Literal[0, 1] = 0
 
 
 class BrandscapeFilters(FountFilters):
@@ -270,6 +337,75 @@ class BrandscapeFilters(FountFilters):
         return values
 
 
+class CategoriesFilters(FountFilters):
+    """Filters for the `categories` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/categories>
+    for more info.
+
+    Attributes
+    ----------
+    sector : int or list[int], optional
+        Fount sector ID or list of sector IDs, by default None
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, by default None
+    """
+
+    sector: OptionalListOr[int] = None
+
+
+class CollectionsFilters(FountFilters):
+    """Filters for the `collections` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/collections>
+    for more info.
+
+    Attributes
+    ----------
+    public : Literal[0, 1], optional
+        Return public collections only, by default 0
+    shared_with_me : Literal[0, 1], optional
+        Only return collections that have been shared with the user, by default 0
+    mine : Literal[0, 1], optional
+        Only return collections created by the user, by default 0
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, by default None
+    """
+
+    public: Literal[0, 1] = 0
+    shared_with_me: Literal[0, 1] = 0
+    mine: Literal[0, 1] = 0
+
+
+class SectorsFilters(FountFilters):
+    """Filters for the `sectors` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/sectors>
+    for more info.
+
+    Attributes
+    ----------
+    in_most_influential : Literal[0, 1], optional
+        Sectors that are part of the Most Influential lists, by default 0
+    not_in_most_influential : Literal[0, 1], optional
+        Sectors that are not part of the Most Influential lists, by default 0
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, by default None
+    """
+
+    in_most_influential: Literal[0, 1] = 0
+    not_in_most_influential: Literal[0, 1] = 0
+
+
 class StudiesFilters(FountFilters):
     """Filters for the `studies` endpoint.
 
@@ -280,31 +416,31 @@ class StudiesFilters(FountFilters):
 
     Attributes
     ----------
-    country_codes: str or list[str], optional
+    country_codes : str or list[str], optional
         Two-letter ISO-3166 country code or list of country codes, by default None
-    year_numbers: int or list[int], optional
+    year_numbers : int or list[int], optional
         Study years in numerical format (not IDs), by default None
-    full_year: Literal[0, 1], optional
+    full_year : Literal[0, 1], optional
         Return full year studies when set to `1` (excludes US quarterly), by default 0
-    released: Literal[0, 1], optional
+    released : Literal[0, 1], optional
         Return released studies when set to `1`, by default 0
-    unreleased: Literal[0, 1], optional
+    unreleased : Literal[0, 1], optional
         Return unreleased studies when set to `1`, by default 0
-    open_survey: Literal[0, 1], optional
+    open_survey : Literal[0, 1], optional
         Return studies with open brand requests when set to `1`, by default 0
-    active: Literal[0, 1], optional
+    active : Literal[0, 1], optional
         Return active audiences when set to `1`, by default 0
-    inactive: Literal[0, 1], optional
+    inactive : Literal[0, 1], optional
         Return inactive audiences when set to `1`, by default 0
-    bav_study: Literal[0, 1], optional
+    bav_study : Literal[0, 1], optional
         Return full BAV studies when set to `1`, by default 0
-    data_updated_since: DTValues, optional
+    data_updated_since : DTValues, optional
         Return studies updated since datetime value, by default None
-    countries: int or list[int], optional
+    countries : int or list[int], optional
         Fount country ID or list of country IDs, by default None
-    regions: int or list[int], optional
+    regions : int or list[int], optional
         Fount region ID or list of region IDs, by default None
-    years: int or list[int], optional
+    years : int or list[int], optional
         Fount year ID or list of year IDs, by default None
 
     Other Parameters

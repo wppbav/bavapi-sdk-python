@@ -11,27 +11,47 @@ through to the `httpx` package.
 
 For more information, go to the WPPBAV Fount website at <https:/fount.wppbav.com>.
 
-Example usage
--------------
+Examples
+--------
+Use top-level endpoint functions for quickly downloading BAV data:
 
 >>> import bavapi
->>> async with bavapi.Client("API_TOKEN") as client:
-...     result = await client.brands(name="Facebook")
-"""
+>>> res = bavapi.brands("TOKEN", name="Facebook")
 
-from importlib.metadata import PackageNotFoundError, version
+For more advanced (and async compatibility), use the `Client` pattern:
+
+>>> import bavapi
+>>> async with bavapi.Client("API_TOKEN") as bav:
+...     result = await bav.brands(name="Facebook")
+"""
 
 from bavapi import filters
 from bavapi.client import Client
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
 from bavapi.query import Query
-from bavapi.sync import audiences, brands, brandscape_data, raw_query, studies
+from bavapi.sync import (
+    audiences,
+    brand_metrics,
+    brand_metric_groups,
+    brands,
+    brandscape_data,
+    categories,
+    collections,
+    sectors,
+    raw_query,
+    studies,
+)
 
 __all__ = (
     "audiences",
+    "brand_metrics",
+    "brand_metric_groups",
     "brands",
     "brandscape_data",
+    "categories",
+    "collections",
     "raw_query",
+    "sectors",
     "studies",
     "Client",
     "Query",
@@ -40,8 +60,3 @@ __all__ = (
     "DataNotFoundError",
     "RateLimitExceededError",
 )
-
-try:
-    __version__ = version(__package__ or __name__)
-except PackageNotFoundError:  # pragma: no cover
-    __version__ = "not_found"

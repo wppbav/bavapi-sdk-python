@@ -1,5 +1,5 @@
 site_name: BAV API Python SDK documentation
-site_url: https://bavapi-sdk-python.github.io
+site_url: https://wppbav.github.io/bavapi-sdk-python
 
 repo_name: wppbav/bavapi-sdk-python
 repo_url: https://github.com/wppbav/bavapi-sdk-python
@@ -17,6 +17,7 @@ theme:
     - content.code.annotate
     - navigation.footer
     - navigation.instant
+    - navigation.instant.progress
     - navigation.sections
     - navigation.tabs
     - navigation.tabs.sticky

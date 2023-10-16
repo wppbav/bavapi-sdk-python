@@ -1,5 +1,28 @@
 # Release Notes
 
+## Version 0.10
+
+### Version 0.10.0 (October XXth, 2023)
+
+#### Feature
+
+- :rocket: The following endpoints have been fully implmented with type hints and validation:
+    - `brand-metrics`
+    - `brand-metric-groups`
+    - `categories`
+    - `collections`
+    - `sectors`
+
+#### Docs
+
+- :notebook: Documentation for newly supported endpoints.
+- :notebook: Documented the use of `"no_default"` as the `include` value for `brandscape_data` and `categories` functions/methods.
+
+#### Internal
+
+- :gear: Generalized internal `_default_includes` function to be able to reuse it with the `categories` endpoint.
+- :bug: `nox` session `docs_build_and_serve` will now rebase local branch if local version data is not synced with GitHub.
+
 ## Version 0.9
 
 ### Version 0.9.0 (October 11th, 2023)

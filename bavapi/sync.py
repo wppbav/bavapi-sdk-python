@@ -23,7 +23,16 @@ from bavapi.typing import JSONDict, OptionalListOr, Unpack, CommonQueryParams, P
 if TYPE_CHECKING:
     from pandas import DataFrame
 
-__all__ = ("raw_query", "audiences", "brands", "brandscape_data", "studies")
+__all__ = (
+    "brand_metrics",
+    "brand_metric_groups",
+    "brands",
+    "brandscape_data",
+    "categories",
+    "collections",
+    "raw_query",
+    "sectors",
+)
 
 T = TypeVar("T")
 P = ParamSpec("P")
@@ -184,6 +193,194 @@ async def audiences(
 
 
 @_coro
+async def brand_metrics(
+    token: str,
+    name: Optional[str] = None,
+    metric_id: Optional[int] = None,
+    active: Literal[0, 1] = 0,
+    inactive: Literal[0, 1] = 0,
+    public: Literal[0, 1] = 0,
+    private: Literal[0, 1] = 0,
+    groups: OptionalListOr[int] = None,
+    *,
+    filters: OptionalFiltersOrMapping[_filters.BrandMetricsFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `brand-metrics` endpoint.
+
+    Parameters
+    ----------
+    token : str
+        Fount API token
+    name : str, optional
+        Search brand metrics by name, by default None
+    metric_id : int, optional
+        Fount metric ID, by default None
+
+        If an metric ID is provided, only that metric will be returned
+    active : Literal[0, 1]
+        Return active brand metrics only if set to `1`, by default 0
+    inactive : Literal[0, 1]
+        Return inactive brand metrics only if set to `1`, by default 0
+    public : Literal[0, 1]
+        Return active brand metrics only if set to `1`, by default 0
+    private : Literal[0, 1]
+        Return inactive brand metrics only if set to `1`, by default 0
+    groups : int or list[int], optional
+        Brand metrics group ID or list of brand metrics group IDs, by default None
+    filters : BrandMetricsFilters or dict of filters, optional
+        BrandMetricsFilters object or dictionary of filter parameters, by default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, by default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, by default None
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, by default False
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, by default None
+    per_page : int, optional
+        Number of results per page, by default None
+    max_pages : int, optional
+        Max number of results to return, by default None
+    sort : str, optional
+        Sort response by field, by default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `brand-metrics` endpoint results.
+    """
+
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.brand_metrics(
+            name,
+            metric_id,
+            active,
+            inactive,
+            public,
+            private,
+            groups,
+            filters=filters,
+            fields=fields,
+            include=include,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
+async def brand_metric_groups(
+    token: str,
+    name: Optional[str] = None,
+    metric_id: Optional[int] = None,
+    active: Literal[0, 1] = 0,
+    inactive: Literal[0, 1] = 0,
+    *,
+    filters: OptionalFiltersOrMapping[_filters.BrandMetricGroupsFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `brand-metric-groups` endpoint.
+
+    Parameters
+    ----------
+    token : str
+        Fount API token
+    name : str, optional
+        Search brand metric groups by name, by default None
+    metric_id : int, optional
+        Fount brand metric group ID, by default None
+
+        If a metric group ID is provided, only that metric group will be returned
+    active : Literal[0, 1]
+        Return active brand metric groups only if set to `1`, by default 0
+    inactive : Literal[0, 1]
+        Return inactive brand metric groups only if set to `1`, by default 0
+    filters : BrandMetricGroupsFilters or dict of filters, optional
+        BrandMetricGroupsFilters object or dictionary of filter parameters, by default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, by default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, by default None
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, by default False
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, by default None
+    per_page : int, optional
+        Number of results per page, by default None
+    max_pages : int, optional
+        Max number of results to return, by default None
+    sort : str, optional
+        Sort response by field, by default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `brand-metric-groups` endpoint results.
+    """
+
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.brand_metric_groups(
+            name,
+            metric_id,
+            active,
+            inactive,
+            filters=filters,
+            fields=fields,
+            include=include,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
 async def brands(
     token: str,
     name: Optional[str] = None,
@@ -323,6 +520,8 @@ async def brandscape_data(
     will be retrieved. This is to allow requesting individual includes if they are
     part of the default.
 
+    To suppress default includes, set `include` to `"no_default"`.
+
     Parameters
     ----------
     token : str
@@ -398,6 +597,269 @@ async def brandscape_data(
             filters=filters,
             fields=fields,
             metric_keys=metric_keys,
+            include=include,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
+async def categories(
+    token: str,
+    name: Optional[str] = None,
+    category_id: Optional[int] = None,
+    sector: OptionalListOr[int] = None,
+    *,
+    filters: OptionalFiltersOrMapping[_filters.CategoriesFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `categories` endpoint.
+
+    Note that this endpoint has a default set of `include` resources:
+    - `sector`
+
+    To suppress default includes, set `include` to `"no_default"`.
+
+    Parameters
+    ----------
+    name : str, optional
+        Search categories by name, by default None
+    category_id : int, optional
+        Fount category ID, by default None
+
+        If an category ID is provided, only that category will be returned
+    sector : int or list[int], optional
+        Filter categories by sector ID, by default 0
+    filters : CategoriesFilters or dict of filters, optional
+        CategoriesFilters object or dictionary of filter parameters, by default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, by default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, by default None
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, by default False
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, by default None
+    per_page : int, optional
+        Number of results per page, by default None
+    max_pages : int, optional
+        Max number of results to return, by default None
+    sort : str, optional
+        Sort response by field, by default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `categories` endpoint results.
+    """
+
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.categories(
+            name,
+            category_id,
+            sector,
+            filters=filters,
+            fields=fields,
+            include=include,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
+async def collections(
+    token: str,
+    name: Optional[str] = None,
+    collection_id: Optional[int] = None,
+    public: Literal[0, 1] = 0,
+    shared_with_me: Literal[0, 1] = 0,
+    mine: Literal[0, 1] = 0,
+    *,
+    filters: OptionalFiltersOrMapping[_filters.CollectionsFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `collections` endpoint.
+
+    Parameters
+    ----------
+    name : str, optional
+        Search collections by name, by default None
+    collection_id : int, optional
+        Fount collection ID, by default None
+
+        If a collection ID is provided, only that collection will be returned
+    public : Literal[0, 1], optional
+        Return public collections only if set to `1`, by default 0
+    shared_with_me : Literal[0, 1], optional
+        Only return collections that have been shared with the user, by default 0
+    mine : Literal[0, 1], optional
+        Only return collections created by the user, by default 0
+    filters : CollectionsFilters or dict of filters, optional
+        CollectionsFilters object or dictionary of filter parameters, by default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, by default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, by default None
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, by default False
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, by default None
+    per_page : int, optional
+        Number of results per page, by default None
+    max_pages : int, optional
+        Max number of results to return, by default None
+    sort : str, optional
+        Sort response by field, by default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `collections` endpoint results.
+    """
+
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.collections(
+            name,
+            collection_id,
+            public,
+            shared_with_me,
+            mine,
+            filters=filters,
+            fields=fields,
+            include=include,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
+async def sectors(
+    token: str,
+    name: Optional[str] = None,
+    sector_id: Optional[int] = None,
+    in_most_influential: Literal[0, 1] = 0,
+    not_in_most_influential: Literal[0, 1] = 0,
+    *,
+    filters: OptionalFiltersOrMapping[_filters.SectorsFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `sectors` endpoint.
+
+    Parameters
+    ----------
+    name : str, optional
+        Search categories by name, by default None
+    sector_id : int, optional
+        Fount sectors ID, by default None
+
+        If a sector ID is provided, only that sector will be returned
+    in_most_influential : Literal[0, 1], optional
+        Sectors that are part of the Most Influential lists, by default 0
+    not_in_most_influential : Literal[0, 1], optional
+        Sectors that are not part of the Most Influential lists, by default 0
+    filters : SectorsFilters or dict of filters, optional
+        SectorsFilters object or dictionary of filter parameters, by default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, by default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, by default None
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, by default False
+    timeout : float
+        Maximum timeout for requests in seconds, by default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, by default True
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, by default None
+    per_page : int, optional
+        Number of results per page, by default None
+    max_pages : int, optional
+        Max number of results to return, by default None
+    sort : str, optional
+        Sort response by field, by default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `sectors` endpoint results.
+    """
+
+    async with Client(token, timeout=timeout, verbose=verbose) as client:
+        return await client.sectors(
+            name,
+            sector_id,
+            in_most_influential,
+            not_in_most_influential,
+            filters=filters,
+            fields=fields,
             include=include,
             stack_data=stack_data,
             **kwargs,

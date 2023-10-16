@@ -131,7 +131,7 @@ bavapi.brands(filters=BrandsFilters(name="Swatch", sector_name="Watches"))
 
 These reference classes must be generated on your machine after installation. Please follow the instructions in the [Installing Reference Classes](../getting-started/reference-classes.md) section.
 
-The following reference classes are available:
+The following reference classes are available as of `v0.10`:
 
 - `Audiences`: Audience IDs for all available Fount audiences.
 - `Countries`: Country IDs for all available Fount countries.
@@ -165,8 +165,8 @@ It is possible to set the time before timeout when performing requests with `bav
 === "Async"
 
     ```py
-    async with bavapi.Client(TOKEN, timeout=60) as client:
-        await client.brands("Facebook")
+    async with bavapi.Client(TOKEN, timeout=60) as bav:
+        await bav.brands("Facebook")
     ```
 
 ## Suppressing progress bars
@@ -180,13 +180,13 @@ It's possible to supress progress bar outputs via the `verbose` parameter in fun
 === Sync (Won't show progress bar)
     ```py
     bavapi.brands(TOKEN, "Facebook", verbose=False)
-```
+    ```
 
 === Async (Won't show progress bar)
     ```py
-    async with bavapi.Client(TOKEN, verbose=False) as client:
-        client.brands("Facebook")
-```
+    async with bavapi.Client(TOKEN, verbose=False) as bav:
+        bav.brands("Facebook")
+    ```
 
 ## Other query parameters
 

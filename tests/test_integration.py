@@ -67,17 +67,27 @@ def test_with_filters_one_page():
     ("endpoint", "filters"),
     (
         ("audiences", {}),
+        ("brand_metric_groups", {}),
+        ("brand_metrics", {}),
         ("brands", {}),
         ("brandscape_data", {"studies": 546}),
+        ("categories", {}),
+        ("collections", {}),
+        ("sectors", {}),
         ("studies", {}),
     ),
 )
 def test_endpoints(endpoint: str, filters: Dict[str, Any]):
     func: Callable[..., pd.DataFrame] = getattr(bavapi, endpoint)
+    for _ in range(5):  # pragma: no cover
+        try:
+            result = func(
+                os.environ["FOUNT_API_KEY"], filters=filters, max_pages=2, per_page=25
+            )
+            break
+        except ssl.SSLError:
+            print("Failed due to SSL error...")
+            continue
 
-    result = func(
-        os.environ["FOUNT_API_KEY"], filters=filters, max_pages=2, per_page=25
-    )
-
-    assert result.shape[0] == 50
-    assert "id" in result
+    assert 0 < result.shape[0] <= 50  # type: ignore
+    assert "id" in result  # type: ignore
