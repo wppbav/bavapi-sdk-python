@@ -11,12 +11,18 @@ through to the `httpx` package.
 
 For more information, go to the WPPBAV Fount website at <https:/fount.wppbav.com>.
 
-Example usage
--------------
+Examples
+--------
+Use top-level endpoint functions for quickly downloading BAV data:
 
 >>> import bavapi
->>> async with bavapi.Client("API_TOKEN") as client:
-...     result = await client.brands(name="Facebook")
+>>> res = bavapi.brands("TOKEN", name="Facebook")
+
+For more advanced (and async compatibility), use the `Client` pattern:
+
+>>> import bavapi
+>>> async with bavapi.Client("API_TOKEN") as bav:
+...     result = await bav.brands(name="Facebook")
 """
 
 from bavapi import filters

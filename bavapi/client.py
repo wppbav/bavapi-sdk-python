@@ -28,6 +28,9 @@ __all__ = ("Client",)
 
 BASE_URL: Final[str] = "https://fount.wppbav.com/api/v2/"
 
+BRANDSCAPE_DEFAULTS: Final[list[str]] = ["study", "brand", "category", "audience"]
+CATEGORIES_DEFAULTS: Final[list[str]] = ["sector"]
+
 F = TypeVar("F", bound=_filters.FountFilters)
 
 OptionalFiltersOrMapping = Optional[_filters.FiltersOrMapping[F]]
@@ -45,8 +48,8 @@ class Client:
     To use the Client class, you will need to precede calls with `await`:
 
     ```py
-    fount = Client("TOKEN")  # creating instance does not use `await`
-    data = await fount.brands("Swatch")  # must use `await`
+    bav = Client("TOKEN")  # creating instance does not use `await`
+    data = await bav.brands("Swatch")  # must use `await`
     ```
 
     For more information, see the `asyncio` documentation for Python.
@@ -71,6 +74,8 @@ class Client:
         If no user_agent is set, `bavapi` will use `"BAVAPI SDK Python"` by default.
     client : HTTPClient, optional
         Authenticated async client from `bavapi.http`, by default None
+
+        If `client` is passed, all other parameters will be ignored.
     verbose : bool, optional
         Set to False to disable progress bar, by default True
 
@@ -86,14 +91,21 @@ class Client:
     This way you get the benefits from `httpx` speed improvements
     and closes the connection when exiting the async with block.
 
-    >>> async with Client("TOKEN") as fount:
-    ...     data = await fount.brands("Swatch")
+    >>> async with Client("TOKEN") as bav:
+    ...     data = await bav.brands("Swatch")
 
     When not using `async with`, close the connection manually by awaiting `aclose`.
 
-    >>> client = Client("TOKEN")
-    >>> data = await fount.brands("Swatch")
-    >>> await client.aclose()
+    >>> bav = Client("TOKEN")
+    >>> data = await bav.brands("Swatch")
+    >>> await bav.aclose()
+
+    If you want to perform multiple endpoint requests with the same `Client`, it is
+    recommended to use `verbose=False` to avoid jumping progress bars.
+
+    >>> async with Client("TOKEN", verbose=False) as bav:
+    ...     resp1 = await bav.brands("Facebook")
+    ...     resp2 = await bav.brands("Microsoft")
     """
 
     @overload
@@ -118,8 +130,6 @@ class Client:
         self,
         *,
         client: HTTPClient = ...,
-        per_page: int = 100,
-        verbose: bool = True,
     ) -> None:
         ...
 
@@ -687,9 +697,7 @@ class Client:
         query: Query[_filters.BrandscapeFilters] = Query(
             filters=filters,
             fields=fields,
-            include=_default_include(
-                include, ["study", "brand", "category", "audience"]
-            ),
+            include=_default_include(include, BRANDSCAPE_DEFAULTS),
             metric_keys=metric_keys,
             **kwargs,
         )
@@ -712,7 +720,7 @@ class Client:
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
         """Query the Fount `categories` endpoint.
-        
+
         Note that this endpoint has a default set of `include` resources:
         - `sector`
 
@@ -780,7 +788,7 @@ class Client:
             id=category_id,
             filters=filters,
             fields=fields,
-            include=_default_include(include, ["sector"]),
+            include=_default_include(include, CATEGORIES_DEFAULTS),
             **kwargs,
         )
 
