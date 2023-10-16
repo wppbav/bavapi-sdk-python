@@ -28,8 +28,8 @@ __all__ = ("Client",)
 
 BASE_URL: Final[str] = "https://fount.wppbav.com/api/v2/"
 
-BRANDSCAPE_DEFAULTS: Final[list[str]] = ["study", "brand", "category", "audience"]
-CATEGORIES_DEFAULTS: Final[list[str]] = ["sector"]
+BRANDSCAPE_DEFAULTS: Final[List[str]] = ["study", "brand", "category", "audience"]
+CATEGORIES_DEFAULTS: Final[List[str]] = ["sector"]
 
 F = TypeVar("F", bound=_filters.FountFilters)
 
