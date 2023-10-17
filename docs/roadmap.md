@@ -12,7 +12,7 @@ This is a non-exhaustive list of potential features & changes to `bavapi` before
 
 ## Known issues
 
-- Sporadic `SSL: CERTIFICATE_VERIFY_FAILED` errors when making requests to the Fount API. Currently, retrying the request usually fixes the issue.
+- [ ] Sporadic `SSL: CERTIFICATE_VERIFY_FAILED` errors when making requests to the Fount API. Currently, retrying the request usually fixes the issue.
 
 ## New fully-supported endpoints
 
