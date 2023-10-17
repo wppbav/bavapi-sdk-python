@@ -11,8 +11,8 @@ from typing import (
     MutableMapping,
     Optional,
     Sequence,
-    TypeVar,
     TypedDict,
+    TypeVar,
     Union,
 )
 
