@@ -19,7 +19,7 @@ Once you have installed Python and have acquired your Fount API token, return to
 - `pydantic` to validate query and filter parameters.
 - `nest-asyncio` to support Jupyter notebooks.
 - `tqdm` to show helpful progress bars.
-- `typing-extensions` for type checking compatibility in Python < 3.10.
+- `typing-extensions` for type-checking compatibility in Python < 3.12.
 
 These libraries will be installed automatically when you install `bavapi`.
 
