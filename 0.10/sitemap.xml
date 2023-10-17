@@ -2,162 +2,152 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/contributing/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/release-notes/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/roadmap/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/audiences/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/brand-metric-groups/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/brand-metrics/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/brands/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/brandscape-data/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/categories/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/collections/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/sectors/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/endpoints/studies/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/getting-started/authentication/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/getting-started/installation/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/getting-started/reference-classes/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/SUMMARY/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/client/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/exceptions/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/filters/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/http/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/query/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/sync/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/parsing/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/parsing/params/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/parsing/responses/</loc>
-         <lastmod>2023-10-16</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/reference/</loc>
-         <lastmod>2023-10-16</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/reference/reference/generate_reference/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/usage/advanced/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/usage/basic/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/0.10/usage/project-tips/</loc>
-         <lastmod>2023-10-16</lastmod>
+         <lastmod>2023-10-17</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
