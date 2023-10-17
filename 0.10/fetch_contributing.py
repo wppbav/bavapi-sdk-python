@@ -1,3 +1,5 @@
+"""Sync top-level `CONTRIBUTING.md` file with `contributing.md` in documentation."""
+
 import re
 
 # Replace absolute documentation URLs with relative URIs
