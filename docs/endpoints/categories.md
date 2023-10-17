@@ -34,6 +34,7 @@ For more information on available filters and functionality, see the Fount docum
 These filters are available directly within the function/method:
 
 - `name`
+- `category_id`
 - `sector`
 
 For other filters, passing a `CategoriesFilters` instance to the `filters` parameter is required.
