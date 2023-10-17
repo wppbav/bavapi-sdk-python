@@ -209,14 +209,17 @@ def docs_deploy(session: nox.Session) -> None:
 
     def version_tuple(string: str) -> tuple[int, ...]:
         return tuple(int(i) for i in string.split("."))
-    
-    def get_versions(list_args: tuple[str, ...], rebase: bool = False) -> set[tuple[int, ...]]:
+
+    def get_versions(
+        list_args: tuple[str, ...], rebase: bool = False
+    ) -> set[tuple[int, ...]]:
         if rebase:
             list_args = tuple(["--rebase"] + list(list_args))
-        
+
         out = cast(str, session.run("mike", "list", *list_args, silent=True))
         return {
-            tuple(int(i) for i in v.partition(" ")[0].split(".")) for v in out.splitlines()
+            tuple(int(i) for i in v.partition(" ")[0].split("."))
+            for v in out.splitlines()
         }
 
     if not any(
