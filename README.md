@@ -27,7 +27,7 @@ You will also need a BAV API token. For more information, go to the [Authenticat
 
 ### Dependencies
 
-- `httpx >= 1.2`
+- `httpx >= 0.20`
 - `nest-asyncio >= 1.5`
 - `pandas >= 1.0`
 - `pydantic >= 2.0`
