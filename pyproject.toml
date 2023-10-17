@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "wpp-bavapi"
-version = "0.10.0"
+version = "0.10.1"
 authors = [
     { name = "Ignacio Maiz Vilches", email = "ignacio.maiz@bavgroup.com" },
 ]
@@ -24,7 +24,7 @@ keywords = [
 ]
 license = { text = "Apache 2.0" }
 classifiers = [
-    'Development Status :: 3 - Alpha',
+    'Development Status :: 4 - Beta',
     'Intended Audience :: Developers',
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: Apache Software License',
@@ -40,12 +40,12 @@ classifiers = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 dependencies = [
-    "httpx >= 0.20",
-    "nest-asyncio >= 1.5.6",
-    "pandas >= 0.16.2",
-    "pydantic >= 2",
-    "tqdm >= 4.62",
-    "typing-extensions >= 4.6; python_version < '3.12'",
+    "httpx >= 1.2",
+    "nest-asyncio >= 1.5",
+    "pandas >= 1.0",
+    "pydantic >= 2.0",                                   # incompatible with v1
+    "tqdm >= 4.62",                                      # consistent asyncio.gather
+    "typing-extensions >= 4.6; python_version < '3.12'", # PEP-692 Unpack support
 ]
 
 [project.urls]
@@ -56,7 +56,7 @@ repository = "https://github.com/wppbav/wpp-bavapi/"
 dev = ["black", "nox", "pip-tools"]
 doc = [
     "mkdocs",
-    "mkdocs-material",
+    "mkdocs-material[imaging]",
     "mkdocstrings[python]",
     "mkdocs-gen-files",
     "mkdocs-literate-nav",
@@ -67,7 +67,7 @@ lint = ["isort", "mypy", "pylint", "pandas-stubs"]
 test = ["coverage", "pytest", "pytest-asyncio", "python-dotenv"]
 
 [project.scripts]
-bavapi-gen-refs = "bavapi.reference.generate_reference:main"
+bavapi-gen-refs = "bavapi._reference.generate_reference:main"
 
 [tool.setuptools.packages.find]
 include = ["bavapi*"]
