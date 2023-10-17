@@ -59,12 +59,17 @@ In order to validate the request parameters before sending a bad request, `bavap
 
 Each endpoint has a filter class associated with it, as each endpoint has its own filter requirements:
 
-| Endpoint            | Filters class                                    |
-| ------------------- | ------------------------------------------------ |
-| `"audiences"`       | [`AudiencesFilters`][filters.AudiencesFilters]   |
-| `"brands"`          | [`BrandsFilters`][filters.BrandsFilters]         |
-| `"brandscape-data"` | [`BrandscapeFilters`][filters.BrandscapeFilters] |
-| `"studies"`         | [`StudiesFilters`][filters.StudiesFilters]       |
+| Endpoint                | Filters class                                                  |
+| ----------------------- | -------------------------------------------------------------- |
+| `"audiences"`           | [`AudiencesFilters`][filters.AudiencesFilters]                 |
+| `"brand-metric-groups"` | [`BrandMetricGroupsFilters`][filters.BrandMetricGroupsFilters] |
+| `"brand-metrics"`       | [`BrandMetricsFilters`][filters.BrandMetricsFilters]           |
+| `"brands"`              | [`BrandsFilters`][filters.BrandsFilters]                       |
+| `"brandscape-data"`     | [`BrandscapeFilters`][filters.BrandscapeFilters]               |
+| `"categories"`          | [`CategoriesFilters`][filters.CategoriesFilters]               |
+| `"collections"`         | [`CollectionsFilters`][filters.CollectionsFilters]             |
+| `"sectors"`             | [`SectorsFilters`][filters.SectorsFilters]                     |
+| `"studies"`             | [`StudiesFilters`][filters.StudiesFilters]                     |
 
 !!! warning
     Using a filters class not meant for a specific endpoint will raise a `ValueError`.
