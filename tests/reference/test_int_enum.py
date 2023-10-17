@@ -1,6 +1,6 @@
 # pylint: disable=missing-class-docstring, missing-module-docstring, missing-function-docstring
 
-from bavapi.reference._int_enum import IntEnum
+from bavapi._reference.int_enum import IntEnum
 
 
 def test_int_enum_str():
