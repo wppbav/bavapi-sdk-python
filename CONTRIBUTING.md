@@ -35,13 +35,13 @@ pip install -e .[dev, doc, test, lint]
 
 This will install all optional dependencies which are necessary for contributing to the code base.
 
-## Fount API Key
+## BAV API Key
 
-You will need a Fount API key to perform requests to the API through `bavapi`.
+You will need a BAV API key to perform requests to the API through `bavapi`.
 
 To get and use an API key, see the [Authentication](https://wppbav.github.io/bavapi-sdk-python/latest/getting-started/authentication) section of the Getting Started guide.
 
-In order to run integration tests, you will need to use an `.env` file to store your Fount API key as `FOUNT_API_KEY` (you can also set the environment variable directly). See the [instructions](https://wppbav.github.io/bavapi-sdk-python/latest/getting-started/authentication#recommended-way-to-manage-api-keys) for more details.
+In order to run integration tests and the `bavapi-gen-refs` [command](https://wppbav.github.io/bavapi-sdk-python/latest/getting-started/reference-classes), you will need to use an `.env` file to store your BAV API key as `BAV_API_KEY` (you can also set the environment variable directly). See the [instructions](https://wppbav.github.io/bavapi-sdk-python/latest/getting-started/authentication#recommended-way-to-manage-api-keys) for more details.
 
 ## Tools and frameworks
 
