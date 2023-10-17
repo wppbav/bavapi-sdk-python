@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.bd3936ea.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.35e1ed30.min.css">
       
         
         <link rel="stylesheet" href="../../../assets/stylesheets/palette.356b1318.min.css">
@@ -1211,7 +1211,7 @@
       
         <li class="md-nav__item">
   <a href="#parsing.responses" class="md-nav__link">
-    parsing.responses
+    responses
   </a>
   
 </li>
@@ -1345,7 +1345,7 @@
       
         <li class="md-nav__item">
   <a href="#parsing.responses" class="md-nav__link">
-    parsing.responses
+    responses
   </a>
   
 </li>
@@ -1394,6 +1394,7 @@
 <div class="doc doc-object doc-module">
 
 
+
 <a id="parsing.responses"></a>
   <div class="doc doc-contents first">
   
@@ -1411,12 +1412,14 @@
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h2 id="parsing.responses.flatten" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">flatten</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">flatten</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 <a href="#parsing.responses.flatten" class="headerlink" title="Permanent link">&para;</a></h2>
 
@@ -1432,6 +1435,8 @@ represent multiple entries on the right table of the <code>JOIN</code>.</p>
 as the PRODUCT of the nested lists. If the mapping has one nested list with 5
 elements, and another nested list with 5 elements,
 the function will yield 25 (5x5) dictionaries in total.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1518,6 +1523,8 @@ the function will yield 25 (5x5) dictionaries in total.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Yields:</strong></p>
   <table>
     <thead>
@@ -1542,9 +1549,9 @@ flattened dictionary.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\parsing\responses.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-75"> 75</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\parsing\responses.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-75"> 75</a></span>
 <span class="normal"><a href="#__codelineno-0-76"> 76</a></span>
 <span class="normal"><a href="#__codelineno-0-77"> 77</a></span>
 <span class="normal"><a href="#__codelineno-0-78"> 78</a></span>
@@ -1656,17 +1663,19 @@ flattened dictionary.</p>
 </span><span id="__span-0-129"><a id="__codelineno-0-129" name="__codelineno-0-129"></a>                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flatten</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">expand</span><span class="p">):</span>
 </span><span id="__span-0-130"><a id="__codelineno-0-130" name="__codelineno-0-130"></a>                    <span class="k">yield</span> <span class="p">{</span><span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">new</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="n">key</span><span class="p">},</span> <span class="o">**</span><span class="n">i</span><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h2 id="parsing.responses.flatten_mapping" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">flatten_mapping</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">flatten_mapping</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
 
 <a href="#parsing.responses.flatten_mapping" class="headerlink" title="Permanent link">&para;</a></h2>
 
@@ -1675,6 +1684,8 @@ flattened dictionary.</p>
   
       <p>Recursively flattens all nested dictionaries into top level key-value pairs.</p>
 <p>Include prefixes or suffixes if nested keys clash with top-level keys.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1747,6 +1758,8 @@ flattened dictionary.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -1769,9 +1782,9 @@ flattened dictionary.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\parsing\responses.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-22">22</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\parsing\responses.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-22">22</a></span>
 <span class="normal"><a href="#__codelineno-0-23">23</a></span>
 <span class="normal"><a href="#__codelineno-0-24">24</a></span>
 <span class="normal"><a href="#__codelineno-0-25">25</a></span>
@@ -1873,17 +1886,19 @@ flattened dictionary.</p>
 </span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a>    <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">expanded</span><span class="p">)</span>
 </span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a>    <span class="k">return</span> <span class="n">res</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h2 id="parsing.responses.parse_response" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">parse_response</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">parse_response</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
 
 <a href="#parsing.responses.parse_response" class="headerlink" title="Permanent link">&para;</a></h2>
 
@@ -1891,6 +1906,8 @@ flattened dictionary.</p>
   <div class="doc doc-contents ">
   
       <p>Parse Fount API JSON into a pandas DataFrame.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1963,6 +1980,8 @@ in the resulting DataFrame, by default False.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -1974,7 +1993,7 @@ in the resulting DataFrame, by default False.</p>
     <tbody>
         <tr>
           <td>
-                <code><span title="pandas">pd</span>.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1985,9 +2004,9 @@ in the resulting DataFrame, by default False.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\parsing\responses.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-133">133</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\parsing\responses.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-133">133</a></span>
 <span class="normal"><a href="#__codelineno-0-134">134</a></span>
 <span class="normal"><a href="#__codelineno-0-135">135</a></span>
 <span class="normal"><a href="#__codelineno-0-136">136</a></span>
@@ -2053,7 +2072,7 @@ in the resulting DataFrame, by default False.</p>
 </span><span id="__span-0-164"><a id="__codelineno-0-164" name="__codelineno-0-164"></a>        <span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </span><span id="__span-0-165"><a id="__codelineno-0-165" name="__codelineno-0-165"></a>    <span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -2152,7 +2171,7 @@ in the resulting DataFrame, by default False.</p>
     <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.94c44541.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.aecac24b.min.js"></script>
       
     
   </body>

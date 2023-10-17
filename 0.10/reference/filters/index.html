@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.bd3936ea.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
@@ -1516,6 +1516,7 @@
 <div class="doc doc-object doc-module">
 
 
+
 <a id="filters"></a>
   <div class="doc doc-contents first">
   
@@ -1523,6 +1524,8 @@
 <p>All endpoint filters are subclasses of <code>FountFilters</code>.</p>
 <p>You can use any endpoint filter class with <code>raw_query</code> functions and methods,
 but you must use endpoint-specific filters for each endpoint function or method.</p>
+
+
 
 <p><strong>Examples:</strong></p>
     <p>Use <code>BrandsFilters</code> with the <code>brands</code> endpoint:</p>
@@ -1552,21 +1555,24 @@ but you must use endpoint-specific filters for each endpoint function or method.
 
 
 
+
 <h2 id="filters.AudiencesFilters" class="doc doc-heading">
-        <code>AudiencesFilters</code>
+          <code>AudiencesFilters</code>
 
 
 <a href="#filters.AudiencesFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
 
   
       <p>Filters for the <code>brands</code> endpoint.</p>
 <p>See <a href="https://developer.wppbav.com/docs/2.x/core-resources/audiences">https://developer.wppbav.com/docs/2.x/core-resources/audiences</a>
 for more info.</p>
+
+
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -1581,7 +1587,7 @@ for more info.</p>
         <tr>
           <td><code>active</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1592,7 +1598,7 @@ for more info.</p>
         <tr>
           <td><code>inactive</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1603,7 +1609,7 @@ for more info.</p>
         <tr>
           <td><code>public</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1614,7 +1620,7 @@ for more info.</p>
         <tr>
           <td><code>private</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1625,7 +1631,7 @@ for more info.</p>
         <tr>
           <td><code>groups</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1635,6 +1641,8 @@ for more info.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Other Parameters:</strong></p>
   <table>
@@ -1649,7 +1657,7 @@ for more info.</p>
         <tr>
           <td><code>updated_since</code></td>
           <td>
-                <code>str, date or datetime</code>
+                <code>(str, date or datetime)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1660,10 +1668,9 @@ for more info.</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-124">124</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-124">124</a></span>
 <span class="normal"><a href="#__codelineno-0-125">125</a></span>
 <span class="normal"><a href="#__codelineno-0-126">126</a></span>
 <span class="normal"><a href="#__codelineno-0-127">127</a></span>
@@ -1723,7 +1730,7 @@ for more info.</p>
 </span><span id="__span-0-152"><a id="__codelineno-0-152" name="__codelineno-0-152"></a>    <span class="n">private</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span id="__span-0-153"><a id="__codelineno-0-153" name="__codelineno-0-153"></a>    <span class="n">groups</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -1749,21 +1756,24 @@ for more info.</p>
 
 
 
+
 <h2 id="filters.BrandMetricGroupsFilters" class="doc doc-heading">
-        <code>BrandMetricGroupsFilters</code>
+          <code>BrandMetricGroupsFilters</code>
 
 
 <a href="#filters.BrandMetricGroupsFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
 
   
       <p>Filters for the <code>brand-metric-groups</code> endpoint.</p>
 <p>See <a href="https://developer.wppbav.com/docs/2.x/core-resources/brand-metric-groups">https://developer.wppbav.com/docs/2.x/core-resources/brand-metric-groups</a>
 for more info.</p>
+
+
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -1778,7 +1788,7 @@ for more info.</p>
         <tr>
           <td><code>active</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1789,7 +1799,7 @@ for more info.</p>
         <tr>
           <td><code>inactive</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1800,10 +1810,9 @@ for more info.</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-246">246</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-246">246</a></span>
 <span class="normal"><a href="#__codelineno-0-247">247</a></span>
 <span class="normal"><a href="#__codelineno-0-248">248</a></span>
 <span class="normal"><a href="#__codelineno-0-249">249</a></span>
@@ -1835,7 +1844,7 @@ for more info.</p>
 </span><span id="__span-0-260"><a id="__codelineno-0-260" name="__codelineno-0-260"></a>    <span class="n">active</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span id="__span-0-261"><a id="__codelineno-0-261" name="__codelineno-0-261"></a>    <span class="n">inactive</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -1861,22 +1870,25 @@ for more info.</p>
 
 
 
+
 <h2 id="filters.BrandMetricsFilters" class="doc doc-heading">
-        <code>BrandMetricsFilters</code>
+          <code>BrandMetricsFilters</code>
 
 
 <a href="#filters.BrandMetricsFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
 
   
       <p>Filters for the <code>brand-metrics</code> endpoint.</p>
 <p><code>groups</code> filters by the Fount IDs of the specific resources.</p>
 <p>See <a href="https://developer.wppbav.com/docs/2.x/core-resources/brand-metrics">https://developer.wppbav.com/docs/2.x/core-resources/brand-metrics</a>
 for more info.</p>
+
+
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -1891,7 +1903,7 @@ for more info.</p>
         <tr>
           <td><code>active</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1902,7 +1914,7 @@ for more info.</p>
         <tr>
           <td><code>inactive</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1913,7 +1925,7 @@ for more info.</p>
         <tr>
           <td><code>public</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1924,7 +1936,7 @@ for more info.</p>
         <tr>
           <td><code>private</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1935,7 +1947,7 @@ for more info.</p>
         <tr>
           <td><code>groups</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1946,7 +1958,7 @@ for more info.</p>
         <tr>
           <td><code>current</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1957,7 +1969,7 @@ for more info.</p>
         <tr>
           <td><code>legacy</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1968,7 +1980,7 @@ for more info.</p>
         <tr>
           <td><code>core</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1979,7 +1991,7 @@ for more info.</p>
         <tr>
           <td><code>custom</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -1989,6 +2001,8 @@ for more info.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Other Parameters:</strong></p>
   <table>
@@ -2003,7 +2017,7 @@ for more info.</p>
         <tr>
           <td><code>updated_since</code></td>
           <td>
-                <code>str, date or datetime</code>
+                <code>(str, date or datetime)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2014,10 +2028,9 @@ for more info.</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-200">200</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-200">200</a></span>
 <span class="normal"><a href="#__codelineno-0-201">201</a></span>
 <span class="normal"><a href="#__codelineno-0-202">202</a></span>
 <span class="normal"><a href="#__codelineno-0-203">203</a></span>
@@ -2105,7 +2118,7 @@ for more info.</p>
 </span><span id="__span-0-242"><a id="__codelineno-0-242" name="__codelineno-0-242"></a>    <span class="n">core</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span id="__span-0-243"><a id="__codelineno-0-243" name="__codelineno-0-243"></a>    <span class="n">custom</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -2131,16 +2144,17 @@ for more info.</p>
 
 
 
+
 <h2 id="filters.BrandsFilters" class="doc doc-heading">
-        <code>BrandsFilters</code>
+          <code>BrandsFilters</code>
 
 
 <a href="#filters.BrandsFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
 
   
       <p>Filters for the <code>brands</code> endpoint.</p>
@@ -2148,6 +2162,8 @@ for more info.</p>
 the Fount IDs of the specific resources.</p>
 <p>See <a href="https://developer.wppbav.com/docs/2.x/core-resources/brands">https://developer.wppbav.com/docs/2.x/core-resources/brands</a>
 for more info.</p>
+
+
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -2162,7 +2178,7 @@ for more info.</p>
         <tr>
           <td><code>country_codes</code></td>
           <td>
-                <code>str or list[str], optional</code>
+                <code>(str or list[str], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2173,7 +2189,7 @@ for more info.</p>
         <tr>
           <td><code>year_numbers</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2184,7 +2200,7 @@ for more info.</p>
         <tr>
           <td><code>categories</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2195,7 +2211,7 @@ for more info.</p>
         <tr>
           <td><code>countries</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2206,7 +2222,7 @@ for more info.</p>
         <tr>
           <td><code>regions</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2217,7 +2233,7 @@ for more info.</p>
         <tr>
           <td><code>sectors</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2228,7 +2244,7 @@ for more info.</p>
         <tr>
           <td><code>studies</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2239,7 +2255,7 @@ for more info.</p>
         <tr>
           <td><code>years</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2249,6 +2265,8 @@ for more info.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Other Parameters:</strong></p>
   <table>
@@ -2263,7 +2281,7 @@ for more info.</p>
         <tr>
           <td><code>updated_since</code></td>
           <td>
-                <code>str, date or datetime</code>
+                <code>(str, date or datetime)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2274,10 +2292,9 @@ for more info.</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-156">156</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-156">156</a></span>
 <span class="normal"><a href="#__codelineno-0-157">157</a></span>
 <span class="normal"><a href="#__codelineno-0-158">158</a></span>
 <span class="normal"><a href="#__codelineno-0-159">159</a></span>
@@ -2361,7 +2378,7 @@ for more info.</p>
 </span><span id="__span-0-196"><a id="__codelineno-0-196" name="__codelineno-0-196"></a>    <span class="n">studies</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="__span-0-197"><a id="__codelineno-0-197" name="__codelineno-0-197"></a>    <span class="n">years</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -2387,16 +2404,17 @@ for more info.</p>
 
 
 
+
 <h2 id="filters.BrandscapeFilters" class="doc doc-heading">
-        <code>BrandscapeFilters</code>
+          <code>BrandscapeFilters</code>
 
 
 <a href="#filters.BrandscapeFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
 
   
       <p>Filters for the <code>studies</code> endpoint.</p>
@@ -2417,6 +2435,8 @@ However, "Category + Audience" will not.</p>
 data for all audiences (there are more than 30 standard audiences).</p>
 <p>The <code>Audiences</code> class is provided to make it easier to filter audiences.</p>
 
+
+
   <p><strong>Attributes:</strong></p>
   <table>
     <thead>
@@ -2430,7 +2450,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>country_code</code></td>
           <td>
-                <code>str or list[str], optional</code>
+                <code>(str or list[str], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2441,7 +2461,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>year_number</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2452,7 +2472,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>audiences</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2464,7 +2484,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>brand_name</code></td>
           <td>
-                <code>str, optional</code>
+                <code>(str, optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2475,7 +2495,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>brands</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2486,7 +2506,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>categories</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2497,7 +2517,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>countries</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2509,7 +2529,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>studies</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2520,7 +2540,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>years</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2530,6 +2550,8 @@ data for all audiences (there are more than 30 standard audiences).</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Other Parameters:</strong></p>
   <table>
@@ -2544,7 +2566,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
         <tr>
           <td><code>updated_since</code></td>
           <td>
-                <code>str, date or datetime</code>
+                <code>(str, date or datetime)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2555,10 +2577,9 @@ data for all audiences (there are more than 30 standard audiences).</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-264">264</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-264">264</a></span>
 <span class="normal"><a href="#__codelineno-0-265">265</a></span>
 <span class="normal"><a href="#__codelineno-0-266">266</a></span>
 <span class="normal"><a href="#__codelineno-0-267">267</a></span>
@@ -2754,7 +2775,7 @@ data for all audiences (there are more than 30 standard audiences).</p>
 </span><span id="__span-0-360"><a id="__codelineno-0-360" name="__codelineno-0-360"></a>
 </span><span id="__span-0-361"><a id="__codelineno-0-361" name="__codelineno-0-361"></a>        <span class="k">return</span> <span class="n">values</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -2780,21 +2801,24 @@ data for all audiences (there are more than 30 standard audiences).</p>
 
 
 
+
 <h2 id="filters.CategoriesFilters" class="doc doc-heading">
-        <code>CategoriesFilters</code>
+          <code>CategoriesFilters</code>
 
 
 <a href="#filters.CategoriesFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
 
   
       <p>Filters for the <code>categories</code> endpoint.</p>
 <p>See <a href="https://developer.wppbav.com/docs/2.x/core-resources/categories">https://developer.wppbav.com/docs/2.x/core-resources/categories</a>
 for more info.</p>
+
+
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -2809,7 +2833,7 @@ for more info.</p>
         <tr>
           <td><code>sector</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2819,6 +2843,8 @@ for more info.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Other Parameters:</strong></p>
   <table>
@@ -2833,7 +2859,7 @@ for more info.</p>
         <tr>
           <td><code>updated_since</code></td>
           <td>
-                <code>str, date or datetime</code>
+                <code>(str, date or datetime)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2844,10 +2870,9 @@ for more info.</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-364">364</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-364">364</a></span>
 <span class="normal"><a href="#__codelineno-0-365">365</a></span>
 <span class="normal"><a href="#__codelineno-0-366">366</a></span>
 <span class="normal"><a href="#__codelineno-0-367">367</a></span>
@@ -2883,7 +2908,7 @@ for more info.</p>
 </span><span id="__span-0-380"><a id="__codelineno-0-380" name="__codelineno-0-380"></a>
 </span><span id="__span-0-381"><a id="__codelineno-0-381" name="__codelineno-0-381"></a>    <span class="n">sector</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -2909,21 +2934,24 @@ for more info.</p>
 
 
 
+
 <h2 id="filters.CollectionsFilters" class="doc doc-heading">
-        <code>CollectionsFilters</code>
+          <code>CollectionsFilters</code>
 
 
 <a href="#filters.CollectionsFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
 
   
       <p>Filters for the <code>collections</code> endpoint.</p>
 <p>See <a href="https://developer.wppbav.com/docs/2.x/core-resources/collections">https://developer.wppbav.com/docs/2.x/core-resources/collections</a>
 for more info.</p>
+
+
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -2938,7 +2966,7 @@ for more info.</p>
         <tr>
           <td><code>public</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2949,7 +2977,7 @@ for more info.</p>
         <tr>
           <td><code>shared_with_me</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2960,7 +2988,7 @@ for more info.</p>
         <tr>
           <td><code>mine</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2970,6 +2998,8 @@ for more info.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Other Parameters:</strong></p>
   <table>
@@ -2984,7 +3014,7 @@ for more info.</p>
         <tr>
           <td><code>updated_since</code></td>
           <td>
-                <code>str, date or datetime</code>
+                <code>(str, date or datetime)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2995,10 +3025,9 @@ for more info.</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-384">384</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-384">384</a></span>
 <span class="normal"><a href="#__codelineno-0-385">385</a></span>
 <span class="normal"><a href="#__codelineno-0-386">386</a></span>
 <span class="normal"><a href="#__codelineno-0-387">387</a></span>
@@ -3046,7 +3075,7 @@ for more info.</p>
 </span><span id="__span-0-406"><a id="__codelineno-0-406" name="__codelineno-0-406"></a>    <span class="n">shared_with_me</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span id="__span-0-407"><a id="__codelineno-0-407" name="__codelineno-0-407"></a>    <span class="n">mine</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -3072,20 +3101,23 @@ for more info.</p>
 
 
 
+
 <h2 id="filters.FountFilters" class="doc doc-heading">
-        <code>FountFilters</code>
+          <code>FountFilters</code>
 
 
 <a href="#filters.FountFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="pydantic.BaseModel">BaseModel</span></code></p>
 
   
       <p>Base class for Fount API Filters.</p>
 <p>Can be used with <code>raw_query</code> endpoints.</p>
+
+
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -3100,7 +3132,7 @@ for more info.</p>
         <tr>
           <td><code>updated_since</code></td>
           <td>
-                <code>str, date or datetime, optional</code>
+                <code>(str, date or datetime, optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3123,10 +3155,9 @@ the response data.</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-59"> 59</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-59"> 59</a></span>
 <span class="normal"><a href="#__codelineno-0-60"> 60</a></span>
 <span class="normal"><a href="#__codelineno-0-61"> 61</a></span>
 <span class="normal"><a href="#__codelineno-0-62"> 62</a></span>
@@ -3252,7 +3283,7 @@ the response data.</p>
 </span><span id="__span-0-120"><a id="__codelineno-0-120" name="__codelineno-0-120"></a>
 </span><span id="__span-0-121"><a id="__codelineno-0-121" name="__codelineno-0-121"></a>        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">new_filters</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -3266,12 +3297,14 @@ the response data.</p>
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="filters.FountFilters.ensure" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">ensure</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="o">**</span><span class="n">addl_filters</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">ensure</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="o">**</span><span class="n">addl_filters</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
@@ -3284,6 +3317,8 @@ the response data.</p>
   
       <p>Ensure <code>FountFilters</code> class from dictionary or other <code>FountFilters</code> class.</p>
 <p>Defaults to values passed to <code>filters</code> when any additional filters overlap.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -3327,6 +3362,8 @@ the response data.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -3338,7 +3375,7 @@ the response data.</p>
     <tbody>
         <tr>
           <td>
-                <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a>, optional</code>
+                <code>(<a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a>, optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3349,9 +3386,9 @@ the response data.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\filters.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-85"> 85</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\filters.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-85"> 85</a></span>
 <span class="normal"><a href="#__codelineno-0-86"> 86</a></span>
 <span class="normal"><a href="#__codelineno-0-87"> 87</a></span>
 <span class="normal"><a href="#__codelineno-0-88"> 88</a></span>
@@ -3425,7 +3462,7 @@ the response data.</p>
 </span><span id="__span-0-120"><a id="__codelineno-0-120" name="__codelineno-0-120"></a>
 </span><span id="__span-0-121"><a id="__codelineno-0-121" name="__codelineno-0-121"></a>    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">new_filters</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -3442,21 +3479,24 @@ the response data.</p>
 
 
 
+
 <h2 id="filters.SectorsFilters" class="doc doc-heading">
-        <code>SectorsFilters</code>
+          <code>SectorsFilters</code>
 
 
 <a href="#filters.SectorsFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
 
   
       <p>Filters for the <code>sectors</code> endpoint.</p>
 <p>See <a href="https://developer.wppbav.com/docs/2.x/core-resources/sectors">https://developer.wppbav.com/docs/2.x/core-resources/sectors</a>
 for more info.</p>
+
+
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -3471,7 +3511,7 @@ for more info.</p>
         <tr>
           <td><code>in_most_influential</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3482,7 +3522,7 @@ for more info.</p>
         <tr>
           <td><code>not_in_most_influential</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3492,6 +3532,8 @@ for more info.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Other Parameters:</strong></p>
   <table>
@@ -3506,7 +3548,7 @@ for more info.</p>
         <tr>
           <td><code>updated_since</code></td>
           <td>
-                <code>str, date or datetime</code>
+                <code>(str, date or datetime)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3517,10 +3559,9 @@ for more info.</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-410">410</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-410">410</a></span>
 <span class="normal"><a href="#__codelineno-0-411">411</a></span>
 <span class="normal"><a href="#__codelineno-0-412">412</a></span>
 <span class="normal"><a href="#__codelineno-0-413">413</a></span>
@@ -3562,7 +3603,7 @@ for more info.</p>
 </span><span id="__span-0-429"><a id="__codelineno-0-429" name="__codelineno-0-429"></a>    <span class="n">in_most_influential</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span id="__span-0-430"><a id="__codelineno-0-430" name="__codelineno-0-430"></a>    <span class="n">not_in_most_influential</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -3588,22 +3629,25 @@ for more info.</p>
 
 
 
+
 <h2 id="filters.StudiesFilters" class="doc doc-heading">
-        <code>StudiesFilters</code>
+          <code>StudiesFilters</code>
 
 
 <a href="#filters.StudiesFilters" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
-      <p class="doc doc-class-bases">
-        Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
+          <p class="doc doc-class-bases">
+            Bases: <code><a class="autorefs autorefs-internal" title="filters.FountFilters" href="#filters.FountFilters">FountFilters</a></code></p>
 
   
       <p>Filters for the <code>studies</code> endpoint.</p>
 <p><code>years</code>, <code>countries</code> and <code>regions</code> filter by the Fount IDs of the specific resources.</p>
 <p>See <a href="https://developer.wppbav.com/docs/2.x/core-resources/studies">https://developer.wppbav.com/docs/2.x/core-resources/studies</a>
 for more info.</p>
+
+
 
   <p><strong>Attributes:</strong></p>
   <table>
@@ -3618,7 +3662,7 @@ for more info.</p>
         <tr>
           <td><code>country_codes</code></td>
           <td>
-                <code>str or list[str], optional</code>
+                <code>(str or list[str], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3629,7 +3673,7 @@ for more info.</p>
         <tr>
           <td><code>year_numbers</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3640,7 +3684,7 @@ for more info.</p>
         <tr>
           <td><code>full_year</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3651,7 +3695,7 @@ for more info.</p>
         <tr>
           <td><code>released</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3662,7 +3706,7 @@ for more info.</p>
         <tr>
           <td><code>unreleased</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3673,7 +3717,7 @@ for more info.</p>
         <tr>
           <td><code>open_survey</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3684,7 +3728,7 @@ for more info.</p>
         <tr>
           <td><code>active</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3695,7 +3739,7 @@ for more info.</p>
         <tr>
           <td><code>inactive</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3706,7 +3750,7 @@ for more info.</p>
         <tr>
           <td><code>bav_study</code></td>
           <td>
-                <code><span title="typing.Literal">Literal</span>[0, 1], optional</code>
+                <code>(<span title="typing.Literal">Literal</span>[0, 1], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3717,7 +3761,7 @@ for more info.</p>
         <tr>
           <td><code>data_updated_since</code></td>
           <td>
-                <code><span title="bavapi.typing.DTValues">DTValues</span>, optional</code>
+                <code>(<span title="bavapi.typing.DTValues">DTValues</span>, optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3728,7 +3772,7 @@ for more info.</p>
         <tr>
           <td><code>countries</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3739,7 +3783,7 @@ for more info.</p>
         <tr>
           <td><code>regions</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3750,7 +3794,7 @@ for more info.</p>
         <tr>
           <td><code>years</code></td>
           <td>
-                <code>int or list[int], optional</code>
+                <code>(int or list[int], optional)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3760,6 +3804,8 @@ for more info.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Other Parameters:</strong></p>
   <table>
@@ -3774,7 +3820,7 @@ for more info.</p>
         <tr>
           <td><code>updated_since</code></td>
           <td>
-                <code>str, date or datetime</code>
+                <code>(str, date or datetime)</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3785,10 +3831,9 @@ for more info.</p>
     </tbody>
   </table>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\filters.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-433">433</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\filters.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-433">433</a></span>
 <span class="normal"><a href="#__codelineno-0-434">434</a></span>
 <span class="normal"><a href="#__codelineno-0-435">435</a></span>
 <span class="normal"><a href="#__codelineno-0-436">436</a></span>
@@ -3914,7 +3959,7 @@ for more info.</p>
 </span><span id="__span-0-494"><a id="__codelineno-0-494" name="__codelineno-0-494"></a>            <span class="k">return</span> <span class="n">value</span>
 </span><span id="__span-0-495"><a id="__codelineno-0-495" name="__codelineno-0-495"></a>        <span class="k">return</span> <span class="n">parse_date</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -4031,7 +4076,7 @@ for more info.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.94c44541.min.js"></script>
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
       
     
   </body>

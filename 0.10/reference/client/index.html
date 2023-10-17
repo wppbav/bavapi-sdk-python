@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.6">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.bd3936ea.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35e1ed30.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
@@ -1558,11 +1558,14 @@
 <div class="doc doc-object doc-module">
 
 
+
 <a id="client"></a>
   <div class="doc doc-contents first">
   
       <p>Asynchronous BAV API client interface.</p>
 <p>Similar to <code>requests.Session</code> or <code>httpx.AsyncClient</code> (uses the latter as dependency).</p>
+
+
 
 <p><strong>Examples:</strong></p>
     <p>Create a client instance and make a request to the <code>brands</code> endpoint.</p>
@@ -1604,8 +1607,9 @@
 
 
 
+
 <h2 id="client.Client" class="doc doc-heading">
-        <code>Client</code>
+          <code>Client</code>
 
 
 <a href="#client.Client" class="headerlink" title="Permanent link">&para;</a></h2>
@@ -1625,6 +1629,8 @@ data in multiple pages or requests instead of one single download)</p>
 </span></code></pre></div>
 <p>For more information, see the <code>asyncio</code> documentation for Python.</p>
 <p>Either <code>auth_token</code> or <code>client</code> are required to instantiate a Client.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -1741,6 +1747,8 @@ data in multiple pages or requests instead of one single download)</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Raises:</strong></p>
   <table>
     <thead>
@@ -1763,6 +1771,8 @@ data in multiple pages or requests instead of one single download)</p>
     </tbody>
   </table>
 
+
+
 <p><strong>Examples:</strong></p>
     <p>Use <code>async with</code> to get data and close the connection.</p>
 <p>This way you get the benefits from <code>httpx</code> speed improvements
@@ -1782,10 +1792,9 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gp">... </span>    <span class="n">resp2</span> <span class="o">=</span> <span class="k">await</span> <span class="n">bav</span><span class="o">.</span><span class="n">brands</span><span class="p">(</span><span class="s2">&quot;Microsoft&quot;</span><span class="p">)</span>
 </span></code></pre></div>
 
-
-        <details class="quote">
-          <summary>Source code in <code>bavapi\client.py</code></summary>
-          <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-74">  74</a></span>
+            <details class="quote">
+              <summary>Source code in <code>bavapi\client.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-74">  74</a></span>
 <span class="normal"><a href="#__codelineno-0-75">  75</a></span>
 <span class="normal"><a href="#__codelineno-0-76">  76</a></span>
 <span class="normal"><a href="#__codelineno-0-77">  77</a></span>
@@ -3819,7 +3828,7 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
 </span><span id="__span-0-1089"><a id="__codelineno-0-1089" name="__codelineno-0-1089"></a>
 </span><span id="__span-0-1090"><a id="__codelineno-0-1090" name="__codelineno-0-1090"></a>        <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-        </details>
+            </details>
 
   
 
@@ -3835,8 +3844,9 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
 
 
 
+
 <h3 id="client.Client.per_page" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">per_page</span><span class="p">:</span> <span class="nb">int</span></code>
+          <code class="highlight language-python"><span class="n">per_page</span><span class="p">:</span> <span class="nb">int</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
@@ -3857,8 +3867,9 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
 
 
 
+
 <h3 id="client.Client.verbose" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span></code>
+          <code class="highlight language-python"><span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-property"><code>property</code></small>
@@ -3877,12 +3888,14 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
 
 
 
+
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.aclose" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">aclose</span><span class="p">()</span></code>
+          <code class="highlight language-python"><span class="n">aclose</span><span class="p">()</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -3895,25 +3908,27 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
   
       <p>Close existing HTTP connections.</p>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-230">230</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-230">230</a></span>
 <span class="normal"><a href="#__codelineno-0-231">231</a></span>
 <span class="normal"><a href="#__codelineno-0-232">232</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-230"><a id="__codelineno-0-230" name="__codelineno-0-230"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">aclose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="__span-0-231"><a id="__codelineno-0-231" name="__codelineno-0-231"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Close existing HTTP connections.&quot;&quot;&quot;</span>
 </span><span id="__span-0-232"><a id="__codelineno-0-232" name="__codelineno-0-232"></a>    <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">aclose</span><span class="p">()</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.audiences" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">audiences</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">audience_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inactive</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">audiences</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">audience_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inactive</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -3925,6 +3940,8 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
   <div class="doc doc-contents ">
   
       <p>Query the Fount <code>audiences</code> endpoint.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -4112,6 +4129,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Other Parameters:</strong></p>
   <table>
     <thead>
@@ -4172,6 +4191,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -4183,7 +4204,7 @@ For any filters, use the <code>filters</code> parameter.</p>
     <tbody>
         <tr>
           <td>
-                <code>pandas.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -4194,9 +4215,9 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-252">252</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-252">252</a></span>
 <span class="normal"><a href="#__codelineno-0-253">253</a></span>
 <span class="normal"><a href="#__codelineno-0-254">254</a></span>
 <span class="normal"><a href="#__codelineno-0-255">255</a></span>
@@ -4386,17 +4407,19 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-345"><a id="__codelineno-0-345" name="__codelineno-0-345"></a>
 </span><span id="__span-0-346"><a id="__codelineno-0-346" name="__codelineno-0-346"></a>    <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.brand_metric_groups" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">brand_metric_groups</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inactive</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">brand_metric_groups</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inactive</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -4408,6 +4431,8 @@ For any filters, use the <code>filters</code> parameter.</p>
   <div class="doc doc-contents ">
   
       <p>Query the Fount <code>brand-metric-groups</code> endpoint.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -4553,6 +4578,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Other Parameters:</strong></p>
   <table>
     <thead>
@@ -4613,6 +4640,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -4624,7 +4653,7 @@ For any filters, use the <code>filters</code> parameter.</p>
     <tbody>
         <tr>
           <td>
-                <code>pandas.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -4635,9 +4664,9 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-444">444</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-444">444</a></span>
 <span class="normal"><a href="#__codelineno-0-445">445</a></span>
 <span class="normal"><a href="#__codelineno-0-446">446</a></span>
 <span class="normal"><a href="#__codelineno-0-447">447</a></span>
@@ -4803,17 +4832,19 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-525"><a id="__codelineno-0-525" name="__codelineno-0-525"></a>
 </span><span id="__span-0-526"><a id="__codelineno-0-526" name="__codelineno-0-526"></a>    <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.brand_metrics" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">brand_metrics</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inactive</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">brand_metrics</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inactive</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -4825,6 +4856,8 @@ For any filters, use the <code>filters</code> parameter.</p>
   <div class="doc doc-contents ">
   
       <p>Query the Fount <code>brand-metrics</code> endpoint.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -5012,6 +5045,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Other Parameters:</strong></p>
   <table>
     <thead>
@@ -5072,6 +5107,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -5083,7 +5120,7 @@ For any filters, use the <code>filters</code> parameter.</p>
     <tbody>
         <tr>
           <td>
-                <code>pandas.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -5094,9 +5131,9 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-348">348</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-348">348</a></span>
 <span class="normal"><a href="#__codelineno-0-349">349</a></span>
 <span class="normal"><a href="#__codelineno-0-350">350</a></span>
 <span class="normal"><a href="#__codelineno-0-351">351</a></span>
@@ -5286,17 +5323,19 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-441"><a id="__codelineno-0-441" name="__codelineno-0-441"></a>
 </span><span id="__span-0-442"><a id="__codelineno-0-442" name="__codelineno-0-442"></a>    <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.brands" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">brands</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">country_codes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">year_numbers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">brand_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">studies</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">brands</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">country_codes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">year_numbers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">brand_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">studies</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -5308,6 +5347,8 @@ For any filters, use the <code>filters</code> parameter.</p>
   <div class="doc doc-contents ">
   
       <p>Query the Fount <code>brands</code> endpoint.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -5467,6 +5508,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Other Parameters:</strong></p>
   <table>
     <thead>
@@ -5527,6 +5570,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -5538,7 +5583,7 @@ For any filters, use the <code>filters</code> parameter.</p>
     <tbody>
         <tr>
           <td>
-                <code>pandas.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -5549,9 +5594,9 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-528">528</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-528">528</a></span>
 <span class="normal"><a href="#__codelineno-0-529">529</a></span>
 <span class="normal"><a href="#__codelineno-0-530">530</a></span>
 <span class="normal"><a href="#__codelineno-0-531">531</a></span>
@@ -5725,17 +5770,19 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-613"><a id="__codelineno-0-613" name="__codelineno-0-613"></a>
 </span><span id="__span-0-614"><a id="__codelineno-0-614" name="__codelineno-0-614"></a>    <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.brandscape_data" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">brandscape_data</span><span class="p">(</span><span class="n">country_code</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">year_number</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">audiences</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">brand_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">studies</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">brandscape_data</span><span class="p">(</span><span class="n">country_code</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">year_number</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">audiences</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">brand_name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">studies</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metric_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -5770,6 +5817,8 @@ data for all audiences (there are more than 100 standard audiences).</p>
 will be retrieved. This is to allow requesting individual includes if they are
 part of the default.</p>
 <p>To suppress default includes, set <code>include</code> to <code>"no_default"</code>.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -5943,6 +5992,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Other Parameters:</strong></p>
   <table>
     <thead>
@@ -6003,6 +6054,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -6014,7 +6067,7 @@ For any filters, use the <code>filters</code> parameter.</p>
     <tbody>
         <tr>
           <td>
-                <code>pandas.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -6024,6 +6077,8 @@ For any filters, use the <code>filters</code> parameter.</p>
         </tr>
     </tbody>
   </table>
+
+
 
   <p><strong>Raises:</strong></p>
   <table>
@@ -6047,9 +6102,9 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-616">616</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-616">616</a></span>
 <span class="normal"><a href="#__codelineno-0-617">617</a></span>
 <span class="normal"><a href="#__codelineno-0-618">618</a></span>
 <span class="normal"><a href="#__codelineno-0-619">619</a></span>
@@ -6305,17 +6360,19 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-742"><a id="__codelineno-0-742" name="__codelineno-0-742"></a>    <span class="c1"># Prefix &#39;global&#39; to avoid clashing with &#39;brand_name&#39; on &#39;brand&#39; includes</span>
 </span><span id="__span-0-743"><a id="__codelineno-0-743" name="__codelineno-0-743"></a>    <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="s2">&quot;global&quot;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.categories" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -6333,6 +6390,8 @@ For any filters, use the <code>filters</code> parameter.</p>
 <p>If any of the default includes are used in <code>include</code>, then only that resource
 will be retrieved. This is to allow requesting individual includes if they are
 part of the default.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -6464,6 +6523,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Other Parameters:</strong></p>
   <table>
     <thead>
@@ -6524,6 +6585,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -6535,7 +6598,7 @@ For any filters, use the <code>filters</code> parameter.</p>
     <tbody>
         <tr>
           <td>
-                <code>pandas.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -6546,9 +6609,9 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-745">745</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-745">745</a></span>
 <span class="normal"><a href="#__codelineno-0-746">746</a></span>
 <span class="normal"><a href="#__codelineno-0-747">747</a></span>
 <span class="normal"><a href="#__codelineno-0-748">748</a></span>
@@ -6724,17 +6787,19 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-831"><a id="__codelineno-0-831" name="__codelineno-0-831"></a>
 </span><span id="__span-0-832"><a id="__codelineno-0-832" name="__codelineno-0-832"></a>    <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.collections" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">collections</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">collection_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shared_with_me</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mine</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">collections</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">collection_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">public</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shared_with_me</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mine</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -6746,6 +6811,8 @@ For any filters, use the <code>filters</code> parameter.</p>
   <div class="doc doc-contents ">
   
       <p>Query the Fount <code>collections</code> endpoint.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -6846,6 +6913,8 @@ stack_data : bool, optional
     Additional parameters to pass to the Query. See <code>Other Parameters</code>.
     For any filters, use the <code>filters</code> parameter.</p>
 
+
+
   <p><strong>Other Parameters:</strong></p>
   <table>
     <thead>
@@ -6906,6 +6975,8 @@ stack_data : bool, optional
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -6917,7 +6988,7 @@ stack_data : bool, optional
     <tbody>
         <tr>
           <td>
-                <code>pandas.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -6928,9 +6999,9 @@ stack_data : bool, optional
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-834">834</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-834">834</a></span>
 <span class="normal"><a href="#__codelineno-0-835">835</a></span>
 <span class="normal"><a href="#__codelineno-0-836">836</a></span>
 <span class="normal"><a href="#__codelineno-0-837">837</a></span>
@@ -7106,17 +7177,19 @@ stack_data : bool, optional
 </span><span id="__span-0-920"><a id="__codelineno-0-920" name="__codelineno-0-920"></a>
 </span><span id="__span-0-921"><a id="__codelineno-0-921" name="__codelineno-0-921"></a>    <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.raw_query" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">raw_query</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">raw_query</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -7129,6 +7202,8 @@ stack_data : bool, optional
   
       <p>Perform a raw GET query to the WPPBAV Fount API, returning
 the response JSON data instead of a <code>pandas</code> DataFrame.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -7172,6 +7247,8 @@ the response JSON data instead of a <code>pandas</code> DataFrame.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -7194,9 +7271,9 @@ the response JSON data instead of a <code>pandas</code> DataFrame.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-234">234</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-234">234</a></span>
 <span class="normal"><a href="#__codelineno-0-235">235</a></span>
 <span class="normal"><a href="#__codelineno-0-236">236</a></span>
 <span class="normal"><a href="#__codelineno-0-237">237</a></span>
@@ -7230,17 +7307,19 @@ the response JSON data instead of a <code>pandas</code> DataFrame.</p>
 </span><span id="__span-0-249"><a id="__codelineno-0-249" name="__codelineno-0-249"></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="__span-0-250"><a id="__codelineno-0-250" name="__codelineno-0-250"></a>    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="p">))</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.sectors" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">sectors</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sector_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">in_most_influential</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">not_in_most_influential</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">sectors</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sector_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">in_most_influential</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">not_in_most_influential</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -7252,6 +7331,8 @@ the response JSON data instead of a <code>pandas</code> DataFrame.</p>
   <div class="doc doc-contents ">
   
       <p>Query the Fount <code>sectors</code> endpoint.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -7397,6 +7478,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Other Parameters:</strong></p>
   <table>
     <thead>
@@ -7457,6 +7540,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -7468,7 +7553,7 @@ For any filters, use the <code>filters</code> parameter.</p>
     <tbody>
         <tr>
           <td>
-                <code>pandas.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -7479,9 +7564,9 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-923"> 923</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-923"> 923</a></span>
 <span class="normal"><a href="#__codelineno-0-924"> 924</a></span>
 <span class="normal"><a href="#__codelineno-0-925"> 925</a></span>
 <span class="normal"><a href="#__codelineno-0-926"> 926</a></span>
@@ -7647,17 +7732,19 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-1004"><a id="__codelineno-0-1004" name="__codelineno-0-1004"></a>
 </span><span id="__span-0-1005"><a id="__codelineno-0-1005" name="__codelineno-0-1005"></a>    <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
+
 
 <div class="doc doc-object doc-function">
 
 
 
+
 <h3 id="client.Client.studies" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">studies</span><span class="p">(</span><span class="n">country_codes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">year_numbers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">full_year</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">study_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">studies</span><span class="p">(</span><span class="n">country_codes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">year_numbers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">full_year</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">study_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -7669,6 +7756,8 @@ For any filters, use the <code>filters</code> parameter.</p>
   <div class="doc doc-contents ">
   
       <p>Query the Fount <code>studies</code> endpoint.</p>
+
+
 
   <p><strong>Parameters:</strong></p>
   <table>
@@ -7816,6 +7905,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Other Parameters:</strong></p>
   <table>
     <thead>
@@ -7876,6 +7967,8 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
+
+
   <p><strong>Returns:</strong></p>
   <table>
     <thead>
@@ -7887,7 +7980,7 @@ For any filters, use the <code>filters</code> parameter.</p>
     <tbody>
         <tr>
           <td>
-                <code>pandas.<span title="pandas.DataFrame">DataFrame</span></code>
+                <code><span title="pandas.DataFrame">DataFrame</span></code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -7898,9 +7991,9 @@ For any filters, use the <code>filters</code> parameter.</p>
     </tbody>
   </table>
 
-      <details class="quote">
-        <summary>Source code in <code>bavapi\client.py</code></summary>
-        <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1007">1007</a></span>
+          <details class="quote">
+            <summary>Source code in <code>bavapi\client.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1007">1007</a></span>
 <span class="normal"><a href="#__codelineno-0-1008">1008</a></span>
 <span class="normal"><a href="#__codelineno-0-1009">1009</a></span>
 <span class="normal"><a href="#__codelineno-0-1010">1010</a></span>
@@ -8068,7 +8161,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-1089"><a id="__codelineno-0-1089" name="__codelineno-0-1089"></a>
 </span><span id="__span-0-1090"><a id="__codelineno-0-1090" name="__codelineno-0-1090"></a>    <span class="k">return</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="n">stack_data</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
-      </details>
+          </details>
   </div>
 
 </div>
@@ -8176,7 +8269,7 @@ For any filters, use the <code>filters</code> parameter.</p>
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.94c44541.min.js"></script>
+      <script src="../../assets/javascripts/bundle.aecac24b.min.js"></script>
       
     
   </body>
