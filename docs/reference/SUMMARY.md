@@ -1,3 +1,4 @@
+* [sync](sync.md)
 * [client](client.md)
 * [exceptions](exceptions.md)
 * [filters](filters.md)
@@ -6,7 +7,3 @@
     * [params](parsing/params.md)
     * [responses](parsing/responses.md)
 * [query](query.md)
-* [reference](reference/index.md)
-    * [generate_reference](reference/generate_reference.md)
-* [sync](sync.md)
-* [typing](typing.md)

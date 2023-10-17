@@ -26,7 +26,7 @@ def test_raw_query():
     for _ in range(5):  # pragma: no cover
         try:
             result = bavapi.raw_query(
-                os.environ["FOUNT_API_KEY"],
+                os.environ["BAV_API_KEY"],
                 "countries",
                 Query(filters={"is_active": 1}, include="region", max_pages=2),
             )
@@ -46,7 +46,7 @@ def test_with_filters_one_page():
     for _ in range(5):  # pragma: no cover
         try:
             result = bavapi.studies(
-                os.environ["FOUNT_API_KEY"],
+                os.environ["BAV_API_KEY"],
                 filters=filters.StudiesFilters(active=1),
                 include="country",
                 page=1,
@@ -82,7 +82,7 @@ def test_endpoints(endpoint: str, filters: Dict[str, Any]):
     for _ in range(5):  # pragma: no cover
         try:
             result = func(
-                os.environ["FOUNT_API_KEY"], filters=filters, max_pages=2, per_page=25
+                os.environ["BAV_API_KEY"], filters=filters, max_pages=2, per_page=25
             )
             break
         except ssl.SSLError:

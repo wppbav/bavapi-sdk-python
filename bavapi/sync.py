@@ -1,11 +1,33 @@
 """
-Convenience functions to perform queries to the Fount synchronously.
+Top level functions to perform queries to the Fount.
 
-Can be used directly without `asyncio`.
+You will need your BAV API token to use these functions.
 
-Meant for experimentation, Jupyter notebooks, one-off scripts, etc.
+Examples
+--------
 
-Use `bavapi.Client` for more advanced usage and performance benefits.
+Use top level functions for one-off downloads:
+
+>>> import bavapi
+>>> result = bavapi.brands("TOKEN", "Facebook")  # Replace TOKEN with your API key
+
+A more complex query:
+
+>>> from bavapi_refs.audiences import Audiences
+>>> bss = bavapi.brandscape_data(
+...     "TOKEN",  # Replace TOKEN with your API key
+...     country_code="UK",
+...     year_number=2022,
+...     audiences=Audiences.ALL_ADULTS,
+... )
+
+Use `bavapi.raw_query` (with `bavapi.Query`) for endpoints that aren't fully supported:
+
+>>> query = bavapi.Query(filters=bavapi.filters.FountFilters(name="Meta"))
+>>> result = bavapi.raw_query("companies", params=query)
+
+If you want to make multiple requests or embed `bavapi` into applications,
+consider using the `bavapi.Client` interface.
 """
 
 # pylint: disable=redefined-outer-name, too-many-arguments, too-many-locals
@@ -18,7 +40,7 @@ from bavapi import filters as _filters
 from bavapi._jupyter import patch_loop, running_in_jupyter
 from bavapi.client import Client, OptionalFiltersOrMapping
 from bavapi.query import Query
-from bavapi.typing import JSONDict, OptionalListOr, Unpack, CommonQueryParams, ParamSpec
+from bavapi.typing import CommonQueryParams, JSONDict, OptionalListOr, ParamSpec, Unpack
 
 if TYPE_CHECKING:
     from pandas import DataFrame
@@ -72,7 +94,7 @@ async def raw_query(
     Parameters
     ----------
     token : str
-        Fount API token
+        WPPBAV Fount API token
     endpoint : str
         Endpoint name
     params : Query
@@ -116,20 +138,20 @@ async def audiences(
     Parameters
     ----------
     token : str
-        Fount API token
+        WPPBAV Fount API token
     name : str, optional
         Search audiences by name, by default None
     audience_id : int, optional
         Fount audience ID, by default None
 
         If an audience ID is provided, only that audience will be returned
-    active : Literal[0, 1]
+    active : Literal[0, 1], optional
         Return active audiences only if set to `1`, by default 0
-    inactive : Literal[0, 1]
+    inactive : Literal[0, 1], optional
         Return inactive audiences only if set to `1`, by default 0
-    public : Literal[0, 1]
+    public : Literal[0, 1], optional
         Return active audiences only if set to `1`, by default 0
-    private : Literal[0, 1]
+    private : Literal[0, 1], optional
         Return inactive audiences only if set to `1`, by default 0
     groups : int or list[int], optional
         Audience group ID or list of audience group IDs, by default None
@@ -144,7 +166,7 @@ async def audiences(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
-    timeout : float
+    timeout : float, optional
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, by default True
@@ -216,20 +238,20 @@ async def brand_metrics(
     Parameters
     ----------
     token : str
-        Fount API token
+        WPPBAV Fount API token
     name : str, optional
         Search brand metrics by name, by default None
     metric_id : int, optional
         Fount metric ID, by default None
 
         If an metric ID is provided, only that metric will be returned
-    active : Literal[0, 1]
+    active : Literal[0, 1], optional
         Return active brand metrics only if set to `1`, by default 0
-    inactive : Literal[0, 1]
+    inactive : Literal[0, 1], optional
         Return inactive brand metrics only if set to `1`, by default 0
-    public : Literal[0, 1]
+    public : Literal[0, 1], optional
         Return active brand metrics only if set to `1`, by default 0
-    private : Literal[0, 1]
+    private : Literal[0, 1], optional
         Return inactive brand metrics only if set to `1`, by default 0
     groups : int or list[int], optional
         Brand metrics group ID or list of brand metrics group IDs, by default None
@@ -244,7 +266,7 @@ async def brand_metrics(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
-    timeout : float
+    timeout : float, optional
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, by default True
@@ -296,7 +318,7 @@ async def brand_metrics(
 async def brand_metric_groups(
     token: str,
     name: Optional[str] = None,
-    metric_id: Optional[int] = None,
+    group_id: Optional[int] = None,
     active: Literal[0, 1] = 0,
     inactive: Literal[0, 1] = 0,
     *,
@@ -313,16 +335,16 @@ async def brand_metric_groups(
     Parameters
     ----------
     token : str
-        Fount API token
+        WPPBAV Fount API token
     name : str, optional
         Search brand metric groups by name, by default None
-    metric_id : int, optional
+    group_id : int, optional
         Fount brand metric group ID, by default None
 
         If a metric group ID is provided, only that metric group will be returned
-    active : Literal[0, 1]
+    active : Literal[0, 1], optional
         Return active brand metric groups only if set to `1`, by default 0
-    inactive : Literal[0, 1]
+    inactive : Literal[0, 1], optional
         Return inactive brand metric groups only if set to `1`, by default 0
     filters : BrandMetricGroupsFilters or dict of filters, optional
         BrandMetricGroupsFilters object or dictionary of filter parameters, by default None
@@ -335,7 +357,7 @@ async def brand_metric_groups(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
-    timeout : float
+    timeout : float, optional
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, by default True
@@ -369,7 +391,7 @@ async def brand_metric_groups(
     async with Client(token, timeout=timeout, verbose=verbose) as client:
         return await client.brand_metric_groups(
             name,
-            metric_id,
+            group_id,
             active,
             inactive,
             filters=filters,
@@ -402,7 +424,7 @@ async def brands(
     Parameters
     ----------
     token : str
-        Fount API token
+        WPPBAV Fount API token
     name : str, optional
         Search brands by name, by default None
     country_codes: str or list[str], optional
@@ -426,7 +448,7 @@ async def brands(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
-    timeout : float
+    timeout : float, optional
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, by default True
@@ -525,7 +547,7 @@ async def brandscape_data(
     Parameters
     ----------
     token : str
-        Fount API token
+        WPPBAV Fount API token
     country_code : str or list[str], optional
         ISO-3166-1 alpha-2 country codes, by default None
     year_number : int or list[int], optional
@@ -551,7 +573,7 @@ async def brandscape_data(
         Key or list of keys for the metrics included in the response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
-    timeout : float
+    timeout : float, optional
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, by default True
@@ -646,7 +668,7 @@ async def categories(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
-    timeout : float
+    timeout : float, optional
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, by default True
@@ -734,7 +756,7 @@ async def collections(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
-    timeout : float
+    timeout : float, optional
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, by default True
@@ -821,7 +843,7 @@ async def sectors(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
-    timeout : float
+    timeout : float, optional
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, by default True
@@ -887,7 +909,7 @@ async def studies(
     Parameters
     ----------
     token : str
-        Fount API token
+        WPPBAV Fount API token
     country_codes: str or list[str], optional
         ISO-3166-1 alpha-2 country codes, by default None
     year_numbers : int or list[int], optional
@@ -911,7 +933,7 @@ async def studies(
         Additional resources to include in API response, by default None
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
-    timeout : float
+    timeout : float, optional
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, by default True

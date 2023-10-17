@@ -2,6 +2,24 @@
 
 ## Version 0.10
 
+### Version 0.10.1 (October 17th, 2023)
+
+#### Fix
+
+- :warning: (Breaking) Fix `metric_id` param to correct `group_id` name in `bavapi.brand_metric_groups` top level function.
+
+#### Internal
+
+- :lock: Renamed `reference` module as private. This will remove it from the code reference docs.
+- :recycle: Set new dependency minimum versions for compatibility.
+
+#### Docs
+
+- :tada: Code reference section now directs to the `sync` documentation by default.
+- :notebook: More documentation for the `sync` and `client` modules.
+- :notebook: Added more clarity around expected environment variables when storing API keys. `bavapi` will always look for an API key in the `BAV_API_KEY` environment variable.
+- :gear: Refactored code reference generation to support renaming of `reference` module.
+
 ### Version 0.10.0 (October 16th, 2023)
 
 #### Feature

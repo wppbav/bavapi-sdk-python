@@ -31,7 +31,7 @@ if TYPE_CHECKING:
 __all__ = ("HTTPClient",)
 
 
-class Query(Protocol):
+class _Query(Protocol):
     """Protocol for Query objects."""
 
     item_id: Optional[int]
@@ -43,7 +43,7 @@ class Query(Protocol):
         """HTTP-compatible params dictionary"""
         raise NotImplementedError
 
-    def paginated(self, per_page: int, n_pages: int) -> Iterator["Query"]:
+    def paginated(self, per_page: int, n_pages: int) -> Iterator["_Query"]:
         """Yields Query objects with page parameters for paginated queries"""
         raise NotImplementedError
 
@@ -138,7 +138,7 @@ class HTTPClient:
         """Asynchronously close all client connections."""
         return await self.client.aclose()
 
-    async def get(self, endpoint: str, params: Query) -> httpx.Response:
+    async def get(self, endpoint: str, params: _Query) -> httpx.Response:
         """Perform GET request on the given endpoint.
 
         Parameters
@@ -177,7 +177,7 @@ class HTTPClient:
         return resp
 
     async def get_pages(
-        self, endpoint: str, params: Query, n_pages: int
+        self, endpoint: str, params: _Query, n_pages: int
     ) -> List[httpx.Response]:
         """Perform GET requests for a given number of pages on an endpoint.
 
@@ -200,11 +200,8 @@ class HTTPClient:
             for p in params.paginated(self.per_page, n_pages)
         ]
         try:
-            return cast(
-                List[httpx.Response],
-                await tqdm.gather(
-                    *tasks, desc=f"{endpoint} query", disable=not self.verbose
-                ),
+            return await tqdm.gather(
+                *tasks, desc=f"{endpoint} query", disable=not self.verbose
             )
         except Exception as exc:
             for task in tasks:
@@ -212,7 +209,7 @@ class HTTPClient:
 
             raise exc
 
-    async def query(self, endpoint: str, params: Query) -> Iterator[JSONDict]:
+    async def query(self, endpoint: str, params: _Query) -> Iterator[JSONDict]:
         """Perform a paginated GET request on the given endpoint.
 
         Parameters

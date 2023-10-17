@@ -8,9 +8,9 @@ from unittest import mock
 import pandas as pd
 import pytest
 
+from bavapi._reference import generate_reference as uref
 from bavapi.client import Client
 from bavapi.query import Query
-from bavapi.reference import generate_reference as uref
 
 from ..helpers import wraps
 
@@ -66,7 +66,7 @@ def test_generate_source():
         '"""Tests class for holding tests IDs."""\n\n'
         "# This file was generated from active tests in the Fount.\n"
         f"# Tests retrieved on {TEST_DT.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
-        "from bavapi.reference._int_enum import IntEnum\n\n\n"
+        "from bavapi._reference.int_enum import IntEnum\n\n\n"
         'class Tests(IntEnum):\n    """Tests IDs for Fount API queries."""\n\n'
         "    A = 1\n"
     )
@@ -77,7 +77,7 @@ def test_generate_source():
     )
 
 
-@mock.patch("bavapi.reference.generate_reference.Path.exists", return_value=True)
+@mock.patch("bavapi._reference.generate_reference.Path.exists", return_value=True)
 def test_write_to_file(mock_exists: mock.MagicMock):
     with mock.patch("builtins.open", new_callable=mock.mock_open) as mock_open:
         uref.write_to_file("", Path("folder/blah.py"))
@@ -86,7 +86,7 @@ def test_write_to_file(mock_exists: mock.MagicMock):
     mock_exists.assert_called_once()
 
 
-@mock.patch("bavapi.reference.generate_reference.Path.mkdir")
+@mock.patch("bavapi._reference.generate_reference.Path.mkdir")
 def test_write_to_file_not_exists(mock_mkdir: mock.MagicMock):
     with mock.patch("builtins.open", new_callable=mock.mock_open) as mock_open:
         uref.write_to_file("", Path("folder/blah.py"))
@@ -113,32 +113,32 @@ def test_parse_args_all():
     assert args.name == ""
 
 
-@mock.patch("bavapi.reference.generate_reference.os.getenv", return_value="test_token")
+@mock.patch("bavapi._reference.generate_reference.os.getenv", return_value="test_token")
 def test_main_no_args(mock_getenv: mock.Mock):
     assert uref.main([]) == 1
-    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "")
+    mock_getenv.assert_called_once_with("BAV_API_KEY", "")
 
 
 @mock.patch(
-    "bavapi.reference.generate_reference.Client.raw_query",
+    "bavapi._reference.generate_reference.Client.raw_query",
     wraps=wraps([{"id": 1, "name": "A"}, {"id": 2, "name": "B"}]),
 )
-@mock.patch("bavapi.reference.generate_reference.write_to_file")
+@mock.patch("bavapi._reference.generate_reference.write_to_file")
 def test_main(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
     args = ["-n", "audiences"]
 
     with mock.patch(
-        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+        "bavapi._reference.generate_reference.os.getenv", return_value="test_token"
     ) as mock_getenv:
         uref.main(args)
 
     mock_write_to_file.assert_called_once()
     mock_raw_query.assert_awaited_once_with("audiences", Query())
-    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "")
+    mock_getenv.assert_called_once_with("BAV_API_KEY", "")
 
 
 @mock.patch(
-    "bavapi.reference.generate_reference.Client.raw_query",
+    "bavapi._reference.generate_reference.Client.raw_query",
     wraps=wraps(
         [
             {"id": 1, "name": "A", "country_name": "A"},
@@ -146,18 +146,18 @@ def test_main(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
         ]
     ),
 )
-@mock.patch("bavapi.reference.generate_reference.write_to_file")
+@mock.patch("bavapi._reference.generate_reference.write_to_file")
 def test_main_all(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
     args = ["-a"]
 
     with mock.patch(
-        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+        "bavapi._reference.generate_reference.os.getenv", return_value="test_token"
     ) as mock_getenv:
         uref.main(args)
 
     assert len(mock_write_to_file.call_args_list) == 2
     assert len(mock_raw_query.call_args_list) == 2
-    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "")
+    mock_getenv.assert_called_once_with("BAV_API_KEY", "")
 
 
 @mock.patch("dotenv.load_dotenv", wraps=wraps(raises=ImportError))
@@ -169,17 +169,17 @@ def test_main_no_token_no_dotenv(mock_load_dotenv: mock.Mock):
 
     assert excinfo.value.args == (
         "You must specify a Fount API token with the `-t`/`--token` argument, "
-        "or install `python-dotenv` and set `FOUNT_API_KEY` in a `.env` file.",
+        "or install `python-dotenv` and set `BAV_API_KEY` in a `.env` file.",
     )
     mock_load_dotenv.assert_called_once()
 
 
 @mock.patch(
-    "bavapi.reference.generate_reference.Client.raw_query",
+    "bavapi._reference.generate_reference.Client.raw_query",
     wraps=wraps([{"id": 1, "name": "A"}, {"id": 2, "name": "B"}]),
 )
 @mock.patch("dotenv.load_dotenv", wraps=wraps(raises=ImportError))
-@mock.patch("bavapi.reference.generate_reference.write_to_file")
+@mock.patch("bavapi._reference.generate_reference.write_to_file")
 def test_main_with_token_arg(
     mock_write_to_file: mock.Mock,
     mock_load_dotenv: mock.Mock,
@@ -188,11 +188,11 @@ def test_main_with_token_arg(
     args = ["-n", "audiences", "-t", "test_token"]
 
     with mock.patch(
-        "bavapi.reference.generate_reference.os.getenv", return_value="test_token"
+        "bavapi._reference.generate_reference.os.getenv", return_value="test_token"
     ) as mock_getenv:
         uref.main(args)
 
     mock_write_to_file.assert_called_once()
     mock_load_dotenv.assert_not_called()
-    mock_getenv.assert_called_once_with("FOUNT_API_KEY", "test_token")
+    mock_getenv.assert_called_once_with("BAV_API_KEY", "test_token")
     mock_raw_query.assert_awaited_once_with("audiences", Query())

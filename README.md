@@ -28,11 +28,11 @@ You will also need a BAV API token. For more information, go to the [Authenticat
 ### Dependencies
 
 - `httpx >= 0.20`
-- `nest-asyncio >= 1.5.6`
-- `pandas >= 0.16.2`
+- `nest-asyncio >= 1.5`
+- `pandas >= 1.0`
 - `pydantic >= 2.0`
 - `tqdm >= 4.62`
-- `typing-extensions >= 3.10` for Python < 3.10
+- `typing-extensions >= 4.6` for Python < 3.12
 
 ## Installation
 
@@ -74,12 +74,20 @@ Once you have acquired a token, you can start using this library directly in pyt
 
 ## Features
 
-- Support for all endpoints in the Fount API. Extended support for the `audiences`, `brands`, `brandscape-data` and `studies` endpoints.
+- Support for all endpoints in the WPPBAV Fount API.
+  - Extended support for the following endpoints:
+    - `audiences`
+    - `brand-metrics`
+    - `brand-metric-groups`
+    - `brands`
+    - `brandscape-data`
+    - `categories`
+    - `collections`
+    - `sectors`
+    - `studies`
   - Other endpoints are available via the `raw_query` functions and methods.
-- Validates query parameters are of the correct types.
-  - Provides type hints for better IDE support.
-- Retrieve multiple pages of data simultaneously.
-  - Monitors and prevents exceeding API rate limit.
+- Validates query parameters are of the correct types and provides type hints for better IDE support.
+- Retrieve multiple pages of data simultaneously, monitoring and preventing exceeding API rate limit.
 - Both synchronous and asynchronous APIs for accessing BAV data.
 
 ## Documentation

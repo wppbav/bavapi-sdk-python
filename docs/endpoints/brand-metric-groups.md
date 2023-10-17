@@ -34,6 +34,7 @@ For more information on available filters and functionality, see the Fount docum
 These filters are available directly within the function/method:
 
 - `name`
+- `group_id`
 - `active`
 - `inactive`
 
