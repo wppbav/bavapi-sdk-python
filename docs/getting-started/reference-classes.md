@@ -44,7 +44,7 @@ And could be used to have better visibility when filtering API responses:
 To generate these reference classes, there are two options for authenticating your requests:
 
 - Specify the Fount API token via the `-t`/`--token` argument
-- Use a `.env` file to store your Fount API token and install `python-dotenv` to read the file into your environment. See the [Authentication](authentication.md#recommended-way-to-manage-api-keys) section for more info.
+- Use a `.env` file to store your Fount API token as the `BAV_API_KEY` environment variable, and install `python-dotenv` to read the file into your environment. See the [Authentication](authentication.md#recommended-way-to-manage-api-keys) section for more info.
 
 To generate the reference files, run the following command:
 
@@ -57,13 +57,13 @@ To generate the reference files, run the following command:
 === "Using the `-t`/`--token` argument"
 
     ```prompt
-    bavapi-gen-refs --all -t your_token
+    bavapi-gen-refs -t "TOKEN" --all
     ```
 
-Alternatively, you can specify the name of the reference class to generate:
+You can also specify the name of the reference class to generate:
 
 ```prompt
-bavapi-gen-refs --name audiences
+bavapi-gen-refs -t "TOKEN" --name audiences
 ```
 
-To update existing reference classes with the latest data, re-run `bavapi-gen-refs --all` on your terminal.
+To update existing reference classes with the latest data, re-run `bavapi-gen-refs` with the appropriate parameters on your terminal.
