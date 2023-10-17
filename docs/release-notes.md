@@ -6,7 +6,7 @@
 
 #### Fix
 
-- :warning: (Breaking) Fix `metric_id` param to correct `group_id` name in `bavapi.brand_metric_groups` top level function.
+- :warning: (Breaking) Fix `metric_id` param to correct `group_id` name in [`bavapi.brand_metric_groups`][sync.brand_metric_groups] top level function.
 
 #### Internal
 
@@ -15,8 +15,9 @@
 
 #### Docs
 
-- :tada: Code reference section now directs to the `sync` documentation by default.
-- :notebook: More documentation for the `sync` and `client` modules.
+- :tada: [Code reference](reference/sync.md) section now directs to the `sync` documentation by default.
+- :notebook: Added all available filters to the summary table in the [Basic Usage](usage/basic.md) section.
+- :notebook: More documentation for the [`sync`](reference/sync.md) and [`client`](reference/client.md) modules.
 - :notebook: Added more clarity around expected environment variables when storing API keys. `bavapi` will always look for an API key in the `BAV_API_KEY` environment variable.
 - :gear: Refactored code reference generation to support renaming of `reference` module.
 
@@ -25,11 +26,11 @@
 #### Feature
 
 - :rocket: The following endpoints have been fully implmented with type hints and validation:
-    - `brand-metrics`
-    - `brand-metric-groups`
-    - `categories`
-    - `collections`
-    - `sectors`
+    - [`brand-metrics`](endpoints/brand-metrics.md)
+    - [`brand-metric-groups`](endpoints/brand-metric-groups.md)
+    - [`categories`](endpoints/categories.md)
+    - [`collections`](endpoints/collections.md)
+    - [`sectors`](endpoints/sectors.md)
 
 #### Docs
 
