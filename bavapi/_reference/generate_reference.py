@@ -145,7 +145,7 @@ def generate_source(
     ref_name: str,
     ref_items: Dict[str, str],
     updated: datetime.datetime,
-    import_items: Tuple[str, str] = ("bavapi.reference._int_enum", "IntEnum"),
+    import_items: Tuple[str, str] = ("bavapi._reference.int_enum", "IntEnum"),
 ) -> str:
     """Generate updated module source from reference items.
 
@@ -225,7 +225,7 @@ def parse_args(argv: Optional[List[str]] = None) -> Args:
         "Existing reference files will be overwritten.",
         epilog="DON'T PUSH REFERENCES TO GIT! Add `bavapi_refs/` to `.gitignore`.",
     )
-    parser.add_argument("-t", "--token", default="", help="Fount API token.")
+    parser.add_argument("-t", "--token", default="", help="WPPBAV Fount API token.")
     parser.add_argument(
         "-a", "--all", action="store_true", help="Generate all reference files."
     )
@@ -266,10 +266,10 @@ def main(argv: Optional[List[str]] = None) -> int:
         except ImportError as exc:
             raise ValueError(
                 "You must specify a Fount API token with the `-t`/`--token` argument, "
-                "or install `python-dotenv` and set `FOUNT_API_KEY` in a `.env` file."
+                "or install `python-dotenv` and set `BAV_API_KEY` in a `.env` file."
             ) from exc
 
-    fount = Client(os.getenv("FOUNT_API_KEY", args.token))
+    fount = Client(os.getenv("BAV_API_KEY", args.token))
 
     ref_configs: Dict[str, RefConfig] = {
         "audiences": RefConfig("audiences", "audiences", parse_audiences),
