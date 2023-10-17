@@ -1,4 +1,4 @@
-"""Exceptions for handling errors with the Fount API."""
+"""Exceptions for handling errors with the WPPBAV Fount API."""
 
 
 class APIError(Exception):

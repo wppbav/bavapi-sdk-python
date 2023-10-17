@@ -18,7 +18,7 @@ Use top-level endpoint functions for quickly downloading BAV data:
 >>> import bavapi
 >>> res = bavapi.brands("TOKEN", name="Facebook")
 
-For more advanced (and async compatibility), use the `Client` pattern:
+For more advanced usage (and async compatibility), use the `bavapi.Client` class:
 
 >>> import bavapi
 >>> async with bavapi.Client("API_TOKEN") as bav:
@@ -31,14 +31,14 @@ from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededErro
 from bavapi.query import Query
 from bavapi.sync import (
     audiences,
-    brand_metrics,
     brand_metric_groups,
+    brand_metrics,
     brands,
     brandscape_data,
     categories,
     collections,
-    sectors,
     raw_query,
+    sectors,
     studies,
 )
 

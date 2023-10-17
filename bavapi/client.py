@@ -1,4 +1,38 @@
-"""Fount API interface."""
+"""
+Asynchronous BAV API client interface.
+
+Similar to `requests.Session` or `httpx.AsyncClient` (uses the latter as dependency).
+
+Examples
+--------
+
+Create a client instance and make a request to the `brands` endpoint.
+
+>>> async with bavapi.Client("TOKEN") as bav:
+...     result = await bav.brands("Facebook")
+
+A more complex query:
+
+>>> from bavapi_refs.audiences import Audiences
+>>> async with bavapi.Client("TOKEN") as bav:
+...     bss = await bav.brandscape_data(
+...         country_code="UK",
+...         year_number=2022,
+...         audiences=Audiences.ALL_ADULTS,
+...     )
+
+Multiple queries will share the client connection for better performance:
+
+>>> async with bavapi.Client("TOKEN") as bav:
+...     result1 = await bav.brands("Facebook")
+...     result2 = await bav.brands("Instagram")
+
+Use `Client.raw_query` (with `bavapi.Query`) for endpoints that aren't fully supported:
+
+>>> query = bavapi.Query(filters=bavapi.filters.FountFilters(name="Meta"))
+>>> async with bavapi.Client("TOKEN") as bav:
+...     result = await bav.raw_query("companies", params=query)
+"""
 
 # pylint: disable=too-many-arguments, too-many-lines
 
@@ -18,10 +52,11 @@ from bavapi import filters as _filters
 from bavapi.http import HTTPClient
 from bavapi.parsing.responses import parse_response
 from bavapi.query import Query
-from bavapi.typing import JSONDict, OptionalListOr, Unpack, CommonQueryParams
+from bavapi.typing import CommonQueryParams, JSONDict, OptionalListOr, Unpack
 
 if TYPE_CHECKING:
     from types import TracebackType
+
     from pandas import DataFrame
 
 __all__ = ("Client",)
@@ -37,7 +72,7 @@ OptionalFiltersOrMapping = Optional[_filters.FiltersOrMapping[F]]
 
 
 class Client:
-    """Asynchronous API to interact with the WPPBAV Fount.
+    """Asynchronous API to interact with the WPPBAV Fount API.
 
     This class uses `asyncio` to perform asynchronous requests to the Fount API.
 
@@ -48,7 +83,7 @@ class Client:
     To use the Client class, you will need to precede calls with `await`:
 
     ```py
-    bav = Client("TOKEN")  # creating instance does not use `await`
+    bav = Client("TOKEN")  # creating client instance does not use `await`
     data = await bav.brands("Swatch")  # must use `await`
     ```
 
@@ -59,7 +94,7 @@ class Client:
     Parameters
     ----------
     auth_token : str, optional
-        Fount API authorization token, by default `''`
+        WPPBAV Fount API authorization token, by default `''`
     per_page : int, optional
         Default number of entries per page, by default 100
     timeout : float, optional
@@ -197,8 +232,8 @@ class Client:
         return await self._client.aclose()
 
     async def raw_query(self, endpoint: str, params: Query[F]) -> List[JSONDict]:
-        """Perform a raw GET query to the Fount API, returning the response JSON data
-        instead of a `pandas` DataFrame.
+        """Perform a raw GET query to the WPPBAV Fount API, returning
+        the response JSON data instead of a `pandas` DataFrame.
 
         Parameters
         ----------
@@ -240,13 +275,13 @@ class Client:
             Fount audience ID, by default None
 
             If an audience ID is provided, only that audience will be returned
-        active : Literal[0, 1]
+        active : Literal[0, 1], optional
             Return active audiences only if set to `1`, by default 0
-        inactive : Literal[0, 1]
+        inactive : Literal[0, 1], optional
             Return inactive audiences only if set to `1`, by default 0
-        public : Literal[0, 1]
+        public : Literal[0, 1], optional
             Return active audiences only if set to `1`, by default 0
-        private : Literal[0, 1]
+        private : Literal[0, 1], optional
             Return inactive audiences only if set to `1`, by default 0
         groups : int or list[int], optional
             Audience group ID or list of audience group IDs, by default None
@@ -336,13 +371,13 @@ class Client:
             Fount metric ID, by default None
 
             If an metric ID is provided, only that metric will be returned
-        active : Literal[0, 1]
+        active : Literal[0, 1], optional
             Return active brand metrics only if set to `1`, by default 0
-        inactive : Literal[0, 1]
+        inactive : Literal[0, 1], optional
             Return inactive brand metrics only if set to `1`, by default 0
-        public : Literal[0, 1]
+        public : Literal[0, 1], optional
             Return active brand metrics only if set to `1`, by default 0
-        private : Literal[0, 1]
+        private : Literal[0, 1], optional
             Return inactive brand metrics only if set to `1`, by default 0
         groups : int or list[int], optional
             Brand metrics group ID or list of Brand metrics group IDs, by default None
@@ -429,9 +464,9 @@ class Client:
             Fount metric group ID, by default None
 
             If an metric group ID is provided, only that metric group will be returned
-        active : Literal[0, 1]
+        active : Literal[0, 1], optional
             Return active brand metric groups only if set to `1`, by default 0
-        inactive : Literal[0, 1]
+        inactive : Literal[0, 1], optional
             Return inactive brand metric groups only if set to `1`, by default 0
         filters : BrandMetricGroupsFilters or dict of filters, optional
             BrandMetricGroupsFilters object or dictionary of filter parameters, by default None
@@ -739,7 +774,7 @@ class Client:
 
             If an category ID is provided, only that category will be returned
         sector : int or list[int], optional
-            Filter categories by sector ID, by default 0
+            Filter categories by sector ID, by default None
         filters : CategoriesFilters or dict of filters, optional
             CategoriesFilters object or dictionary of filter parameters, by default None
         fields : str or list[str], optional

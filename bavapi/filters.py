@@ -1,4 +1,28 @@
-"""Filter objects for Fount API queries based on `pydantic`."""
+"""
+Filter objects for WPPBAV Fount API queries based on `pydantic`.
+
+All endpoint filters are subclasses of `FountFilters`.
+
+You can use any endpoint filter class with `raw_query` functions and methods,
+but you must use endpoint-specific filters for each endpoint function or method.
+
+Examples
+--------
+
+Use `BrandsFilters` with the `brands` endpoint:
+
+>>> import bavapi
+>>> bavapi.brands("TOKEN", filters=bavapi.filters.BrandsFilters(name="Facebook"))
+
+`FountFilters` is compatible with all endpoints (including `raw_query`):
+
+>>> bavapi.brands("TOKEN", filters=bavapi.filters.FountFilters(name="Facebook"))
+
+Using the wrong filter can lead to unexpected results:
+>>> bavapi.brands("TOKEN", filters=bavapi.filters.CategoriesFilters(country_codes="UK"))
+
+The above example may work, but it is highly discouraged.
+"""
 
 # pylint: disable=no-name-in-module, too-few-public-methods
 
@@ -64,21 +88,21 @@ class FountFilters(BaseModel):
         filters: Optional[FiltersOrMapping["FountFilters"]],
         **addl_filters: InputSequenceOrValues,
     ) -> Optional[F]:
-        """Ensure FountFilters class from dictionary or other FountFilters class.
+        """Ensure `FountFilters` class from dictionary or other `FountFilters` class.
 
         Defaults to values passed to `filters` when any additional filters overlap.
 
         Parameters
         ----------
         filters : FountFilters or dict of filter values, optional
-            Dictionary of filters or FountFilters class.
+            Dictionary of filters or `FountFilters` class.
         **addl_filters : SequenceOrValues, optional
-            Additional filters to add to the new FountFilters instance.
+            Additional filters to add to the new `FountFilters` instance.
 
         Returns
         -------
         FountFilters, optional
-            FountFilters class or None if `filters` is None and no additional filters are passed.
+            `FountFilters` class or `None` if `filters` is `None` and no additional filters are passed.
         """
         addl_filters = {k: v for k, v in addl_filters.items() if v}
 
