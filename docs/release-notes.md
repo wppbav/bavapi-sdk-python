@@ -1,12 +1,84 @@
 # Release Notes
 
-## Version 0.10
+## `0.11`
 
-### Version 0.10.1 (October 17th, 2023)
+### `0.11.0` (October XXth, 2023)
+
+In preparation for a stable release of `bavapi`, some aspects of the endpoint function/method interface have been normalized across the library.
+
+This means that all endpoints now support a `query` parameter directly, to allow for better reproducibility and parametrization of queries. `raw_query` now also uses `query` instead of `params`, with `query` being required unlike with other endpoints.
+
+Another change is that the order of parameters has been altered. The main reason for this is that parameters like `brand_id` were positional parameters before, when they are exclusive with almost all othe r parameters. This was also the case for parameters like `studies`, which are exclusive with `country_codes` and `year_numbers`. Now `{endpoint}_id` parameters and other exclusive or niche filters have been turned to keyword-only parameters. Filters like `inactive` and `not_in_most_influential` have been removed from endpoint functions. Use the `filters` parameter instead. See each [endpoint documentation](endpoints/index.md) page for more information.
+
+#### Feature
+
+- :tada: It is now possible to pass a [`bavapi.Query`][query.Query] object to all endpoint functions and methods with the `query` parameter. If `query` is used, all the parameters that would be used in the query (listed before `query` in each [endpoint documentation][sync]) will be ignored.
+- :tada: It is now possible to specify a destination folder for the `bavapi-gen-refs` command with the `-d`/`--dest-folder` argument.
+- :tada: Reference classes generated via `bavapi-gen-refs` can now be imported with `from bavapi_refs import Countries` for example.
+
+#### Changes
+
+- :stop_sign: (BREAKING) Changed `raw_query` `params` parameter name to `query` to match all other endpoints.
+- :stop_sign: (BREAKING) Changed the order of several endpoint parameters for more effective queries. Now, each endpoint function has a set of parameters that can be set as positional arguments for exploratory filtering, while niche filters and IDs have become keyword only parameters.
+    - `audiences`:
+        - Positional filters: `name`, `active`, `public`
+        - Keyword filters: `audience_id`, `private`, `groups`
+    - `brand_metrics`:
+        - Positional filters: `name`, `active`, `public`
+        - Keyword filters: `metric_id`, `private`, `groups`
+    - `brand_metric_groups`:
+        - Positional filters: `name`, `active`
+        - Keyword filters: `group_id`
+    - `brands`:
+        - Positional filters: `name`, `country_codes`, `year_numbers`
+        - Keyword filters: `brand_id`, `studies`
+    - `brandscape_data`:
+        - Positional filters: `country_code`, `year_number`, `audiences`, `brand_name`
+        - Keyword filters: `studies`
+    - `categories`:
+        - Positional filters: `name`, `sector`
+        - Keyword filters: `category_id`
+    - `collections`:
+        - Positional filters: `name`, `public`
+        - Keyword filters: `collection_id`, `shared_with_me`, `mine`
+    - `sectors`:
+        - Positional filters: `name`, `in_most_influential`
+        - Keyword filters: `sector_id`
+    - `studies`:
+        - Positional filters: `country_codes`, `year_numbers`, `full_year`
+        - Keyword filters: `study_id`
+
+#### Error Messages
+
+- :warning: Improved error message for `bavapi-gen-refs` command when neither `-a`/`--all` nor `-n`/`--name` arguments aren't used.
 
 #### Fix
 
-- :warning: (Breaking) Fix `metric_id` param to correct `group_id` name in [`bavapi.brand_metric_groups`][sync.brand_metric_groups] top level function.
+- :bug: Fixed that requests with `item_id` would ignore other query parameters.
+- :bug: Addressed undefined behavior when `max_pages` is larger than the total number of pages as reported by the API. Now the max number of pages is always capped by the reported total.
+
+#### Internal
+
+- :bug: Fixed typing of `tuple` internal `docs_deploy` function annotations not being compatible with Python <3.9.
+
+#### Docs
+
+- :sparkles: Filter classes table in [Basic usage](usage/basic.md#filtering-responses) page now points to each endpoint function docs.
+- :sparkles: Automatically add comment to `docs/contributing.md` to edit `./CONTRIBUTING.md` instead.
+- :notebook: Updated Jupyter notebook demo with latest features and conventions.
+- :notebook: Documented the [use of `bavapi.Query`](usage/basic.md#using-query-objects) object in functions and methods.
+- :notebook: Improved code example for the [Using reference classes](usage/basic.md#using-reference-classes) section of the Basic usage page.
+- :notebook: Clarified which endpoint filters are positional and keyword-only in respective [endpoint documentation](endpoints/index.md) pages
+- :bug: Fixed incorrect rendering of tabs in the [Suppressing progess bar](usage/basic.md#suppressing-progress-bars) section of the Basic usage page.
+- :x: Removed `datetime` formatting section from the [Basic usage](usage/basic.md) page.
+
+## `0.10`
+
+### `0.10.1` (October 17th, 2023)
+
+#### Fix
+
+- :stop_sign: (Breaking) Fix `metric_id` param to correct `group_id` name in [`bavapi.brand_metric_groups`][sync.brand_metric_groups] top level function.
 
 #### Internal
 
@@ -15,13 +87,13 @@
 
 #### Docs
 
-- :tada: [Code reference](reference/sync.md) section now directs to the `sync` documentation by default.
+- :tada: Code reference section now directs to the [`sync`][sync] documentation by default.
 - :notebook: Added all available filters to the summary table in the [Basic Usage](usage/basic.md) section.
-- :notebook: More documentation for the [`sync`](reference/sync.md) and [`client`](reference/client.md) modules.
+- :notebook: More documentation for the [`sync`][sync] and [`client`][client] modules.
 - :notebook: Added more clarity around expected environment variables when storing API keys. `bavapi` will always look for an API key in the `BAV_API_KEY` environment variable.
 - :gear: Refactored code reference generation to support renaming of `reference` module.
 
-### Version 0.10.0 (October 16th, 2023)
+### `0.10.0` (October 16th, 2023)
 
 #### Feature
 
@@ -42,9 +114,9 @@
 - :gear: Generalized internal `_default_includes` function to be able to reuse it with the `categories` endpoint.
 - :bug: `nox` session `docs_build_and_serve` will now rebase local branch if local version data is not synced with GitHub.
 
-## Version 0.9
+## `0.9`
 
-### Version 0.9.0 (October 11th, 2023)
+### `0.9.0` (October 11th, 2023)
 
 #### Feature
 
@@ -76,9 +148,9 @@
 
 - :arrow_up: Updated minimum required version of `typing-extensions` for Python versions below 3.12.
 
-## Version 0.8
+## `0.8`
 
-### Version 0.8.1 (September 29th, 2023)
+### `0.8.1` (September 29th, 2023)
 
 #### Performance
 
@@ -97,7 +169,7 @@
 
 - :lock: Renamed `jupyter` compatibility module as private. This will remove it from the code reference docs.
 
-### Version 0.8.0 (September 15th, 2023)
+### `0.8.0` (September 15th, 2023)
 
 #### Feature
 
@@ -123,9 +195,9 @@
 
 - :gear: Removed end-to-end tests from CI pipeline due to various issues. They will have to be run manually in the near future.
 
-## Version 0.7
+## `0.7`
 
-### Version 0.7.0 (August 22nd, 2023)
+### `0.7.0` (August 22nd, 2023)
 
 #### Feature
 
@@ -145,9 +217,9 @@
 - :rocket: Set up automatic building of docs using `mike` and Github Actions.
 - :bug: Fix `deploy_docs` nox session to install dependencies and actually run the deploy command.
 
-## Version 0.6
+## `0.6`
 
-### Version 0.6.1 (July 19th, 2023)
+### `0.6.1` (July 19th, 2023)
 
 #### Fix
 
@@ -166,11 +238,11 @@
 
 - :notebook: Added warning about potential SSL errors outside of `bavapi` when using the Fount API.
 
-### Version 0.6.0 (July 13th, 2023)
+### `0.6.0` (July 13th, 2023)
 
 #### Internal
 
-- :rocket: Upgraded [`pydantic`](https://pypi.org/project/pydantic/) to v2. Use `bavapi` v0.5 for compatibility with `pydantic` v1.
+- :rocket: Upgraded [`pydantic`](https://pypi.org/project/pydantic/) to `v2`. Use `bavapi` `v0.5` for compatibility with `pydantic` `v1`.
 
 #### Typing
 
