@@ -27,6 +27,7 @@ class Args:
     def __init__(self, namespace: argparse.Namespace) -> None:
         self.all: bool = namespace.all
         self.name: str = namespace.name
+        self.folder: Path = namespace.dest_folder
         self.token: str = namespace.token
 
 
@@ -184,6 +185,41 @@ def generate_source(
     return "\n\n".join(source_items) + "\n"
 
 
+def generate_init_source(dest_folder: Path) -> str:
+    """Generate updated init module source from existing reference modules.
+
+    Scans destination folder for reference modules.
+
+    Parameters
+    ----------
+    dest_folder : Path
+        Path to reference modules.
+
+    Returns
+    -------
+    str
+        Updated init source as a string.
+    """
+    ref_names = [
+        file.stem for file in dest_folder.glob("*.py") if file.stem != "__init__"
+    ]
+    exports = ", ".join(f'"{name.capitalize()}"' for name in ref_names)
+    if len(ref_names) == 1:
+        exports += ","
+
+    return "\n".join(
+        [
+            '"""`bavapi` Reference classes for holding Fount IDs.\n\n'
+            'Use them in place of integers when filtering requests.\n"""\n',
+        ]
+        + [
+            f"from {dest_folder.name}.{name} import {name.capitalize()}"
+            for name in ref_names
+        ]
+        + ["\n" f"__all__ = ({exports})" "\n"]
+    )
+
+
 def write_to_file(source: str, filepath: Path) -> None:
     """Write updated module source to file.
 
@@ -221,20 +257,27 @@ def parse_args(argv: Optional[List[str]] = None) -> Args:
         "The currently available reference classes are Audiences and Countries.\n"
         "These classess will be stored in a `bavapi_refs` folder in your "
         "current working directory. "
-        "You can import them using `from bavapi_refs.audiences import Audiences`.\n"
+        "You can import them using `from bavapi_refs import Audiences`.\n"
         "Existing reference files will be overwritten.",
         epilog="DON'T PUSH REFERENCES TO GIT! Add `bavapi_refs/` to `.gitignore`.",
     )
-    parser.add_argument("-t", "--token", default="", help="WPPBAV Fount API token.")
+    parser.add_argument("-t", "--token", default="", help="WPPBAV Fount API token")
     parser.add_argument(
-        "-a", "--all", action="store_true", help="Generate all reference files."
+        "-a", "--all", action="store_true", help="Generate all reference files"
     )
     parser.add_argument(
         "-n",
         "--name",
         default="",
         choices={"audiences", "countries"},
-        help="Name of reference to generate.",
+        help="Name of reference to generate",
+    )
+    parser.add_argument(
+        "-d",
+        "--dest-folder",
+        default="./bavapi_refs/",
+        type=Path,
+        help="Path to destination folder, by default './bavapi_refs/'",
     )
     return Args(parser.parse_args(argv))
 
@@ -284,8 +327,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     if args.all:
         names, configs = list(ref_configs.keys()), list(ref_configs.values())
     elif not args.name:
-        print("bavapi-refs: Run `bavapi-refs -h` for usage instructions.")
-        return 1
+        raise ValueError(
+            "You must use either the `-a`/`--all` or the `-n`/`--name` arguments. "
+            "Run `bavapi-gen-refs -h for more details and instructions."
+        )
     else:
         names, configs = [args.name], [ref_configs[args.name]]
 
@@ -296,10 +341,12 @@ def main(argv: Optional[List[str]] = None) -> int:
         source = generate_source(
             name, items, datetime.datetime.now(datetime.timezone.utc)
         )
-        path = Path.cwd() / f"bavapi_refs/{name}.py"
+        path = args.folder / f"{name}.py"
 
         print(f"Writing {name} file with {len(items)} items to {path}")
         write_to_file(source, path)
+
+    write_to_file(generate_init_source(args.folder), args.folder / "__init__.py")
 
     print("Success!")
     return 0
