@@ -31,9 +31,7 @@ For more information on available filters and functionality, see the Fount docum
 
 These filters are available directly within the function/method:
 
-- `country_codes`
-- `year_numbers`
-- `full_year`
-- `study_id`
+- Positional filters: `country_codes`, `year_numbers`, `full_year`
+- Keyword filters: `study_id`
 
 For other filters, passing a `StudiesFilters` instance to the `filters` parameter is required.

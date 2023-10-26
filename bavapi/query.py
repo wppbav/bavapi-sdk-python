@@ -26,36 +26,38 @@ class Query(BaseModel, Generic[F]):
 
     Attributes
     ----------
-    id: int, optional
+    item_id : int, optional
         Get specific resource by ID, by default None
+
+        Can also be set with `id`.
     filters : FountFilters instance or dict of filter values, optional
         Filters to apply to the query, by default None
-    fields: str or list[str], optional
+    fields : str or list[str], optional
         Specific fields to retrieve from the query, by default None
-    include: str or list[str], optional
+    include : str or list[str], optional
         Additional resources to retrieve from the query, by default None
     metric_keys: str or list[str], optional
         Key or list of keys for the metrics included in the response, by default None
 
         Currently, this parameter is only available for the `brandscape-data` endpoint.
-    sort: str, optional
+    sort : str, optional
         Sort response by field, by default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
         `sort="-differentiation_rank"`
 
         Sorts by item ID by default.
-    page: int, optional
+    page : int, optional
         Get specific page from paginated response, by default None
 
         When None, the default value in the Fount is 1
-    per_page: int, optional
+    per_page : int, optional
         Number of items per page, by default None
 
         When None, the default value in the Fount is 25
 
         When performing paged queries, Client uses 100 as the default `per_page`.
-    max_pages: int, optional
+    max_pages : int, optional
         Maximum number of pages to retrieve, by default None
 
         When None, all pages will be retrieved with a `per_page` value of 100 by default.
@@ -84,7 +86,7 @@ class Query(BaseModel, Generic[F]):
         dict[str, Any]
             Fount-compatible dictionary of the query.
         """
-        exclude: Final[Set[str]] = {"filters", "fields", "max_pages"}
+        exclude: Final[Set[str]] = {"item_id", "filters", "fields", "max_pages"}
 
         filters: BaseParamsMapping = {}
         fields: BaseMutableParamsMapping = {}

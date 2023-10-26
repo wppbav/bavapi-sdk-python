@@ -31,12 +31,7 @@ For more information on available filters and functionality, see the Fount docum
 
 These filters are available directly within the function/method:
 
-- `name`
-- `audience_id`
-- `active`
-- `inactive`
-- `public`
-- `private`
-- `groups`
+- Positional filters: `name`, `active`, `public`
+- Keyword filters: `audience_id`, `private`, `groups`
 
 For other filters, passing an `AudienceFilters` instance to the `filters` parameter is required.

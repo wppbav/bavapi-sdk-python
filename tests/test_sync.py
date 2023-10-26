@@ -30,19 +30,18 @@ def test_coro_new_loop(mock_new_loop: mock.AsyncMock):
 
 @mock.patch("bavapi.sync.patch_loop")
 @mock.patch("bavapi.sync.running_in_jupyter", return_value=True)
-def test_coro_jupyter(
-    mock_running_in_jupyter: mock.Mock, mock_enabled_nested: mock.Mock
-):
+def test_coro_jupyter(mock_running_in_jupyter: mock.Mock, mock_patch_loop: mock.Mock):
     @sync._coro
     async def mock_func():
         pass
 
     mock_func()
 
-    mock_enabled_nested.assert_called_once()
+    mock_patch_loop.assert_called_once()
     mock_running_in_jupyter.assert_called_once()
 
 
+@pytest.mark.slow
 def test_raw_query():
     with mock.patch("bavapi.sync.Client.raw_query", wraps=wraps()) as mock_raw_query:
         sync.raw_query("TOKEN", "companies", Query(), timeout=10.0)
@@ -50,6 +49,7 @@ def test_raw_query():
     mock_raw_query.assert_called_with("companies", Query())
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize(
     ("endpoint", "filters"),
     (
@@ -65,8 +65,7 @@ def test_raw_query():
     ),
 )
 def test_function(endpoint: str, filters: Dict[str, Any]):
-    func = getattr(sync, endpoint)
     with mock.patch(f"bavapi.sync.Client.{endpoint}", wraps=wraps()) as mock_endpoint:
-        func("TOKEN", filters=filters, timeout=10.0)
+        getattr(sync, endpoint)("TOKEN", filters=filters, timeout=10.0)
 
-    mock_endpoint.assert_called()
+    mock_endpoint.assert_called_once()

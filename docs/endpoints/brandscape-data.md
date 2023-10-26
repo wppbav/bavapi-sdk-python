@@ -41,11 +41,8 @@ For more information on available filters and functionality, see the Fount docum
 
 These filters are available directly within the function/method:
 
-- `country_code`
-- `year_number`
-- `audiences`
-- `brand_name` (will perform a search on brand name)
-- `studies`
+- Positional filters: `country_code`, `year_number`, `audiences`, `brand_name` (search by name)
+- Keyword filters: `studies`
 
 For other filters, passing a `BrandscapeFilters` instance to the `filters` parameter is required.
 

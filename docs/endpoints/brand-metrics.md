@@ -33,12 +33,7 @@ For more information on available filters and functionality, see the Fount docum
 
 These filters are available directly within the function/method:
 
-- `name`
-- `metric_id`
-- `active`
-- `inactive`
-- `public`
-- `private`
-- `groups`
+- Positional filters: `name`, `active`, `public`
+- Keyword filters: `metric_id`, `private`, `groups`
 
 For other filters, passing a `BrandMetricsFilters` instance to the `filters` parameter is required.
