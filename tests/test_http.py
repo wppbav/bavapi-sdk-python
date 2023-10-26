@@ -9,7 +9,7 @@ import httpx
 import pytest
 
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
-from bavapi.http import HTTPClient
+from bavapi.http import HTTPClient, _calculate_pages
 from bavapi.query import Query
 from bavapi.typing import JSONData, JSONDict
 
@@ -120,9 +120,9 @@ async def test_get(mock_get: mock.AsyncMock, client: HTTPClient):
 @pytest.mark.anyio
 @mock.patch("bavapi.http.httpx.AsyncClient.get", wraps=wraps(response()))
 async def test_get_with_id(mock_get: mock.AsyncMock, client: HTTPClient):
-    assert await client.get("request", Query(id=1))
+    assert await client.get("request", Query(id=1, fields="test"))
 
-    mock_get.assert_awaited_once_with("request/1")
+    mock_get.assert_awaited_once_with("request/1", params={"fields[request]": "test"})
 
 
 @pytest.mark.anyio
@@ -202,7 +202,7 @@ async def test_query(
 ):
     assert len(tuple(await client.query("request", Query()))) == 1
 
-    mock_get.assert_awaited_once_with("request", params=Query())
+    mock_get.assert_awaited_once_with("request", Query())
     mock_get_pages.assert_awaited_once_with("request", Query(), 20)
 
 
@@ -282,3 +282,12 @@ async def test_query_rate_limit(
         "exceeds the rate limit (1, "
         "total=500)."
     )
+
+
+def test_calculate_pages_return_max():
+    assert _calculate_pages(10, 100, 9) == 10  # 100 / 9 = 11 pages
+
+
+@pytest.mark.parametrize("max_pages", (None, 100))
+def test_calculate_pages_return_total(max_pages: Optional[int]):
+    assert _calculate_pages(max_pages, 100, 50) == 2  # 100 / 50 = 2 pages
