@@ -133,15 +133,16 @@ The `to_params` method can be used to parse the parameters into a dictionary of 
 ...         year_numbers=[2012, 2013, 2014, 2015]
 ...     ),
 ...     include=["company"]
-... ).to_params(endpoint="brandscape-data")
+... ).to_params(endpoint="brandscape-data")  # (1)
 {
-    "include[brandscape-data]": "company",  # (1)
+    "include[brandscape-data]": "company",  # (2)
     "filter[brand_name]": "Facebook",
     "year_numbers": "2012,2013,2014,2015",
 }
 ```
 
-1. :bulb: Parses `filters` and `include` into the correct format for the Fount API, and parses all elements in lists of parameters to their string representation.
+1. Needs the endpoint name to format parameters correctly.
+2. :bulb: Parses `filters` and `include` into the correct format for the Fount API, and parses all elements in lists of parameters to their string representation.
 
 ## User Agent
 
