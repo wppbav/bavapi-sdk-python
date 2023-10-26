@@ -35,7 +35,7 @@ for path in sorted(Path("./bavapi").rglob("*.py")):
     mkdocs_gen_files.set_edit_path(full_doc_path, path)
 
 nav_lines = list(nav.build_literate_nav())
-nav_lines.insert(0, nav_lines.pop(-1))
+nav_lines.insert(0, nav_lines.pop())  # move `sync` to the top
 
 with mkdocs_gen_files.open("reference/SUMMARY.md", "w") as nav_file:
     nav_file.writelines(nav_lines)
