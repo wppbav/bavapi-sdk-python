@@ -2,7 +2,7 @@
 
 ## `0.11`
 
-### `0.11.0` (October XXth, 2023)
+### `0.11.0` (October 27th, 2023)
 
 In preparation for a stable release of `bavapi`, some aspects of the endpoint function/method interface have been normalized across the library.
 
