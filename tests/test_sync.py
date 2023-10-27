@@ -41,15 +41,14 @@ def test_coro_jupyter(mock_running_in_jupyter: mock.Mock, mock_patch_loop: mock.
     mock_running_in_jupyter.assert_called_once()
 
 
-@pytest.mark.slow
-def test_raw_query():
+def test_raw_query(mock_async_client: mock.MagicMock):
     with mock.patch("bavapi.sync.Client.raw_query", wraps=wraps()) as mock_raw_query:
         sync.raw_query("TOKEN", "companies", Query(), timeout=10.0)
 
     mock_raw_query.assert_called_with("companies", Query())
+    mock_async_client.assert_called_once()
 
 
-@pytest.mark.slow
 @pytest.mark.parametrize(
     ("endpoint", "filters"),
     (
@@ -64,8 +63,11 @@ def test_raw_query():
         ("studies", {}),
     ),
 )
-def test_function(endpoint: str, filters: Dict[str, Any]):
+def test_function(
+    endpoint: str, filters: Dict[str, Any], mock_async_client: mock.MagicMock
+):
     with mock.patch(f"bavapi.sync.Client.{endpoint}", wraps=wraps()) as mock_endpoint:
         getattr(sync, endpoint)("TOKEN", filters=filters, timeout=10.0)
 
     mock_endpoint.assert_called_once()
+    mock_async_client.assert_called_once()

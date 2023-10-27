@@ -93,5 +93,4 @@ mypy_path = "type_stubs"
 [tool.pytest.ini_options]
 markers = [
     "e2e: tests that require an authenticated connection with the Fount.",
-    "slow: slow integration tests that don't require a Fount connection."
 ]

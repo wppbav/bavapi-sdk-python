@@ -60,6 +60,8 @@ Another change is that the order of parameters has been altered. The main reason
 #### Internal
 
 - :bug: Fixed typing of `tuple` internal `docs_deploy` function annotations not being compatible with Python <3.9.
+- :rocket: Removed slow and unnecessary test for the `verbose` parameter in `HTTPClient`.
+- :rocket: Refactored tests that instantiate `httpx.AsyncClient` instances for a 20x reduction in test run time.
 
 #### Docs
 

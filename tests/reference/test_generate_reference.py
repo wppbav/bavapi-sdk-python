@@ -122,7 +122,7 @@ def test_parse_args_all():
 
 
 @mock.patch("bavapi._reference.generate_reference.os.getenv", return_value="test_token")
-def test_main_no_args(mock_getenv: mock.Mock):
+def test_main_no_args(mock_getenv: mock.Mock, mock_async_client: mock.MagicMock):
     with pytest.raises(ValueError) as exc_info:
         uref.main([])
 
@@ -131,6 +131,7 @@ def test_main_no_args(mock_getenv: mock.Mock):
         "Run `bavapi-gen-refs -h for more details and instructions.",
     )
     mock_getenv.assert_called_once_with("BAV_API_KEY", "")
+    mock_async_client.assert_called_once()
 
 
 @mock.patch(
@@ -138,7 +139,11 @@ def test_main_no_args(mock_getenv: mock.Mock):
     wraps=wraps([{"id": 1, "name": "A"}, {"id": 2, "name": "B"}]),
 )
 @mock.patch("bavapi._reference.generate_reference.write_to_file")
-def test_main(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
+def test_main(
+    mock_write_to_file: mock.Mock,
+    mock_raw_query: mock.AsyncMock,
+    mock_async_client: mock.MagicMock,
+):
     args = ["-n", "audiences"]
 
     with mock.patch(
@@ -149,6 +154,7 @@ def test_main(mock_write_to_file: mock.Mock, mock_raw_query: mock.AsyncMock):
     assert len(mock_write_to_file.call_args_list) == 2
     mock_raw_query.assert_awaited_once_with("audiences", Query())
     mock_getenv.assert_called_once_with("BAV_API_KEY", "")
+    mock_async_client.assert_called_once()
 
 
 @mock.patch(
@@ -168,6 +174,7 @@ def test_main_all(
     mock_gen_init_source: mock.Mock,
     mock_write_to_file: mock.Mock,
     mock_raw_query: mock.AsyncMock,
+    mock_async_client: mock.MagicMock,
 ):
     args = ["-a"]
 
@@ -180,6 +187,7 @@ def test_main_all(
     assert len(mock_write_to_file.call_args_list) == 3
     assert len(mock_raw_query.call_args_list) == 2
     mock_getenv.assert_called_once_with("BAV_API_KEY", "")
+    mock_async_client.assert_called_once()
 
 
 @mock.patch("dotenv.load_dotenv", wraps=wraps(raises=ImportError))
@@ -210,6 +218,7 @@ def test_main_with_token_arg(
     mock_write_to_file: mock.Mock,
     mock_load_dotenv: mock.Mock,
     mock_raw_query: mock.AsyncMock,
+    mock_async_client: mock.MagicMock,
 ):
     args = ["-n", "audiences", "-t", "test_token"]
 
@@ -223,3 +232,4 @@ def test_main_with_token_arg(
     mock_load_dotenv.assert_not_called()
     mock_getenv.assert_called_once_with("BAV_API_KEY", "test_token")
     mock_raw_query.assert_awaited_once_with("audiences", Query())
+    mock_async_client.assert_called_once()

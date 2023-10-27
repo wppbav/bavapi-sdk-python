@@ -103,10 +103,6 @@ bavapi.Query(
 )
 ```
 
-1. !!! tip "Stick with defaults"
-
-        The default `per_page` value (`100`) has been set after testing various options for the best download speed. :rocket:
-
 ### `Query` parameters
 
 All Fount queries performed with [`bavapi.Query`][query.Query] support the following parameters:

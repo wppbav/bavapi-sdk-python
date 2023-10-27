@@ -81,29 +81,26 @@ def rate_limited_response() -> httpx.Response:
 # TESTS
 
 
-def test_client_init_with_client():
-    httpx_client = httpx.AsyncClient()
+def test_client_init_with_client(http_client: httpx.AsyncClient):
+    client = HTTPClient(client=http_client)
 
-    client = HTTPClient(client=httpx_client)
-
-    assert client.client is httpx_client
+    assert client.client is http_client
 
 
 @pytest.mark.anyio
-async def test_context_manager():
-    client = HTTPClient()
-    async with client as client:
+async def test_context_manager(mock_async_client: mock.MagicMock):
+    async with HTTPClient(client=mock_async_client) as client:
         assert isinstance(client, HTTPClient)
 
     assert client.client.is_closed
 
 
 @pytest.mark.anyio
-@mock.patch("bavapi.http.httpx.AsyncClient.aclose", wraps=wraps())
+@mock.patch("bavapi.http.httpx.AsyncClient.aclose")
 async def test_aclose(mock_aclose: mock.AsyncMock, client: HTTPClient):
     await client.aclose()
 
-    mock_aclose.assert_called_once()
+    mock_aclose.assert_awaited_once()
 
 
 @pytest.mark.anyio
@@ -166,20 +163,6 @@ async def test_get_pages(
 
     assert res == [["page"]]
     assert captured.err
-    mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
-
-
-@pytest.mark.anyio
-@mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(["page"]))
-async def test_get_pages_no_pbar(
-    mock_get: mock.AsyncMock, capsys: pytest.CaptureFixture
-):
-    client = HTTPClient("test", verbose=False)
-    res = await client.get_pages("request", Query(), 1)
-    captured = capsys.readouterr()
-
-    assert res == [["page"]]
-    assert not captured.err
     mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
 
 

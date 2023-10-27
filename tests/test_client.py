@@ -7,7 +7,7 @@ from unittest import mock
 import pytest
 
 from bavapi import filters
-from bavapi.client import Client, _default_include
+from bavapi.client import BASE_URL, USER_AGENT, Client, _default_include
 from bavapi.http import HTTPClient
 from bavapi.query import Query
 from bavapi.typing import OptionalListOr
@@ -17,14 +17,19 @@ from .helpers import wraps
 # CLASS INIT TESTS
 
 
-def test_init():
+def test_init(mock_async_client: mock.MagicMock):
     fount = Client("test_token")
+    mock_async_client.assert_called_once_with(
+        headers={
+            "Authorization": "Bearer test_token",
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT,
+        },
+        timeout=30.0,
+        verify=True,
+        base_url=BASE_URL,
+    )
     assert isinstance(fount._client, HTTPClient)
-
-
-def test_init_with_client(client: HTTPClient):
-    fount = Client(client=client)
-    assert fount._client is client
 
 
 def test_init_no_token():
@@ -34,10 +39,19 @@ def test_init_no_token():
     assert excinfo.value.args[0] == "You must provide `auth_token` or `client`."
 
 
-def test_init_user_agent():
-    fount = Client("test_token", user_agent="TEST_AGENT")
-
-    assert fount._client.client.headers["User-Agent"] == "TEST_AGENT"
+def test_init_user_agent(mock_async_client: mock.MagicMock):
+    fount = Client("test_token", user_agent="test_agent")
+    mock_async_client.assert_called_once_with(
+        headers={
+            "Authorization": "Bearer test_token",
+            "Accept": "application/json",
+            "User-Agent": "test_agent",
+        },
+        timeout=30.0,
+        verify=True,
+        base_url=BASE_URL,
+    )
+    assert isinstance(fount._client, HTTPClient)
 
 
 # PRIVATE TESTS
@@ -67,23 +81,25 @@ def test_no_default_include():
 # PUBLIC TESTS
 
 
-def test_per_page():
-    _fount = Client("token")
-    assert _fount.per_page == 100
-    _fount.per_page = 1000
-    assert _fount._client.per_page == 1000
+def test_per_page(fount: Client):
+    assert fount.per_page == 100
+    fount.per_page = 1000
+    assert fount._client.per_page == 1000
+
+    fount.per_page = 100
 
 
-def test_verbose():
-    _fount = Client("token")
-    assert _fount.verbose
-    _fount.verbose = False
-    assert not _fount._client.verbose
+def test_verbose(fount: Client):
+    assert fount.verbose
+    fount.verbose = False
+    assert not fount._client.verbose
+
+    fount.verbose = True
 
 
 @pytest.mark.anyio
-async def test_context_manager():
-    _fount = Client(client=HTTPClient())
+async def test_context_manager(mock_async_client: mock.MagicMock):
+    _fount = Client(client=HTTPClient(client=mock_async_client))
     async with _fount as fount_ctx:
         assert isinstance(fount_ctx, Client)
 
