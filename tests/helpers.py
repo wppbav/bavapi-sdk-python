@@ -3,6 +3,7 @@
 from typing import Callable, Optional, Type, TypeVar, Union
 
 T = TypeVar("T")
+ASGIApp = Callable[..., "ASGIApp"]
 
 
 def wraps(
@@ -16,3 +17,7 @@ def wraps(
         return return_value
 
     return _wraps
+
+
+def mock_app(*args, **kwargs) -> ASGIApp:
+    return mock_app(*args, **kwargs)  # pragma: no cover

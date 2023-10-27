@@ -13,7 +13,7 @@ Create a client instance and make a request to the `brands` endpoint.
 
 A more complex query:
 
->>> from bavapi_refs.audiences import Audiences
+>>> from bavapi_refs import Audiences
 >>> async with bavapi.Client("TOKEN") as bav:
 ...     bss = await bav.brandscape_data(
 ...         country_code="UK",
@@ -31,7 +31,7 @@ Use `Client.raw_query` (with `bavapi.Query`) for endpoints that aren't fully sup
 
 >>> query = bavapi.Query(filters=bavapi.filters.FountFilters(name="Meta"))
 >>> async with bavapi.Client("TOKEN") as bav:
-...     result = await bav.raw_query("companies", params=query)
+...     result = await bav.raw_query("companies", query=query)
 """
 
 # pylint: disable=too-many-arguments, too-many-lines
@@ -62,6 +62,7 @@ if TYPE_CHECKING:
 __all__ = ("Client",)
 
 BASE_URL: Final[str] = "https://fount.wppbav.com/api/v2/"
+USER_AGENT: Final[str] = "BAVAPI SDK Python"
 
 BRANDSCAPE_DEFAULTS: Final[List[str]] = ["study", "brand", "category", "audience"]
 CATEGORIES_DEFAULTS: Final[List[str]] = ["sector"]
@@ -192,7 +193,7 @@ class Client:
                 headers={
                     "Authorization": f"Bearer {auth_token}",
                     "Accept": "application/json",
-                    "User-Agent": user_agent or "BAVAPI SDK Python",
+                    "User-Agent": user_agent or USER_AGENT,
                 },
                 verbose=verbose,
             )
@@ -231,7 +232,7 @@ class Client:
         """Close existing HTTP connections."""
         return await self._client.aclose()
 
-    async def raw_query(self, endpoint: str, params: Query[F]) -> List[JSONDict]:
+    async def raw_query(self, endpoint: str, query: Query[F]) -> List[JSONDict]:
         """Perform a raw GET query to the WPPBAV Fount API, returning
         the response JSON data instead of a `pandas` DataFrame.
 
@@ -239,29 +240,29 @@ class Client:
         ----------
         endpoint : str
             Endpoint name
-        params : Query
-            Query `pydantic` model with query parameters.
+        query : Query
+            bavapi.Query object with query parameters.
 
         Returns
         -------
         list[dict[str, Any]]
             List of JSON response data
         """
-        return list(await self._client.query(endpoint, params))
+        return list(await self._client.query(endpoint, query))
 
     async def audiences(
         self,
         name: Optional[str] = None,
-        audience_id: Optional[int] = None,
         active: Literal[0, 1] = 0,
-        inactive: Literal[0, 1] = 0,
         public: Literal[0, 1] = 0,
+        *,
+        audience_id: Optional[int] = None,
         private: Literal[0, 1] = 0,
         groups: OptionalListOr[int] = None,
-        *,
         filters: OptionalFiltersOrMapping[_filters.AudiencesFilters] = None,
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.AudiencesFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
@@ -271,16 +272,14 @@ class Client:
         ----------
         name : str, optional
             Search audiences by name, by default None
+        active : Literal[0, 1], optional
+            Return active audiences only if set to `1`, by default 0
+        public : Literal[0, 1], optional
+            Return active audiences only if set to `1`, by default 0
         audience_id : int, optional
             Fount audience ID, by default None
 
             If an audience ID is provided, only that audience will be returned
-        active : Literal[0, 1], optional
-            Return active audiences only if set to `1`, by default 0
-        inactive : Literal[0, 1], optional
-            Return inactive audiences only if set to `1`, by default 0
-        public : Literal[0, 1], optional
-            Return active audiences only if set to `1`, by default 0
         private : Literal[0, 1], optional
             Return inactive audiences only if set to `1`, by default 0
         groups : int or list[int], optional
@@ -294,6 +293,10 @@ class Client:
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
             Additional resources to include in API response, by default None
+        query : Query[AudiencesFilters], optional
+            Query object to perform request with, by default None
+
+            If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -322,24 +325,23 @@ class Client:
         pandas.DataFrame
             DataFrame with `brands` endpoint results.
         """
+        if query is None:
+            filters = _filters.AudiencesFilters.ensure(
+                filters,
+                name=name,
+                active=active,
+                public=public,
+                private=private,
+                groups=groups,
+            )
 
-        filters = _filters.AudiencesFilters.ensure(
-            filters,
-            name=name,
-            active=active,
-            inactive=inactive,
-            public=public,
-            private=private,
-            groups=groups,
-        )
-
-        query: Query[_filters.AudiencesFilters] = Query(
-            id=audience_id,
-            filters=filters,
-            fields=fields,
-            include=include,
-            **kwargs,
-        )
+            query = Query(
+                id=audience_id,
+                filters=filters,
+                fields=fields,
+                include=include,
+                **kwargs,
+            )
 
         items = await self._client.query("audiences", query)
 
@@ -348,16 +350,16 @@ class Client:
     async def brand_metrics(
         self,
         name: Optional[str] = None,
-        metric_id: Optional[int] = None,
         active: Literal[0, 1] = 0,
-        inactive: Literal[0, 1] = 0,
         public: Literal[0, 1] = 0,
+        *,
+        metric_id: Optional[int] = None,
         private: Literal[0, 1] = 0,
         groups: OptionalListOr[int] = None,
-        *,
         filters: OptionalFiltersOrMapping[_filters.BrandMetricsFilters] = None,
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.BrandMetricsFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
@@ -367,16 +369,14 @@ class Client:
         ----------
         name : str, optional
             Search brand metrics by name, by default None
+        active : Literal[0, 1], optional
+            Return active brand metrics only if set to `1`, by default 0
+        public : Literal[0, 1], optional
+            Return active brand metrics only if set to `1`, by default 0
         metric_id : int, optional
             Fount metric ID, by default None
 
             If an metric ID is provided, only that metric will be returned
-        active : Literal[0, 1], optional
-            Return active brand metrics only if set to `1`, by default 0
-        inactive : Literal[0, 1], optional
-            Return inactive brand metrics only if set to `1`, by default 0
-        public : Literal[0, 1], optional
-            Return active brand metrics only if set to `1`, by default 0
         private : Literal[0, 1], optional
             Return inactive brand metrics only if set to `1`, by default 0
         groups : int or list[int], optional
@@ -390,6 +390,10 @@ class Client:
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
             Additional resources to include in API response, by default None
+        query : Query[BrandMetricsFilters], optional
+            Query object to perform request with, by default None
+
+            If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -418,24 +422,23 @@ class Client:
         pandas.DataFrame
             DataFrame with `brand-metrics` endpoint results.
         """
+        if query is None:
+            filters = _filters.BrandMetricsFilters.ensure(
+                filters,
+                name=name,
+                active=active,
+                public=public,
+                private=private,
+                groups=groups,
+            )
 
-        filters = _filters.BrandMetricsFilters.ensure(
-            filters,
-            name=name,
-            active=active,
-            inactive=inactive,
-            public=public,
-            private=private,
-            groups=groups,
-        )
-
-        query: Query[_filters.BrandMetricsFilters] = Query(
-            id=metric_id,
-            filters=filters,
-            fields=fields,
-            include=include,
-            **kwargs,
-        )
+            query = Query(
+                id=metric_id,
+                filters=filters,
+                fields=fields,
+                include=include,
+                **kwargs,
+            )
 
         items = await self._client.query("brand-metrics", query)
 
@@ -444,13 +447,13 @@ class Client:
     async def brand_metric_groups(
         self,
         name: Optional[str] = None,
-        group_id: Optional[int] = None,
         active: Literal[0, 1] = 0,
-        inactive: Literal[0, 1] = 0,
         *,
+        group_id: Optional[int] = None,
         filters: OptionalFiltersOrMapping[_filters.BrandMetricGroupsFilters] = None,
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.BrandMetricGroupsFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
@@ -460,14 +463,12 @@ class Client:
         ----------
         name : str, optional
             Search brand metric groups by name, by default None
+        active : Literal[0, 1], optional
+            Return active brand metric groups only if set to `1`, by default 0
         group_id : int, optional
             Fount metric group ID, by default None
 
             If an metric group ID is provided, only that metric group will be returned
-        active : Literal[0, 1], optional
-            Return active brand metric groups only if set to `1`, by default 0
-        inactive : Literal[0, 1], optional
-            Return inactive brand metric groups only if set to `1`, by default 0
         filters : BrandMetricGroupsFilters or dict of filters, optional
             BrandMetricGroupsFilters object or dictionary of filter parameters, by default None
         fields : str or list[str], optional
@@ -477,6 +478,10 @@ class Client:
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
             Additional resources to include in API response, by default None
+        query : Query[BrandMetricGroupsFilters], optional
+            Query object to perform request with, by default None
+
+            If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -505,21 +510,20 @@ class Client:
         pandas.DataFrame
             DataFrame with `brand-metric-groups` endpoint results.
         """
+        if query is None:
+            filters = _filters.BrandMetricGroupsFilters.ensure(
+                filters,
+                name=name,
+                active=active,
+            )
 
-        filters = _filters.BrandMetricGroupsFilters.ensure(
-            filters,
-            name=name,
-            active=active,
-            inactive=inactive,
-        )
-
-        query: Query[_filters.BrandMetricGroupsFilters] = Query(
-            id=group_id,
-            filters=filters,
-            fields=fields,
-            include=include,
-            **kwargs,
-        )
+            query = Query(
+                id=group_id,
+                filters=filters,
+                fields=fields,
+                include=include,
+                **kwargs,
+            )
 
         items = await self._client.query("brand-metric-groups", query)
 
@@ -530,12 +534,13 @@ class Client:
         name: Optional[str] = None,
         country_codes: OptionalListOr[str] = None,
         year_numbers: OptionalListOr[int] = None,
+        *,
         brand_id: Optional[int] = None,
         studies: OptionalListOr[int] = None,
-        *,
         filters: OptionalFiltersOrMapping[_filters.BrandsFilters] = None,
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.BrandsFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
@@ -564,6 +569,10 @@ class Client:
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
             Additional resources to include in API response, by default None
+        query : Query[BrandsFilters], optional
+            Query object to perform request with, by default None
+
+            If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -592,22 +601,22 @@ class Client:
         pandas.DataFrame
             DataFrame with `brands` endpoint results.
         """
+        if query is None:
+            filters = _filters.BrandsFilters.ensure(
+                filters,
+                name=name,
+                country_codes=country_codes,
+                year_numbers=year_numbers,
+                studies=studies,
+            )
 
-        filters = _filters.BrandsFilters.ensure(
-            filters,
-            name=name,
-            country_codes=country_codes,
-            year_numbers=year_numbers,
-            studies=studies,
-        )
-
-        query: Query[_filters.BrandsFilters] = Query(
-            id=brand_id,
-            filters=filters,
-            fields=fields,
-            include=include,
-            **kwargs,
-        )
+            query = Query(
+                id=brand_id,
+                filters=filters,
+                fields=fields,
+                include=include,
+                **kwargs,
+            )
 
         items = await self._client.query("brands", query)
 
@@ -619,12 +628,13 @@ class Client:
         year_number: OptionalListOr[int] = None,
         audiences: OptionalListOr[int] = None,
         brand_name: Optional[str] = None,
-        studies: OptionalListOr[int] = None,
         *,
+        studies: OptionalListOr[int] = None,
         filters: OptionalFiltersOrMapping[_filters.BrandscapeFilters] = None,
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
         metric_keys: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.BrandscapeFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
@@ -686,6 +696,10 @@ class Client:
             Additional resources to include in API response, by default None
         metric_keys: str or list[str], optional
             Key or list of keys for the metrics included in the response, by default None
+        query : Query[BrandscapeFilters], optional
+            Query object to perform request with, by default None
+
+            If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -719,23 +733,23 @@ class Client:
         ValidationError
             If used with an invalid combination of parameters (see above)
         """
+        if query is None:
+            filters = _filters.BrandscapeFilters.ensure(
+                filters,
+                country_code=country_code,
+                year_number=year_number,
+                audiences=audiences,
+                brand_name=brand_name,
+                studies=studies,
+            )
 
-        filters = _filters.BrandscapeFilters.ensure(
-            filters,
-            country_code=country_code,
-            year_number=year_number,
-            audiences=audiences,
-            brand_name=brand_name,
-            studies=studies,
-        )
-
-        query: Query[_filters.BrandscapeFilters] = Query(
-            filters=filters,
-            fields=fields,
-            include=_default_include(include, BRANDSCAPE_DEFAULTS),
-            metric_keys=metric_keys,
-            **kwargs,
-        )
+            query = Query(
+                filters=filters,
+                fields=fields,
+                include=_default_include(include, BRANDSCAPE_DEFAULTS),
+                metric_keys=metric_keys,
+                **kwargs,
+            )
 
         items = await self._client.query("brandscape-data", query)
 
@@ -745,12 +759,13 @@ class Client:
     async def categories(
         self,
         name: Optional[str] = None,
-        category_id: Optional[int] = None,
         sector: OptionalListOr[int] = None,
         *,
+        category_id: Optional[int] = None,
         filters: OptionalFiltersOrMapping[_filters.CategoriesFilters] = None,
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.CategoriesFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
@@ -769,12 +784,12 @@ class Client:
         ----------
         name : str, optional
             Search categories by name, by default None
+        sector : int or list[int], optional
+            Filter categories by sector ID, by default None
         category_id : int, optional
             Fount category ID, by default None
 
             If an category ID is provided, only that category will be returned
-        sector : int or list[int], optional
-            Filter categories by sector ID, by default None
         filters : CategoriesFilters or dict of filters, optional
             CategoriesFilters object or dictionary of filter parameters, by default None
         fields : str or list[str], optional
@@ -784,6 +799,10 @@ class Client:
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
             Additional resources to include in API response, by default None
+        query : Query[CategoriesFilters], optional
+            Query object to perform request with, by default None
+
+            If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -812,20 +831,20 @@ class Client:
         pandas.DataFrame
             DataFrame with `categories` endpoint results.
         """
+        if query is None:
+            filters = _filters.CategoriesFilters.ensure(
+                filters,
+                name=name,
+                sector=sector,
+            )
 
-        filters = _filters.CategoriesFilters.ensure(
-            filters,
-            name=name,
-            sector=sector,
-        )
-
-        query: Query[_filters.CategoriesFilters] = Query(
-            id=category_id,
-            filters=filters,
-            fields=fields,
-            include=_default_include(include, CATEGORIES_DEFAULTS),
-            **kwargs,
-        )
+            query = Query(
+                id=category_id,
+                filters=filters,
+                fields=fields,
+                include=_default_include(include, CATEGORIES_DEFAULTS),
+                **kwargs,
+            )
 
         items = await self._client.query("categories", query)
 
@@ -834,14 +853,15 @@ class Client:
     async def collections(
         self,
         name: Optional[str] = None,
-        collection_id: Optional[int] = None,
         public: Literal[0, 1] = 0,
+        *,
+        collection_id: Optional[int] = None,
         shared_with_me: Literal[0, 1] = 0,
         mine: Literal[0, 1] = 0,
-        *,
         filters: OptionalFiltersOrMapping[_filters.CollectionsFilters] = None,
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.CollectionsFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
@@ -851,17 +871,16 @@ class Client:
         ----------
         name : str, optional
             Search collections by name, by default None
+        public : Literal[0, 1], optional
+            Return public collections only, by default 0
         collection_id : int, optional
             Fount collection ID, by default None
 
             If an collection ID is provided, only that collection will be returned
-        public : Literal[0, 1], optional
-            Return public collections only, by default 0
         shared_with_me : Literal[0, 1], optional
             Only return collections that have been shared with the user, by default 0
         mine : Literal[0, 1], optional
             Only return collections created by the user, by default 0
-
         filters : CollectionsFilters or dict of filters, optional
             CollectionsFilters object or dictionary of filter parameters, by default None
         fields : str or list[str], optional
@@ -871,6 +890,10 @@ class Client:
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
             Additional resources to include in API response, by default None
+        query : Query[CollectionsFilters], optional
+            Query object to perform request with, by default None
+
+            If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -899,22 +922,22 @@ class Client:
         pandas.DataFrame
             DataFrame with `collections` endpoint results.
         """
+        if query is None:
+            filters = _filters.CollectionsFilters.ensure(
+                filters,
+                name=name,
+                public=public,
+                shared_with_me=shared_with_me,
+                mine=mine,
+            )
 
-        filters = _filters.CollectionsFilters.ensure(
-            filters,
-            name=name,
-            public=public,
-            shared_with_me=shared_with_me,
-            mine=mine,
-        )
-
-        query: Query[_filters.CollectionsFilters] = Query(
-            id=collection_id,
-            filters=filters,
-            fields=fields,
-            include=include,
-            **kwargs,
-        )
+            query = Query(
+                id=collection_id,
+                filters=filters,
+                fields=fields,
+                include=include,
+                **kwargs,
+            )
 
         items = await self._client.query("collections", query)
 
@@ -923,13 +946,13 @@ class Client:
     async def sectors(
         self,
         name: Optional[str] = None,
-        sector_id: Optional[int] = None,
         in_most_influential: Literal[0, 1] = 0,
-        not_in_most_influential: Literal[0, 1] = 0,
         *,
+        sector_id: Optional[int] = None,
         filters: OptionalFiltersOrMapping[_filters.SectorsFilters] = None,
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.SectorsFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
@@ -939,14 +962,12 @@ class Client:
         ----------
         name : str, optional
             Search sectors by name, by default None
+        in_most_influential : Literal[0, 1], optional
+            Sectors that are part of the Most Influential lists, by default 0
         sector_id : int, optional
             Fount sectors ID, by default None
 
             If a sector ID is provided, only that sector will be returned
-        in_most_influential : Literal[0, 1], optional
-            Sectors that are part of the Most Influential lists, by default 0
-        not_in_most_influential : Literal[0, 1], optional
-            Sectors that are not part of the Most Influential lists, by default 0
         filters : SectorsFilters or dict of filters, optional
             SectorsFilters object or dictionary of filter parameters, by default None
         fields : str or list[str], optional
@@ -956,6 +977,10 @@ class Client:
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
             Additional resources to include in API response, by default None
+        query : Query[SectorsFilters], optional
+            Query object to perform request with, by default None
+
+            If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -984,21 +1009,20 @@ class Client:
         pandas.DataFrame
             DataFrame with `sectors` endpoint results.
         """
+        if query is None:
+            filters = _filters.SectorsFilters.ensure(
+                filters,
+                name=name,
+                in_most_influential=in_most_influential,
+            )
 
-        filters = _filters.SectorsFilters.ensure(
-            filters,
-            name=name,
-            in_most_influential=in_most_influential,
-            not_in_most_influential=not_in_most_influential,
-        )
-
-        query: Query[_filters.SectorsFilters] = Query(
-            id=sector_id,
-            filters=filters,
-            fields=fields,
-            include=include,
-            **kwargs,
-        )
+            query = Query(
+                id=sector_id,
+                filters=filters,
+                fields=fields,
+                include=include,
+                **kwargs,
+            )
 
         items = await self._client.query("sectors", query)
 
@@ -1009,11 +1033,12 @@ class Client:
         country_codes: OptionalListOr[str] = None,
         year_numbers: OptionalListOr[int] = None,
         full_year: Literal[0, 1] = 0,
-        study_id: Optional[int] = None,
         *,
+        study_id: Optional[int] = None,
         filters: OptionalFiltersOrMapping[_filters.StudiesFilters] = None,
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.StudiesFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
     ) -> "DataFrame":
@@ -1042,6 +1067,10 @@ class Client:
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
             Additional resources to include in API response, by default None
+        query : Query[StudiesFilters], optional
+            Query object to perform request with, by default None
+
+            If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
             Whether to expand nested lists into new dictionaries, by default False
         **kwargs
@@ -1070,20 +1099,21 @@ class Client:
         pandas.DataFrame
             DataFrame with `studies` endpoint results.
         """
-        filters = _filters.StudiesFilters.ensure(
-            filters,
-            country_codes=country_codes,
-            year_numbers=year_numbers,
-            full_year=full_year,
-        )
+        if query is None:
+            filters = _filters.StudiesFilters.ensure(
+                filters,
+                country_codes=country_codes,
+                year_numbers=year_numbers,
+                full_year=full_year,
+            )
 
-        query: Query[_filters.StudiesFilters] = Query(
-            id=study_id,
-            filters=filters,
-            fields=fields,
-            include=include,
-            **kwargs,
-        )
+            query = Query(
+                id=study_id,
+                filters=filters,
+                fields=fields,
+                include=include,
+                **kwargs,
+            )
 
         items = await self._client.query("studies", query)
 

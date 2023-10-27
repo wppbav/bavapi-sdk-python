@@ -9,7 +9,7 @@ jobs:
       name: Build documentation
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
           with:
             fetch-depth: 0
   
@@ -24,4 +24,6 @@ jobs:
             git config --global user.email docs@bavapi-sdk-python.wppbav.com
   
         - name: Release docs website
-          run: nox -s docs_deploy -- --push
+          run: |
+            pip install -e .[doc]
+            nox -s docs_deploy -- --push

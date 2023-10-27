@@ -1,30 +1,40 @@
 # `bavapi` Roadmap
 
 !!! note
-    As of `v0.10.1`, `bavapi` is in **beta**. New features won't likely be developed until the full release of `bavapi`.
+    As of `v0.10.1`, `bavapi` is in **beta**. Only listed features below will likely be developed until the full release of `bavapi`.
 
 This is a non-exhaustive list of potential features & changes to `bavapi` before it is ready for full release:
 
 ## Core tooling
 
-- [x] ~~`pydantic` V2 support~~ `v0.6.0`
-- [x] ~~Strict `mypy` support with [PEP 692](https://docs.python.org/3.12/whatsnew/3.12.html#whatsnew312-pep692) `Unpack` and `TypedDict`~~ `v0.9.0`
+- [x] `v0.6.0` ~~`pydantic` V2 support~~
+- [x] `v0.9.0` ~~Strict `mypy` support with [PEP 692](https://docs.python.org/3.12/whatsnew/3.12.html#whatsnew312-pep692) `Unpack` and `TypedDict`~~
+- [x] `v0.11.0` ~~Ability to use custom `bavapi.Query` objects in endpoint methods and functions~~
+- [x] `v0.11.0` ~~Improved importing experiece when using reference classes created via the `bavapi-gen-refs` command~~
 
 ## Known issues
 
-- [ ] Sporadic `SSL: CERTIFICATE_VERIFY_FAILED` errors when making requests to the Fount API. Currently, retrying the request usually fixes the issue.
+- [ ] Sporadic `SSL: CERTIFICATE_VERIFY_FAILED` errors when making requests to the Fount API. Currently, retrying the request usually fixes the issue. See [an option](usage/project-tips.md#retry-failed-requests) for temporary fix.
 
-## New fully-supported endpoints
+## Fully-supported endpoints
 
-Eventually, the plan is to support all endpoints. This is the current priority list:
+Eventually, the plan is to support almost all endpoints. This is the current priority list:
 
-- [x] ~~Categories~~ `v0.10.0`
-- [x] ~~Collections~~ `v0.10.0`
-- [x] ~~Brand Metrics~~ `v0.10.0`
-- [x] ~~Sectors~~ `v0.10.0`
-- [x] ~~Brand Metric Groups~~ `v0.10.0`
+- [x] `v0.1.0` ~~Brands~~
+- [x] `v0.1.0` ~~Brandscape Data~~
+- [x] `v0.1.0` ~~Studies~~
+- [x] `v0.4.0` ~~Audiences~~
+- [x] `v0.10.0` ~~Categories~~
+- [x] `v0.10.0` ~~Collections~~
+- [x] `v0.10.0` ~~Brand Metrics~~
+- [x] `v0.10.0` ~~Sectors~~
+- [x] `v0.10.0` ~~Brand Metric Groups~~
+- [ ] Companies
+- [ ] Countries
+- [ ] Regions
+- [ ] Cities
+- [ ] Years
 
 ## Stretch goals
 
-- [x] ~~Smarter flattening of JSON responses, possibly through `pandas.json_normalize`.~~ `v0.8.1`
-- [ ] ~~Parse datetime values to `pandas` datetime.~~ `de-scoped`
+- [x] `v0.8.1` ~~Smarter flattening of JSON responses, possibly through `pandas.json_normalize`.~~

@@ -21,7 +21,7 @@ my-project-folder
 └─── ... (other stuff)
 ```
 
-Create this `.env` file (note the leading dot) in the top level of your working directory, and write down your token like so:
+Create a `.env` file (note the leading dot) in the top level of your working directory, and write down your token:
 
 ```env
 BAV_API_KEY = "your_token_here"

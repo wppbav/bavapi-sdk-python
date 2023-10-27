@@ -5,7 +5,7 @@
 import json
 import os
 import pathlib
-from typing import cast
+from typing import Tuple, cast
 
 import nox
 
@@ -176,10 +176,10 @@ def docs_deploy(session: nox.Session) -> None:
 
     Arguments
     ---------
-    --push: flag
+    --push : flag (`--push`)
         Check versions from GitHub branch and deploy to branch.
-    --version: str
-        Override version from package
+    --version : str
+        Override version from package (`--version=1.0`)
 
     Examples
     --------
@@ -195,11 +195,6 @@ def docs_deploy(session: nox.Session) -> None:
 
     `nox -s docs_deploy -- --version=2.0.0`
     """
-
-    # Get current package version
-    if os.getenv("CI"):
-        session.run("pip", "install", "-e", ".[doc]")
-
     try:
         import tomllib
     except ImportError:
@@ -207,12 +202,12 @@ def docs_deploy(session: nox.Session) -> None:
         session.run("pip", "install", "tomli")
         import tomli as tomllib
 
-    def version_tuple(string: str) -> tuple[int, ...]:
-        return tuple(int(i) for i in string.split("."))
+    def version_tuple(version: str) -> Tuple[int, ...]:
+        return tuple(int(i) for i in version.split("."))
 
     def get_versions(
-        list_args: tuple[str, ...], rebase: bool = False
-    ) -> set[tuple[int, ...]]:
+        list_args: Tuple[str, ...], rebase: bool = False
+    ) -> set[Tuple[int, ...]]:
         if rebase:
             list_args = tuple(["--rebase"] + list(list_args))
 
@@ -222,6 +217,7 @@ def docs_deploy(session: nox.Session) -> None:
             for v in out.splitlines()
         }
 
+    # Get current package version
     if not any(
         version_args := [i for i in session.posargs if i.startswith("--version=")]
     ):
@@ -263,5 +259,5 @@ def docs_serve(session: nox.Session) -> None:
 @nox.session(python=False)
 def docs_build_and_serve(session: nox.Session) -> None:
     """Build and serve documentation. Suitable for local development."""
-    session.notify("docs_deploy")
+    session.notify("docs_deploy", session.posargs)
     session.notify("docs_serve")

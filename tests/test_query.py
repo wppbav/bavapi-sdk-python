@@ -25,7 +25,7 @@ def test_paginated():
 
 
 def test_to_params_no_filters_no_fields():
-    assert Query(id=1).to_params("test") == {"id": 1}
+    assert Query(id=1).to_params("test") == {}
 
 
 @pytest.mark.parametrize(
@@ -41,7 +41,6 @@ def test_to_params_no_filters_no_fields():
 )
 def test_to_params(query: Query):
     assert query.to_params("test") == {
-        "id": 1,
         "filter[name]": 1,
         "fields[test]": "metric",
     }
@@ -51,4 +50,4 @@ def test_to_params_dict_filters():
     query = Query(id=1, filters={"name": 1})
     query.filters = {"name": 1}
 
-    assert query.to_params("test") == {"id": 1, "filter[name]": 1}
+    assert query.to_params("test") == {"filter[name]": 1}

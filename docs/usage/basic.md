@@ -11,7 +11,7 @@ import bavapi
 !!! info "SSL Issues"
     It's possible that you get `SSL: CERTIFICATE_VERIFY_FAILED` errors when performing requests with `bavapi`. At the moment, it is not clear to what might be the source of the issue; as it only happens sometimes, and the error doesn't appear to happen with other tested URLs.
 
-    Usually, making the request again solves the issue, but you might have to do so a couple of times if the issue persists.
+    Usually, making the request again solves the issue, but you might have to do so a couple of times if the issue persists. Here's a temporary [solution](project-tips.md#retry-failed-requests) for the issue.
 
     :bulb: If you have any thoughts on how to solve this, please open an [issue](https://github.com/wppbav/bavapi-sdk-python/issues/) on GitHub.
 
@@ -36,7 +36,7 @@ You can make requests to other [endpoints](../endpoints/index.md) in the same wa
 ```py
 uk_studies = bavapi.studies("TOKEN", country_code="GB")
 
-uk22 = bavapi.brandscape_data("TOKEN", year_numbers=2022, country_code="GB", audiences=1)
+uk22 = bavapi.brandscape_data("TOKEN", year_number=2022, country_code="GB", audiences=12)
 
 all_adults = bavapi.audiences("TOKEN", name="All Adults")
 ```
@@ -57,19 +57,19 @@ In order to validate the request parameters before sending a bad request, `bavap
 
     Similarly, if the initial request returns the entirety of the query (e.g., there are only 10 results and `per_page` is above 10, which it is by default), no further requests will be performed, and instead the data from the initial response will be returned.
 
-Each endpoint has a filter class associated with it, as each endpoint has its own filter requirements:
+Each endpoint function has a filter class associated with it, as each endpoint has its own filter requirements:
 
-| Endpoint                | Filters class                                                  |
-| ----------------------- | -------------------------------------------------------------- |
-| `"audiences"`           | [`AudiencesFilters`][filters.AudiencesFilters]                 |
-| `"brand-metric-groups"` | [`BrandMetricGroupsFilters`][filters.BrandMetricGroupsFilters] |
-| `"brand-metrics"`       | [`BrandMetricsFilters`][filters.BrandMetricsFilters]           |
-| `"brands"`              | [`BrandsFilters`][filters.BrandsFilters]                       |
-| `"brandscape-data"`     | [`BrandscapeFilters`][filters.BrandscapeFilters]               |
-| `"categories"`          | [`CategoriesFilters`][filters.CategoriesFilters]               |
-| `"collections"`         | [`CollectionsFilters`][filters.CollectionsFilters]             |
-| `"sectors"`             | [`SectorsFilters`][filters.SectorsFilters]                     |
-| `"studies"`             | [`StudiesFilters`][filters.StudiesFilters]                     |
+| Endpoint Function                                 | Filters class                                                  |
+| ------------------------------------------------- | -------------------------------------------------------------- |
+| [`audiences`][sync.audiences]                     | [`AudiencesFilters`][filters.AudiencesFilters]                 |
+| [`brand_metric_groups`][sync.brand_metric_groups] | [`BrandMetricGroupsFilters`][filters.BrandMetricGroupsFilters] |
+| [`brand_metrics`][sync.brand_metrics]             | [`BrandMetricsFilters`][filters.BrandMetricsFilters]           |
+| [`brands`][sync.brands]                           | [`BrandsFilters`][filters.BrandsFilters]                       |
+| [`brandscape_data`][sync.brandscape_data]         | [`BrandscapeFilters`][filters.BrandscapeFilters]               |
+| [`categories`][sync.categories]                   | [`CategoriesFilters`][filters.CategoriesFilters]               |
+| [`collections`][sync.collections]                 | [`CollectionsFilters`][filters.CollectionsFilters]             |
+| [`sectors`][sync.sectors]                         | [`SectorsFilters`][filters.SectorsFilters]                     |
+| [`studies`][sync.studies]                         | [`StudiesFilters`][filters.StudiesFilters]                     |
 
 !!! warning
     Using a filters class not meant for a specific endpoint will raise a `ValueError`.
@@ -104,7 +104,7 @@ Filters can be specified using a Python dictionary (if you know the name of the 
     ```
 
 !!! warning
-    If both regular function parameters and filters are specified, the values in the filters parameter will take precedence for the actual request:
+    If both regular function parameters and `filters` are specified, the values in the `filters` parameter will take precedence for the actual request:
 
     ```py
     result = bavapi.brands(name="Swatch", filters={"name": "Facebook"})
@@ -113,6 +113,8 @@ Filters can be specified using a Python dictionary (if you know the name of the 
     The request will use `name="Facebook"`, because values specified in the `filters` parameter take precedence.
 
 ### Value filters
+
+!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/customizing/filters)"
 
 "Value" filters refer to filtering on the values of the data returned by the endpoint, as opposed to filtering via query parameters specified in the Fount API [documentation](https://developer.wppbav.com/docs/2.x/customizing/fields). For example, filtering by category name or by sector in the `brandscape-data` endpoint.
 
@@ -141,11 +143,14 @@ The following reference classes are available as of `v0.10`:
 - `Audiences`: Audience IDs for all available Fount audiences.
 - `Countries`: Country IDs for all available Fount countries.
 
-They make it easier to use these filters, which require Fount IDs to work:
+They make it easier to use their respective filters, which require Fount IDs to work, rather than remembering each respective ID:
 
 ```py
+from bavapi_refs import Audiences, Countries
+
 uk22 = bavapi.brandscape_data(
     "TOKEN",
+    year_number=2021,
     countries=Countries.UNITED_KINGDOM,
     audiences=Audiences.ALL_ADULTS,
 )
@@ -182,18 +187,22 @@ It is possible to set the time before timeout when performing requests with `bav
 
 It's possible to supress progress bar outputs via the `verbose` parameter in function calls and `Client` init methods:
 
-=== Sync (Won't show progress bar)
+=== "Sync (Won't show progress bar)"
+
     ```py
     bavapi.brands(TOKEN, "Facebook", verbose=False)
     ```
 
-=== Async (Won't show progress bar)
+=== "Async (Won't show progress bar)"
+
     ```py
     async with bavapi.Client(TOKEN, verbose=False) as bav:
         bav.brands("Facebook")
     ```
 
 ## Other query parameters
+
+The following query parameters are available for all endpoints (unless stated otherwise).
 
 ### Fields
 
@@ -239,7 +248,7 @@ result = bavapi.brands(name="Swatch", includes="company")
 ```
 
 !!! note "Default `includes`"
-    The `brandscape_data` function includes `study`, `brand`, `category` and `audience` by default, to align functionality with other sources of data like the Fount website and the Cultural Rank Tool.
+    The `brandscape_data` function includes `study`, `brand`, `category` and `audience` by default, to align functionality with other sources of data like the Fount website and the Cultural Rank Tool. More [info](../endpoints/brandscape-data.md#default-includes). The `categories` function also has [default includes](../endpoints/categories.md#default-includes).
 
 ### Pagination
 
@@ -261,14 +270,32 @@ You can also set a custom number of `max_pages` for the request, or directly spe
 
 ### Metric keys
 
+!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/core-resources/brandscape-data#additional-column-customizations)"
+
 `metric_keys` is a special filter to specify the data *columns* that the response should contain.
 
 The API response will include all score types for that metric.
 
 !!! note
-    Currently, only the `brandscape-data` endpoint supports the use of metric keys. All other endpoints will ignore this parameter.
+    Currently, only the `brandscape-data` endpoint supports the use of metric keys. All other endpoints will ignore this parameter. More info in the [`brandscape-data`](../endpoints/brandscape-data.md#metric-keys) endpoint section.
 
-    More info in the [`brandscape-data`](../endpoints/brandscape-data.md#metric-keys) endpoint section.
+## Using `Query` objects
+
+!!! abstract "New in `v0.11.0`"
+
+While the available parameters in endpoint functions and methods are provided for convenience, it is possible to use [`bavapi.Query`][query.Query] objects directly inside function calls.
+
+This can be combined with the techniques covered in the [saving query objects](project-tips.md#save--load-filters-and-queries) section of the documentation for powerful reproducibility.
+
+When using `Query` in one of the endpoint methods, only the parameter values specified in the `Query` object will be used.
+
+```py
+# will use `name="Facebook"` because `query` values take precedence.
+bavapi.brands(name="Swatch", query=bavapi.Query(filters={"name":"Facebook"}))
+```
+
+!!! info
+    Read more about `Query` in the [Advanced usage](advanced.md#the-query-class) section.
 
 ## Formatting output
 
@@ -293,12 +320,6 @@ bavapi.brands("Facebook", include="studies", stack_data=True)
 |   0 | 24353 | Facebook |        254 | Argentina - Adults 2011 | ... |
 |   1 | 24353 | Facebook |        787 | Argentina - Adults 2012 | ... |
 | ... |   ... | ...      |        ... | ...                     | ... |
-
-## Datetime in Fount responses
-
-Parsing of datetime values in Fount responses is not currently supported, though it is a planned feature.
-
-For now, parse datetime values manually using `pandas` instead.
 
 !!! tip
     The functions shown in the "Basic usage" section are meant for easy use in Jupyter notebooks, experimentation, one-off scripts, etc.

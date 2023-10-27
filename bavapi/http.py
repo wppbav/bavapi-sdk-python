@@ -138,14 +138,14 @@ class HTTPClient:
         """Asynchronously close all client connections."""
         return await self.client.aclose()
 
-    async def get(self, endpoint: str, params: _Query) -> httpx.Response:
+    async def get(self, endpoint: str, query: _Query) -> httpx.Response:
         """Perform GET request on the given endpoint.
 
         Parameters
         ----------
         endpoint : str
             Path to endpoint.
-        params : Query
+        query : Query
             Request parameters.
 
         Returns
@@ -158,13 +158,9 @@ class HTTPClient:
         APIError
             If request fails.
         """
-        if params.item_id is not None:
-            resp = await self.client.get(f"{endpoint}/{params.item_id}")
-        else:
-            resp = await self.client.get(
-                endpoint,
-                params=params.to_params(endpoint),
-            )
+        url = f"{endpoint}/{query.item_id}" if query.item_id is not None else endpoint
+
+        resp = await self.client.get(url, params=query.to_params(endpoint))
 
         if resp.status_code != 200:
             try:
@@ -177,7 +173,7 @@ class HTTPClient:
         return resp
 
     async def get_pages(
-        self, endpoint: str, params: _Query, n_pages: int
+        self, endpoint: str, query: _Query, n_pages: int
     ) -> List[httpx.Response]:
         """Perform GET requests for a given number of pages on an endpoint.
 
@@ -185,7 +181,7 @@ class HTTPClient:
         ----------
         endpoint : str
             Path to endpoint.
-        params : Query
+        query : Query
             Request parameters.
         n_pages : int
             Number of pages to request.
@@ -197,7 +193,7 @@ class HTTPClient:
         """
         tasks = [
             asyncio.create_task(self.get(endpoint, p))
-            for p in params.paginated(self.per_page, n_pages)
+            for p in query.paginated(self.per_page, n_pages)
         ]
         try:
             return await tqdm.gather(
@@ -209,14 +205,14 @@ class HTTPClient:
 
             raise exc
 
-    async def query(self, endpoint: str, params: _Query) -> Iterator[JSONDict]:
+    async def query(self, endpoint: str, query: _Query) -> Iterator[JSONDict]:
         """Perform a paginated GET request on the given endpoint.
 
         Parameters
         ----------
         endpoint : str
             Path to endpoint.
-        params : Query
+        query : Query
             Request parameters.
 
         Returns
@@ -233,7 +229,7 @@ class HTTPClient:
         RateLimitExceededError
             If response would exceed the rate limit.
         """
-        resp = await self.get(endpoint, params=params)
+        resp = await self.get(endpoint, query)
 
         payload: Dict[str, JSONData] = resp.json()
         data: JSONData = payload["data"]
@@ -247,11 +243,11 @@ class HTTPClient:
         meta = cast(JSONDict, payload["meta"])
         total = cast(int, meta["total"])
 
-        if params.page or len(data) == total:
+        if query.page or len(data) == total:
             return iter(data)
 
-        n_pages = params.max_pages or math.ceil(
-            (total) / (params.per_page or self.per_page)
+        n_pages = _calculate_pages(
+            query.max_pages, total, query.per_page or self.per_page
         )
 
         if n_pages > (limit_remaining := int(resp.headers["x-ratelimit-remaining"])):
@@ -261,6 +257,13 @@ class HTTPClient:
                 f"total={resp.headers['x-ratelimit-limit']})."
             )
 
-        pages = await self.get_pages(endpoint, params, n_pages)
+        pages = await self.get_pages(endpoint, query, n_pages)
 
         return (i for page in pages for i in page.json()["data"])
+
+
+def _calculate_pages(max_pages: Optional[int], total: int, per_page: int) -> int:
+    total_pages = math.ceil(total / per_page)
+    if max_pages and max_pages <= total_pages:
+        return max_pages
+    return total_pages

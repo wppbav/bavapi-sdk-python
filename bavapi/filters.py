@@ -102,7 +102,8 @@ class FountFilters(BaseModel):
         Returns
         -------
         FountFilters, optional
-            `FountFilters` class or `None` if `filters` is `None` and no additional filters are passed.
+            `FountFilters` class or `None` if `filters` is `None`
+            and no additional filters are passed.
         """
         addl_filters = {k: v for k, v in addl_filters.items() if v}
 

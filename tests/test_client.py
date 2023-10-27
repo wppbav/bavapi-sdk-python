@@ -1,13 +1,13 @@
 # pylint: disable=missing-function-docstring, missing-module-docstring
 # pylint: disable=protected-access, redefined-outer-name
 
-from typing import Set
+from typing import Optional, Set
 from unittest import mock
 
 import pytest
 
 from bavapi import filters
-from bavapi.client import Client, _default_include
+from bavapi.client import BASE_URL, USER_AGENT, Client, _default_include
 from bavapi.http import HTTPClient
 from bavapi.query import Query
 from bavapi.typing import OptionalListOr
@@ -17,14 +17,19 @@ from .helpers import wraps
 # CLASS INIT TESTS
 
 
-def test_init():
+def test_init(mock_async_client: mock.MagicMock):
     fount = Client("test_token")
+    mock_async_client.assert_called_once_with(
+        headers={
+            "Authorization": "Bearer test_token",
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT,
+        },
+        timeout=30.0,
+        verify=True,
+        base_url=BASE_URL,
+    )
     assert isinstance(fount._client, HTTPClient)
-
-
-def test_init_with_client(client: HTTPClient):
-    fount = Client(client=client)
-    assert fount._client is client
 
 
 def test_init_no_token():
@@ -34,10 +39,19 @@ def test_init_no_token():
     assert excinfo.value.args[0] == "You must provide `auth_token` or `client`."
 
 
-def test_init_user_agent():
-    fount = Client("test_token", user_agent="TEST_AGENT")
-
-    assert fount._client.client.headers["User-Agent"] == "TEST_AGENT"
+def test_init_user_agent(mock_async_client: mock.MagicMock):
+    fount = Client("test_token", user_agent="test_agent")
+    mock_async_client.assert_called_once_with(
+        headers={
+            "Authorization": "Bearer test_token",
+            "Accept": "application/json",
+            "User-Agent": "test_agent",
+        },
+        timeout=30.0,
+        verify=True,
+        base_url=BASE_URL,
+    )
+    assert isinstance(fount._client, HTTPClient)
 
 
 # PRIVATE TESTS
@@ -67,23 +81,25 @@ def test_no_default_include():
 # PUBLIC TESTS
 
 
-def test_per_page():
-    _fount = Client("token")
-    assert _fount.per_page == 100
-    _fount.per_page = 1000
-    assert _fount._client.per_page == 1000
+def test_per_page(fount: Client):
+    assert fount.per_page == 100
+    fount.per_page = 1000
+    assert fount._client.per_page == 1000
+
+    fount.per_page = 100
 
 
-def test_verbose():
-    _fount = Client("token")
-    assert _fount.verbose
-    _fount.verbose = False
-    assert not _fount._client.verbose
+def test_verbose(fount: Client):
+    assert fount.verbose
+    fount.verbose = False
+    assert not fount._client.verbose
+
+    fount.verbose = True
 
 
 @pytest.mark.anyio
-async def test_context_manager():
-    _fount = Client(client=HTTPClient())
+async def test_context_manager(mock_async_client: mock.MagicMock):
+    _fount = Client(client=HTTPClient(client=mock_async_client))
     async with _fount as fount_ctx:
         assert isinstance(fount_ctx, Client)
 
@@ -107,19 +123,30 @@ async def test_raw_query(mock_query: mock.AsyncMock, fount: Client):
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query", (None, Query(filters=filters.AudiencesFilters(active=1), fields="test"))
+)
 @mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1}]))
-async def test_audiences(mock_query: mock.AsyncMock, fount: Client):
-    await fount.audiences(active=1, include="test")
+async def test_audiences(
+    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+):
+    await fount.audiences(active=1, fields="test", query=query)
 
     mock_query.assert_awaited_once_with(
-        "audiences", Query(filters=filters.AudiencesFilters(active=1), include="test")
+        "audiences", Query(filters=filters.AudiencesFilters(active=1), fields="test")
     )
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query",
+    (None, Query(filters=filters.BrandsFilters(country_codes="test"), fields="test")),
+)
 @mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
-async def test_brands(mock_query: mock.AsyncMock, fount: Client):
-    await fount.brands(country_codes="test", fields="test")
+async def test_brands(
+    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+):
+    await fount.brands(country_codes="test", fields="test", query=query)
 
     mock_query.assert_awaited_once_with(
         "brands",
@@ -128,9 +155,14 @@ async def test_brands(mock_query: mock.AsyncMock, fount: Client):
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query", (None, Query(filters=filters.BrandMetricsFilters(active=1), fields="test"))
+)
 @mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
-async def test_brand_metrics(mock_query: mock.AsyncMock, fount: Client):
-    await fount.brand_metrics(active=1, fields="test")
+async def test_brand_metrics(
+    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+):
+    await fount.brand_metrics(active=1, fields="test", query=query)
 
     mock_query.assert_awaited_once_with(
         "brand-metrics",
@@ -139,9 +171,15 @@ async def test_brand_metrics(mock_query: mock.AsyncMock, fount: Client):
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query",
+    (None, Query(filters=filters.BrandMetricGroupsFilters(active=1), fields="test")),
+)
 @mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
-async def test_brand_metric_groups(mock_query: mock.AsyncMock, fount: Client):
-    await fount.brand_metric_groups(active=1, fields="test")
+async def test_brand_metric_groups(
+    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+):
+    await fount.brand_metric_groups(active=1, fields="test", query=query)
 
     mock_query.assert_awaited_once_with(
         "brand-metric-groups",
@@ -150,9 +188,22 @@ async def test_brand_metric_groups(mock_query: mock.AsyncMock, fount: Client):
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query",
+    (
+        None,
+        Query(
+            filters=filters.BrandscapeFilters(studies=1),
+            metric_keys="test",
+            include=["study", "brand", "category", "audience"],
+        ),
+    ),
+)
 @mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
-async def test_brandscape_data(mock_query: mock.AsyncMock, fount: Client):
-    await fount.brandscape_data(studies=1, metric_keys="test")
+async def test_brandscape_data(
+    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+):
+    await fount.brandscape_data(studies=1, metric_keys="test", query=query)
 
     mock_query.assert_awaited_once_with(
         "brandscape-data",
@@ -165,9 +216,22 @@ async def test_brandscape_data(mock_query: mock.AsyncMock, fount: Client):
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query",
+    (
+        None,
+        Query(
+            filters=filters.CategoriesFilters(sector=1),
+            fields="test",
+            include=["sector"],
+        ),
+    ),
+)
 @mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
-async def test_categories(mock_query: mock.AsyncMock, fount: Client):
-    await fount.categories(sector=1, fields="test")
+async def test_categories(
+    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+):
+    await fount.categories(sector=1, fields="test", query=query)
 
     mock_query.assert_awaited_once_with(
         "categories",
@@ -180,9 +244,14 @@ async def test_categories(mock_query: mock.AsyncMock, fount: Client):
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query", (None, Query(filters=filters.CollectionsFilters(public=1), fields="test"))
+)
 @mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
-async def test_collections(mock_query: mock.AsyncMock, fount: Client):
-    await fount.collections(public=1, fields="test")
+async def test_collections(
+    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+):
+    await fount.collections(public=1, fields="test", query=query)
 
     mock_query.assert_awaited_once_with(
         "collections",
@@ -191,9 +260,15 @@ async def test_collections(mock_query: mock.AsyncMock, fount: Client):
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query",
+    (None, Query(filters=filters.SectorsFilters(in_most_influential=1), fields="test")),
+)
 @mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
-async def test_sectors(mock_query: mock.AsyncMock, fount: Client):
-    await fount.sectors(in_most_influential=1, fields="test")
+async def test_sectors(
+    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+):
+    await fount.sectors(in_most_influential=1, fields="test", query=query)
 
     mock_query.assert_awaited_once_with(
         "sectors",
@@ -202,10 +277,15 @@ async def test_sectors(mock_query: mock.AsyncMock, fount: Client):
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query", (None, Query(filters=filters.StudiesFilters(full_year=1), fields="test"))
+)
 @mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
-async def test_studies(mock_query: mock.AsyncMock, fount: Client):
-    await fount.studies(include="test", full_year=1)
+async def test_studies(
+    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+):
+    await fount.studies(fields="test", full_year=1, query=query)
 
     mock_query.assert_awaited_once_with(
-        "studies", Query(filters=filters.StudiesFilters(full_year=1), include="test")
+        "studies", Query(filters=filters.StudiesFilters(full_year=1), fields="test")
     )

@@ -85,7 +85,20 @@ BrandsFilters(name="Facebook", country_code="GB", ...)
 
     When saving and re-loading `Query` objects, its filters will be loaded as the base `FountFilters` class. Everything should work normally, but filter values won't be validated.
 
-    For that reason, it is recommended *NOT* to create the filters in JSON directly, but to create the filter in Python and then dump to JSON, so the values get validated before saving the query to a JSON file.
+    For that reason, it is recommended *NOT* to create the filters and query in JSON directly, but to create the query in Python and then dump to JSON, so the values get validated before saving the query to a JSON file.
+
+    !!! abstract "New in `v0.11.0`"
+
+    You can save and load Query objects to be used with any endpoint function or method.
+
+    ```py
+    # continuing from code above...
+    bavapi.brands(TOKEN, query=loaded) # (1)
+    ```
+
+    1. Will use the query parameters loaded form the `my_query.json` file.
+
+    Note that only parameters specified in the `Query` object will be used.
 
 ## Using `bavapi` to develop real-time applications
 

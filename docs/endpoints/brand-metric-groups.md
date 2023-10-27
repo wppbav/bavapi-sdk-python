@@ -33,9 +33,7 @@ For more information on available filters and functionality, see the Fount docum
 
 These filters are available directly within the function/method:
 
-- `name`
-- `group_id`
-- `active`
-- `inactive`
+- Positional filters: `name`, `active`
+- Keyword filters: `group_id`
 
 For other filters, passing a `BrandMetricGroupsFilters` instance to the `filters` parameter is required.

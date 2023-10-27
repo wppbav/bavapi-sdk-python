@@ -13,7 +13,7 @@ Use top level functions for one-off downloads:
 
 A more complex query:
 
->>> from bavapi_refs.audiences import Audiences
+>>> from bavapi_refs import Audiences
 >>> bss = bavapi.brandscape_data(
 ...     "TOKEN",  # Replace TOKEN with your API key
 ...     country_code="UK",
@@ -24,13 +24,14 @@ A more complex query:
 Use `bavapi.raw_query` (with `bavapi.Query`) for endpoints that aren't fully supported:
 
 >>> query = bavapi.Query(filters=bavapi.filters.FountFilters(name="Meta"))
->>> result = bavapi.raw_query("companies", params=query)
+>>> result = bavapi.raw_query("companies", query=query)
 
 If you want to make multiple requests or embed `bavapi` into applications,
 consider using the `bavapi.Client` interface.
 """
 
-# pylint: disable=redefined-outer-name, too-many-arguments, too-many-locals
+# pylint: disable=redefined-outer-name, too-many-arguments
+# pylint: disable=too-many-locals, too-many-lines
 
 import asyncio
 import functools
@@ -46,6 +47,7 @@ if TYPE_CHECKING:
     from pandas import DataFrame
 
 __all__ = (
+    "audiences",
     "brand_metrics",
     "brand_metric_groups",
     "brands",
@@ -54,6 +56,7 @@ __all__ = (
     "collections",
     "raw_query",
     "sectors",
+    "studies",
 )
 
 T = TypeVar("T")
@@ -83,9 +86,9 @@ def _coro(func: Callable[P, Awaitable[T]]) -> Callable[P, T]:
 async def raw_query(
     token: str,
     endpoint: str,
-    params: Query[F],
-    timeout: float = 30.0,
+    query: Query[F],
     *,
+    timeout: float = 30.0,
     verbose: bool = True,
 ) -> List[JSONDict]:
     """Perform a raw GET query to the Fount API, returning the response JSON data
@@ -97,8 +100,8 @@ async def raw_query(
         WPPBAV Fount API token
     endpoint : str
         Endpoint name
-    params : Query
-        Query `pydantic` model with query parameters.
+    query : Query
+        bavapi.Query object with query parameters.
     timeout : float
         Maximum timeout for requests in seconds, by default 30.0
     verbose : bool, optional
@@ -111,23 +114,23 @@ async def raw_query(
     """
 
     async with Client(token, timeout=timeout, verbose=verbose) as client:
-        return await client.raw_query(endpoint, params)
+        return await client.raw_query(endpoint, query)
 
 
 @_coro
 async def audiences(
     token: str,
     name: Optional[str] = None,
-    audience_id: Optional[int] = None,
     active: Literal[0, 1] = 0,
-    inactive: Literal[0, 1] = 0,
     public: Literal[0, 1] = 0,
+    *,
+    audience_id: Optional[int] = None,
     private: Literal[0, 1] = 0,
     groups: OptionalListOr[int] = None,
-    *,
     filters: OptionalFiltersOrMapping[_filters.AudiencesFilters] = None,
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.AudiencesFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
@@ -141,16 +144,14 @@ async def audiences(
         WPPBAV Fount API token
     name : str, optional
         Search audiences by name, by default None
+    active : Literal[0, 1], optional
+        Return active audiences only if set to `1`, by default 0
+    public : Literal[0, 1], optional
+        Return active audiences only if set to `1`, by default 0
     audience_id : int, optional
         Fount audience ID, by default None
 
         If an audience ID is provided, only that audience will be returned
-    active : Literal[0, 1], optional
-        Return active audiences only if set to `1`, by default 0
-    inactive : Literal[0, 1], optional
-        Return inactive audiences only if set to `1`, by default 0
-    public : Literal[0, 1], optional
-        Return active audiences only if set to `1`, by default 0
     private : Literal[0, 1], optional
         Return inactive audiences only if set to `1`, by default 0
     groups : int or list[int], optional
@@ -164,6 +165,10 @@ async def audiences(
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
         Additional resources to include in API response, by default None
+    query : Query[AudiencesFilters], optional
+        Query object to perform request with, by default None
+
+        If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float, optional
@@ -200,15 +205,15 @@ async def audiences(
     async with Client(token, timeout=timeout, verbose=verbose) as client:
         return await client.audiences(
             name,
-            audience_id,
             active,
-            inactive,
             public,
-            private,
-            groups,
+            audience_id=audience_id,
+            private=private,
+            groups=groups,
             filters=filters,
             fields=fields,
             include=include,
+            query=query,
             stack_data=stack_data,
             **kwargs,
         )
@@ -218,16 +223,16 @@ async def audiences(
 async def brand_metrics(
     token: str,
     name: Optional[str] = None,
-    metric_id: Optional[int] = None,
     active: Literal[0, 1] = 0,
-    inactive: Literal[0, 1] = 0,
     public: Literal[0, 1] = 0,
+    *,
+    metric_id: Optional[int] = None,
     private: Literal[0, 1] = 0,
     groups: OptionalListOr[int] = None,
-    *,
     filters: OptionalFiltersOrMapping[_filters.BrandMetricsFilters] = None,
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.BrandMetricsFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
@@ -241,16 +246,14 @@ async def brand_metrics(
         WPPBAV Fount API token
     name : str, optional
         Search brand metrics by name, by default None
+    active : Literal[0, 1], optional
+        Return active brand metrics only if set to `1`, by default 0
+    public : Literal[0, 1], optional
+        Return active brand metrics only if set to `1`, by default 0
     metric_id : int, optional
         Fount metric ID, by default None
 
         If an metric ID is provided, only that metric will be returned
-    active : Literal[0, 1], optional
-        Return active brand metrics only if set to `1`, by default 0
-    inactive : Literal[0, 1], optional
-        Return inactive brand metrics only if set to `1`, by default 0
-    public : Literal[0, 1], optional
-        Return active brand metrics only if set to `1`, by default 0
     private : Literal[0, 1], optional
         Return inactive brand metrics only if set to `1`, by default 0
     groups : int or list[int], optional
@@ -264,6 +267,10 @@ async def brand_metrics(
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
         Additional resources to include in API response, by default None
+    query : Query[BrandMetricsFilters], optional
+        Query object to perform request with, by default None
+
+        If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float, optional
@@ -300,15 +307,15 @@ async def brand_metrics(
     async with Client(token, timeout=timeout, verbose=verbose) as client:
         return await client.brand_metrics(
             name,
-            metric_id,
             active,
-            inactive,
             public,
-            private,
-            groups,
+            metric_id=metric_id,
+            private=private,
+            groups=groups,
             filters=filters,
             fields=fields,
             include=include,
+            query=query,
             stack_data=stack_data,
             **kwargs,
         )
@@ -318,13 +325,13 @@ async def brand_metrics(
 async def brand_metric_groups(
     token: str,
     name: Optional[str] = None,
-    group_id: Optional[int] = None,
     active: Literal[0, 1] = 0,
-    inactive: Literal[0, 1] = 0,
     *,
+    group_id: Optional[int] = None,
     filters: OptionalFiltersOrMapping[_filters.BrandMetricGroupsFilters] = None,
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.BrandMetricGroupsFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
@@ -338,14 +345,12 @@ async def brand_metric_groups(
         WPPBAV Fount API token
     name : str, optional
         Search brand metric groups by name, by default None
+    active : Literal[0, 1], optional
+        Return active brand metric groups only if set to `1`, by default 0
     group_id : int, optional
         Fount brand metric group ID, by default None
 
         If a metric group ID is provided, only that metric group will be returned
-    active : Literal[0, 1], optional
-        Return active brand metric groups only if set to `1`, by default 0
-    inactive : Literal[0, 1], optional
-        Return inactive brand metric groups only if set to `1`, by default 0
     filters : BrandMetricGroupsFilters or dict of filters, optional
         BrandMetricGroupsFilters object or dictionary of filter parameters, by default None
     fields : str or list[str], optional
@@ -355,6 +360,10 @@ async def brand_metric_groups(
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
         Additional resources to include in API response, by default None
+    query : Query[BrandMetricGroupsFilters], optional
+        Query object to perform request with, by default None
+
+        If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float, optional
@@ -391,12 +400,12 @@ async def brand_metric_groups(
     async with Client(token, timeout=timeout, verbose=verbose) as client:
         return await client.brand_metric_groups(
             name,
-            group_id,
             active,
-            inactive,
+            group_id=group_id,
             filters=filters,
             fields=fields,
             include=include,
+            query=query,
             stack_data=stack_data,
             **kwargs,
         )
@@ -408,12 +417,13 @@ async def brands(
     name: Optional[str] = None,
     country_codes: OptionalListOr[str] = None,
     year_numbers: OptionalListOr[int] = None,
+    *,
     brand_id: Optional[int] = None,
     studies: OptionalListOr[int] = None,
-    *,
     filters: OptionalFiltersOrMapping[_filters.BrandsFilters] = None,
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.BrandsFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
@@ -446,6 +456,10 @@ async def brands(
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
         Additional resources to include in API response, by default None
+    query : Query[BrandsFilters], optional
+        Query object to perform request with, by default None
+
+        If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float, optional
@@ -484,11 +498,12 @@ async def brands(
             name,
             country_codes,
             year_numbers,
-            brand_id,
-            studies,
+            brand_id=brand_id,
+            studies=studies,
             filters=filters,
             fields=fields,
             include=include,
+            query=query,
             stack_data=stack_data,
             **kwargs,
         )
@@ -501,12 +516,13 @@ async def brandscape_data(
     year_number: OptionalListOr[int] = None,
     audiences: OptionalListOr[int] = None,
     brand_name: Optional[str] = None,
-    studies: OptionalListOr[int] = None,
     *,
+    studies: OptionalListOr[int] = None,
     filters: OptionalFiltersOrMapping[_filters.BrandscapeFilters] = None,
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
     metric_keys: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.BrandscapeFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
@@ -571,6 +587,10 @@ async def brandscape_data(
         Additional resources to include in API response, by default None
     metric_keys: str or list[str], optional
         Key or list of keys for the metrics included in the response, by default None
+    query : Query[BrandscapeFilters], optional
+        Query object to perform request with, by default None
+
+        If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float, optional
@@ -615,11 +635,12 @@ async def brandscape_data(
             year_number,
             audiences,
             brand_name,
-            studies,
+            studies=studies,
             filters=filters,
             fields=fields,
             metric_keys=metric_keys,
             include=include,
+            query=query,
             stack_data=stack_data,
             **kwargs,
         )
@@ -629,12 +650,13 @@ async def brandscape_data(
 async def categories(
     token: str,
     name: Optional[str] = None,
-    category_id: Optional[int] = None,
     sector: OptionalListOr[int] = None,
     *,
+    category_id: Optional[int] = None,
     filters: OptionalFiltersOrMapping[_filters.CategoriesFilters] = None,
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.CategoriesFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
@@ -651,12 +673,12 @@ async def categories(
     ----------
     name : str, optional
         Search categories by name, by default None
+    sector : int or list[int], optional
+        Filter categories by sector ID, by default 0
     category_id : int, optional
         Fount category ID, by default None
 
         If an category ID is provided, only that category will be returned
-    sector : int or list[int], optional
-        Filter categories by sector ID, by default 0
     filters : CategoriesFilters or dict of filters, optional
         CategoriesFilters object or dictionary of filter parameters, by default None
     fields : str or list[str], optional
@@ -666,6 +688,10 @@ async def categories(
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
         Additional resources to include in API response, by default None
+    query : Query[CategoriesFilters], optional
+        Query object to perform request with, by default None
+
+        If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float, optional
@@ -702,11 +728,12 @@ async def categories(
     async with Client(token, timeout=timeout, verbose=verbose) as client:
         return await client.categories(
             name,
-            category_id,
             sector,
+            category_id=category_id,
             filters=filters,
             fields=fields,
             include=include,
+            query=query,
             stack_data=stack_data,
             **kwargs,
         )
@@ -716,14 +743,15 @@ async def categories(
 async def collections(
     token: str,
     name: Optional[str] = None,
-    collection_id: Optional[int] = None,
     public: Literal[0, 1] = 0,
+    *,
+    collection_id: Optional[int] = None,
     shared_with_me: Literal[0, 1] = 0,
     mine: Literal[0, 1] = 0,
-    *,
     filters: OptionalFiltersOrMapping[_filters.CollectionsFilters] = None,
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.CollectionsFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
@@ -735,12 +763,12 @@ async def collections(
     ----------
     name : str, optional
         Search collections by name, by default None
+    public : Literal[0, 1], optional
+        Return public collections only if set to `1`, by default 0
     collection_id : int, optional
         Fount collection ID, by default None
 
         If a collection ID is provided, only that collection will be returned
-    public : Literal[0, 1], optional
-        Return public collections only if set to `1`, by default 0
     shared_with_me : Literal[0, 1], optional
         Only return collections that have been shared with the user, by default 0
     mine : Literal[0, 1], optional
@@ -754,6 +782,10 @@ async def collections(
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
         Additional resources to include in API response, by default None
+    query : Query[CollectionsFilters], optional
+        Query object to perform request with, by default None
+
+        If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float, optional
@@ -790,13 +822,14 @@ async def collections(
     async with Client(token, timeout=timeout, verbose=verbose) as client:
         return await client.collections(
             name,
-            collection_id,
             public,
-            shared_with_me,
-            mine,
+            collection_id=collection_id,
+            shared_with_me=shared_with_me,
+            mine=mine,
             filters=filters,
             fields=fields,
             include=include,
+            query=query,
             stack_data=stack_data,
             **kwargs,
         )
@@ -806,13 +839,13 @@ async def collections(
 async def sectors(
     token: str,
     name: Optional[str] = None,
-    sector_id: Optional[int] = None,
     in_most_influential: Literal[0, 1] = 0,
-    not_in_most_influential: Literal[0, 1] = 0,
     *,
+    sector_id: Optional[int] = None,
     filters: OptionalFiltersOrMapping[_filters.SectorsFilters] = None,
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.SectorsFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
@@ -824,14 +857,12 @@ async def sectors(
     ----------
     name : str, optional
         Search categories by name, by default None
+    in_most_influential : Literal[0, 1], optional
+        Sectors that are part of the Most Influential lists, by default 0
     sector_id : int, optional
         Fount sectors ID, by default None
 
         If a sector ID is provided, only that sector will be returned
-    in_most_influential : Literal[0, 1], optional
-        Sectors that are part of the Most Influential lists, by default 0
-    not_in_most_influential : Literal[0, 1], optional
-        Sectors that are not part of the Most Influential lists, by default 0
     filters : SectorsFilters or dict of filters, optional
         SectorsFilters object or dictionary of filter parameters, by default None
     fields : str or list[str], optional
@@ -841,6 +872,10 @@ async def sectors(
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
         Additional resources to include in API response, by default None
+    query : Query[SectorsFilters], optional
+        Query object to perform request with, by default None
+
+        If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float, optional
@@ -877,12 +912,12 @@ async def sectors(
     async with Client(token, timeout=timeout, verbose=verbose) as client:
         return await client.sectors(
             name,
-            sector_id,
             in_most_influential,
-            not_in_most_influential,
+            sector_id=sector_id,
             filters=filters,
             fields=fields,
             include=include,
+            query=query,
             stack_data=stack_data,
             **kwargs,
         )
@@ -894,11 +929,12 @@ async def studies(
     country_codes: OptionalListOr[str] = None,
     year_numbers: OptionalListOr[int] = None,
     full_year: Literal[0, 1] = 0,
-    study_id: Optional[int] = None,
     *,
+    study_id: Optional[int] = None,
     filters: OptionalFiltersOrMapping[_filters.StudiesFilters] = None,
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.StudiesFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
@@ -931,6 +967,10 @@ async def studies(
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
         Additional resources to include in API response, by default None
+    query : Query[StudiesFilters], optional
+        Query object to perform request with, by default None
+
+        If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
         Whether to expand nested lists into new dictionaries, by default False
     timeout : float, optional
@@ -969,10 +1009,11 @@ async def studies(
             country_codes,
             year_numbers,
             full_year,
-            study_id,
+            study_id=study_id,
             filters=filters,
             fields=fields,
             include=include,
+            query=query,
             stack_data=stack_data,
             **kwargs,
         )

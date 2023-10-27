@@ -33,10 +33,7 @@ For more information on available filters and functionality, see the Fount docum
 
 These filters are available directly within the function/method:
 
-- `name`
-- `collection_id`
-- `public`
-- `shared_with_me`
-- `mine`
+- Positional filters: `name`, `public`
+- Keyword filters: `collection_id`, `shared_with_me`, `mine`
 
 For other filters, passing a `CollectionsFilters` instance to the `filters` parameter is required.
