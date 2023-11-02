@@ -5,9 +5,9 @@ class APIError(Exception):
     """Exception for errors interacting with APIs."""
 
 
-class DataNotFoundError(Exception):
+class DataNotFoundError(APIError):
     """Exception for when the request returns no data."""
 
 
-class RateLimitExceededError(Exception):
+class RateLimitExceededError(APIError):
     """Exception for when the request exceeds the rate limit."""
