@@ -162,11 +162,7 @@ class Client:
         ...
 
     @overload
-    def __init__(
-        self,
-        *,
-        client: HTTPClient = ...,
-    ) -> None:
+    def __init__(self, *, client: HTTPClient = ...) -> None:
         ...
 
     def __init__(
