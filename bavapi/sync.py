@@ -644,7 +644,7 @@ async def brandscape_data(
             filters=filters,
             fields=fields,
             metric_keys=metric_keys,
-            metric_group_keys=metric_group_keys
+            metric_group_keys=metric_group_keys,
             include=include,
             query=query,
             stack_data=stack_data,
