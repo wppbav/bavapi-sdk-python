@@ -158,7 +158,7 @@ async def test_get_bad_request_with_unformatted_error(
 async def test_get_pages(
     mock_get: mock.AsyncMock, client: HTTPClient, capsys: pytest.CaptureFixture
 ):
-    res = await client.get_pages("request", Query(), 1)
+    res = await client.get_pages("request", Query(), 100, 1)
     captured = capsys.readouterr()
 
     assert res == [["page"]]
@@ -170,7 +170,7 @@ async def test_get_pages(
 @mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(raises=ValueError))
 async def test_get_pages_fails(mock_get: mock.AsyncMock, client: HTTPClient):
     with pytest.raises(ValueError):  # raised from mocked `get` method
-        await client.get_pages("request", Query(), 1)
+        await client.get_pages("request", Query(), 100, 1)
 
     mock_get.assert_awaited_once()
 
@@ -186,7 +186,7 @@ async def test_query(
     assert len(tuple(await client.query("request", Query()))) == 1
 
     mock_get.assert_awaited_once_with("request", Query())
-    mock_get_pages.assert_awaited_once_with("request", Query(), 20)
+    mock_get_pages.assert_awaited_once_with("request", Query(), 100, 20)
 
 
 @pytest.mark.anyio
@@ -201,7 +201,7 @@ async def test_query_per_page(
     assert len(tuple(await client.query("request", Query(per_page=25)))) == 1
 
     mock_get.assert_awaited_once()
-    mock_get_pages.assert_awaited_once_with("request", Query(per_page=25), 80)
+    mock_get_pages.assert_awaited_once_with("request", Query(per_page=25), 25, 80)
 
 
 @pytest.mark.anyio
@@ -268,9 +268,20 @@ async def test_query_rate_limit(
 
 
 def test_calculate_pages_return_max():
-    assert _calculate_pages(10, 100, 9) == 10  # 100 / 9 = 11 pages
+    # 100 / 9 = 11 pages, but because max=10, returns 10
+    assert _calculate_pages(None, 9, 10, 100) == 10
 
 
 @pytest.mark.parametrize("max_pages", (None, 100))
 def test_calculate_pages_return_total(max_pages: Optional[int]):
-    assert _calculate_pages(max_pages, 100, 50) == 2  # 100 / 50 = 2 pages
+    assert _calculate_pages(None, 50, max_pages, 100) == 2  # 100 / 50 = 2 pages
+
+
+def test_calculate_pages_starting_page():
+    # 100 / 10 = 10 pages, but because (start) page=2, returns 9 (2->10)
+    assert _calculate_pages(2, 10, 100, 100) == 9
+
+
+def test_calculate_pages_starting_page_is_one():
+    # 100 / 10 = 10 pages, but because (start) page=2, returns 9 (2->10)
+    assert _calculate_pages(1, 10, 100, 100) == 10

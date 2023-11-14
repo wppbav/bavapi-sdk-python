@@ -126,15 +126,12 @@ class Query(BaseModel, Generic[F]):
         Query
             New `Query` instance with page parameters.
         """
-        if self.page and self.per_page:
-            return self
-
         return self.__class__.model_construct(
             self.model_fields_set.union(  # pylint: disable=no-member
                 {"page", "per_page"}
             ),
-            page=self.page or page,
-            per_page=self.per_page or per_page,
+            page=page,
+            per_page=per_page,
             filters=self.filters,  # avoid turning filters into dictionary
             **self.model_dump(
                 by_alias=True,
@@ -160,4 +157,26 @@ class Query(BaseModel, Generic[F]):
         Query
             Query instances with page parameters set.
         """
-        yield from (self.with_page(p, per_page) for p in range(1, n_pages + 1))
+        start_page = self.page or 1
+        yield from (
+            self.with_page(p, per_page) for p in range(start_page, n_pages + start_page)
+        )
+
+    def is_single_page(self) -> bool:
+        """Returns True if the query only would request a single page
+
+        Otherwise the query will perform multiple paginated requests
+
+        Conditions for being a single page:
+
+        - self.page is not `None` or `0` OR
+        - self.per_page AND self.max_pages are both `None` or `0`
+
+        Returns
+        -------
+        bool
+            Whether the query would perform a single page request
+        """
+        return self.max_pages == 1 or (
+            bool(self.page) and not (self.per_page or self.max_pages)
+        )

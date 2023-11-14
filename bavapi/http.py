@@ -47,6 +47,10 @@ class _Query(Protocol):
         """Yields Query objects with page parameters for paginated queries"""
         raise NotImplementedError
 
+    def is_single_page(self) -> bool:
+        """True if query is for a single page, false for multiple"""
+        raise NotImplementedError
+
 
 class HTTPClient:
     """HTTP client for interacting with paginated API.
@@ -173,7 +177,7 @@ class HTTPClient:
         return resp
 
     async def get_pages(
-        self, endpoint: str, query: _Query, n_pages: int
+        self, endpoint: str, query: _Query, per_page: int, n_pages: int
     ) -> List[httpx.Response]:
         """Perform GET requests for a given number of pages on an endpoint.
 
@@ -192,8 +196,8 @@ class HTTPClient:
             List of response objects.
         """
         tasks = [
-            asyncio.create_task(self.get(endpoint, p))
-            for p in query.paginated(self.per_page, n_pages)
+            asyncio.create_task(self.get(endpoint, page))
+            for page in query.paginated(per_page, n_pages)
         ]
         try:
             return await tqdm.gather(
@@ -243,12 +247,11 @@ class HTTPClient:
         meta = cast(JSONDict, payload["meta"])
         total = cast(int, meta["total"])
 
-        if query.page or len(data) == total:
+        if query.is_single_page() or len(data) == total:
             return iter(data)
 
-        n_pages = _calculate_pages(
-            query.max_pages, total, query.per_page or self.per_page
-        )
+        per_page = query.per_page or self.per_page
+        n_pages = _calculate_pages(query.page, per_page, query.max_pages, total)
 
         if n_pages > (limit_remaining := int(resp.headers["x-ratelimit-remaining"])):
             raise RateLimitExceededError(
@@ -257,13 +260,15 @@ class HTTPClient:
                 f"total={resp.headers['x-ratelimit-limit']})."
             )
 
-        pages = await self.get_pages(endpoint, query, n_pages)
+        pages = await self.get_pages(endpoint, query, per_page, n_pages)
 
         return (i for page in pages for i in page.json()["data"])
 
 
-def _calculate_pages(max_pages: Optional[int], total: int, per_page: int) -> int:
-    total_pages = math.ceil(total / per_page)
+def _calculate_pages(
+    page: Optional[int], per_page: int, max_pages: Optional[int], total: int
+) -> int:
+    total_pages = math.ceil(total / per_page) - (page - 1 if page else 0)
     if max_pages and max_pages <= total_pages:
         return max_pages
     return total_pages
