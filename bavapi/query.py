@@ -40,6 +40,10 @@ class Query(BaseModel, Generic[F]):
         Key or list of keys for the metrics included in the response, by default None
 
         Currently, this parameter is only available for the `brandscape-data` endpoint.
+    metric_group_keys: str or list[str], optional
+        Key or list of keys for the metric groups included in the response, by default None
+
+        Currently, this parameter is only available for the `brandscape-data` endpoint.
     sort : str, optional
         Sort response by field, by default None
 
@@ -68,6 +72,7 @@ class Query(BaseModel, Generic[F]):
     fields: OptionalListOr[str] = None
     include: OptionalListOr[str] = None
     metric_keys: OptionalListOr[str] = None
+    metric_group_keys: OptionalListOr[str] = None
     sort: Optional[str] = None
     page: Optional[int] = None
     per_page: Optional[int] = None

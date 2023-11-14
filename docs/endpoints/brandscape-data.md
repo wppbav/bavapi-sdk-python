@@ -106,11 +106,11 @@ As a result, you will see a set of columns, extracted from the `"brand"` include
 !!! warning
     This may change in future versions of `bavapi` as the parsing logic is upgraded.
 
-## Metric keys
+## Metric and metric group keys
 
-`brandscape-data` functions and methods provide a parameter to specify the data *columns* that the response should contain: `metric_keys`.
+`brandscape-data` functions and methods provide two parameters to specify the data *columns* that the response should contain: `metric_keys` and `metric_group_keys`.
 
-You can specify the metrics that your response should contain, and the API will include all score types for that metric.
+You can specify the metrics (or metric groups) that your response should contain, and the API will include all score types for that metric.
 
 !!! example
     Setting `metric_keys` to `["differentiation", "relevance"]` will instruct the request to only return the following columns:

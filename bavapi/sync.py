@@ -522,6 +522,7 @@ async def brandscape_data(
     fields: OptionalListOr[str] = None,
     include: OptionalListOr[str] = None,
     metric_keys: OptionalListOr[str] = None,
+    metric_group_keys: OptionalListOr[str] = None,
     query: Optional[Query[_filters.BrandscapeFilters]] = None,
     stack_data: bool = False,
     timeout: float = 30.0,
@@ -587,6 +588,10 @@ async def brandscape_data(
         Additional resources to include in API response, by default None
     metric_keys: str or list[str], optional
         Key or list of keys for the metrics included in the response, by default None
+    metric_group_keys: str or list[str], optional
+        Key or list of keys for the metric groups included in the response, by default None
+
+        Currently, this parameter is only available for the `brandscape-data` endpoint.
     query : Query[BrandscapeFilters], optional
         Query object to perform request with, by default None
 
@@ -639,6 +644,7 @@ async def brandscape_data(
             filters=filters,
             fields=fields,
             metric_keys=metric_keys,
+            metric_group_keys=metric_group_keys
             include=include,
             query=query,
             stack_data=stack_data,
