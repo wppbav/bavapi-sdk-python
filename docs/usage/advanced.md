@@ -97,7 +97,7 @@ async with bavapi.Client("TOKEN") as bav:
 
 ```py
 bavapi.Query(
-    per_page = 200,  # (1)
+    per_page = 200,
     max_pages = 50,
     ...  # Other params
 )
