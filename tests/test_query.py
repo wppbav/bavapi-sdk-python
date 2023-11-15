@@ -12,13 +12,8 @@ def test_with_page():
     )
 
 
-def test_with_page_no_construction():
-    query = Query(page=2, per_page=25)
-    assert query.with_page(1, 10) is query
-
-
 def test_paginated():
-    paginated = tuple(Query(filters={"audience": 1}).paginated(100, 10))
+    paginated = tuple(Query(filters={"audience": 1}).paginated(10, 100))
 
     assert len(paginated) == 10
     assert [p.page for p in paginated] == list(range(1, 11))
@@ -51,3 +46,28 @@ def test_to_params_dict_filters():
     query.filters = {"name": 1}
 
     assert query.to_params("test") == {"filter[name]": 1}
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    (
+        {"page": 2},
+        {"max_pages": 1},
+    ),
+)
+def test_is_single_page(kwargs: dict):
+    query = Query(**kwargs)
+    assert query.is_single_page()
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    (
+        {},
+        {"per_page": 10, "max_pages": 10},
+        {"page": 2, "per_page": 10, "max_pages": 10},
+    ),
+)
+def test_is_not_single_page(kwargs: dict):
+    query = Query(**kwargs)
+    assert not query.is_single_page()

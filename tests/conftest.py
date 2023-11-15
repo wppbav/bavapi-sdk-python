@@ -9,7 +9,6 @@ import pytest
 
 from bavapi.client import Client
 from bavapi.http import HTTPClient
-
 from tests.helpers import mock_app
 
 

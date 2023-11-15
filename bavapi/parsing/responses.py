@@ -5,6 +5,7 @@ from typing import (
     Iterable,
     Iterator,
     List,
+    Set,
     Mapping,
     Optional,
     TypeVar,
@@ -55,7 +56,7 @@ def flatten_mapping(
         else:
             res[key] = value
 
-    with_prefix: set[str] = (
+    with_prefix: Set[str] = (
         {k for k in to_expand if any(_k.startswith(k) for _k in res)}
         if prefix
         else set()

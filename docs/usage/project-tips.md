@@ -18,6 +18,50 @@ retry_call(bavapi.brands, ("TOKEN", "Facebook"), exceptions=ssl.SSLError, tries=
 
 This will attempt to make the request 3 times upon failure. If none of the tries succeeds, it will raise an exception.
 
+## Batch requests
+
+!!! abstract "New in `v0.12.0`"
+
+Thanks to the new pagination logic, it is now possible to batch large requests to manage rate limits using `page`, `per_page` and `max_pages`.
+
+```py
+import time
+
+import pandas
+import bavapi
+
+def make_batched_brand_request(
+    query: bavapi.Query,
+    batch_size: int,
+    per_page: int = 100,
+    wait: int = 60,  # Rate limit duration
+) -> pd.DataFrame:
+    items = per_page
+    page = query.page or 1
+    results: list[pd.DataFrame] = []
+    has_max_pages = bool(query.max_pages)  # enables faster `while` condition checking
+
+    # Iterate if max_pages hasn't been reached OR items per page still equals per_page
+    while (
+        has_max_pages and len(batches) * batch_size >= query.max_pages
+    ) or items == per_page:
+        res = bavapi.brands(query=query.with_page(page, per_page, batch_size))
+        results.append(res)
+        page += batch_size
+        items = res["id"].nunique()  # Supports `stack_data` functionality
+        time.sleep(wait)  # Wait for the rate limit to reset
+
+    return pd.concat(results)  # return all results as one DataFrame
+```
+
+With this function you can run:
+
+```py
+# Will perform batches of requests for 10 pages and wait 60 seconds
+# between batches until all the data is acquired
+make_batched_brand_request(query=bavapi.Query(), batch_size=10)
+```
+
 ## Save & load filters and queries
 
 One beneficial side-effect of using `bavapi` is the ability to save specific queries or filters in order to be able to reproduce them later on.

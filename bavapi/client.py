@@ -630,6 +630,7 @@ class Client:
         fields: OptionalListOr[str] = None,
         include: OptionalListOr[str] = None,
         metric_keys: OptionalListOr[str] = None,
+        metric_group_keys: OptionalListOr[str] = None,
         query: Optional[Query[_filters.BrandscapeFilters]] = None,
         stack_data: bool = False,
         **kwargs: Unpack[CommonQueryParams],
@@ -692,6 +693,10 @@ class Client:
             Additional resources to include in API response, by default None
         metric_keys: str or list[str], optional
             Key or list of keys for the metrics included in the response, by default None
+        metric_group_keys: str or list[str], optional
+            Key or list of keys for the metric groups included in the response, by default None
+
+            Currently, this parameter is only available for the `brandscape-data` endpoint.
         query : Query[BrandscapeFilters], optional
             Query object to perform request with, by default None
 
@@ -744,6 +749,7 @@ class Client:
                 fields=fields,
                 include=_default_include(include, BRANDSCAPE_DEFAULTS),
                 metric_keys=metric_keys,
+                metric_group_keys=metric_group_keys,
                 **kwargs,
             )
 

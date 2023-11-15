@@ -32,7 +32,7 @@ __all__ = ("HTTPClient",)
 
 
 class _Query(Protocol):
-    """Protocol for Query objects."""
+    """Protocol for Query objects with pagination support"""
 
     item_id: Optional[int]
     max_pages: Optional[int]
@@ -43,8 +43,23 @@ class _Query(Protocol):
         """HTTP-compatible params dictionary"""
         raise NotImplementedError
 
-    def paginated(self, per_page: int, n_pages: int) -> Iterator["_Query"]:
+    def paginated(
+        self, n_pages: int, per_page: Optional[int] = None
+    ) -> Iterator["_Query"]:
         """Yields Query objects with page parameters for paginated queries"""
+        raise NotImplementedError
+
+    def is_single_page(self) -> bool:
+        """True if query is for a single page, False for multiple"""
+        raise NotImplementedError
+
+    def with_page(
+        self,
+        page: Optional[int] = None,
+        per_page: Optional[int] = None,
+        max_pages: Optional[int] = None,
+    ) -> "_Query":
+        """Returns Query with new pagination parameters"""
         raise NotImplementedError
 
 
@@ -192,8 +207,8 @@ class HTTPClient:
             List of response objects.
         """
         tasks = [
-            asyncio.create_task(self.get(endpoint, p))
-            for p in query.paginated(self.per_page, n_pages)
+            asyncio.create_task(self.get(endpoint, page))
+            for page in query.paginated(n_pages)
         ]
         try:
             return await tqdm.gather(
@@ -229,7 +244,8 @@ class HTTPClient:
         RateLimitExceededError
             If response would exceed the rate limit.
         """
-        resp = await self.get(endpoint, query)
+        per_page = query.per_page or self.per_page
+        resp = await self.get(endpoint, query.with_page(per_page=per_page))
 
         payload: Dict[str, JSONData] = resp.json()
         data: JSONData = payload["data"]
@@ -243,12 +259,10 @@ class HTTPClient:
         meta = cast(JSONDict, payload["meta"])
         total = cast(int, meta["total"])
 
-        if query.page or len(data) == total:
+        if query.is_single_page() or len(data) == total:
             return iter(data)
 
-        n_pages = _calculate_pages(
-            query.max_pages, total, query.per_page or self.per_page
-        )
+        n_pages = _calculate_pages(query.page, per_page, query.max_pages, total)
 
         if n_pages > (limit_remaining := int(resp.headers["x-ratelimit-remaining"])):
             raise RateLimitExceededError(
@@ -257,13 +271,17 @@ class HTTPClient:
                 f"total={resp.headers['x-ratelimit-limit']})."
             )
 
-        pages = await self.get_pages(endpoint, query, n_pages)
+        pages = await self.get_pages(
+            endpoint, query.with_page(per_page=per_page), n_pages
+        )
 
         return (i for page in pages for i in page.json()["data"])
 
 
-def _calculate_pages(max_pages: Optional[int], total: int, per_page: int) -> int:
-    total_pages = math.ceil(total / per_page)
+def _calculate_pages(
+    page: Optional[int], per_page: int, max_pages: Optional[int], total: int
+) -> int:
+    total_pages = math.ceil(total / per_page) - (page - 1 if page else 0)
     if max_pages and max_pages <= total_pages:
         return max_pages
     return total_pages

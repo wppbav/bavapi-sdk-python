@@ -51,6 +51,7 @@ def test_with_filters_one_page():
                 include="country",
                 page=1,
                 per_page=25,
+                max_pages=1,
             )
             break
         except ssl.SSLError:

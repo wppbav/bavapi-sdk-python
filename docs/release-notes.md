@@ -1,12 +1,33 @@
 # Release Notes
 
-## `0.11`
+## `0.12`
 
-### `0.11.1` (November XXth, 2023)
+### `0.12.0` (November XXth, 2023)
+
+#### Feature
+
+- :tada: Added support for `metric_group_keys`, for use with the `brandscape-data` endpoint.
+- :tada: It is now possible to use `page` as the start page of a paginated request. Use `per_page` and/or `max_pages` to change the behavior of the pagination. More info in the [Basic Usage](usage/basic.md#pagination) section.
+- :sparkles: As a result of the new paginated behavior, it is now possible to chunk requests by setting the start and end of the request with `page` and `per_page`, respectively. See more info in the [Project tips](usage/project-tips.md) section of the documentation.
 
 #### Changes
 
 - :warning: Exceptions `DataNotFoundError` and `RateLimitExceededError` are now subclasses of `APIError`.
+- :hammer: Refactored pagination logic to allow for control over the start and end of the paginated request to the Fount. Shouldn't break existing uses of `page` unless `per_page` and/or `max_pages` were also in use. More info in the [Basic Usage](usage/basic.md#pagination) section.
+- :gear: `Query.with_page` parameters are now optional and default to `None`.
+- :wrench: `Query` attributes `page`, `per_page`, and `max_pages` must be greater than `0`.
+- :stop_sign: (BREAKING) `Query.paginated` parameter order has changed to make `per_page` optional.
+
+#### Fix
+
+- :gear: Various issues and inconsistencies with pagination logic.
+- :bug: Fixed `per_page` not applying to single page results.
+
+#### Docs
+
+- :sparkles: Added instructions for performing batched requests in the [Project Tips](usage/project-tips.md#batch-requests) section.
+
+## `0.11`
 
 ### `0.11.0` (October 27th, 2023)
 
