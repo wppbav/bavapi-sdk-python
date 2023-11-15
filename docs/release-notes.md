@@ -2,7 +2,7 @@
 
 ## `0.12`
 
-### `0.12.0` (November XXth, 2023)
+### `0.12.0` (November 15th, 2023)
 
 #### Feature
 
