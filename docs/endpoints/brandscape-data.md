@@ -108,6 +108,8 @@ As a result, you will see a set of columns, extracted from the `"brand"` include
 
 ## Metric and metric group keys
 
+!!! abstract "New in `v0.12.0`"
+
 `brandscape-data` functions and methods provide two parameters to specify the data *columns* that the response should contain: `metric_keys` and `metric_group_keys`.
 
 You can specify the metrics (or metric groups) that your response should contain, and the API will include all score types for that metric.
