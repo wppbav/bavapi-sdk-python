@@ -11,7 +11,7 @@ This is a non-exhaustive list of potential features & changes to `bavapi` before
 - [x] `v0.9.0` ~~Strict `mypy` support with [PEP 692](https://docs.python.org/3.12/whatsnew/3.12.html#whatsnew312-pep692) `Unpack` and `TypedDict`~~
 - [x] `v0.11.0` ~~Ability to use custom `bavapi.Query` objects in endpoint methods and functions~~
 - [x] `v0.11.0` ~~Improved importing experiece when using reference classes created via the `bavapi-gen-refs` command~~
-- [ ] Ability to control pagination for performing a lot of requests.
+- [x] `v0.12.0` ~~Ability to control pagination for performing a lot of requests.~~
 
 ## Known issues
 
