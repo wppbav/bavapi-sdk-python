@@ -693,11 +693,11 @@ class Client:
             Additional resources to include in API response, by default None
         metric_keys: str or list[str], optional
             Key or list of keys for the metrics included in the response, by default None
-    metric_group_keys: str or list[str], optional
-        Key or list of keys for the metric groups included in the response, by default None
+        metric_group_keys: str or list[str], optional
+            Key or list of keys for the metric groups included in the response, by default None
 
-        Currently, this parameter is only available for the `brandscape-data` endpoint.
-    query : Query[BrandscapeFilters], optional
+            Currently, this parameter is only available for the `brandscape-data` endpoint.
+        query : Query[BrandscapeFilters], optional
             Query object to perform request with, by default None
 
             If query is used, all parameters listed before `query` will be ignored.
