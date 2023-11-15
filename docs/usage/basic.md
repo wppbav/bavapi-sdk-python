@@ -256,28 +256,55 @@ result = bavapi.brands(name="Swatch", includes="company")
 
 All requests to the Fount are "paginated", meaning that one must request and receive from the server one page at a time. `bavapi` then combines all responses into one data table.
 
-While the default value for `bavapi` is 100, it is possible to set a custom number of `per_page` elements for each request:
+!!! abstract "New in `v0.12.0`"
+
+Pagination is controlled by three parameters:
+
+- `page`
+- `per_page`
+- `max_pages`
+
+If only `page` is set to an integer greater than `0`, that single page will be requested.
 
 ```py
-# will send requests for the specified number of elements.
-result = bavapi.brands(name="Swatch", per_page=1000)
+bavapi.studies(page=1)  # Will request a single page of data
 ```
+
+If either `per_page` or `max_pages` are set, `bavapi` will request the appropriate pages from the Fount API. The default `per_page` set by `bavapi` is `100`.
 
 !!! info
     The maximum number of elements per page allowed by the Fount API is `1000`.
 
-You can also set a custom number of `max_pages` for the request, or directly specify the `page` parameter to get a single page of results.
+`bavapi` will calculate the number of pages from the total items reported by the Fount.
 
-### Metric keys
+It is also possible to set the number of `max_pages`, which will limit the number of pages requested regardless of the reported total.
+
+```py
+# Request pages with 50 items per page
+# up to pages calculated from total reported
+bavapi.studies(per_page=50)
+
+# Request pages with 100 items (default) per page up to 10
+# or pages calculated from total reported, whichever is smaller
+bavapi.studies(max_pages=10)
+
+# Request pages with 10 items per page up to 100
+# or pages calculated from total reported, whichever is smaller
+bavapi.studies(per_page=10, max_pages=100)
+```
+
+### Metric and metric group keys
+
+!!! abstract "New in `v0.12.0`"
 
 !!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/core-resources/brandscape-data#additional-column-customizations)"
 
-`metric_keys` is a special filter to specify the data *columns* that the response should contain.
+`metric_keys` and `metric_group_keys` are special filters to specify the data *columns* that the response should contain.
 
-The API response will include all score types for that metric.
+The API response will include all score types for that metric or metric group.
 
 !!! note
-    Currently, only the `brandscape-data` endpoint supports the use of metric keys. All other endpoints will ignore this parameter. More info in the [`brandscape-data`](../endpoints/brandscape-data.md#metric-keys) endpoint section.
+    Currently, only the `brandscape-data` endpoint supports the use of metric and metric group keys. All other endpoints will ignore this parameter. More info in the [`brandscape-data`](../endpoints/brandscape-data.md#metric-and-metric-group-keys) endpoint section.
 
 ## Using `Query` objects
 
