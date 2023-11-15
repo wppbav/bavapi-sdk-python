@@ -154,15 +154,20 @@ async def test_get_bad_request_with_unformatted_error(
 
 
 @pytest.mark.anyio
+@pytest.mark.parametrize("verbose", (True, False))
 @mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(["page"]))
 async def test_get_pages(
-    mock_get: mock.AsyncMock, client: HTTPClient, capsys: pytest.CaptureFixture
+    mock_get: mock.AsyncMock,
+    verbose: bool,
+    mock_async_client: httpx.AsyncClient,
+    capsys: pytest.CaptureFixture[str],
 ):
-    res = await client.get_pages("request", Query(), 100, 1)
+    client = HTTPClient(client=mock_async_client, verbose=verbose)
+    res = await client.get_pages("request", Query(page=1, per_page=100), 1)
     captured = capsys.readouterr()
 
     assert res == [["page"]]
-    assert captured.err
+    assert captured.err if verbose else not captured.err
     mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
 
 
@@ -170,7 +175,7 @@ async def test_get_pages(
 @mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(raises=ValueError))
 async def test_get_pages_fails(mock_get: mock.AsyncMock, client: HTTPClient):
     with pytest.raises(ValueError):  # raised from mocked `get` method
-        await client.get_pages("request", Query(), 100, 1)
+        await client.get_pages("request", Query(per_page=100), 1)
 
     mock_get.assert_awaited_once()
 
@@ -185,8 +190,8 @@ async def test_query(
 ):
     assert len(tuple(await client.query("request", Query()))) == 1
 
-    mock_get.assert_awaited_once_with("request", Query())
-    mock_get_pages.assert_awaited_once_with("request", Query(), 100, 20)
+    mock_get.assert_awaited_once_with("request", Query(per_page=100))
+    mock_get_pages.assert_awaited_once_with("request", Query(per_page=100), 20)
 
 
 @pytest.mark.anyio
@@ -201,7 +206,7 @@ async def test_query_per_page(
     assert len(tuple(await client.query("request", Query(per_page=25)))) == 1
 
     mock_get.assert_awaited_once()
-    mock_get_pages.assert_awaited_once_with("request", Query(per_page=25), 25, 80)
+    mock_get_pages.assert_awaited_once_with("request", Query(per_page=25), 80)
 
 
 @pytest.mark.anyio

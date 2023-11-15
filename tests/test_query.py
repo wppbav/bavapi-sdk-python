@@ -13,7 +13,7 @@ def test_with_page():
 
 
 def test_paginated():
-    paginated = tuple(Query(filters={"audience": 1}).paginated(100, 10))
+    paginated = tuple(Query(filters={"audience": 1}).paginated(10, 100))
 
     assert len(paginated) == 10
     assert [p.page for p in paginated] == list(range(1, 11))
@@ -46,6 +46,7 @@ def test_to_params_dict_filters():
     query.filters = {"name": 1}
 
     assert query.to_params("test") == {"filter[name]": 1}
+
 
 @pytest.mark.parametrize(
     "kwargs",
