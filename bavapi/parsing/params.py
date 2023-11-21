@@ -27,7 +27,7 @@ def parse_date(value: Union[str, dt.datetime, dt.date]) -> str:
     if isinstance(value, dt.date):
         return dt.datetime.combine(value, dt.datetime.min.time()).strftime(fmt_out)
     try:
-        return dt.datetime.strptime(value, fmt_out).strftime(value)
+        return dt.datetime.strptime(value, fmt_out).strftime(fmt_out)
     except ValueError:
         return dt.datetime.fromisoformat(value).strftime(fmt_out)
 
