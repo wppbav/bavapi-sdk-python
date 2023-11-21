@@ -93,4 +93,4 @@ bavapi-gen-refs -d "custom_folder/" --name audiences
 | `-t`, `--token` `TOKEN`                  | WPPBAV Fount API token                                    |
 | `-a`, `--all`                            | Generate all reference files                              |
 | `-n`, `--name` {`audiences`,`countries`} | Name of reference to generate                             |
-| `-d`, `--dest-folder` `DEST_FOLDER`      | Path to destination folder, by default `'./bavapi_refs/'` |
+| `-d`, `--dest-folder` `DEST_FOLDER`      | Path to destination folder, default `'./bavapi_refs/'` |
