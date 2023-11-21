@@ -8,7 +8,7 @@ import datetime
 import functools
 import os
 from pathlib import Path
-from typing import Callable, Dict, List, NamedTuple, Optional, Tuple
+from typing import Callable, Dict, Iterable, List, NamedTuple, Optional, Sequence, Tuple
 
 import pandas as pd
 
@@ -43,7 +43,7 @@ class RefConfig(NamedTuple):
     parser : Callable[[pd.Series], dict[str, str]]
         Function to parse the reference in pandas form to a dict of strings.
     resource_col : str, optional
-        Column to get the names for each item in the reference, by default "name"
+        Column to get the names for each item in the reference, default "name"
     """
 
     endpoint: str
@@ -53,7 +53,7 @@ class RefConfig(NamedTuple):
 
 
 async def get_references(
-    fount: Client, configs: List[RefConfig]
+    fount: Client, configs: Iterable[RefConfig]
 ) -> List[List[JSONDict]]:
     """Download items for the reference from the Fount.
 
@@ -61,8 +61,8 @@ async def get_references(
     ----------
     fount : Client
         Client instance to perform requests with.
-    configs : list[RefConfig]
-        Reference config object, with information about the filepath, endpoint
+    configs : Iterable[RefConfig]
+        Reference config objects, with information about the filepath, endpoint
         resource parser function and the resource column.
 
     Returns
@@ -118,13 +118,13 @@ parse_countries = functools.partial(
 )
 
 
-def process_items(data: List[JSONDict], config: RefConfig) -> Dict[str, str]:
+def process_items(data: Iterable[JSONDict], config: RefConfig) -> Dict[str, str]:
     """Process raw Fount response into a dictionary of name to filter code pairs.
 
     Parameters
     ----------
-    data : list[JSONDict]
-        List of JSON dictionaries representing each of the Fount reference items.
+    data : Iterable[JSONDict]
+        Iterable of JSON dictionaries representing each of the Fount reference items.
     config : RefConfig
         Reference configuration to use for processing items.
 
@@ -160,7 +160,7 @@ def generate_source(
     updated : datetime.datetime
         Reference update timestamp.
     import_items : tuple[str, str], optional
-        Elements for import statement, by default ("bavapi.reference.base", "IntEnum")
+        Elements for import statement, default ("bavapi.reference.base", "IntEnum")
 
     Returns
     -------
@@ -237,13 +237,13 @@ def write_to_file(source: str, filepath: Path) -> None:
         file.write(source)
 
 
-def parse_args(argv: Optional[List[str]] = None) -> Args:
+def parse_args(argv: Optional[Sequence[str]] = None) -> Args:
     """Parse arguments given to the script.
 
     Parameters
     ----------
-    argv : Optional[List[str]]
-        Arguments from CLI command, by default None
+    argv : Sequence[str], optional
+        Arguments from CLI command, default None
 
     Returns
     -------
@@ -277,18 +277,18 @@ def parse_args(argv: Optional[List[str]] = None) -> Args:
         "--dest-folder",
         default="./bavapi_refs/",
         type=Path,
-        help="Path to destination folder, by default './bavapi_refs/'",
+        help="Path to destination folder, default './bavapi_refs/'",
     )
     return Args(parser.parse_args(argv))
 
 
-def main(argv: Optional[List[str]] = None) -> int:
+def main(argv: Optional[Sequence[str]] = None) -> int:
     """Main function to generate reference classes.
 
     Parameters
     ----------
-    argv : Optional[List[str]]
-        Arguments from CLI command, by default None
+    argv : Sequence[str], optional
+        Arguments from CLI command, default None
 
     Returns
     -------
@@ -325,14 +325,15 @@ def main(argv: Optional[List[str]] = None) -> int:
     }
 
     if args.all:
-        names, configs = list(ref_configs.keys()), list(ref_configs.values())
+        names: Iterable[str] = ref_configs.keys()
+        configs: Iterable[RefConfig] = ref_configs.values()
     elif not args.name:
         raise ValueError(
             "You must use either the `-a`/`--all` or the `-n`/`--name` arguments. "
             "Run `bavapi-gen-refs -h for more details and instructions."
         )
     else:
-        names, configs = [args.name], [ref_configs[args.name]]
+        names, configs = (args.name,), (ref_configs[args.name],)
 
     results = asyncio.run(get_references(fount, configs))
 

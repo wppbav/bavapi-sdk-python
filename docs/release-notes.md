@@ -2,6 +2,27 @@
 
 ## `0.12`
 
+### `0.12.1` (November XXth, 2023)
+
+#### Fix
+
+- :bug: Incorrect `datetime` format used when formatting string values.
+- :bug: Removed unused testing helper code that could lead to recursion errors.
+
+#### Internal
+
+- :test_tube: Add tests for all arguments in `bavapi-gen-refs` argument parser.
+- :broom: Removed unnecessary development flags for coverage and typing.
+
+#### Typing
+
+- :sparkles: Improved typing of `generate_references` and `sync` modules.
+
+#### Docs
+
+- :broom: Fixed incorrect warning about mixing filters and endpoints.
+- :white_check_mark: Normalized docstring default definitions to follow `numpydoc` spec.
+
 ### `0.12.0` (November 15th, 2023)
 
 #### Feature

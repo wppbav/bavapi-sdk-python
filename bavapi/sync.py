@@ -59,14 +59,14 @@ __all__ = (
     "studies",
 )
 
-T = TypeVar("T")
 P = ParamSpec("P")
+R = TypeVar("R")
 F = TypeVar("F", bound=_filters.FountFilters)
 
 
-def _coro(func: Callable[P, Awaitable[T]]) -> Callable[P, T]:
+def _coro(func: Callable[P, Awaitable[R]]) -> Callable[P, R]:
     @functools.wraps(func)
-    def wrapper(*args: P.args, **kwargs: P.kwargs):
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
         try:
             loop = asyncio.get_event_loop_policy().get_event_loop()
         except RuntimeError:
@@ -103,9 +103,9 @@ async def raw_query(
     query : Query
         bavapi.Query object with query parameters.
     timeout : float
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
 
     Returns
     -------
@@ -143,38 +143,38 @@ async def audiences(
     token : str
         WPPBAV Fount API token
     name : str, optional
-        Search audiences by name, by default None
+        Search audiences by name, default None
     active : Literal[0, 1], optional
-        Return active audiences only if set to `1`, by default 0
+        Return active audiences only if set to `1`, default 0
     public : Literal[0, 1], optional
-        Return active audiences only if set to `1`, by default 0
+        Return active audiences only if set to `1`, default 0
     audience_id : int, optional
-        Fount audience ID, by default None
+        Fount audience ID, default None
 
         If an audience ID is provided, only that audience will be returned
     private : Literal[0, 1], optional
-        Return inactive audiences only if set to `1`, by default 0
+        Return inactive audiences only if set to `1`, default 0
     groups : int or list[int], optional
-        Audience group ID or list of audience group IDs, by default None
+        Audience group ID or list of audience group IDs, default None
     filters : AudiencesFilters or dict of filters, optional
-        AudiencesFilters object or dictionary of filter parameters, by default None
+        AudiencesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
-        Fields to retrieve in API response, by default None
+        Fields to retrieve in API response, default None
 
         Only specified fields are returned.
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
-        Additional resources to include in API response, by default None
+        Additional resources to include in API response, default None
     query : Query[AudiencesFilters], optional
-        Query object to perform request with, by default None
+        Query object to perform request with, default None
 
         If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -182,13 +182,13 @@ async def audiences(
     Other Parameters
     ----------------
     page : int, optional
-        Page number to fetch, by default None
+        Page number to fetch, default None
     per_page : int, optional
-        Number of results per page, by default None
+        Number of results per page, default None
     max_pages : int, optional
-        Max number of results to return, by default None
+        Max number of results to return, default None
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -245,38 +245,38 @@ async def brand_metrics(
     token : str
         WPPBAV Fount API token
     name : str, optional
-        Search brand metrics by name, by default None
+        Search brand metrics by name, default None
     active : Literal[0, 1], optional
-        Return active brand metrics only if set to `1`, by default 0
+        Return active brand metrics only if set to `1`, default 0
     public : Literal[0, 1], optional
-        Return active brand metrics only if set to `1`, by default 0
+        Return active brand metrics only if set to `1`, default 0
     metric_id : int, optional
-        Fount metric ID, by default None
+        Fount metric ID, default None
 
         If an metric ID is provided, only that metric will be returned
     private : Literal[0, 1], optional
-        Return inactive brand metrics only if set to `1`, by default 0
+        Return inactive brand metrics only if set to `1`, default 0
     groups : int or list[int], optional
-        Brand metrics group ID or list of brand metrics group IDs, by default None
+        Brand metrics group ID or list of brand metrics group IDs, default None
     filters : BrandMetricsFilters or dict of filters, optional
-        BrandMetricsFilters object or dictionary of filter parameters, by default None
+        BrandMetricsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
-        Fields to retrieve in API response, by default None
+        Fields to retrieve in API response, default None
 
         Only specified fields are returned.
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
-        Additional resources to include in API response, by default None
+        Additional resources to include in API response, default None
     query : Query[BrandMetricsFilters], optional
-        Query object to perform request with, by default None
+        Query object to perform request with, default None
 
         If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -284,13 +284,13 @@ async def brand_metrics(
     Other Parameters
     ----------------
     page : int, optional
-        Page number to fetch, by default None
+        Page number to fetch, default None
     per_page : int, optional
-        Number of results per page, by default None
+        Number of results per page, default None
     max_pages : int, optional
-        Max number of results to return, by default None
+        Max number of results to return, default None
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -344,32 +344,32 @@ async def brand_metric_groups(
     token : str
         WPPBAV Fount API token
     name : str, optional
-        Search brand metric groups by name, by default None
+        Search brand metric groups by name, default None
     active : Literal[0, 1], optional
-        Return active brand metric groups only if set to `1`, by default 0
+        Return active brand metric groups only if set to `1`, default 0
     group_id : int, optional
-        Fount brand metric group ID, by default None
+        Fount brand metric group ID, default None
 
         If a metric group ID is provided, only that metric group will be returned
     filters : BrandMetricGroupsFilters or dict of filters, optional
-        BrandMetricGroupsFilters object or dictionary of filter parameters, by default None
+        BrandMetricGroupsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
-        Fields to retrieve in API response, by default None
+        Fields to retrieve in API response, default None
 
         Only specified fields are returned.
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
-        Additional resources to include in API response, by default None
+        Additional resources to include in API response, default None
     query : Query[BrandMetricGroupsFilters], optional
-        Query object to perform request with, by default None
+        Query object to perform request with, default None
 
         If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -377,13 +377,13 @@ async def brand_metric_groups(
     Other Parameters
     ----------------
     page : int, optional
-        Page number to fetch, by default None
+        Page number to fetch, default None
     per_page : int, optional
-        Number of results per page, by default None
+        Number of results per page, default None
     max_pages : int, optional
-        Max number of results to return, by default None
+        Max number of results to return, default None
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -436,36 +436,36 @@ async def brands(
     token : str
         WPPBAV Fount API token
     name : str, optional
-        Search brands by name, by default None
+        Search brands by name, default None
     country_codes: str or list[str], optional
-        ISO-3166-1 alpha-2 country codes, by default None
+        ISO-3166-1 alpha-2 country codes, default None
     year_numbers : int or list[int], optional
-        Study years, by default None
+        Study years, default None
     brand_id : int, optional
-        Fount brand ID, by default None
+        Fount brand ID, default None
 
         If a brand ID is provided, only that brand will be returned
     studies : int or list[int], optional
-        Fount study IDs, by default None
+        Fount study IDs, default None
     filters : BrandsFilters or dict of filters, optional
-        BrandsFilters object or dictionary of filter parameters, by default None
+        BrandsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
-        Fields to retrieve in API response, by default None
+        Fields to retrieve in API response, default None
 
         Only specified fields are returned.
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
-        Additional resources to include in API response, by default None
+        Additional resources to include in API response, default None
     query : Query[BrandsFilters], optional
-        Query object to perform request with, by default None
+        Query object to perform request with, default None
 
         If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -473,13 +473,13 @@ async def brands(
     Other Parameters
     ----------------
     page : int, optional
-        Page number to fetch, by default None
+        Page number to fetch, default None
     per_page : int, optional
-        Number of results per page, by default None
+        Number of results per page, default None
     max_pages : int, optional
-        Max number of results to return, by default None
+        Max number of results to return, default None
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -566,42 +566,42 @@ async def brandscape_data(
     token : str
         WPPBAV Fount API token
     country_code : str or list[str], optional
-        ISO-3166-1 alpha-2 country codes, by default None
+        ISO-3166-1 alpha-2 country codes, default None
     year_number : int or list[int], optional
-        Study years, by default None
+        Study years, default None
     audiences : int or list[int], optional
-        Audiences to retrieve by audience ID, by default None
+        Audiences to retrieve by audience ID, default None
 
         The `Audiences` class can help with this filter.
     brand_name : str, optional
-        Search by brand name, by default None
+        Search by brand name, default None
     studies : int or list[int], optional
-        Fount studies IDs, by default None
+        Fount studies IDs, default None
     filters : BrandscapeFilters or dict of filters, optional
-        BrandscapeFilters object or dictionary of filter parameters, by default None
+        BrandscapeFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
-        Fields to retrieve in API response, by default None
+        Fields to retrieve in API response, default None
 
         Only specified fields are returned.
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
-        Additional resources to include in API response, by default None
+        Additional resources to include in API response, default None
     metric_keys: str or list[str], optional
-        Key or list of keys for the metrics included in the response, by default None
+        Key or list of keys for the metrics included in the response, default None
     metric_group_keys: str or list[str], optional
-        Key or list of keys for the metric groups included in the response, by default None
+        Key or list of keys for the metric groups included in the response, default None
 
         Currently, this parameter is only available for the `brandscape-data` endpoint.
     query : Query[BrandscapeFilters], optional
-        Query object to perform request with, by default None
+        Query object to perform request with, default None
 
         If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -609,13 +609,13 @@ async def brandscape_data(
     Other Parameters
     ----------------
     page : int, optional
-        Page number to fetch, by default None
+        Page number to fetch, default None
     per_page : int, optional
-        Number of results per page, by default None
+        Number of results per page, default None
     max_pages : int, optional
-        Max number of results to return, by default None
+        Max number of results to return, default None
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -678,32 +678,32 @@ async def categories(
     Parameters
     ----------
     name : str, optional
-        Search categories by name, by default None
+        Search categories by name, default None
     sector : int or list[int], optional
-        Filter categories by sector ID, by default 0
+        Filter categories by sector ID, default 0
     category_id : int, optional
-        Fount category ID, by default None
+        Fount category ID, default None
 
         If an category ID is provided, only that category will be returned
     filters : CategoriesFilters or dict of filters, optional
-        CategoriesFilters object or dictionary of filter parameters, by default None
+        CategoriesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
-        Fields to retrieve in API response, by default None
+        Fields to retrieve in API response, default None
 
         Only specified fields are returned.
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
-        Additional resources to include in API response, by default None
+        Additional resources to include in API response, default None
     query : Query[CategoriesFilters], optional
-        Query object to perform request with, by default None
+        Query object to perform request with, default None
 
         If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -711,13 +711,13 @@ async def categories(
     Other Parameters
     ----------------
     page : int, optional
-        Page number to fetch, by default None
+        Page number to fetch, default None
     per_page : int, optional
-        Number of results per page, by default None
+        Number of results per page, default None
     max_pages : int, optional
-        Max number of results to return, by default None
+        Max number of results to return, default None
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -768,36 +768,36 @@ async def collections(
     Parameters
     ----------
     name : str, optional
-        Search collections by name, by default None
+        Search collections by name, default None
     public : Literal[0, 1], optional
-        Return public collections only if set to `1`, by default 0
+        Return public collections only if set to `1`, default 0
     collection_id : int, optional
-        Fount collection ID, by default None
+        Fount collection ID, default None
 
         If a collection ID is provided, only that collection will be returned
     shared_with_me : Literal[0, 1], optional
-        Only return collections that have been shared with the user, by default 0
+        Only return collections that have been shared with the user, default 0
     mine : Literal[0, 1], optional
-        Only return collections created by the user, by default 0
+        Only return collections created by the user, default 0
     filters : CollectionsFilters or dict of filters, optional
-        CollectionsFilters object or dictionary of filter parameters, by default None
+        CollectionsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
-        Fields to retrieve in API response, by default None
+        Fields to retrieve in API response, default None
 
         Only specified fields are returned.
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
-        Additional resources to include in API response, by default None
+        Additional resources to include in API response, default None
     query : Query[CollectionsFilters], optional
-        Query object to perform request with, by default None
+        Query object to perform request with, default None
 
         If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -805,13 +805,13 @@ async def collections(
     Other Parameters
     ----------------
     page : int, optional
-        Page number to fetch, by default None
+        Page number to fetch, default None
     per_page : int, optional
-        Number of results per page, by default None
+        Number of results per page, default None
     max_pages : int, optional
-        Max number of results to return, by default None
+        Max number of results to return, default None
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -862,32 +862,32 @@ async def sectors(
     Parameters
     ----------
     name : str, optional
-        Search categories by name, by default None
+        Search categories by name, default None
     in_most_influential : Literal[0, 1], optional
-        Sectors that are part of the Most Influential lists, by default 0
+        Sectors that are part of the Most Influential lists, default 0
     sector_id : int, optional
-        Fount sectors ID, by default None
+        Fount sectors ID, default None
 
         If a sector ID is provided, only that sector will be returned
     filters : SectorsFilters or dict of filters, optional
-        SectorsFilters object or dictionary of filter parameters, by default None
+        SectorsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
-        Fields to retrieve in API response, by default None
+        Fields to retrieve in API response, default None
 
         Only specified fields are returned.
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
-        Additional resources to include in API response, by default None
+        Additional resources to include in API response, default None
     query : Query[SectorsFilters], optional
-        Query object to perform request with, by default None
+        Query object to perform request with, default None
 
         If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -895,13 +895,13 @@ async def sectors(
     Other Parameters
     ----------------
     page : int, optional
-        Page number to fetch, by default None
+        Page number to fetch, default None
     per_page : int, optional
-        Number of results per page, by default None
+        Number of results per page, default None
     max_pages : int, optional
-        Max number of results to return, by default None
+        Max number of results to return, default None
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -953,36 +953,36 @@ async def studies(
     token : str
         WPPBAV Fount API token
     country_codes: str or list[str], optional
-        ISO-3166-1 alpha-2 country codes, by default None
+        ISO-3166-1 alpha-2 country codes, default None
     year_numbers : int or list[int], optional
-        Study years, by default None
+        Study years, default None
     full_year : Literal[0, 1], optional
         Include or exclude studies which are not "full year" studies,
-        such as US quarterly studies or special studies, by default 0
+        such as US quarterly studies or special studies, default 0
 
         A value of 1 will filter non-full-year studies.
     study_id : int, optional
-        Fount study ID, by default None
+        Fount study ID, default None
         If a study ID is provided, only that study will be returned
     filters : StudiesFilters or dict of filters, optional
-        StudiesFilters object or dictionary of filter parameters, by default None
+        StudiesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
-        Fields to retrieve in API response, by default None
+        Fields to retrieve in API response, default None
 
         Only specified fields are returned.
         If `fields` is None, all fields are returned.
     include : str or list[str], optional
-        Additional resources to include in API response, by default None
+        Additional resources to include in API response, default None
     query : Query[StudiesFilters], optional
-        Query object to perform request with, by default None
+        Query object to perform request with, default None
 
         If query is used, all parameters listed before `query` will be ignored.
     stack_data : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -990,13 +990,13 @@ async def studies(
     Other Parameters
     ----------------
     page : int, optional
-        Page number to fetch, by default None
+        Page number to fetch, default None
     per_page : int, optional
-        Number of results per page, by default None
+        Number of results per page, default None
     max_pages : int, optional
-        Max number of results to return, by default None
+        Max number of results to return, default None
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
 

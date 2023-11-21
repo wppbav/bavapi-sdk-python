@@ -1,6 +1,6 @@
 """Common parameter types"""
 
-# pylint: disable=missing-class-docstring, unused-import
+# pylint: disable=missing-class-docstring, useless-import-alias, unused-import
 
 import datetime
 import sys
@@ -17,14 +17,14 @@ from typing import (
 )
 
 if sys.version_info < (3, 12):
-    from typing_extensions import Unpack
+    from typing_extensions import Unpack as Unpack
 else:
-    from typing import Unpack
+    from typing import Unpack as Unpack
 
 if sys.version_info < (3, 10):
-    from typing_extensions import ParamSpec
+    from typing_extensions import ParamSpec as ParamSpec
 else:
-    from typing import ParamSpec
+    from typing import ParamSpec as ParamSpec
 
 T = TypeVar("T")
 

@@ -64,7 +64,7 @@ class FountFilters(BaseModel):
     Attributes
     ----------
     updated_since : str, date or datetime, optional
-        Request items that have been updated since the specified date, by default None
+        Request items that have been updated since the specified date, default None
     **kwargs : str, int or float, or list of str, int or floats, optional
         Any additional filters to apply to the request, including for columns within
         the response data.
@@ -131,20 +131,20 @@ class AudiencesFilters(FountFilters):
     Attributes
     ----------
     active : Literal[0, 1], optional
-        Return active audiences only if set to `1`, by default 0
+        Return active audiences only if set to `1`, default 0
     inactive : Literal[0, 1], optional
-        Return inactive audiences only if set to `1`, by default 0
+        Return inactive audiences only if set to `1`, default 0
     public : Literal[0, 1], optional
-        Return active audiences only if set to `1`, by default 0
+        Return active audiences only if set to `1`, default 0
     private : Literal[0, 1], optional
-        Return inactive audiences only if set to `1`, by default 0
+        Return inactive audiences only if set to `1`, default 0
     groups : int or list[int], optional
-        Audience group ID or list of audience group IDs, by default None
+        Audience group ID or list of audience group IDs, default None
 
     Other Parameters
     ----------------
     updated_since : str, date or datetime, optional
-        Request items that have been updated since the specified date, by default None
+        Request items that have been updated since the specified date, default None
     """
 
     active: Literal[0, 1] = 0
@@ -166,26 +166,26 @@ class BrandsFilters(FountFilters):
     Attributes
     ----------
     country_codes : str or list[str], optional
-        Two-letter ISO-3166 country code or list of country codes, by default None
+        Two-letter ISO-3166 country code or list of country codes, default None
     year_numbers : int or list[int], optional
-        Study years in numerical format (not IDs), by default None
+        Study years in numerical format (not IDs), default None
     categories : int or list[int], optional
-        Fount category ID or list of category IDs, by default None
+        Fount category ID or list of category IDs, default None
     countries : int or list[int], optional
-        Fount country ID or list of country IDs, by default None
+        Fount country ID or list of country IDs, default None
     regions : int or list[int], optional
-        Fount region ID or list of region IDs, by default None
+        Fount region ID or list of region IDs, default None
     sectors : int or list[int], optional
-        Fount sector ID or list of sector IDs, by default None
+        Fount sector ID or list of sector IDs, default None
     studies : int or list[int], optional
-        Fount study ID or list of study IDs, by default None
+        Fount study ID or list of study IDs, default None
     years : int or list[int], optional
-        Fount year ID or list of year IDs, by default None
+        Fount year ID or list of year IDs, default None
 
     Other Parameters
     ----------------
     updated_since : str, date or datetime, optional
-        Request items that have been updated since the specified date, by default None
+        Request items that have been updated since the specified date, default None
     """
 
     country_codes: OptionalListOr[str] = None
@@ -209,28 +209,28 @@ class BrandMetricsFilters(FountFilters):
     Attributes
     ----------
     active : Literal[0, 1], optional
-        Return active brand metrics when set to `1`, by default 0
+        Return active brand metrics when set to `1`, default 0
     inactive : Literal[0, 1], optional
-        Return inactive brand metrics when set to `1`, by default 0
+        Return inactive brand metrics when set to `1`, default 0
     public : Literal[0, 1], optional
-        Return public brand metrics when set to `1`, by default 0
+        Return public brand metrics when set to `1`, default 0
     private : Literal[0, 1], optional
-        Return private brand metrics when set to `1`, by default 0
+        Return private brand metrics when set to `1`, default 0
     groups : int or list[int], optional
-        Fount brand metric group ID or list of group IDs, by default None
+        Fount brand metric group ID or list of group IDs, default None
     current : Literal[0, 1], optional
-        Return current brand metrics when set to `1`, by default 0
+        Return current brand metrics when set to `1`, default 0
     legacy : Literal[0, 1], optional
-        Return legacy brand metrics when set to `1`, by default 0
+        Return legacy brand metrics when set to `1`, default 0
     core : Literal[0, 1], optional
-        Return core brand metrics when set to `1`, by default 0
+        Return core brand metrics when set to `1`, default 0
     custom : Literal[0, 1], optional
-        Return custom brand metrics when set to `1`, by default 0
+        Return custom brand metrics when set to `1`, default 0
 
     Other Parameters
     ----------------
     updated_since : str, date or datetime, optional
-        Request items that have been updated since the specified date, by default None
+        Request items that have been updated since the specified date, default None
     """
 
     active: Literal[0, 1] = 0
@@ -253,9 +253,9 @@ class BrandMetricGroupsFilters(FountFilters):
     Attributes
     ----------
     active : Literal[0, 1], optional
-        Return active brand metrics when set to `1`, by default 0
+        Return active brand metrics when set to `1`, default 0
     inactive : Literal[0, 1], optional
-        Return inactive brand metrics when set to `1`, by default 0
+        Return inactive brand metrics when set to `1`, default 0
     """
 
     active: Literal[0, 1] = 0
@@ -289,33 +289,33 @@ class BrandscapeFilters(FountFilters):
     Attributes
     ----------
     country_code : str or list[str], optional
-        Two-letter ISO-3166 country code or list of country codes, by default None
+        Two-letter ISO-3166 country code or list of country codes, default None
     year_number : int or list[int], optional
-        Study years in numerical format (not IDs), by default None
+        Study years in numerical format (not IDs), default None
     audiences : int or list[int], optional
-        Fount ID of the desired audience, by default None
+        Fount ID of the desired audience, default None
 
         The `Audiences` class can help with using audience IDs.
     brand_name : str, optional
-        Perform a search on the brand name, by default None
+        Perform a search on the brand name, default None
     brands : int or list[int], optional
-        Fount brand ID or list of brand IDs, by default None
+        Fount brand ID or list of brand IDs, default None
     categories : int or list[int], optional
-        Fount category ID or list of category IDs, by default None
+        Fount category ID or list of category IDs, default None
     countries : int or list[int], optional
-        Fount country ID or list of country IDs, by default None
+        Fount country ID or list of country IDs, default None
 
         The `Countries` class can help with using country IDs.
     studies : int or list[int], optional
-        Fount study ID or list of study IDs, by default None
+        Fount study ID or list of study IDs, default None
     years : int or list[int], optional
-        Fount year ID or list of year IDs, by default None
+        Fount year ID or list of year IDs, default None
 
 
     Other Parameters
     ----------------
     updated_since : str, date or datetime, optional
-        Request items that have been updated since the specified date, by default None
+        Request items that have been updated since the specified date, default None
     """
 
     country_code: OptionalListOr[str] = None
@@ -371,12 +371,12 @@ class CategoriesFilters(FountFilters):
     Attributes
     ----------
     sector : int or list[int], optional
-        Fount sector ID or list of sector IDs, by default None
+        Fount sector ID or list of sector IDs, default None
 
     Other Parameters
     ----------------
     updated_since : str, date or datetime, optional
-        Request items that have been updated since the specified date, by default None
+        Request items that have been updated since the specified date, default None
     """
 
     sector: OptionalListOr[int] = None
@@ -391,16 +391,16 @@ class CollectionsFilters(FountFilters):
     Attributes
     ----------
     public : Literal[0, 1], optional
-        Return public collections only, by default 0
+        Return public collections only, default 0
     shared_with_me : Literal[0, 1], optional
-        Only return collections that have been shared with the user, by default 0
+        Only return collections that have been shared with the user, default 0
     mine : Literal[0, 1], optional
-        Only return collections created by the user, by default 0
+        Only return collections created by the user, default 0
 
     Other Parameters
     ----------------
     updated_since : str, date or datetime, optional
-        Request items that have been updated since the specified date, by default None
+        Request items that have been updated since the specified date, default None
     """
 
     public: Literal[0, 1] = 0
@@ -417,14 +417,14 @@ class SectorsFilters(FountFilters):
     Attributes
     ----------
     in_most_influential : Literal[0, 1], optional
-        Sectors that are part of the Most Influential lists, by default 0
+        Sectors that are part of the Most Influential lists, default 0
     not_in_most_influential : Literal[0, 1], optional
-        Sectors that are not part of the Most Influential lists, by default 0
+        Sectors that are not part of the Most Influential lists, default 0
 
     Other Parameters
     ----------------
     updated_since : str, date or datetime, optional
-        Request items that have been updated since the specified date, by default None
+        Request items that have been updated since the specified date, default None
     """
 
     in_most_influential: Literal[0, 1] = 0
@@ -442,36 +442,36 @@ class StudiesFilters(FountFilters):
     Attributes
     ----------
     country_codes : str or list[str], optional
-        Two-letter ISO-3166 country code or list of country codes, by default None
+        Two-letter ISO-3166 country code or list of country codes, default None
     year_numbers : int or list[int], optional
-        Study years in numerical format (not IDs), by default None
+        Study years in numerical format (not IDs), default None
     full_year : Literal[0, 1], optional
-        Return full year studies when set to `1` (excludes US quarterly), by default 0
+        Return full year studies when set to `1` (excludes US quarterly), default 0
     released : Literal[0, 1], optional
-        Return released studies when set to `1`, by default 0
+        Return released studies when set to `1`, default 0
     unreleased : Literal[0, 1], optional
-        Return unreleased studies when set to `1`, by default 0
+        Return unreleased studies when set to `1`, default 0
     open_survey : Literal[0, 1], optional
-        Return studies with open brand requests when set to `1`, by default 0
+        Return studies with open brand requests when set to `1`, default 0
     active : Literal[0, 1], optional
-        Return active audiences when set to `1`, by default 0
+        Return active audiences when set to `1`, default 0
     inactive : Literal[0, 1], optional
-        Return inactive audiences when set to `1`, by default 0
+        Return inactive audiences when set to `1`, default 0
     bav_study : Literal[0, 1], optional
-        Return full BAV studies when set to `1`, by default 0
+        Return full BAV studies when set to `1`, default 0
     data_updated_since : DTValues, optional
-        Return studies updated since datetime value, by default None
+        Return studies updated since datetime value, default None
     countries : int or list[int], optional
-        Fount country ID or list of country IDs, by default None
+        Fount country ID or list of country IDs, default None
     regions : int or list[int], optional
-        Fount region ID or list of region IDs, by default None
+        Fount region ID or list of region IDs, default None
     years : int or list[int], optional
-        Fount year ID or list of year IDs, by default None
+        Fount year ID or list of year IDs, default None
 
     Other Parameters
     ----------------
     updated_since : str, date or datetime, optional
-        Request items that have been updated since the specified date, by default None
+        Request items that have been updated since the specified date, default None
     """
 
     country_codes: OptionalListOr[str] = None

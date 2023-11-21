@@ -1,6 +1,6 @@
 """Class for interacting with paginated APIs over HTTP."""
 
-# pylint: disable=too-many-arguments, too-few-public-methods
+# pylint: disable=too-many-arguments
 
 import asyncio
 import math
@@ -71,19 +71,19 @@ class HTTPClient:
     base_url : str
         The base URL of the API.
     per_page : int, optional
-        Default number of entries per page, by default 100
+        Default number of entries per page, default 100
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 5.0
+        Maximum timeout for requests in seconds, default 5.0
     verify : bool or str, optional
-        Verify SSL credentials, by default True
+        Verify SSL credentials, default True
 
         Also accepts a path string to an SSL certificate file.
     headers : dict[str, str], optional
-        Collection of headers to send with each request, by default None
+        Collection of headers to send with each request, default None
     client : httpx.AsyncClient, optional
-        Authenticated `httpx.AsyncClient`, by default None
+        Authenticated `httpx.AsyncClient`, default None
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
     """
 
     __slots__ = ("client", "per_page", "verbose")
@@ -281,6 +281,29 @@ class HTTPClient:
 def _calculate_pages(
     page: Optional[int], per_page: int, max_pages: Optional[int], total: int
 ) -> int:
+    """Calculate number of pages to request from the API.
+
+    If `max_pages` is less than the `total` pages, returns `max_pages`
+
+    Otherwise, returns the calculated total number of pages based on the
+    `total` items and the starting `page`
+
+    Parameters
+    ----------
+    page : Optional[int]
+        Starting page
+    per_page : int
+        Number of items per page
+    max_pages : Optional[int]
+        Maximum number of pages
+    total : int
+        Total number of items
+
+    Returns
+    -------
+    int
+        Calculated number of pages
+    """
     total_pages = math.ceil(total / per_page) - (page - 1 if page else 0)
     if max_pages and max_pages <= total_pages:
         return max_pages

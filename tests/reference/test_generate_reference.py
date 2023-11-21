@@ -104,21 +104,29 @@ def test_write_to_file_not_exists(mock_mkdir: mock.MagicMock):
 
 
 def test_parse_args_name():
-    argv = ["-n", "audiences"]
-
-    args = uref.parse_args(argv)
+    args = uref.parse_args(["-n", "audiences"])
 
     assert not args.all
     assert args.name == "audiences"
 
 
 def test_parse_args_all():
-    argv = ["-a"]
-
-    args = uref.parse_args(argv)
+    args = uref.parse_args(["-a"])
 
     assert args.all
     assert args.name == ""
+
+
+def test_parse_args_dest():
+    args = uref.parse_args(["-d", "test/folder"])
+
+    assert args.folder == Path("test/folder")
+
+
+def test_parse_args_token():
+    args = uref.parse_args(["-t", "TOKEN"])
+
+    assert args.token == "TOKEN"
 
 
 @mock.patch("bavapi._reference.generate_reference.os.getenv", return_value="test_token")

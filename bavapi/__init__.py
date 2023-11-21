@@ -25,6 +25,8 @@ For more advanced usage (and async compatibility), use the `bavapi.Client` class
 ...     result = await bav.brands(name="Facebook")
 """
 
+# pylint: disable=R0801
+
 from bavapi import filters
 from bavapi.client import Client
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError

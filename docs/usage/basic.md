@@ -72,9 +72,9 @@ Each endpoint function has a filter class associated with it, as each endpoint h
 | [`studies`][sync.studies]                         | [`StudiesFilters`][filters.StudiesFilters]                     |
 
 !!! warning
-    Using a filters class not meant for a specific endpoint will raise a `ValueError`.
+    Using a filters class not meant for a specific endpoint won't raise any errors from the outset, but it also won't provide IDE type support or type validation to the parameters that are associated with each endpoint.
 
-    However, using a dictionary instead (as seen in the instructions below) won't raise errors if the dictionary doesn't match the expected filter types. Use the dictionary method with caution.
+    Similarly, using a dictionary (as seen in the example below) won't provide validation or type hints. Use the dictionary method with caution.
 
 These classes are available in the `bavapi.filters` module.
 
