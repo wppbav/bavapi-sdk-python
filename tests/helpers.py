@@ -11,7 +11,7 @@ def wraps(
     *,
     raises: Optional[Union[Type[Exception], Exception]] = None,
 ) -> Callable[..., Optional[T]]:
-    def _wraps(*_, **__):
+    def _wraps(*_, **__) -> Optional[T]:
         if raises is not None:
             raise raises
         return return_value
@@ -19,5 +19,5 @@ def wraps(
     return _wraps
 
 
-def mock_app(*args, **kwargs) -> ASGIApp:
-    return mock_app(*args, **kwargs)  # pragma: no cover
+def mock_app(*_, **__) -> ASGIApp:
+    ...  # pragma: no cover
