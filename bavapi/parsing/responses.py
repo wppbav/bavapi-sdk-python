@@ -5,9 +5,9 @@ from typing import (
     Iterable,
     Iterator,
     List,
-    Set,
     Mapping,
     Optional,
+    Set,
     TypeVar,
     Union,
     cast,
@@ -32,11 +32,11 @@ def flatten_mapping(
     mapping : dict[str, Any]
         Dictionary with potential nested dictionaries
     parent : str
-        Parent key for generating children keys, by default ""
+        Parent key for generating children keys, default ""
     sep : str
-        Separator to use between keys and parent keys, by default ""
+        Separator to use between keys and parent keys, default ""
     prefix: str
-        Prefix for nested keys that clash with keys in the top-level mapping, by default ""
+        Prefix for nested keys that clash with keys in the top-level mapping, default ""
 
         An empty prefix will ignore key conflicts.
 
@@ -98,15 +98,15 @@ def flatten(
     mapping : dict[str, Any]
         Dictionary with potential nested dictionaries and lists of dictionaries
     parent : str
-        Parent key for generating children keys, by default ""
+        Parent key for generating children keys, default ""
     sep : str
-        Separator to use between keys and parent keys, by default ""
+        Separator to use between keys and parent keys, default "_"
     prefix: str
-        Prefix for keys that clash with keys in the top-level mapping, by default ""
+        Prefix for keys that clash with keys in the top-level mapping, default ""
 
         An empty prefix will ignore key conflicts.
     expand : bool, optional
-        Whether to expand nested lists into new dictionaries, by default False
+        Whether to expand nested lists into new dictionaries, default False
 
     Yields
     ------
@@ -144,12 +144,12 @@ def parse_response(
     page : Iterable[dict[str, Any]]
         Page from API response.
     prefix : str, optional
-        Prefix to prepend to columns with clashing names, by default `""`
+        Prefix to prepend to columns with clashing names, default `""`
     index : str, optional
-        Column name to use as index, by default None.
+        Column name to use as index, default None.
     expand : bool, optional
         Whether to expand lists of dictionaries into new entries (rows)
-        in the resulting DataFrame, by default False.
+        in the resulting DataFrame, default False.
 
     Returns
     -------

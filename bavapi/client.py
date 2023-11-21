@@ -95,25 +95,25 @@ class Client:
     Parameters
     ----------
     auth_token : str, optional
-        WPPBAV Fount API authorization token, by default `''`
+        WPPBAV Fount API authorization token, default `''`
     per_page : int, optional
-        Default number of entries per page, by default 100
+        Default number of entries per page, default 100
     timeout : float, optional
-        Maximum timeout for requests in seconds, by default 30.0
+        Maximum timeout for requests in seconds, default 30.0
     verify : bool or str, optional
-        Verify SSL credentials, by default True
+        Verify SSL credentials, default True
 
         Also accepts a path string to an SSL certificate file.
     user_agent : str, optional
-        The name of the User-Agent to send to the Fount API, by default `''`.
+        The name of the User-Agent to send to the Fount API, default `''`.
 
         If no user_agent is set, `bavapi` will use `"BAVAPI SDK Python"` by default.
     client : HTTPClient, optional
-        Authenticated async client from `bavapi.http`, by default None
+        Authenticated async client from `bavapi.http`, default None
 
         If `client` is passed, all other parameters will be ignored.
     verbose : bool, optional
-        Set to False to disable progress bar, by default True
+        Set to False to disable progress bar, default True
 
     Raises
     ------
@@ -267,34 +267,34 @@ class Client:
         Parameters
         ----------
         name : str, optional
-            Search audiences by name, by default None
+            Search audiences by name, default None
         active : Literal[0, 1], optional
-            Return active audiences only if set to `1`, by default 0
+            Return active audiences only if set to `1`, default 0
         public : Literal[0, 1], optional
-            Return active audiences only if set to `1`, by default 0
+            Return active audiences only if set to `1`, default 0
         audience_id : int, optional
-            Fount audience ID, by default None
+            Fount audience ID, default None
 
             If an audience ID is provided, only that audience will be returned
         private : Literal[0, 1], optional
-            Return inactive audiences only if set to `1`, by default 0
+            Return inactive audiences only if set to `1`, default 0
         groups : int or list[int], optional
-            Audience group ID or list of audience group IDs, by default None
+            Audience group ID or list of audience group IDs, default None
         filters : AudiencesFilters or dict of filters, optional
-            AudiencesFilters object or dictionary of filter parameters, by default None
+            AudiencesFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
-            Fields to retrieve in API response, by default None
+            Fields to retrieve in API response, default None
 
             Only specified fields are returned.
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
-            Additional resources to include in API response, by default None
+            Additional resources to include in API response, default None
         query : Query[AudiencesFilters], optional
-            Query object to perform request with, by default None
+            Query object to perform request with, default None
 
             If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
-            Whether to expand nested lists into new dictionaries, by default False
+            Whether to expand nested lists into new dictionaries, default False
         **kwargs
             Additional parameters to pass to the Query. See `Other Parameters`.
             For any filters, use the `filters` parameter.
@@ -302,13 +302,13 @@ class Client:
         Other Parameters
         ----------------
         page : int, optional
-            Page number to fetch, by default None
+            Page number to fetch, default None
         per_page : int, optional
-            Number of results per page, by default None
+            Number of results per page, default None
         max_pages : int, optional
-            Max number of results to return, by default None
+            Max number of results to return, default None
         sort : str, optional
-            Sort response by field, by default None
+            Sort response by field, default None
 
             To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -364,34 +364,34 @@ class Client:
         Parameters
         ----------
         name : str, optional
-            Search brand metrics by name, by default None
+            Search brand metrics by name, default None
         active : Literal[0, 1], optional
-            Return active brand metrics only if set to `1`, by default 0
+            Return active brand metrics only if set to `1`, default 0
         public : Literal[0, 1], optional
-            Return active brand metrics only if set to `1`, by default 0
+            Return active brand metrics only if set to `1`, default 0
         metric_id : int, optional
-            Fount metric ID, by default None
+            Fount metric ID, default None
 
             If an metric ID is provided, only that metric will be returned
         private : Literal[0, 1], optional
-            Return inactive brand metrics only if set to `1`, by default 0
+            Return inactive brand metrics only if set to `1`, default 0
         groups : int or list[int], optional
-            Brand metrics group ID or list of Brand metrics group IDs, by default None
+            Brand metrics group ID or list of Brand metrics group IDs, default None
         filters : BrandMetricsFilters or dict of filters, optional
-            BrandMetricsFilters object or dictionary of filter parameters, by default None
+            BrandMetricsFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
-            Fields to retrieve in API response, by default None
+            Fields to retrieve in API response, default None
 
             Only specified fields are returned.
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
-            Additional resources to include in API response, by default None
+            Additional resources to include in API response, default None
         query : Query[BrandMetricsFilters], optional
-            Query object to perform request with, by default None
+            Query object to perform request with, default None
 
             If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
-            Whether to expand nested lists into new dictionaries, by default False
+            Whether to expand nested lists into new dictionaries, default False
         **kwargs
             Additional parameters to pass to the Query. See `Other Parameters`.
             For any filters, use the `filters` parameter.
@@ -399,13 +399,13 @@ class Client:
         Other Parameters
         ----------------
         page : int, optional
-            Page number to fetch, by default None
+            Page number to fetch, default None
         per_page : int, optional
-            Number of results per page, by default None
+            Number of results per page, default None
         max_pages : int, optional
-            Max number of results to return, by default None
+            Max number of results to return, default None
         sort : str, optional
-            Sort response by field, by default None
+            Sort response by field, default None
 
             To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -458,28 +458,28 @@ class Client:
         Parameters
         ----------
         name : str, optional
-            Search brand metric groups by name, by default None
+            Search brand metric groups by name, default None
         active : Literal[0, 1], optional
-            Return active brand metric groups only if set to `1`, by default 0
+            Return active brand metric groups only if set to `1`, default 0
         group_id : int, optional
-            Fount metric group ID, by default None
+            Fount metric group ID, default None
 
             If an metric group ID is provided, only that metric group will be returned
         filters : BrandMetricGroupsFilters or dict of filters, optional
-            BrandMetricGroupsFilters object or dictionary of filter parameters, by default None
+            BrandMetricGroupsFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
-            Fields to retrieve in API response, by default None
+            Fields to retrieve in API response, default None
 
             Only specified fields are returned.
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
-            Additional resources to include in API response, by default None
+            Additional resources to include in API response, default None
         query : Query[BrandMetricGroupsFilters], optional
-            Query object to perform request with, by default None
+            Query object to perform request with, default None
 
             If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
-            Whether to expand nested lists into new dictionaries, by default False
+            Whether to expand nested lists into new dictionaries, default False
         **kwargs
             Additional parameters to pass to the Query. See `Other Parameters`.
             For any filters, use the `filters` parameter.
@@ -487,13 +487,13 @@ class Client:
         Other Parameters
         ----------------
         page : int, optional
-            Page number to fetch, by default None
+            Page number to fetch, default None
         per_page : int, optional
-            Number of results per page, by default None
+            Number of results per page, default None
         max_pages : int, optional
-            Max number of results to return, by default None
+            Max number of results to return, default None
         sort : str, optional
-            Sort response by field, by default None
+            Sort response by field, default None
 
             To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -545,32 +545,32 @@ class Client:
         Parameters
         ----------
         name : str, optional
-            Search brands by name, by default None
+            Search brands by name, default None
         country_codes: str or list[str], optional
-            ISO-3166-1 alpha-2 country codes, by default None
+            ISO-3166-1 alpha-2 country codes, default None
         year_numbers : int or list[int], optional
-            Study years, by default None
+            Study years, default None
         brand_id : int, optional
-            Fount brand ID, by default None
+            Fount brand ID, default None
 
             If a brand ID is provided, only that brand will be returned
         studies : int or list[int], optional
-            Fount study IDs, by default None
+            Fount study IDs, default None
         filters : BrandsFilters or dict of filters, optional
-            BrandsFilters object or dictionary of filter parameters, by default None
+            BrandsFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
-            Fields to retrieve in API response, by default None
+            Fields to retrieve in API response, default None
 
             Only specified fields are returned.
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
-            Additional resources to include in API response, by default None
+            Additional resources to include in API response, default None
         query : Query[BrandsFilters], optional
-            Query object to perform request with, by default None
+            Query object to perform request with, default None
 
             If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
-            Whether to expand nested lists into new dictionaries, by default False
+            Whether to expand nested lists into new dictionaries, default False
         **kwargs
             Additional parameters to pass to the Query. See `Other Parameters`.
             For any filters, use the `filters` parameter.
@@ -578,13 +578,13 @@ class Client:
         Other Parameters
         ----------------
         page : int, optional
-            Page number to fetch, by default None
+            Page number to fetch, default None
         per_page : int, optional
-            Number of results per page, by default None
+            Number of results per page, default None
         max_pages : int, optional
-            Max number of results to return, by default None
+            Max number of results to return, default None
         sort : str, optional
-            Sort response by field, by default None
+            Sort response by field, default None
 
             To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -671,38 +671,38 @@ class Client:
         Parameters
         ----------
         country_code : str or list[str], optional
-            ISO-3166-1 alpha-2 country codes, by default None
+            ISO-3166-1 alpha-2 country codes, default None
         year_number : int or list[int], optional
-            Study years, by default None
+            Study years, default None
         audiences : int or list[int], optional
-            Audiences to retrieve by audience ID, by default None
+            Audiences to retrieve by audience ID, default None
 
             The `Audiences` class can help with this filter.
         brand_name : str, optional
-            Search by brand name, by default None
+            Search by brand name, default None
         studies : int or list[int], optional
-            Fount studies IDs, by default None
+            Fount studies IDs, default None
         filters : BrandscapeFilters or dict of filters, optional
-            BrandscapeFilters object or dictionary of filter parameters, by default None
+            BrandscapeFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
-            Fields to retrieve in API response, by default None
+            Fields to retrieve in API response, default None
 
             Only specified fields are returned.
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
-            Additional resources to include in API response, by default None
+            Additional resources to include in API response, default None
         metric_keys: str or list[str], optional
-            Key or list of keys for the metrics included in the response, by default None
+            Key or list of keys for the metrics included in the response, default None
         metric_group_keys: str or list[str], optional
-            Key or list of keys for the metric groups included in the response, by default None
+            Key or list of keys for the metric groups included in the response, default None
 
             Currently, this parameter is only available for the `brandscape-data` endpoint.
         query : Query[BrandscapeFilters], optional
-            Query object to perform request with, by default None
+            Query object to perform request with, default None
 
             If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
-            Whether to expand nested lists into new dictionaries, by default False
+            Whether to expand nested lists into new dictionaries, default False
         **kwargs
             Additional parameters to pass to the Query. See `Other Parameters`.
             For any filters, use the `filters` parameter.
@@ -710,13 +710,13 @@ class Client:
         Other Parameters
         ----------------
         page : int, optional
-            Page number to fetch, by default None
+            Page number to fetch, default None
         per_page : int, optional
-            Number of results per page, by default None
+            Number of results per page, default None
         max_pages : int, optional
-            Max number of results to return, by default None
+            Max number of results to return, default None
         sort : str, optional
-            Sort response by field, by default None
+            Sort response by field, default None
 
             To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -785,28 +785,28 @@ class Client:
         Parameters
         ----------
         name : str, optional
-            Search categories by name, by default None
+            Search categories by name, default None
         sector : int or list[int], optional
-            Filter categories by sector ID, by default None
+            Filter categories by sector ID, default None
         category_id : int, optional
-            Fount category ID, by default None
+            Fount category ID, default None
 
             If an category ID is provided, only that category will be returned
         filters : CategoriesFilters or dict of filters, optional
-            CategoriesFilters object or dictionary of filter parameters, by default None
+            CategoriesFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
-            Fields to retrieve in API response, by default None
+            Fields to retrieve in API response, default None
 
             Only specified fields are returned.
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
-            Additional resources to include in API response, by default None
+            Additional resources to include in API response, default None
         query : Query[CategoriesFilters], optional
-            Query object to perform request with, by default None
+            Query object to perform request with, default None
 
             If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
-            Whether to expand nested lists into new dictionaries, by default False
+            Whether to expand nested lists into new dictionaries, default False
         **kwargs
             Additional parameters to pass to the Query. See `Other Parameters`.
             For any filters, use the `filters` parameter.
@@ -814,13 +814,13 @@ class Client:
         Other Parameters
         ----------------
         page : int, optional
-            Page number to fetch, by default None
+            Page number to fetch, default None
         per_page : int, optional
-            Number of results per page, by default None
+            Number of results per page, default None
         max_pages : int, optional
-            Max number of results to return, by default None
+            Max number of results to return, default None
         sort : str, optional
-            Sort response by field, by default None
+            Sort response by field, default None
 
             To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -872,32 +872,32 @@ class Client:
         Parameters
         ----------
         name : str, optional
-            Search collections by name, by default None
+            Search collections by name, default None
         public : Literal[0, 1], optional
-            Return public collections only, by default 0
+            Return public collections only, default 0
         collection_id : int, optional
-            Fount collection ID, by default None
+            Fount collection ID, default None
 
             If an collection ID is provided, only that collection will be returned
         shared_with_me : Literal[0, 1], optional
-            Only return collections that have been shared with the user, by default 0
+            Only return collections that have been shared with the user, default 0
         mine : Literal[0, 1], optional
-            Only return collections created by the user, by default 0
+            Only return collections created by the user, default 0
         filters : CollectionsFilters or dict of filters, optional
-            CollectionsFilters object or dictionary of filter parameters, by default None
+            CollectionsFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
-            Fields to retrieve in API response, by default None
+            Fields to retrieve in API response, default None
 
             Only specified fields are returned.
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
-            Additional resources to include in API response, by default None
+            Additional resources to include in API response, default None
         query : Query[CollectionsFilters], optional
-            Query object to perform request with, by default None
+            Query object to perform request with, default None
 
             If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
-            Whether to expand nested lists into new dictionaries, by default False
+            Whether to expand nested lists into new dictionaries, default False
         **kwargs
             Additional parameters to pass to the Query. See `Other Parameters`.
             For any filters, use the `filters` parameter.
@@ -905,13 +905,13 @@ class Client:
         Other Parameters
         ----------------
         page : int, optional
-            Page number to fetch, by default None
+            Page number to fetch, default None
         per_page : int, optional
-            Number of results per page, by default None
+            Number of results per page, default None
         max_pages : int, optional
-            Max number of results to return, by default None
+            Max number of results to return, default None
         sort : str, optional
-            Sort response by field, by default None
+            Sort response by field, default None
 
             To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -963,28 +963,28 @@ class Client:
         Parameters
         ----------
         name : str, optional
-            Search sectors by name, by default None
+            Search sectors by name, default None
         in_most_influential : Literal[0, 1], optional
-            Sectors that are part of the Most Influential lists, by default 0
+            Sectors that are part of the Most Influential lists, default 0
         sector_id : int, optional
-            Fount sectors ID, by default None
+            Fount sectors ID, default None
 
             If a sector ID is provided, only that sector will be returned
         filters : SectorsFilters or dict of filters, optional
-            SectorsFilters object or dictionary of filter parameters, by default None
+            SectorsFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
-            Fields to retrieve in API response, by default None
+            Fields to retrieve in API response, default None
 
             Only specified fields are returned.
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
-            Additional resources to include in API response, by default None
+            Additional resources to include in API response, default None
         query : Query[SectorsFilters], optional
-            Query object to perform request with, by default None
+            Query object to perform request with, default None
 
             If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
-            Whether to expand nested lists into new dictionaries, by default False
+            Whether to expand nested lists into new dictionaries, default False
         **kwargs
             Additional parameters to pass to the Query. See `Other Parameters`.
             For any filters, use the `filters` parameter.
@@ -992,13 +992,13 @@ class Client:
         Other Parameters
         ----------------
         page : int, optional
-            Page number to fetch, by default None
+            Page number to fetch, default None
         per_page : int, optional
-            Number of results per page, by default None
+            Number of results per page, default None
         max_pages : int, optional
-            Max number of results to return, by default None
+            Max number of results to return, default None
         sort : str, optional
-            Sort response by field, by default None
+            Sort response by field, default None
 
             To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -1049,32 +1049,32 @@ class Client:
         Parameters
         ----------
         country_codes: str or list[str], optional
-            ISO-3166-1 alpha-2 country codes, by default None
+            ISO-3166-1 alpha-2 country codes, default None
         year_numbers : int or list[int], optional
-            Study years, by default None
+            Study years, default None
         full_year : Literal[0, 1], optional
             Include or exclude studies which are not "full year" studies,
-            such as US quarterly studies or special studies, by default 0
+            such as US quarterly studies or special studies, default 0
 
             A value of 1 will filter non-full-year studies.
         study_id : int, optional
-            Fount study ID, by default None
+            Fount study ID, default None
             If a study ID is provided, only that study will be returned
         filters : StudiesFilters or dict of filters, optional
-            StudiesFilters object or dictionary of filter parameters, by default None
+            StudiesFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
-            Fields to retrieve in API response, by default None
+            Fields to retrieve in API response, default None
 
             Only specified fields are returned.
             If `fields` is None, all fields are returned.
         include : str or list[str], optional
-            Additional resources to include in API response, by default None
+            Additional resources to include in API response, default None
         query : Query[StudiesFilters], optional
-            Query object to perform request with, by default None
+            Query object to perform request with, default None
 
             If query is used, all parameters listed before `query` will be ignored.
         stack_data : bool, optional
-            Whether to expand nested lists into new dictionaries, by default False
+            Whether to expand nested lists into new dictionaries, default False
         **kwargs
             Additional parameters to pass to the Query. See `Other Parameters`.
             For any filters, use the `filters` parameter.
@@ -1082,13 +1082,13 @@ class Client:
         Other Parameters
         ----------------
         page : int, optional
-            Page number to fetch, by default None
+            Page number to fetch, default None
         per_page : int, optional
-            Number of results per page, by default None
+            Number of results per page, default None
         max_pages : int, optional
-            Max number of results to return, by default None
+            Max number of results to return, default None
         sort : str, optional
-            Sort response by field, by default None
+            Sort response by field, default None
 
             To sort in descending (highest first) order, use a `-` before the field name:
 
@@ -1125,6 +1125,21 @@ class Client:
 def _default_include(
     value: OptionalListOr[str], default: List[str]
 ) -> OptionalListOr[str]:
+    """Appends default includes to the passed value
+
+    Parameters
+    ----------
+    value : OptionalListOr[str]
+        value to add defaults to
+    default : List[str]
+        Default values to add to `value`
+
+    Returns
+    -------
+    OptionalListOr[str]
+        None if value is `"no_default"`, else returns defaults
+        and any includes in `value`
+    """
     if value is None:
         return default
     if isinstance(value, list):

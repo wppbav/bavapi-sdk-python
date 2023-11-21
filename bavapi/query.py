@@ -27,38 +27,38 @@ class Query(BaseModel, Generic[F]):
     Attributes
     ----------
     item_id : int, optional
-        Get specific resource by ID, by default None
+        Get specific resource by ID, default None
 
         Can also be set with `id`.
     filters : FountFilters instance or dict of filter values, optional
-        Filters to apply to the query, by default None
+        Filters to apply to the query, default None
     fields : str or list[str], optional
-        Specific fields to retrieve from the query, by default None
+        Specific fields to retrieve from the query, default None
     include : str or list[str], optional
-        Additional resources to retrieve from the query, by default None
+        Additional resources to retrieve from the query, default None
     metric_keys: str or list[str], optional
-        Key or list of keys for the metrics included in the response, by default None
+        Key or list of keys for the metrics included in the response, default None
 
         Currently, this parameter is only available for the `brandscape-data` endpoint.
     metric_group_keys: str or list[str], optional
-        Key or list of keys for the metric groups included in the response, by default None
+        Key or list of keys for the metric groups included in the response, default None
 
         Currently, this parameter is only available for the `brandscape-data` endpoint.
     sort : str, optional
-        Sort response by field, by default None
+        Sort response by field, default None
 
         To sort in descending (highest first) order, use a `-` before the field name:
         `sort="-differentiation_rank"`
 
-        Sorts by item ID by default.
+        Sorts by item ID default.
     page : int, optional
-        Get specific page from paginated response, by default None
+        Get specific page from paginated response, default None
 
         When None, the default value in the Fount is 1
 
         Must be greater than 0
     per_page : int, optional
-        Number of items per page, by default None
+        Number of items per page, default None
 
         When None, the default value in the Fount is 25
 
@@ -66,9 +66,9 @@ class Query(BaseModel, Generic[F]):
 
         Must be greater than 0
     max_pages : int, optional
-        Maximum number of pages to retrieve, by default None
+        Maximum number of pages to retrieve, default None
 
-        When None, all pages will be retrieved with a `per_page` value of 100 by default.
+        When None, all pages will be retrieved with a `per_page` value of 100 default.
 
         Must be greater than 0
     """
@@ -175,11 +175,10 @@ class Query(BaseModel, Generic[F]):
 
         Parameters
         ----------
-        per_page : int
-            Number of results per page
         n_pages : int
             Number of pages for which to generate paginated `Query` instances
-
+        per_page : int, optional
+            Number of results per page, default None
         Yields
         ------
         Query

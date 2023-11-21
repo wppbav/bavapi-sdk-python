@@ -23,7 +23,7 @@ def load_env() -> Generator[None, None, None]:
 @pytest.mark.e2e
 def test_raw_query():
     result: List[Dict[str, Any]] = []
-    for _ in range(5):  # pragma: no cover
+    for _ in range(5):
         try:
             result = bavapi.raw_query(
                 os.environ["BAV_API_KEY"],
@@ -42,8 +42,8 @@ def test_raw_query():
 
 @pytest.mark.e2e
 def test_with_filters_one_page():
-    result: pd.DataFrame = pd.DataFrame()
-    for _ in range(5):  # pragma: no cover
+    result = pd.DataFrame()
+    for _ in range(5):
         try:
             result = bavapi.studies(
                 os.environ["BAV_API_KEY"],
@@ -59,7 +59,7 @@ def test_with_filters_one_page():
             continue
 
     assert "country_id" in result
-    assert result["is_active"].unique()[0] == 1  # type: ignore
+    assert result["is_active"].unique()[0] == 1
     assert result.shape[0] == 25
 
 
@@ -80,7 +80,8 @@ def test_with_filters_one_page():
 )
 def test_endpoints(endpoint: str, filters: Dict[str, Any]):
     func: Callable[..., pd.DataFrame] = getattr(bavapi, endpoint)
-    for _ in range(5):  # pragma: no cover
+    result = pd.DataFrame()
+    for _ in range(5):
         try:
             result = func(
                 os.environ["BAV_API_KEY"], filters=filters, max_pages=2, per_page=25
@@ -90,5 +91,5 @@ def test_endpoints(endpoint: str, filters: Dict[str, Any]):
             print("Failed due to SSL error...")
             continue
 
-    assert 0 < result.shape[0] <= 50  # type: ignore
-    assert "id" in result  # type: ignore
+    assert 0 < result.shape[0] <= 50
+    assert "id" in result
