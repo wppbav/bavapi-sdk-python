@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.8">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.10">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.4b4a2bd9.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
@@ -1122,14 +1122,18 @@
       
         <li class="md-nav__item">
   <a href="#http" class="md-nav__link">
-    http
+    <span class="md-ellipsis">
+      http
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#http.HTTPClient" class="md-nav__link">
-    HTTPClient
+    <span class="md-ellipsis">
+      HTTPClient
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="HTTPClient">
@@ -1137,28 +1141,36 @@
         
           <li class="md-nav__item">
   <a href="#http.HTTPClient.aclose" class="md-nav__link">
-    aclose()
+    <span class="md-ellipsis">
+      aclose()
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#http.HTTPClient.get" class="md-nav__link">
-    get()
+    <span class="md-ellipsis">
+      get()
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#http.HTTPClient.get_pages" class="md-nav__link">
-    get_pages()
+    <span class="md-ellipsis">
+      get_pages()
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#http.HTTPClient.query" class="md-nav__link">
-    query()
+    <span class="md-ellipsis">
+      query()
+    </span>
   </a>
   
 </li>
@@ -1363,14 +1375,18 @@
       
         <li class="md-nav__item">
   <a href="#http" class="md-nav__link">
-    http
+    <span class="md-ellipsis">
+      http
+    </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
   <a href="#http.HTTPClient" class="md-nav__link">
-    HTTPClient
+    <span class="md-ellipsis">
+      HTTPClient
+    </span>
   </a>
   
     <nav class="md-nav" aria-label="HTTPClient">
@@ -1378,28 +1394,36 @@
         
           <li class="md-nav__item">
   <a href="#http.HTTPClient.aclose" class="md-nav__link">
-    aclose()
+    <span class="md-ellipsis">
+      aclose()
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#http.HTTPClient.get" class="md-nav__link">
-    get()
+    <span class="md-ellipsis">
+      get()
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#http.HTTPClient.get_pages" class="md-nav__link">
-    get_pages()
+    <span class="md-ellipsis">
+      get_pages()
+    </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
   <a href="#http.HTTPClient.query" class="md-nav__link">
-    query()
+    <span class="md-ellipsis">
+      query()
+    </span>
   </a>
   
 </li>
@@ -1500,7 +1524,7 @@
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Default number of entries per page, by default 100</p>
+              <p>Default number of entries per page, default 100</p>
             </div>
           </td>
           <td>
@@ -1514,7 +1538,7 @@
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Maximum timeout for requests in seconds, by default 5.0</p>
+              <p>Maximum timeout for requests in seconds, default 5.0</p>
             </div>
           </td>
           <td>
@@ -1528,7 +1552,7 @@
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Verify SSL credentials, by default True</p>
+              <p>Verify SSL credentials, default True</p>
 <p>Also accepts a path string to an SSL certificate file.</p>
             </div>
           </td>
@@ -1543,7 +1567,7 @@
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Collection of headers to send with each request, by default None</p>
+              <p>Collection of headers to send with each request, default None</p>
             </div>
           </td>
           <td>
@@ -1557,7 +1581,7 @@
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Authenticated <code>httpx.AsyncClient</code>, by default None</p>
+              <p>Authenticated <code>httpx.AsyncClient</code>, default None</p>
             </div>
           </td>
           <td>
@@ -1571,7 +1595,7 @@
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Set to False to disable progress bar, by default True</p>
+              <p>Set to False to disable progress bar, default True</p>
             </div>
           </td>
           <td>
@@ -1803,19 +1827,19 @@
 </span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a><span class="sd">    base_url : str</span>
 </span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a><span class="sd">        The base URL of the API.</span>
 </span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73"></a><span class="sd">    per_page : int, optional</span>
-</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a><span class="sd">        Default number of entries per page, by default 100</span>
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a><span class="sd">        Default number of entries per page, default 100</span>
 </span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75"></a><span class="sd">    timeout : float, optional</span>
-</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76"></a><span class="sd">        Maximum timeout for requests in seconds, by default 5.0</span>
+</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76"></a><span class="sd">        Maximum timeout for requests in seconds, default 5.0</span>
 </span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77"></a><span class="sd">    verify : bool or str, optional</span>
-</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78"></a><span class="sd">        Verify SSL credentials, by default True</span>
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78"></a><span class="sd">        Verify SSL credentials, default True</span>
 </span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79"></a>
 </span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80"></a><span class="sd">        Also accepts a path string to an SSL certificate file.</span>
 </span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81"></a><span class="sd">    headers : dict[str, str], optional</span>
-</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="sd">        Collection of headers to send with each request, by default None</span>
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="sd">        Collection of headers to send with each request, default None</span>
 </span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="sd">    client : httpx.AsyncClient, optional</span>
-</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="sd">        Authenticated `httpx.AsyncClient`, by default None</span>
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="sd">        Authenticated `httpx.AsyncClient`, default None</span>
 </span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="sd">    verbose : bool, optional</span>
-</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="sd">        Set to False to disable progress bar, by default True</span>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="sd">        Set to False to disable progress bar, default True</span>
 </span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88"></a>
 </span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89"></a>    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;client&quot;</span><span class="p">,</span> <span class="s2">&quot;per_page&quot;</span><span class="p">,</span> <span class="s2">&quot;verbose&quot;</span><span class="p">)</span>
@@ -2768,7 +2792,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.81fa17fe.min.js"></script>
+      <script src="../../assets/javascripts/bundle.6c14ae12.min.js"></script>
       
     
   </body>
