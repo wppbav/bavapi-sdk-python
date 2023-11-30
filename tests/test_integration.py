@@ -22,18 +22,12 @@ def load_env() -> Generator[None, None, None]:
 
 @pytest.mark.e2e
 def test_raw_query():
-    result: List[Dict[str, Any]] = []
-    for _ in range(5):
-        try:
-            result = bavapi.raw_query(
-                os.environ["BAV_API_KEY"],
-                "countries",
-                Query(filters={"is_active": 1}, include="region", max_pages=2),
-            )
-            break
-        except ssl.SSLError:
-            print("Failed due to SSL error...")
-            continue
+    result = bavapi.raw_query(
+        os.environ["BAV_API_KEY"],
+        "countries",
+        Query(filters={"is_active": 1}, include="region", max_pages=2),
+        retries=5,
+    )
 
     assert result
     assert len(result) == 200
@@ -42,21 +36,15 @@ def test_raw_query():
 
 @pytest.mark.e2e
 def test_with_filters_one_page():
-    result = pd.DataFrame()
-    for _ in range(5):
-        try:
-            result = bavapi.studies(
-                os.environ["BAV_API_KEY"],
-                filters=filters.StudiesFilters(active=1),
-                include="country",
-                page=1,
-                per_page=25,
-                max_pages=1,
-            )
-            break
-        except ssl.SSLError:
-            print("Failed due to SSL error...")
-            continue
+    result = bavapi.studies(
+        os.environ["BAV_API_KEY"],
+        filters=filters.StudiesFilters(active=1),
+        include="country",
+        page=1,
+        per_page=25,
+        max_pages=1,
+        retries=5,
+    )
 
     assert "country_id" in result
     assert result["is_active"].unique()[0] == 1
@@ -80,16 +68,14 @@ def test_with_filters_one_page():
 )
 def test_endpoints(endpoint: str, filters: Dict[str, Any]):
     func: Callable[..., pd.DataFrame] = getattr(bavapi, endpoint)
-    result = pd.DataFrame()
-    for _ in range(5):
-        try:
-            result = func(
-                os.environ["BAV_API_KEY"], filters=filters, max_pages=2, per_page=25
-            )
-            break
-        except ssl.SSLError:
-            print("Failed due to SSL error...")
-            continue
+
+    result = func(
+        os.environ["BAV_API_KEY"],
+        filters=filters,
+        max_pages=2,
+        per_page=25,
+        retries=5,
+    )
 
     assert 0 < result.shape[0] <= 50
     assert "id" in result
