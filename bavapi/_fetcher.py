@@ -1,4 +1,5 @@
 # pylint: disable=broad-exception-caught, too-few-public-methods
+from __future__ import annotations
 
 import asyncio
 import functools
@@ -10,12 +11,13 @@ from typing import (
     List,
     NamedTuple,
     Optional,
-    ParamSpec,
     Protocol,
     TypeVar,
 )
 
 from tqdm import tqdm
+
+from bavapi.typing import ParamSpec
 
 T = TypeVar("T")
 Q = TypeVar("Q", bound="_Query")
@@ -33,9 +35,15 @@ class ErrorRecord(NamedTuple):
     exception: Exception
 
 
-class ResultRecord(NamedTuple, Generic[T]):
-    page: int
-    result: T
+# Generic NamedTuple introduced in 3.11
+# Cannot use dataclass slots until 3.11
+# Cannot use generic dataclasses until 3.10
+class ResultRecord(Generic[T]):
+    __slots__ = ("page", "result")
+
+    def __init__(self, page: int, result: T) -> None:
+        self.page = page
+        self.result = result
 
 
 class PageFetcher(Generic[T]):
@@ -44,12 +52,13 @@ class PageFetcher(Generic[T]):
     def __init__(
         self,
         pbar: Optional[tqdm] = None,
-        results: Optional[List[ResultRecord[T]]] = None,
-        errors: Optional[List[ErrorRecord]] = None,
+        *,
+        _results: Optional[List[ResultRecord[T]]] = None,
+        _errors: Optional[List[ErrorRecord]] = None,
     ) -> None:
         self.pbar = pbar
-        self._results = list(results) if results else []
-        self._errors = list(errors) if errors else []
+        self._results = list(_results) if _results else []
+        self._errors = list(_errors) if _errors else []
 
     async def fetch_page(
         self, func: AsyncCallable[[str, Q], T], endpoint: str, query: Q
@@ -81,14 +90,16 @@ class PageFetcher(Generic[T]):
 
     @property
     def errors(self) -> List[int]:
-        return [page for page, _ in self._errors]
+        return sorted([page for page, _ in self._errors])
 
     @property
     def results(self) -> List[T]:
-        return [res for _, res in sorted(self._results, key=lambda x: x.page)]
+        return [res.result for res in sorted(self._results, key=lambda x: x.page)]
 
 
-def aretry(func: AsyncCallable[P, T], retries: int = 3) -> AsyncCallable[P, T]:
+def aretry(
+    func: AsyncCallable[P, T], retries: int = 3, delay: float = 0
+) -> AsyncCallable[P, T]:
     # pylint: disable=no-member
     @functools.wraps(func)
     async def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:  # type: ignore[ret-type]
@@ -98,6 +109,6 @@ def aretry(func: AsyncCallable[P, T], retries: int = 3) -> AsyncCallable[P, T]:
             except Exception as exc:
                 if retry_count == retries:
                     raise exc
-                await asyncio.sleep(1)
+                await asyncio.sleep(delay)
 
     return wrapper
