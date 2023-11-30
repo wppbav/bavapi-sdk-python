@@ -8,6 +8,7 @@ from json import JSONDecodeError
 from typing import (
     TYPE_CHECKING,
     Dict,
+    Iterable,
     Iterator,
     List,
     Optional,
@@ -20,8 +21,10 @@ from typing import (
 )
 
 import httpx
-from tqdm.asyncio import tqdm
+from tqdm import tqdm
 
+from bavapi._batched import batched
+from bavapi._fetcher import PageFetcher, aretry
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
 from bavapi.typing import BaseParamsMapping, JSONData, JSONDict
 
@@ -188,7 +191,13 @@ class HTTPClient:
         return resp
 
     async def get_pages(
-        self, endpoint: str, query: _Query, n_pages: int
+        self,
+        endpoint: str,
+        query: _Query,
+        n_pages: int,
+        batch_size: int = 10,
+        n_workers: int = 2,
+        retries: int = 3,
     ) -> List[httpx.Response]:
         """Perform GET requests for a given number of pages on an endpoint.
 
@@ -206,19 +215,28 @@ class HTTPClient:
         list[httpx.Response]
             List of response objects.
         """
-        tasks = [
-            asyncio.create_task(self.get(endpoint, page))
-            for page in query.paginated(n_pages)
-        ]
-        try:
-            return await tqdm.gather(
-                *tasks, desc=f"{endpoint} query", disable=not self.verbose
-            )
-        except Exception as exc:
-            for task in tasks:
-                task.cancel()
+        get_func = aretry(self.get, retries)
+        pbar = tqdm(desc=f"{endpoint} query", total=n_pages) if self.verbose else None
+        fetcher: PageFetcher[httpx.Response] = PageFetcher(pbar)
+        queue: asyncio.Queue[Iterable[_Query]] = asyncio.Queue()
 
-            raise exc
+        for batch in batched(query.paginated(n_pages), batch_size):
+            queue.put_nowait(batch)
+
+        workers = [
+            asyncio.create_task(fetcher.worker(get_func, endpoint, queue))
+            for _ in range(n_workers)
+        ]
+
+        await asyncio.gather(*workers)
+
+        if fetcher.errors:
+            print(f"Could not get the following pages: {fetcher.errors}")
+
+        if pbar:
+            pbar.close()
+
+        return fetcher.results
 
     async def query(self, endpoint: str, query: _Query) -> Iterator[JSONDict]:
         """Perform a paginated GET request on the given endpoint.
