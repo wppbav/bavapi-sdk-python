@@ -173,11 +173,16 @@ async def test_get_pages(
 
 @pytest.mark.anyio
 @mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(raises=ValueError))
-async def test_get_pages_fails(mock_get: mock.AsyncMock, client: HTTPClient):
-    with pytest.raises(ValueError):  # raised from mocked `get` method
-        await client.get_pages("request", Query(per_page=100), 1)
+async def test_get_pages_fails(
+    mock_get: mock.AsyncMock, client: HTTPClient, capsys: pytest.CaptureFixture
+):
+    await client.get_pages("request", Query(per_page=100), 1, retries=0)
 
-    mock_get.assert_awaited_once()
+    mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
+
+    out, err = capsys.readouterr()
+    assert err
+    assert out == "Could not get the following pages: [1]\n"
 
 
 @pytest.mark.anyio
@@ -190,8 +195,10 @@ async def test_query(
 ):
     assert len(tuple(await client.query("request", Query()))) == 1
 
-    mock_get.assert_awaited_once_with("request", Query(per_page=100))
-    mock_get_pages.assert_awaited_once_with("request", Query(per_page=100), 20)
+    mock_get.assert_awaited_once_with("request", Query(per_page=1))
+    mock_get_pages.assert_awaited_once_with(
+        "request", Query(per_page=100), 20, 10, 2, 3
+    )
 
 
 @pytest.mark.anyio
@@ -206,7 +213,7 @@ async def test_query_per_page(
     assert len(tuple(await client.query("request", Query(per_page=25)))) == 1
 
     mock_get.assert_awaited_once()
-    mock_get_pages.assert_awaited_once_with("request", Query(per_page=25), 80)
+    mock_get_pages.assert_awaited_once_with("request", Query(per_page=25), 80, 10, 2, 3)
 
 
 @pytest.mark.anyio
