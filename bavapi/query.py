@@ -126,9 +126,7 @@ class Query(BaseModel, Generic[F]):
         per_page: Optional[int] = None,
         max_pages: Optional[int] = None,
     ) -> "Query[F]":
-        """Create new instance of `Query` with page parameters if either is set to default.
-
-        Returns new instance of Query.
+        """Create new instance of `Query` with overridden page parameters.
 
         Parameters
         ----------
