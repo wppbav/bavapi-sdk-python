@@ -1,9 +1,9 @@
 # BAV API Python SDK
 
 [![CI status](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml/badge.svg)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml)
-[![coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/nachomaiz/32196acdc05431cd2bc7a8c73a587a8d/raw/covbadge.json)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml)
 [![release status](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/release.yml/badge.svg)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/release.yml)
 [![docs status](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/docs.yml/badge.svg)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/docs.yml)
+[![coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/nachomaiz/32196acdc05431cd2bc7a8c73a587a8d/raw/covbadge.json)](https://github.com/wppbav/bavapi-sdk-python/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/wpp-bavapi)](https://pypi.org/project/wpp-bavapi/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/wpp-bavapi)](https://pypi.org/project/wpp-bavapi/)
 

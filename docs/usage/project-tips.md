@@ -120,7 +120,7 @@ BrandsFilters(name="Facebook", country_code="GB", ...)
 
     with open("my_query.json", "w", encoding="utf-8") as file:
         json.dump(to_save.model_dump(), file)
-    
+
     # Saved to `my_query.json`
 
     with open("my_query.json", "r", encoding="utf-8") as file:
