@@ -90,6 +90,9 @@ async def raw_query(
     *,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
 ) -> List[JSONDict]:
     """Perform a raw GET query to the Fount API, returning the response JSON data
     instead of a `pandas` DataFrame.
@@ -106,6 +109,15 @@ async def raw_query(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
 
     Returns
     -------
@@ -113,7 +125,14 @@ async def raw_query(
         List of JSON response data
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.raw_query(endpoint, query)
 
 
@@ -134,6 +153,9 @@ async def audiences(
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `audiences` endpoint.
@@ -175,6 +197,15 @@ async def audiences(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -202,7 +233,14 @@ async def audiences(
         DataFrame with `brands` endpoint results
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.audiences(
             name,
             active,
@@ -236,6 +274,9 @@ async def brand_metrics(
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brand-metrics` endpoint.
@@ -277,6 +318,15 @@ async def brand_metrics(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -304,7 +354,14 @@ async def brand_metrics(
         DataFrame with `brand-metrics` endpoint results.
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.brand_metrics(
             name,
             active,
@@ -335,6 +392,9 @@ async def brand_metric_groups(
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brand-metric-groups` endpoint.
@@ -370,6 +430,15 @@ async def brand_metric_groups(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -397,7 +466,14 @@ async def brand_metric_groups(
         DataFrame with `brand-metric-groups` endpoint results.
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.brand_metric_groups(
             name,
             active,
@@ -427,6 +503,9 @@ async def brands(
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brands` endpoint
@@ -466,6 +545,15 @@ async def brands(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -493,7 +581,14 @@ async def brands(
         DataFrame with `brands` endpoint results
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.brands(
             name,
             country_codes,
@@ -527,6 +622,9 @@ async def brandscape_data(
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brandscape-data` endpoint.
@@ -602,6 +700,15 @@ async def brandscape_data(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -634,7 +741,14 @@ async def brandscape_data(
         If used with an invalid combination of parameters (see above)
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.brandscape_data(
             country_code,
             year_number,
@@ -666,6 +780,9 @@ async def categories(
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `categories` endpoint.
@@ -704,6 +821,15 @@ async def categories(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -731,7 +857,14 @@ async def categories(
         DataFrame with `categories` endpoint results.
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.categories(
             name,
             sector,
@@ -761,6 +894,9 @@ async def collections(
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `collections` endpoint.
@@ -798,6 +934,15 @@ async def collections(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -825,7 +970,14 @@ async def collections(
         DataFrame with `collections` endpoint results.
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.collections(
             name,
             public,
@@ -855,6 +1007,9 @@ async def sectors(
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `sectors` endpoint.
@@ -888,6 +1043,15 @@ async def sectors(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -915,7 +1079,14 @@ async def sectors(
         DataFrame with `sectors` endpoint results.
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.sectors(
             name,
             in_most_influential,
@@ -944,6 +1115,9 @@ async def studies(
     stack_data: bool = False,
     timeout: float = 30.0,
     verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = -1,
+    retries: int = 3,
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `studies` endpoint.
@@ -983,6 +1157,15 @@ async def studies(
         Maximum timeout for requests in seconds, default 30.0
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -1010,7 +1193,14 @@ async def studies(
         DataFrame with `studies` endpoint results
     """
 
-    async with Client(token, timeout=timeout, verbose=verbose) as client:
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+    ) as client:
         return await client.studies(
             country_codes,
             year_numbers,

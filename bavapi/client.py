@@ -114,6 +114,15 @@ class Client:
         If `client` is passed, all other parameters will be ignored.
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
 
     Raises
     ------
@@ -158,11 +167,22 @@ class Client:
         user_agent: str = "",
         *,
         verbose: bool = True,
+        batch_size: int = 10,
+        n_workers: int = -1,
+        retries: int = 3,
     ) -> None:
         ...
 
     @overload
-    def __init__(self, *, client: HTTPClient = ...) -> None:
+    def __init__(
+        self,
+        *,
+        client: HTTPClient = ...,
+        verbose: bool = True,
+        batch_size: int = 10,
+        n_workers: int = -1,
+        retries: int = 3,
+    ) -> None:
         ...
 
     def __init__(
@@ -175,6 +195,9 @@ class Client:
         *,
         client: Optional[HTTPClient] = None,
         verbose: bool = True,
+        batch_size: int = 10,
+        n_workers: int = -1,
+        retries: int = 3,
     ) -> None:
         if client is not None:
             self._client = client
@@ -192,6 +215,9 @@ class Client:
                     "User-Agent": user_agent or USER_AGENT,
                 },
                 verbose=verbose,
+                batch_size=batch_size,
+                n_workers=n_workers,
+                retries=retries,
             )
 
     @property
@@ -211,6 +237,33 @@ class Client:
     @verbose.setter
     def verbose(self, value: bool) -> None:
         self._client.verbose = value
+
+    @property
+    def batch_size(self) -> int:
+        """Size of batches to make requests with."""
+        return self._client.batch_size
+
+    @batch_size.setter
+    def batch_size(self, value: int) -> None:
+        self._client.batch_size = value
+
+    @property
+    def n_workers(self) -> int:
+        """Number of workers to make requests."""
+        return self._client.n_workers
+
+    @n_workers.setter
+    def n_workers(self, value: int) -> None:
+        self._client.n_workers = value
+
+    @property
+    def retries(self) -> int:
+        """Number of times to retry a request."""
+        return self._client.retries
+
+    @retries.setter
+    def retries(self, value: int) -> None:
+        self._client.retries = value
 
     async def __aenter__(self) -> "Client":
         await self._client.__aenter__()

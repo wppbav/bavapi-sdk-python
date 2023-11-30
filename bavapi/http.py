@@ -13,6 +13,7 @@ from typing import (
     List,
     Optional,
     Protocol,
+    Tuple,
     Type,
     TypeVar,
     Union,
@@ -87,9 +88,18 @@ class HTTPClient:
         Authenticated `httpx.AsyncClient`, default None
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default -1
+
+        If n_workers is less than one (default), calculate the number of workers based on
+        the number of pages in the request.
+    retries : int, optional
+        Number of times to retry a request, default 3
     """
 
-    __slots__ = ("client", "per_page", "verbose")
+    __slots__ = ("client", "per_page", "verbose", "batch_size", "n_workers", "retries")
 
     C = TypeVar("C", bound="HTTPClient")
 
@@ -103,6 +113,9 @@ class HTTPClient:
         *,
         headers: Optional[Dict[str, str]] = None,
         verbose: bool = True,
+        batch_size: int = 10,
+        n_workers: int = -1,
+        retries: int = 3,
     ) -> None:
         ...
 
@@ -113,6 +126,9 @@ class HTTPClient:
         client: httpx.AsyncClient = ...,
         per_page: int = 100,
         verbose: bool = True,
+        batch_size: int = 10,
+        n_workers: int = -1,
+        retries: int = 3,
     ) -> None:
         ...
 
@@ -126,9 +142,15 @@ class HTTPClient:
         headers: Optional[Dict[str, str]] = None,
         client: Optional[httpx.AsyncClient] = None,
         verbose: bool = True,
+        batch_size: int = 10,
+        n_workers: int = -1,
+        retries: int = 3,
     ) -> None:
         self.per_page = per_page
         self.verbose = verbose
+        self.batch_size = batch_size
+        self.n_workers = n_workers
+        self.retries = retries
 
         if client is not None:
             self.client = client
@@ -195,9 +217,6 @@ class HTTPClient:
         endpoint: str,
         query: _Query,
         n_pages: int,
-        batch_size: int = 10,
-        n_workers: int = 2,
-        retries: int = 3,
     ) -> List[httpx.Response]:
         """Perform GET requests for a given number of pages on an endpoint.
 
@@ -215,10 +234,13 @@ class HTTPClient:
         list[httpx.Response]
             List of response objects.
         """
-        get_func = aretry(self.get, retries, delay=0.25)
+        get_func = aretry(self.get, self.retries, delay=0.25)
         pbar = tqdm(desc=f"{endpoint} query", total=n_pages) if self.verbose else None
         fetcher: PageFetcher[httpx.Response] = PageFetcher(pbar)
         queue: asyncio.Queue[Iterable[_Query]] = asyncio.Queue()
+        batch_size, n_workers = _calculate_batch_params(
+            n_pages, self.batch_size, self.n_workers
+        )
 
         for batch in batched(query.paginated(n_pages), batch_size):
             queue.put_nowait(batch)
@@ -242,9 +264,6 @@ class HTTPClient:
         self,
         endpoint: str,
         query: _Query,
-        batch_size: int = 10,
-        n_workers: int = 2,
-        retries: int = 3,
     ) -> Iterator[JSONDict]:
         """Perform a paginated GET request on the given endpoint.
 
@@ -270,7 +289,8 @@ class HTTPClient:
             If response would exceed the rate limit.
         """
         per_page = query.per_page or self.per_page
-        resp = await self.get(endpoint, query.with_page(per_page=1))
+        init_per_page = per_page if query.is_single_page() else 1
+        resp = await self.get(endpoint, query.with_page(per_page=init_per_page))
 
         payload: Dict[str, JSONData] = resp.json()
         data: JSONData = payload["data"]
@@ -297,12 +317,7 @@ class HTTPClient:
             )
 
         pages = await self.get_pages(
-            endpoint,
-            query.with_page(per_page=per_page),
-            n_pages,
-            batch_size,
-            n_workers,
-            retries,
+            endpoint, query.with_page(per_page=per_page), n_pages
         )
 
         return (i for page in pages for i in page.json()["data"])
@@ -338,3 +353,15 @@ def _calculate_pages(
     if max_pages and max_pages <= total_pages:
         return max_pages
     return total_pages
+
+
+def _calculate_batch_params(
+    n_pages: int, batch_size: int, n_workers: int
+) -> Tuple[int, int]:
+    if n_pages < 10:
+        return n_pages, 1
+    if n_workers < 1:
+        # Returns between 2 and 5 n_workers from n_pages and batch_size
+        return batch_size, min(n_pages, int(2 * n_pages ** (0.0125 * 100 / batch_size)))
+
+    return batch_size, n_workers

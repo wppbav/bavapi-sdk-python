@@ -97,6 +97,30 @@ def test_verbose(fount: Client):
     fount.verbose = True
 
 
+def test_batch_size(fount: Client):
+    assert fount.batch_size == 10
+    fount.batch_size = 100
+    assert fount._client.batch_size == 100
+
+    fount.batch_size = 10
+
+
+def test_n_workers(fount: Client):
+    assert fount.n_workers == -1
+    fount.n_workers = 1
+    assert fount._client.n_workers == 1
+
+    fount.n_workers = -1
+
+
+def test_retries(fount: Client):
+    assert fount.retries == 3
+    fount.retries = 2
+    assert fount._client.retries == 2
+
+    fount.retries = 3
+
+
 @pytest.mark.anyio
 async def test_context_manager(mock_async_client: mock.MagicMock):
     _fount = Client(client=HTTPClient(client=mock_async_client))
