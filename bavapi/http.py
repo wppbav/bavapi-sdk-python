@@ -215,7 +215,7 @@ class HTTPClient:
         list[httpx.Response]
             List of response objects.
         """
-        get_func = aretry(self.get, retries)
+        get_func = aretry(self.get, retries, delay=0.25)
         pbar = tqdm(desc=f"{endpoint} query", total=n_pages) if self.verbose else None
         fetcher: PageFetcher[httpx.Response] = PageFetcher(pbar)
         queue: asyncio.Queue[Iterable[_Query]] = asyncio.Queue()
@@ -238,7 +238,14 @@ class HTTPClient:
 
         return fetcher.results
 
-    async def query(self, endpoint: str, query: _Query) -> Iterator[JSONDict]:
+    async def query(
+        self,
+        endpoint: str,
+        query: _Query,
+        batch_size: int = 10,
+        n_workers: int = 2,
+        retries: int = 3,
+    ) -> Iterator[JSONDict]:
         """Perform a paginated GET request on the given endpoint.
 
         Parameters
@@ -263,7 +270,7 @@ class HTTPClient:
             If response would exceed the rate limit.
         """
         per_page = query.per_page or self.per_page
-        resp = await self.get(endpoint, query.with_page(per_page=per_page))
+        resp = await self.get(endpoint, query.with_page(per_page=1))
 
         payload: Dict[str, JSONData] = resp.json()
         data: JSONData = payload["data"]
@@ -290,7 +297,12 @@ class HTTPClient:
             )
 
         pages = await self.get_pages(
-            endpoint, query.with_page(per_page=per_page), n_pages
+            endpoint,
+            query.with_page(per_page=per_page),
+            n_pages,
+            batch_size,
+            n_workers,
+            retries,
         )
 
         return (i for page in pages for i in page.json()["data"])
