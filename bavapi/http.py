@@ -359,9 +359,11 @@ def _calculate_batch_params(
     n_pages: int, batch_size: int, n_workers: int
 ) -> Tuple[int, int]:
     if n_pages < 10:
+        # shortcuts to a single worker to avoid unnecessary overhead
         return n_pages, 1
     if n_workers < 1:
-        # Returns between 2 and 5 n_workers from n_pages and batch_size
-        return batch_size, min(n_pages, int(2 * n_pages ** (0.0125 * 100 / batch_size)))
+        # Returns between 2 and 20 n_workers scaled from n_pages and batch_size
+        # translating to between 10 to 40 concurrent pages requested
+        return batch_size, min(20, int(1.5 * n_pages ** (0.0125 * 100 / batch_size)))
 
     return batch_size, n_workers
