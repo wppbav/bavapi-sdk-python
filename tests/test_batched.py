@@ -1,6 +1,7 @@
 # pylint: disable=missing-function-docstring, missing-module-docstring
 
 import pytest
+
 from bavapi._batched import batched
 
 

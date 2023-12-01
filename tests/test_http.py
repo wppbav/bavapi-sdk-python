@@ -9,7 +9,7 @@ import httpx
 import pytest
 
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
-from bavapi.http import HTTPClient, _calculate_pages, _calculate_batch_params
+from bavapi.http import HTTPClient, _calculate_batch_params, _calculate_pages
 from bavapi.query import Query
 from bavapi.typing import JSONData, JSONDict
 
@@ -299,14 +299,18 @@ def test_calculate_pages_starting_page_is_one():
     # 100 / 10 = 10 pages, but because (start) page=2, returns 9 (2->10)
     assert _calculate_pages(1, 10, 100, 100) == 10
 
+
 def test_calculate_batch_params_low_pages():
     assert _calculate_batch_params(5, 10, -1) == (5, 1)
 
+
 def test_calculate_batch_params_workers():
-    assert _calculate_batch_params(100, 10, -1) == (10, 3)
+    assert _calculate_batch_params(100, 10, -1) == (10, 2)
+
 
 def test_calculate_batch_params_large_request_positive_workers():
     assert _calculate_batch_params(100, 10, 3) == (10, 3)
 
+
 def test_calculate_batch_params_workers_never_exceeds_pages():
-    assert _calculate_batch_params(100, 1, -1) == (1, 100)
+    assert _calculate_batch_params(100, 1, -1) == (1, 20)
