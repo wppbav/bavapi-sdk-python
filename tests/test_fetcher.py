@@ -5,11 +5,12 @@ import asyncio
 from dataclasses import dataclass
 from typing import Optional
 from unittest import mock
+import warnings
 
 import pytest
 from tqdm import tqdm
 
-from bavapi._fetcher import PageFetcher, aretry
+from bavapi._fetcher import PageFetcher, aretry, Error
 
 
 @dataclass
@@ -35,10 +36,11 @@ async def test_fetch_page():
     async def _test(_str: str, _query: Q):
         return 1
 
-    fetcher = PageFetcher()
+    fetcher: PageFetcher[int] = PageFetcher()
     await fetcher.fetch_page(_test, "test_endpoint", Q(1))
 
     assert len(fetcher.results) == 1
+    assert fetcher.results[0] == 1
     assert not fetcher.errors
 
 
@@ -100,6 +102,20 @@ async def test_worker():
     assert fetcher.results == [1] * 10
 
 
+def test_warn_if_errors_warns():
+    fetcher = PageFetcher(_errors=[Error(1, ValueError())])
+    warning_pat = r"Could not get pages: \[Error\(page=1, exception=ValueError\(\)\)\]"
+    with pytest.warns(UserWarning, match=warning_pat):
+        fetcher.warn_if_errors()
+
+
+def test_warn_if_errors_no_errors():
+    fetcher = PageFetcher(_errors=[])
+    with warnings.catch_warnings():
+        warnings.simplefilter("error")
+        fetcher.warn_if_errors()
+
+
 @pytest.mark.anyio
 async def test_aretry():
     mock_coro = mock.AsyncMock()
@@ -140,4 +156,4 @@ async def test_aretry_no_iter():
 
     await retry_func()
 
-    assert mock_coro.await_count == 0
+    assert mock_coro.await_count == 1

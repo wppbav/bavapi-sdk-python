@@ -9,7 +9,7 @@ import httpx
 import pytest
 
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
-from bavapi.http import HTTPClient, _calculate_batch_params, _calculate_pages
+from bavapi.http import HTTPClient, _calculate_pages
 from bavapi.query import Query
 from bavapi.typing import JSONData, JSONDict
 
@@ -173,19 +173,29 @@ async def test_get_pages(
 
 @pytest.mark.anyio
 @mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(raises=ValueError))
-async def test_get_pages_fails(
+async def test_get_pages_fails_warns(
     mock_get: mock.AsyncMock,
     mock_async_client: httpx.AsyncClient,
-    capsys: pytest.CaptureFixture,
 ):
     client = HTTPClient(client=mock_async_client, retries=0)
-    await client.get_pages("request", Query(per_page=100), 1)
+    warning_pat = r"Could not get pages: \[Error\(page=1, exception=ValueError\(\)\)\]"
+    with pytest.warns(UserWarning, match=warning_pat):
+        await client.get_pages("request", Query(per_page=100), 1)
 
     mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
 
-    out, err = capsys.readouterr()
-    assert err
-    assert out == "Could not get the following pages: [1]\n"
+
+@pytest.mark.anyio
+@mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(raises=ValueError))
+async def test_get_pages_fails_raises(
+    mock_get: mock.AsyncMock,
+    mock_async_client: httpx.AsyncClient,
+):
+    client = HTTPClient(client=mock_async_client, retries=0, on_errors="raise")
+    with pytest.raises(ValueError):  # raised from mock_get
+        await client.get_pages("request", Query(per_page=100), 1)
+
+    mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
 
 
 @pytest.mark.anyio
@@ -298,19 +308,3 @@ def test_calculate_pages_starting_page():
 def test_calculate_pages_starting_page_is_one():
     # 100 / 10 = 10 pages, but because (start) page=2, returns 9 (2->10)
     assert _calculate_pages(1, 10, 100, 100) == 10
-
-
-def test_calculate_batch_params_low_pages():
-    assert _calculate_batch_params(5, 10, -1) == (5, 1)
-
-
-def test_calculate_batch_params_workers():
-    assert _calculate_batch_params(100, 10, -1) == (10, 2)
-
-
-def test_calculate_batch_params_large_request_positive_workers():
-    assert _calculate_batch_params(100, 10, 3) == (10, 3)
-
-
-def test_calculate_batch_params_workers_never_exceeds_pages():
-    assert _calculate_batch_params(100, 1, -1) == (1, 20)

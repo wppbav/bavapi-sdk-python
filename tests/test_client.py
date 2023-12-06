@@ -106,11 +106,11 @@ def test_batch_size(fount: Client):
 
 
 def test_n_workers(fount: Client):
-    assert fount.n_workers == -1
+    assert fount.n_workers == 2
     fount.n_workers = 1
     assert fount._client.n_workers == 1
 
-    fount.n_workers = -1
+    fount.n_workers = 2
 
 
 def test_retries(fount: Client):
@@ -119,6 +119,14 @@ def test_retries(fount: Client):
     assert fount._client.retries == 2
 
     fount.retries = 3
+
+
+def test_on_errors(fount: Client):
+    assert fount.on_errors == "warn"
+    fount.on_errors = "raise"
+    assert fount._client.on_errors == "raise"
+
+    fount.on_errors = "warn"
 
 
 @pytest.mark.anyio
