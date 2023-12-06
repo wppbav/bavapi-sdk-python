@@ -2,15 +2,15 @@
 # pylint: disable=protected-access
 
 import asyncio
+import warnings
 from dataclasses import dataclass
 from typing import Optional
 from unittest import mock
-import warnings
 
 import pytest
 from tqdm import tqdm
 
-from bavapi._fetcher import PageFetcher, aretry, Error
+from bavapi._fetcher import Error, PageFetcher, aretry
 
 
 @dataclass
