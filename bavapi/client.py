@@ -117,12 +117,11 @@ class Client:
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
 
     Raises
     ------
@@ -168,8 +167,9 @@ class Client:
         *,
         verbose: bool = True,
         batch_size: int = 10,
-        n_workers: int = -1,
+        n_workers: int = 2,
         retries: int = 3,
+        on_errors: Literal["warn", "raise"] = "warn",
     ) -> None:
         ...
 
@@ -180,8 +180,9 @@ class Client:
         client: HTTPClient = ...,
         verbose: bool = True,
         batch_size: int = 10,
-        n_workers: int = -1,
+        n_workers: int = 2,
         retries: int = 3,
+        on_errors: Literal["warn", "raise"] = "warn",
     ) -> None:
         ...
 
@@ -196,8 +197,9 @@ class Client:
         client: Optional[HTTPClient] = None,
         verbose: bool = True,
         batch_size: int = 10,
-        n_workers: int = -1,
+        n_workers: int = 2,
         retries: int = 3,
+        on_errors: Literal["warn", "raise"] = "warn",
     ) -> None:
         if client is not None:
             self._client = client
@@ -218,6 +220,7 @@ class Client:
                 batch_size=batch_size,
                 n_workers=n_workers,
                 retries=retries,
+                on_errors=on_errors,
             )
 
     @property
@@ -264,6 +267,15 @@ class Client:
     @retries.setter
     def retries(self, value: int) -> None:
         self._client.retries = value
+
+    @property
+    def on_errors(self) -> Literal["warn", "raise"]:
+        """Number of times to retry a request."""
+        return self._client.on_errors
+
+    @on_errors.setter
+    def on_errors(self, value: Literal["warn", "raise"]) -> None:
+        self._client.on_errors = value
 
     async def __aenter__(self) -> "Client":
         await self._client.__aenter__()
@@ -1088,6 +1100,8 @@ class Client:
         country_codes: OptionalListOr[str] = None,
         year_numbers: OptionalListOr[int] = None,
         full_year: Literal[0, 1] = 0,
+        released: Literal[0, 1] = 0,
+        bav_study: Literal[0, 1] = 0,
         *,
         study_id: Optional[int] = None,
         filters: OptionalFiltersOrMapping[_filters.StudiesFilters] = None,
@@ -1110,6 +1124,10 @@ class Client:
             such as US quarterly studies or special studies, default 0
 
             A value of 1 will filter non-full-year studies.
+        released : Literal[0, 1], optional
+            Return released studies when set to `1`, default 0
+        bav_study : Literal[0, 1], optional
+            Return full BAV studies when set to `1`, default 0
         study_id : int, optional
             Fount study ID, default None
             If a study ID is provided, only that study will be returned
@@ -1160,6 +1178,8 @@ class Client:
                 country_codes=country_codes,
                 year_numbers=year_numbers,
                 full_year=full_year,
+                released=released,
+                bav_study=bav_study,
             )
 
             query = Query(

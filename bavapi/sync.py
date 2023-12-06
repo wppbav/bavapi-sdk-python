@@ -91,8 +91,9 @@ async def raw_query(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
 ) -> List[JSONDict]:
     """Perform a raw GET query to the Fount API, returning the response JSON data
     instead of a `pandas` DataFrame.
@@ -112,12 +113,11 @@ async def raw_query(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
 
     Returns
     -------
@@ -132,6 +132,7 @@ async def raw_query(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.raw_query(endpoint, query)
 
@@ -154,8 +155,9 @@ async def audiences(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `audiences` endpoint.
@@ -200,12 +202,11 @@ async def audiences(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -240,6 +241,7 @@ async def audiences(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.audiences(
             name,
@@ -275,8 +277,9 @@ async def brand_metrics(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brand-metrics` endpoint.
@@ -321,12 +324,11 @@ async def brand_metrics(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -361,6 +363,7 @@ async def brand_metrics(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.brand_metrics(
             name,
@@ -393,8 +396,9 @@ async def brand_metric_groups(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brand-metric-groups` endpoint.
@@ -433,12 +437,11 @@ async def brand_metric_groups(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -473,6 +476,7 @@ async def brand_metric_groups(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.brand_metric_groups(
             name,
@@ -504,8 +508,9 @@ async def brands(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brands` endpoint
@@ -548,12 +553,11 @@ async def brands(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -588,6 +592,7 @@ async def brands(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.brands(
             name,
@@ -623,8 +628,9 @@ async def brandscape_data(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `brandscape-data` endpoint.
@@ -703,12 +709,11 @@ async def brandscape_data(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -748,6 +753,7 @@ async def brandscape_data(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.brandscape_data(
             country_code,
@@ -781,8 +787,9 @@ async def categories(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `categories` endpoint.
@@ -824,12 +831,11 @@ async def categories(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -864,6 +870,7 @@ async def categories(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.categories(
             name,
@@ -895,8 +902,9 @@ async def collections(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `collections` endpoint.
@@ -937,12 +945,11 @@ async def collections(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -977,6 +984,7 @@ async def collections(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.collections(
             name,
@@ -1008,8 +1016,9 @@ async def sectors(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `sectors` endpoint.
@@ -1046,12 +1055,11 @@ async def sectors(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -1086,6 +1094,7 @@ async def sectors(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.sectors(
             name,
@@ -1106,6 +1115,8 @@ async def studies(
     country_codes: OptionalListOr[str] = None,
     year_numbers: OptionalListOr[int] = None,
     full_year: Literal[0, 1] = 0,
+    released: Literal[0, 1] = 0,
+    bav_study: Literal[0, 1] = 0,
     *,
     study_id: Optional[int] = None,
     filters: OptionalFiltersOrMapping[_filters.StudiesFilters] = None,
@@ -1116,8 +1127,9 @@ async def studies(
     timeout: float = 30.0,
     verbose: bool = True,
     batch_size: int = 10,
-    n_workers: int = -1,
+    n_workers: int = 2,
     retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
     **kwargs: Unpack[CommonQueryParams],
 ) -> "DataFrame":
     """Query the Fount `studies` endpoint.
@@ -1135,6 +1147,10 @@ async def studies(
         such as US quarterly studies or special studies, default 0
 
         A value of 1 will filter non-full-year studies.
+    released : Literal[0, 1], optional
+        Return released studies when set to `1`, default 0
+    bav_study : Literal[0, 1], optional
+        Return full BAV studies when set to `1`, default 0
     study_id : int, optional
         Fount study ID, default None
         If a study ID is provided, only that study will be returned
@@ -1160,12 +1176,11 @@ async def studies(
     batch_size : int, optional
         Size of batches to make requests with, default 10
     n_workers : int, optional
-        Number of workers to make requests, default -1
-
-        If n_workers is less than one (default), calculate the number of workers based on
-        the number of pages in the request.
+        Number of workers to make requests, default 2
     retries : int, optional
         Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     **kwargs
         Additional parameters to pass to the Query. See `Other Parameters`.
         For any filters, use the `filters` parameter.
@@ -1200,11 +1215,14 @@ async def studies(
         batch_size=batch_size,
         n_workers=n_workers,
         retries=retries,
+        on_errors=on_errors,
     ) as client:
         return await client.studies(
             country_codes,
             year_numbers,
             full_year,
+            released,
+            bav_study,
             study_id=study_id,
             filters=filters,
             fields=fields,
