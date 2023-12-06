@@ -2,8 +2,7 @@
 # pylint: disable=redefined-outer-name, protected-access
 
 import os
-import ssl
-from typing import Any, Callable, Dict, Generator, List
+from typing import Any, Callable, Dict, Generator
 
 import pandas as pd
 import pytest
