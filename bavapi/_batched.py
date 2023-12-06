@@ -1,4 +1,4 @@
-# pylint: disable=invalid-name
+# pylint: disable=invalid-name, too-few-public-methods
 
 import itertools
 import sys
@@ -9,6 +9,33 @@ T = TypeVar("T")
 if sys.version_info < (3, 12):
 
     class batched(Generic[T]):
+        # Docstring from `itertools.batched`
+        """Batch data into tuples of length n. The last batch may be shorter than n.
+
+        Loops over the input iterable and accumulates data into tuples up to size n.
+        The input is consumed lazily, just enough to fill a batch.
+        The result is yielded as soon as a batch is full or when the input iterable is exhausted.
+
+        >>> for batch in batched('ABCDEFG', 3):
+        ...     print(batch)
+        ...
+        ('A', 'B', 'C')
+        ('D', 'E', 'F')
+        ('G',)
+
+        Parameters
+        ----------
+        iterable : Iterable[T]
+            Iterable to yield in batches
+        n : int
+            Number of items in each batch. Must be greater than zero
+
+        Yields
+        ------
+        batch : tuple[T, ...]
+            Batch of items of length n. The last batch may be shorter than n.
+        """
+
         def __init__(self, iterable: Iterable[T], n: int) -> None:
             if n < 1:
                 raise ValueError("n must be at least one")
