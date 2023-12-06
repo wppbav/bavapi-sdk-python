@@ -10,7 +10,7 @@ import warnings
 import pytest
 from tqdm import tqdm
 
-from bavapi._fetcher import PageFetcher, aretry, Error
+from bavapi._fetcher import Error, PageFetcher, aretry
 
 
 @dataclass
