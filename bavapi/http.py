@@ -8,8 +8,10 @@ from json import JSONDecodeError
 from typing import (
     TYPE_CHECKING,
     Dict,
+    Iterable,
     Iterator,
     List,
+    Literal,
     Optional,
     Protocol,
     Type,
@@ -20,8 +22,10 @@ from typing import (
 )
 
 import httpx
-from tqdm.asyncio import tqdm
+from tqdm import tqdm
 
+from bavapi._batched import batched
+from bavapi._fetcher import PageFetcher, aretry
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
 from bavapi.typing import BaseParamsMapping, JSONData, JSONDict
 
@@ -84,9 +88,25 @@ class HTTPClient:
         Authenticated `httpx.AsyncClient`, default None
     verbose : bool, optional
         Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default 2
+    retries : int, optional
+        Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
     """
 
-    __slots__ = ("client", "per_page", "verbose")
+    __slots__ = (
+        "client",
+        "per_page",
+        "verbose",
+        "batch_size",
+        "n_workers",
+        "retries",
+        "on_errors",
+    )
 
     C = TypeVar("C", bound="HTTPClient")
 
@@ -100,6 +120,10 @@ class HTTPClient:
         *,
         headers: Optional[Dict[str, str]] = None,
         verbose: bool = True,
+        batch_size: int = 10,
+        n_workers: int = 2,
+        retries: int = 3,
+        on_errors: Literal["warn", "raise"] = "warn",
     ) -> None:
         ...
 
@@ -110,6 +134,10 @@ class HTTPClient:
         client: httpx.AsyncClient = ...,
         per_page: int = 100,
         verbose: bool = True,
+        batch_size: int = 10,
+        n_workers: int = 2,
+        retries: int = 3,
+        on_errors: Literal["warn", "raise"] = "warn",
     ) -> None:
         ...
 
@@ -123,19 +151,24 @@ class HTTPClient:
         headers: Optional[Dict[str, str]] = None,
         client: Optional[httpx.AsyncClient] = None,
         verbose: bool = True,
+        batch_size: int = 10,
+        n_workers: int = 2,
+        retries: int = 3,
+        on_errors: Literal["warn", "raise"] = "warn",
     ) -> None:
         self.per_page = per_page
         self.verbose = verbose
+        self.batch_size = batch_size
+        self.n_workers = n_workers
+        self.retries = retries
+        self.on_errors: Literal["warn", "raise"] = on_errors
 
-        if client is not None:
-            self.client = client
-        else:
-            self.client = httpx.AsyncClient(
-                headers=headers,
-                timeout=timeout,
-                verify=verify,
-                base_url=base_url,
-            )
+        self.client = client or httpx.AsyncClient(
+            headers=headers,
+            timeout=timeout,
+            verify=verify,
+            base_url=base_url,
+        )
 
     async def __aenter__(self: C) -> C:
         await self.client.__aenter__()
@@ -188,7 +221,10 @@ class HTTPClient:
         return resp
 
     async def get_pages(
-        self, endpoint: str, query: _Query, n_pages: int
+        self,
+        endpoint: str,
+        query: _Query,
+        n_pages: int,
     ) -> List[httpx.Response]:
         """Perform GET requests for a given number of pages on an endpoint.
 
@@ -206,21 +242,33 @@ class HTTPClient:
         list[httpx.Response]
             List of response objects.
         """
-        tasks = [
-            asyncio.create_task(self.get(endpoint, page))
-            for page in query.paginated(n_pages)
+        get_func = aretry(self.get, self.retries, delay=0.25)
+        pbar = tqdm(desc=f"{endpoint} query", total=n_pages) if self.verbose else None
+        fetcher: PageFetcher[httpx.Response] = PageFetcher(pbar, self.on_errors)
+        queue: asyncio.Queue[Iterable[_Query]] = asyncio.Queue()
+
+        for batch in batched(query.paginated(n_pages), self.batch_size):
+            queue.put_nowait(batch)
+
+        workers = [
+            asyncio.create_task(fetcher.worker(get_func, endpoint, queue))
+            for _ in range(self.n_workers)
         ]
-        try:
-            return await tqdm.gather(
-                *tasks, desc=f"{endpoint} query", disable=not self.verbose
-            )
-        except Exception as exc:
-            for task in tasks:
-                task.cancel()
 
-            raise exc
+        await asyncio.gather(*workers)
 
-    async def query(self, endpoint: str, query: _Query) -> Iterator[JSONDict]:
+        if pbar:
+            pbar.close()
+
+        fetcher.warn_if_errors()
+
+        return fetcher.results
+
+    async def query(
+        self,
+        endpoint: str,
+        query: _Query,
+    ) -> Iterator[JSONDict]:
         """Perform a paginated GET request on the given endpoint.
 
         Parameters
@@ -245,7 +293,8 @@ class HTTPClient:
             If response would exceed the rate limit.
         """
         per_page = query.per_page or self.per_page
-        resp = await self.get(endpoint, query.with_page(per_page=per_page))
+        init_per_page = per_page if query.is_single_page() else 1
+        resp = await self.get(endpoint, query.with_page(per_page=init_per_page))
 
         payload: Dict[str, JSONData] = resp.json()
         data: JSONData = payload["data"]

@@ -200,6 +200,44 @@ It's possible to supress progress bar outputs via the `verbose` parameter in fun
         bav.brands("Facebook")
     ```
 
+## Error handling
+
+!!! abstract "New in `v0.13`"
+
+### Warn or raise when a page fails to download
+
+You can control the error handling behavior of `bavapi` by changing the `on_errors` parameter in top-level functions and the `Client` interface.
+
+Options and examples:
+
+- `"warn"` (default): Will return all successfully downloaded data, and warn at the end about any pages that failed downloading so they can be manually retried.
+- `"raise"`: Will raise any exception that occurs immediately. This was the default behavior until `v0.13`.
+
+=== "Warn"
+
+    ```py
+    >>> bavapi.brands(TOKEN, "Facebook", verbose=False, on_errors="warn") # Fails page 1
+    UserWarning: Could not fetch pages: ["page 1: Exception(...)"]
+    ```
+
+=== "Raise"
+
+    ```py
+    >>> bavapi.brands(TOKEN, "Facebook", verbose=False, on_errors="raise") # Fails page 1
+    Exception: ...
+    ```
+
+### Retry failed requests
+
+`bavapi` will automatically retry requests that fail because of an exception. The number of retry attempts can be controlled via the `retries` parameter in top-level functions and the `Client` interface:
+
+```py
+bavapi.brands(TOKEN, retries=5)  # Will retry pages 5 times after original failure
+```
+
+!!! tip
+    There are some additional, advanced options for controlling the behavior of `bavapi` requests. More info in the [Control `bavapi` behavior](advanced.md#control-bavapi-behavior) section from the Advanced Usage documentation.
+
 ## Other query parameters
 
 The following query parameters are available for all endpoints (unless stated otherwise).

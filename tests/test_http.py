@@ -173,11 +173,29 @@ async def test_get_pages(
 
 @pytest.mark.anyio
 @mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(raises=ValueError))
-async def test_get_pages_fails(mock_get: mock.AsyncMock, client: HTTPClient):
-    with pytest.raises(ValueError):  # raised from mocked `get` method
+async def test_get_pages_fails_warns(
+    mock_get: mock.AsyncMock,
+    mock_async_client: httpx.AsyncClient,
+):
+    client = HTTPClient(client=mock_async_client, retries=0)
+    warning_pat = r"Could not get pages: \[Error\(page=1, exception=ValueError\(\)\)\]"
+    with pytest.warns(UserWarning, match=warning_pat):
         await client.get_pages("request", Query(per_page=100), 1)
 
-    mock_get.assert_awaited_once()
+    mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
+
+
+@pytest.mark.anyio
+@mock.patch("bavapi.http.HTTPClient.get", wraps=wraps(raises=ValueError))
+async def test_get_pages_fails_raises(
+    mock_get: mock.AsyncMock,
+    mock_async_client: httpx.AsyncClient,
+):
+    client = HTTPClient(client=mock_async_client, retries=0, on_errors="raise")
+    with pytest.raises(ValueError):  # raised from mock_get
+        await client.get_pages("request", Query(per_page=100), 1)
+
+    mock_get.assert_awaited_once_with("request", Query(page=1, per_page=100))
 
 
 @pytest.mark.anyio
@@ -190,7 +208,7 @@ async def test_query(
 ):
     assert len(tuple(await client.query("request", Query()))) == 1
 
-    mock_get.assert_awaited_once_with("request", Query(per_page=100))
+    mock_get.assert_awaited_once_with("request", Query(per_page=1))
     mock_get_pages.assert_awaited_once_with("request", Query(per_page=100), 20)
 
 

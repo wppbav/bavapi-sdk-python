@@ -1,7 +1,7 @@
 # `bavapi` Roadmap
 
 !!! note
-    As of `v0.10.1`, `bavapi` is in **beta**. Only listed features below will likely be developed until the full release of `bavapi`.
+    As of `v0.10`, `bavapi` is in **beta**. Only listed features below will likely be developed until the full release of `bavapi`.
 
 This is a non-exhaustive list of potential features & changes to `bavapi` before it is ready for full release:
 
@@ -15,7 +15,7 @@ This is a non-exhaustive list of potential features & changes to `bavapi` before
 
 ## Known issues
 
-- [ ] Sporadic `SSL: CERTIFICATE_VERIFY_FAILED` errors when making requests to the Fount API. Currently, retrying the request usually fixes the issue. See [an option](usage/project-tips.md#retry-failed-requests) for temporary fix.
+- [x] `v0.13.0` ~~Sporadic `SSL: CERTIFICATE_VERIFY_FAILED` errors when making requests to the Fount API.~~
 
 ## Fully-supported endpoints
 

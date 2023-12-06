@@ -2,9 +2,12 @@
 
 ## Retry failed requests
 
-There's a sporadic issue where some requests may raise an `SSL: CERTIFICATE_VERIFY_FAILED` error.
+!!! tip "New default behavior"
+    `bavapi` automatically retries failed requests starting from `v0.13`. The number of retry attempts can be controlled by the `retries` parameter in top-level functions and the `Client` interface. [More info](advanced.md#control-bavapi-behavior).
 
-While we will continue investigating solutions to the issue, you can use the [`retry`](https://github.com/invl/retry) package to automatically retry requests upon failure.
+    If you are using an older version of `bavapi`, this tip should still apply.
+
+You can use the [`retry`](https://github.com/invl/retry) package to automatically retry requests upon failure.
 
 Here's an example snippet:
 
@@ -16,9 +19,14 @@ import bavapi
 retry_call(bavapi.brands, ("TOKEN", "Facebook"), exceptions=ssl.SSLError, tries=3)
 ```
 
-This will attempt to make the request 3 times upon failure. If none of the tries succeeds, it will raise an exception.
+This will attempt to make the request 3 times upon failure. If none of the tries succeeds, it will raise the exception resulting from the last retry.
 
 ## Batch requests
+
+!!! tip "New default behavior"
+    `bavapi` automatically batches requests starting from `v0.13`. Number of requests per batch and number of worker coroutines can be controlled by the `batch_size` and `n_workers` parameters in top-level functions and the `Client` interface. [More info](advanced.md#control-bavapi-behavior).
+
+    If you are using an older version of `bavapi`, or you want to work around API rate limits, this tip should still apply.
 
 !!! abstract "New in `v0.12.0`"
 
@@ -26,29 +34,31 @@ Thanks to the new pagination logic, it is now possible to batch large requests t
 
 ```py
 import time
+from typing import Sequence
 
-import pandas
+import pandas as pd
 import bavapi
 
 def make_batched_brand_request(
     query: bavapi.Query,
     batch_size: int,
     per_page: int = 100,
-    wait: int = 60,  # Rate limit duration
+    wait: int = 60,  # BAV API rate limit duration
 ) -> pd.DataFrame:
-    items = per_page
+    n_items = per_page
     page = query.page or 1
+    max_pages = query.max_pages 
     results: list[pd.DataFrame] = []
-    has_max_pages = bool(query.max_pages)  # enables faster `while` condition checking
 
-    # Iterate if max_pages hasn't been reached OR items per page still equals per_page
-    while (
-        has_max_pages and len(batches) * batch_size >= query.max_pages
-    ) or items == per_page:
+    def collected_all(results: Sequence[pd.DataFrame]) -> bool:
+        return max_pages and len(results) * batch_size >= max_pages
+
+    # Loop if max_pages hasn't been reached OR n_items (per page) still equals per_page
+    while not collected_all(results) or n_items == per_page:
         res = bavapi.brands(query=query.with_page(page, per_page, batch_size))
         results.append(res)
         page += batch_size
-        items = res["id"].nunique()  # Supports `stack_data` functionality
+        n_items = res["id"].nunique()  # Supports `stack_data` functionality
         time.sleep(wait)  # Wait for the rate limit to reset
 
     return pd.concat(results)  # return all results as one DataFrame
@@ -57,9 +67,9 @@ def make_batched_brand_request(
 With this function you can run:
 
 ```py
-# Will perform batches of requests for 10 pages and wait 60 seconds
+# Will perform batches of requests for 100 pages and wait 60 seconds
 # between batches until all the data is acquired
-make_batched_brand_request(query=bavapi.Query(), batch_size=10)
+>>> make_batched_brand_request(query=bavapi.Query(), batch_size=100)
 ```
 
 ## Save & load filters and queries
@@ -73,12 +83,10 @@ You could share the data if you save the file and then share with them, but anot
 The recommended (simplest) way to achieve this would be to save the query in a JSON file.
 
 ```py
-import json
-
 to_save = bavapi.filters.BrandsFilters(name="Facebook", country_code="GB")
 
 with open("my_filters.json", "w", encoding="utf-8") as file:
-    json.dump(to_save.model_dump(), file)
+    file.write(to_save.model_dump_json())
 ```
 
 The code above will save your filters as a JSON file:
@@ -98,9 +106,11 @@ The code above will save your filters as a JSON file:
 }
 ```
 
-You can then load the file into a `bavapi.filters` object like so:
+You can then load the file into a `bavapi.filters.BrandsFilters` (or any `FountFilters`) object like so:
 
 ```py
+import json
+
 with open("my_filters.json", "r", encoding="utf-8") as file:
     loaded = bavapi.filters.BrandsFilters(**json.load(file))
 ```
@@ -112,37 +122,36 @@ This should restore all filter values, so you can use it again with other reques
 BrandsFilters(name="Facebook", country_code="GB", ...)
 ```
 
-!!! tip
-    This also works for `Query` objects:
+This also works for `Query` objects:
 
-    ```py
-    to_save = bavapi.Query(...)
+```py
+to_save = bavapi.Query(...)
 
-    with open("my_query.json", "w", encoding="utf-8") as file:
-        json.dump(to_save.model_dump(), file)
-    
-    # Saved to `my_query.json`
+with open("my_query.json", "w", encoding="utf-8") as file:
+    file.write(to_save.model_dump_json(), file)
 
-    with open("my_query.json", "r", encoding="utf-8") as file:
-        loaded = bavapi.Query(**json.load(file))
-    ```
+# Saved to `my_query.json`
 
-    When saving and re-loading `Query` objects, its filters will be loaded as the base `FountFilters` class. Everything should work normally, but filter values won't be validated.
+with open("my_query.json", "r", encoding="utf-8") as file:
+    loaded = bavapi.Query(**json.load(file))
+```
 
-    For that reason, it is recommended *NOT* to create the filters and query in JSON directly, but to create the query in Python and then dump to JSON, so the values get validated before saving the query to a JSON file.
+When saving and re-loading `Query` objects, its filters will be loaded as the base `FountFilters` class. Everything should work normally, but **filter values won't be validated**.
 
-    !!! abstract "New in `v0.11.0`"
+For that reason, it is recommended *NOT* to create the filters and query in JSON directly, but to create the query in Python and then dump to JSON, so the values get validated before saving the query to a JSON file.
 
-    You can save and load Query objects to be used with any endpoint function or method.
+!!! abstract "New in `v0.11.0`"
 
-    ```py
-    # continuing from code above...
-    bavapi.brands(TOKEN, query=loaded) # (1)
-    ```
+You can save and load Query objects to be used with any endpoint function or method.
 
-    1. Will use the query parameters loaded form the `my_query.json` file.
+```py
+# continuing from code above...
+bavapi.brands(TOKEN, query=loaded) # (1)
+```
 
-    Note that only parameters specified in the `Query` object will be used.
+1. Will use the query parameters loaded from the `my_query.json` file.
+
+Note that only parameters specified in the `Query` object will be used.
 
 ## Using `bavapi` to develop real-time applications
 

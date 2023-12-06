@@ -12,17 +12,17 @@ jobs:
         - uses: actions/checkout@v4
           with:
             fetch-depth: 0
-  
+
         - name: Set up nox
           uses: wntrblm/nox@2023.04.22
           with:
             python-versions: '3.11'
-        
+
         - name: Set up deploy git user
           run: |
             git config --global user.name docs-deploy
             git config --global user.email docs@bavapi-sdk-python.wppbav.com
-  
+
         - name: Release docs website
           run: |
             pip install -e .[doc]
