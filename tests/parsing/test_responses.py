@@ -31,6 +31,7 @@ def test_flatten_mapping():
 @pytest.mark.parametrize(
     ("value", "expected"),
     (
+        # no nested lists
         (
             {
                 "other_a": None,
@@ -49,6 +50,7 @@ def test_flatten_mapping():
                 }
             ],
         ),
+        # two levels of nested lists
         (
             {
                 "a": 1,
@@ -62,6 +64,26 @@ def test_flatten_mapping():
                 {"a": 1, "b_c": 1, "b_d_e": 2},
                 {"a": 1, "b_c": 2, "b_d_e": 1},
                 {"a": 1, "b_c": 2, "b_d_e": 2},
+            ],
+        ),
+        # two levels of nested lists and multiple lists in different keys
+        (
+            {
+                "a": 1,
+                "b": [
+                    {"c": [{"e": 1}, {"e": 2}], "d": [{"f": 1}, {"f": 2}], "g": 3},
+                    {"c": [{"e": 1}, {"e": 2}], "d": [{"f": 1}, {"f": 2}], "g": 4},
+                ],
+            },
+            [
+                {"a": 1, "b_g": 3, "b_c_e": 1, "b_d_f": 1},
+                {"a": 1, "b_g": 3, "b_c_e": 1, "b_d_f": 2},
+                {"a": 1, "b_g": 3, "b_c_e": 2, "b_d_f": 1},
+                {"a": 1, "b_g": 3, "b_c_e": 2, "b_d_f": 2},
+                {"a": 1, "b_g": 4, "b_c_e": 1, "b_d_f": 1},
+                {"a": 1, "b_g": 4, "b_c_e": 1, "b_d_f": 2},
+                {"a": 1, "b_g": 4, "b_c_e": 2, "b_d_f": 1},
+                {"a": 1, "b_g": 4, "b_c_e": 2, "b_d_f": 2},
             ],
         ),
     ),

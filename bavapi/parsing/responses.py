@@ -1,5 +1,6 @@
 """Functions for parsing Fount API responses"""
 
+import itertools
 from typing import (
     Dict,
     Iterable,
@@ -10,7 +11,6 @@ from typing import (
     Set,
     TypeVar,
     Union,
-    cast,
 )
 
 import pandas as pd
@@ -116,19 +116,22 @@ def flatten(
         If expand is True and any nested lists are present, yield each resulting
         flattened dictionary.
     """
-    new: Dict[str, T] = flatten_mapping(mapping, parent, sep, prefix)
-    expand_keys: List[str] = (
-        [k for k, v in new.items() if isinstance(v, list)] if expand else []
-    )
+    res: Dict[str, T] = {}
+    to_expand: Dict[str, List[Dict[str, T]]] = {}
+    for k, v in flatten_mapping(mapping, parent, sep, prefix).items():
+        if isinstance(v, list) and expand:
+            to_expand[k] = v
+        else:
+            res[k] = v
 
-    if not expand_keys:
-        yield new
+    if not to_expand:
+        yield res
     else:
-        for key in expand_keys:
-            values = cast(List[Dict[str, T]], new[key])
-            for val in values:
-                for i in flatten(val, key, sep, prefix, expand):
-                    yield {**{k: v for k, v in new.items() if k != key}, **i}
+        for record in itertools.product(*to_expand.values()):
+            to_yield = res.copy()
+            for key, value in zip(to_expand.keys(), record):
+                to_yield[key] = value
+            yield from flatten(to_yield, parent, sep, prefix, expand)
 
 
 def parse_response(
