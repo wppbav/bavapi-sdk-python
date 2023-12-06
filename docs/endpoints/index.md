@@ -4,7 +4,7 @@ sidebar_label: Overview
 
 # Endpoints
 
-As of `v0.12`, there are four endpoints that have been fully implemented in `bavapi`:
+As of `v0.13`, there are four endpoints that have been fully implemented in `bavapi`:
 
 - [`audiences`](audiences.md)
 - [`brand-metrics`](brand-metrics.md)
@@ -16,7 +16,7 @@ As of `v0.12`, there are four endpoints that have been fully implemented in `bav
 - [`sectors`](sectors.md)
 - [`studies`](studies.md)
 
-"Implemented" meaning that the endpoint has a corresponding function, `Client` method, and filters class associated with them. More info in each endpoint's respective section linked above.
+"Implemented" in this case means that the endpoint has a corresponding function, `Client` method, and filters class associated with them. More info in each endpoint's respective section linked above.
 
 If an existing endpoint does not appear in the list above, you can still perform queries to it using the `raw_query` function/method (see [below](#other-endpoints)), but `bavapi` won't validate filter parameters.
 
