@@ -46,6 +46,53 @@ await bav.aclose()  # (1)
 
 1. :recycle: Close the connection by awaiting `aclose` after you're done with your requests.
 
+## Control `bavapi` behavior
+
+!!! abstract "New in `v0.13`"
+
+`bavapi` will automatically batch paginated requests to the API to improve latency and throughput. Default values are set to maintain around twenty concurrent requests at a time.
+
+In addition, `bavapi` will also automatically retry failed requests a number of times (default `2`), which can be defined by the user.
+
+Both top-level functions and the `Client` class have the following parameters to control the behavior of the requests:
+
+- `batch_size`: Number of pages to include in each batch of requests, default `10`.
+- `n_workers`: Number of worker coroutines that will make batched requests at once, default `2`.
+- `retries`: Number of times to retry a page request before raising an exception, default `3`.
+- `on_errors`: Whether to `"warn"` about failed requests at the end of the query, or `"raise"` immediately upon failure (after retries), default `"warn"`.
+
+These parameters can be set in both top-level functions and the async `Client` class:
+
+=== "Sync"
+
+    ```py
+    bavapi.brands(
+        TOKEN,
+        batch_size=5,  # number of requests per batch
+        n_workers=5,  # number of concurrent workers
+        retries=2,  # number of retry attempts
+        on_errors="raise",  # raise on failure after retries
+    )
+    ```
+
+=== "Async"
+
+    ```py
+    async with bavapi.Client(
+        TOKEN,
+        batch_size=5,  # number of requests per batch
+        n_workers=5,  # number of concurrent workers
+        retries=2,  # number of retry attempts
+        on_errors="raise",  # raise on failure after retries
+    ) as client:
+        await client.brands()
+    ```
+
+The query from the example above will result in 25 (5 `batch_size` * 5 `n_workers`) concurrent API requests, and `bavapi` will retry each failed request twice (after the initial request). `on_errors="raise"` will ensure that an exception is raised if all retries for any page result in exceptions.
+
+!!! warning
+    In order to avoid SSL and timeout issues, it is recommended to set `batch_size` and `n_workers` so `bavapi` will perform at most 20-30 concurrent requests.
+
 ## Other endpoints
 
 Because of the large number of available endpoints in the Fount and the highly customizable queries, some endpoints won't have extended support from the start.
