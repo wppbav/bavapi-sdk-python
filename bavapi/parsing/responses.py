@@ -35,7 +35,7 @@ def flatten_mapping(
         Parent key for generating children keys, default ""
     sep : str
         Separator to use between keys and parent keys, default ""
-    prefix: str
+    prefix : str
         Prefix for nested keys that clash with keys in the top-level mapping, default ""
 
         An empty prefix will ignore key conflicts.
@@ -101,7 +101,7 @@ def flatten(
         Parent key for generating children keys, default ""
     sep : str
         Separator to use between keys and parent keys, default "_"
-    prefix: str
+    prefix : str
         Prefix for keys that clash with keys in the top-level mapping, default ""
 
         An empty prefix will ignore key conflicts.
@@ -128,10 +128,8 @@ def flatten(
         yield res
     else:
         for record in itertools.product(*to_expand.values()):
-            to_yield = res.copy()
-            for key, value in zip(to_expand.keys(), record):
-                to_yield[key] = value
-            yield from flatten(to_yield, parent, sep, prefix, expand)
+            res.update(zip(to_expand.keys(), record))
+            yield from flatten(res, parent, sep, prefix, expand)
 
 
 def parse_response(
