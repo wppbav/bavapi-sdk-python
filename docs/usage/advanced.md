@@ -88,10 +88,10 @@ These parameters can be set in both top-level functions and the async `Client` c
         await client.brands()
     ```
 
-The query from the example above will result in 25 (5 `batch_size` * 5 `n_workers`) concurrent API requests, and `bavapi` will retry each failed request twice (after the initial request). `on_errors="raise"` will ensure that an exception is raised if all retries for any page result in exceptions.
+The query from the examples above will result in *25* concurrent API requests (5 `batch_size` * 5 `n_workers`), and `bavapi` will retry each failed request *twice* (after the initial request). `on_errors="raise"` will ensure that an exception is raised if all retries for any page result in exceptions.
 
 !!! warning
-    In order to avoid SSL and timeout issues, it is recommended to set `batch_size` and `n_workers` so `bavapi` will perform at most 20-30 concurrent requests.
+    In order to avoid SSL and timeout issues, it is recommended to set `batch_size` and `n_workers` so `bavapi` will perform at most 20-30 concurrent requests. The default is 20 concurrent requests (10 `batch_size` * 2 `n_workers`).
 
 ## Other endpoints
 
@@ -108,8 +108,11 @@ Because of the large number of available endpoints in the Fount and the highly c
 These `raw_query` methods require the use of [`bavapi.Query`][query.Query] instances to make the request:
 
 ```py
+import bavapi
+from bavapi import Query, FountFilters
+
 async with bavapi.Client("TOKEN") as bav:
-    res = bav.raw_query("companies", Query(filters=FountFilters(name="Facebook")))
+    res = bav.raw_query("companies", Query(filters=FountFilters(name="Apple")))
 ```
 
 These functions will return a list of JSON dictionaries, one for each entry retrieved from the Fount:

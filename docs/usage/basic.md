@@ -9,11 +9,13 @@ import bavapi
 ## Using bavapi
 
 !!! info "SSL Issues"
-    It's possible that you get `SSL: CERTIFICATE_VERIFY_FAILED` errors when performing requests with `bavapi`. At the moment, it is not clear to what might be the source of the issue; as it only happens sometimes, and the error doesn't appear to happen with other tested URLs.
+    It's possible that you get `SSL: CERTIFICATE_VERIFY_FAILED` errors when performing requests with `bavapi`. Usually, making the request again solves the issue, but you might have to do so a couple of times if the issue persists.
 
-    Usually, making the request again solves the issue, but you might have to do so a couple of times if the issue persists. Here's a temporary [solution](project-tips.md#retry-failed-requests) for the issue.
-
-    :bulb: If you have any thoughts on how to solve this, please open an [issue](https://github.com/wppbav/bavapi-sdk-python/issues/) on GitHub.
+    `bavapi>=0.13` has an updated algorithm that should avoid this issue altogether. Please consider updating using `pip install --upgrade wpp-bavapi` in your terminal.
+    
+    If you are using `bavapi>=0.13` and still encounter this issue, try increasing the `retries` parameter to `5` or more from the default of `3`.
+    
+    If you are using a previous version of `bavapi`, here's a possible [workaround](project-tips.md#retry-failed-requests).
 
 You can query the available [endpoints](../endpoints/index.md) with their corresponding methods:
 
@@ -132,112 +134,6 @@ When using additional value filters, which might not be available in the argumen
 bavapi.brands(filters=BrandsFilters(name="Swatch", sector_name="Watches"))
 ```
 
-## Using *Reference* classes
-
-`bavapi` provides reference classes to make API queries easier to construct.
-
-These reference classes must be generated on your machine after installation. Please follow the instructions in the [Installing Reference Classes](../getting-started/reference-classes.md) section.
-
-The following reference classes are available as of `v0.10`:
-
-- `Audiences`: Audience IDs for all available Fount audiences.
-- `Countries`: Country IDs for all available Fount countries.
-
-They make it easier to use their respective filters, which require Fount IDs to work, rather than remembering each respective ID:
-
-```py
-from bavapi_refs import Audiences, Countries
-
-uk22 = bavapi.brandscape_data(
-    "TOKEN",
-    year_number=2021,
-    countries=Countries.UNITED_KINGDOM,
-    audiences=Audiences.ALL_ADULTS,
-)
-```
-
-## Timeout
-
-!!! abstract "New in `v0.8`"
-
-By default, API requests will timeout after 30 seconds in order to avoid hangups.
-
-This may happen more commonly when performing requests with more than 50-100 pages. If you get a `TimeoutError`, you can change this parameter to allow for longer timeouts.
-
-It is possible to set the time before timeout when performing requests with `bavapi`:
-
-=== "Sync"
-
-    ```py
-    bavapi.brands(TOKEN, "Facebook", timeout=60)
-    ```
-
-=== "Async"
-
-    ```py
-    async with bavapi.Client(TOKEN, timeout=60) as bav:
-        await bav.brands("Facebook")
-    ```
-
-## Suppressing progress bars
-
-!!! abstract "New in `v0.9`"
-
-`bavapi` displays progress bars to show download progress. Each tick in the progress bar refers to individual pages being downloaded.
-
-It's possible to supress progress bar outputs via the `verbose` parameter in function calls and `Client` init methods:
-
-=== "Sync (Won't show progress bar)"
-
-    ```py
-    bavapi.brands(TOKEN, "Facebook", verbose=False)
-    ```
-
-=== "Async (Won't show progress bar)"
-
-    ```py
-    async with bavapi.Client(TOKEN, verbose=False) as bav:
-        bav.brands("Facebook")
-    ```
-
-## Error handling
-
-!!! abstract "New in `v0.13`"
-
-### Warn or raise when a page fails to download
-
-You can control the error handling behavior of `bavapi` by changing the `on_errors` parameter in top-level functions and the `Client` interface.
-
-Options and examples:
-
-- `"warn"` (default): Will return all successfully downloaded data, and warn at the end about any pages that failed downloading so they can be manually retried.
-- `"raise"`: Will raise any exception that occurs immediately. This was the default behavior until `v0.13`.
-
-=== "Warn"
-
-    ```py
-    >>> bavapi.brands(TOKEN, "Facebook", verbose=False, on_errors="warn") # Fails page 1
-    UserWarning: Could not fetch pages: ["page 1: Exception(...)"]
-    ```
-
-=== "Raise"
-
-    ```py
-    >>> bavapi.brands(TOKEN, "Facebook", verbose=False, on_errors="raise") # Fails page 1
-    Exception: ...
-    ```
-
-### Retry failed requests
-
-`bavapi` will automatically retry requests that fail because of an exception. The number of retry attempts can be controlled via the `retries` parameter in top-level functions and the `Client` interface:
-
-```py
-bavapi.brands(TOKEN, retries=5)  # Will retry pages 5 times after original failure
-```
-
-!!! tip
-    There are some additional, advanced options for controlling the behavior of `bavapi` requests. More info in the [Control `bavapi` behavior](advanced.md#control-bavapi-behavior) section from the Advanced Usage documentation.
-
 ## Other query parameters
 
 The following query parameters are available for all endpoints (unless stated otherwise).
@@ -288,6 +184,110 @@ result = bavapi.brands(name="Swatch", includes="company")
 !!! note "Default `includes`"
     The `brandscape_data` function includes `study`, `brand`, `category` and `audience` by default, to align functionality with other sources of data like the Fount website and the Cultural Rank Tool. More [info](../endpoints/brandscape-data.md#default-includes). The `categories` function also has [default includes](../endpoints/categories.md#default-includes).
 
+## Using *Reference* classes
+
+`bavapi` provides reference classes to make API queries easier to construct.
+
+These reference classes must be generated on your machine after installation. Please follow the instructions in the [Installing Reference Classes](../getting-started/reference-classes.md) section.
+
+The following reference classes are available as of `v0.13`:
+
+- `Audiences`: Audience IDs for all available Fount audiences.
+- `Countries`: Country IDs for all available Fount countries.
+
+They make it easier to use their respective filters, which require Fount IDs to work, rather than remembering each respective ID:
+
+```py
+from bavapi_refs import Audiences, Countries
+
+uk21 = bavapi.brandscape_data(
+    "TOKEN",
+    year_number=2021,
+    countries=Countries.UNITED_KINGDOM,
+    audiences=Audiences.ALL_ADULTS,
+)
+```
+
+## Timeout
+
+!!! abstract "New in `v0.8`"
+
+By default, API requests will timeout after 30 seconds in order to avoid hangups.
+
+It is possible to set the time before timeout when performing requests with `bavapi`:
+
+=== "Sync"
+
+    ```py
+    bavapi.brands("TOKEN", "Facebook", timeout=60)
+    ```
+
+=== "Async"
+
+    ```py
+    async with bavapi.Client("TOKEN", timeout=60) as bav:
+        await bav.brands("Facebook")
+    ```
+
+## Suppressing progress bars
+
+!!! abstract "New in `v0.9`"
+
+`bavapi` displays progress bars to show download progress. Each tick in the progress bar refers to individual pages being downloaded.
+
+It's possible to supress progress bar outputs via the `verbose` parameter in function calls and `Client` init methods:
+
+=== "Sync (Won't show progress bar)"
+
+    ```py
+    bavapi.brands("TOKEN", "Facebook", verbose=False)
+    ```
+
+=== "Async (Won't show progress bar)"
+
+    ```py
+    async with bavapi.Client("TOKEN", verbose=False) as bav:
+        bav.brands("Facebook")
+    ```
+
+## Error handling
+
+!!! abstract "New in `v0.13`"
+
+### Warn or raise when a page fails to download
+
+You can control the error handling behavior of `bavapi` by changing the `on_errors` parameter in top-level functions and the `Client` interface.
+
+Options and examples:
+
+- `"warn"` (default): Will return all successfully downloaded data, and warn at the end about any pages that failed downloading so they can be manually retried.
+- `"raise"`: Will raise any exception that occurs immediately. This was the default behavior until `v0.13`.
+
+=== "Warn"
+
+    ```py
+    >>> bavapi.brands("TOKEN", "Facebook", verbose=False, on_errors="warn") # Fails page 1
+    UserWarning: Could not fetch pages: ["page 1: Exception(...)"]  # Does not raise
+    ```
+
+=== "Raise"
+
+    ```py
+    >>> bavapi.brands("TOKEN", "Facebook", verbose=False, on_errors="raise") # Fails page 1
+    Exception: ...  # Raised
+    ```
+
+### Retry failed requests
+
+`bavapi` will automatically retry requests that fail because of an exception. The number of retry attempts can be controlled via the `retries` parameter in top-level functions and the `Client` interface:
+
+```py
+bavapi.brands("TOKEN", retries=5)  # Will retry pages 5 times after original failure
+```
+
+!!! tip
+    There are some additional, advanced options for controlling the behavior of `bavapi` requests. More info in the [Control `bavapi` behavior](advanced.md#control-bavapi-behavior) section from the Advanced Usage documentation.
+
 ### Pagination
 
 !!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/pagination)"
@@ -308,7 +308,9 @@ If only `page` is set to an integer greater than `0`, that single page will be r
 bavapi.studies(page=1)  # Will request a single page of data
 ```
 
-If either `per_page` or `max_pages` are set, `bavapi` will request the appropriate pages from the Fount API. The default `per_page` set by `bavapi` is `100`.
+If either `per_page` or `max_pages` are set, `bavapi` will request the appropriate pages from the Fount API.
+
+While the Fount API default is `25`, the default `per_page` set by `bavapi` is `100`.
 
 !!! info
     The maximum number of elements per page allowed by the Fount API is `1000`.
@@ -317,18 +319,24 @@ If either `per_page` or `max_pages` are set, `bavapi` will request the appropria
 
 It is also possible to set the number of `max_pages`, which will limit the number of pages requested regardless of the reported total.
 
+The `page` value will be used as the starting page for the request. Therefore, if `page=10` and, for example, `max_pages=30`, `bavapi` will request pages `10` to `40`.
+
 ```py
 # Request pages with 50 items per page
 # up to pages calculated from total reported
-bavapi.studies(per_page=50)
+bavapi.studies("TOKEN", per_page=50)
 
-# Request pages with 100 items (default) per page up to 10
+# Request pages with 100 items (default) per page up to 10 pages
 # or pages calculated from total reported, whichever is smaller
-bavapi.studies(max_pages=10)
+bavapi.studies("TOKEN", max_pages=10)
 
-# Request pages with 10 items per page up to 100
+# Request pages with 10 items per page up to 100 pages
 # or pages calculated from total reported, whichever is smaller
-bavapi.studies(per_page=10, max_pages=100)
+bavapi.studies("TOKEN", per_page=10, max_pages=100)
+
+# Request pages with 100 items (default) per page from page 3 to 33
+# or pages calculated from total reported, whichever is smaller
+bavapi.studies("TOKEN", page=3, max_pages=30)
 ```
 
 ### Metric and metric group keys
@@ -352,7 +360,7 @@ While the available parameters in endpoint functions and methods are provided fo
 
 This can be combined with the techniques covered in the [saving query objects](project-tips.md#save--load-filters-and-queries) section of the documentation for powerful reproducibility.
 
-When using `Query` in one of the endpoint methods, only the parameter values specified in the `Query` object will be used.
+Similarly to filters objects, when using `Query` in one of the endpoint methods, the parameter values specified in the `Query` object will take precedence over parameters specified at the function level.
 
 ```py
 # will use `name="Facebook"` because `query` values take precedence.
