@@ -1,5 +1,7 @@
 # pylint: disable=missing-function-docstring, missing-module-docstring
 
+from typing import Optional
+
 import pytest
 
 from bavapi import filters
@@ -71,3 +73,25 @@ def test_is_single_page(kwargs: dict):
 def test_is_not_single_page(kwargs: dict):
     query = Query(**kwargs)
     assert not query.is_single_page()
+
+
+@pytest.mark.parametrize(("query_param"), (Query(), None))
+def test_ensure_always_returns(query_param: Optional[Query]):
+    query = Query.ensure(query_param)
+    assert isinstance(query, Query)
+
+
+def test_ensure_addl_params():
+    query = Query.ensure(per_page=100, include=["a", "b"])
+    assert query.per_page == 100
+    assert query.include == ["a", "b"]
+
+
+def test_ensure_query_over_addl():
+    query = Query.ensure(Query(metric_keys=["a", "b"]), metric_keys=[])
+    assert query.metric_keys == ["a", "b"]
+
+
+def test_ensure_filters_same_type():
+    query = Query.ensure(Query(filters=filters.FountFilters()))
+    assert isinstance(query.filters, filters.FountFilters)
