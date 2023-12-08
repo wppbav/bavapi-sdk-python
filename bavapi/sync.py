@@ -659,6 +659,10 @@ async def brandscape_data(
 
     Any additional valid includes will be added to the default set.
 
+    Also note that due to a name clash in the "brand" `include`, brand columns
+    will be prefixed with `"global_"`. Thus, these columns will refer to the global
+    brand, while the `brand_name` column will refer to the local brand/spelling.
+
     If any of the default includes are used in `include`, then only that resource
     will be retrieved. This is to allow requesting individual includes if they are
     part of the default.
