@@ -4,18 +4,20 @@
 
 ### `0.13.0` (December XXth, 2023)
 
-This version of `bavapi` is expected to be the last beta version before a release candidate.
+This version of `bavapi` is expected to be the last **beta** version before a release candidate.
 
 #### Feature
 
 - :tada: `bavapi` will now **retry** page requests upon failure. You can control the number of retry attempts with the `retries` parameter in top-level functions and the `Client` interface.
 - :tada: It is now possible to control the behavior of errors in the request process. If `on_errors` is set to `"warn"` (default), successful requests will be returned and a warning will be issued detailing which pages resulted in errors and each exception associated with it. If `on_errors` is set to `"raise"` (old behavior) instead, an exception will be raised as soon as any request fails.
+- :tada: Added `bav_study` and `released` filters to `studies` endpoint function and method.
 
 #### Changes
 
 - :rocket: Reduced the size of the initial request to 1 item if a paginated request is detected for improved performance.
 - :rocket: Paginated requests are now performed in batches instead of starting every request from the start. This should mitigate several issues (like SSL errors) with large queries and improve overall run times. You can control this behavior through the `batch_size` and `n_workers` parameters in top-level functions and the `Client` interface.
 - :hammer: Instead of having failed requests immediately raise exceptions, `bavapi` will continue downloading pages, collect successful responses, and warn the user about the pages that failed to be collected. This can be controlled by the `on_errors` parameter in top-level functions and the `Client` interface.
+- :sparkles: Using `bavapi.Query` instances in request functions and methods will now combine method parameters with parameters in the query object. Parameters specified in the query object will take precedence over parameters specified in the function or method. Filter values in the method parameters will be ignored if the query object contains filters.
 
 #### Fix
 
@@ -26,11 +28,18 @@ This version of `bavapi` is expected to be the last beta version before a releas
 - :broom: Removed trailing whitespaces
 - :hammer: New data fetching algorithm based on asynchronous workers.
 - :bug: Fixed unmatched checkout action versions in `ci`.
+- :hammer: Refactored filter consolidation logic to avoid unnecessary copies of parameters.
+
+#### Docs
+
+- :notebook: Added clarification about prefixed column names in `brandscape-data` endpoint results.
+- :sparkles: Various improvements to documentation, focused on warnings/tips and code snippets.
 
 #### Test
 
 - :test_tube: Added tests for new `_batched` and `_fetcher` modules.
 - :test_tube: Added new test case for `parsing.responses` to test correct behavior with multiple expandable columns in the response.
+- :test_tube: Added new tests for query consolidation logic.
 - :wrench: Fixed `HTTPClient` tests to work with new architecture.
 - :sparkles: Simplified integration tests thanks to the new retry functionality
 
@@ -105,33 +114,33 @@ Another change is that the order of parameters has been altered. The main reason
 
 - :stop_sign: (BREAKING) Changed `raw_query` `params` parameter name to `query` to match all other endpoints.
 - :stop_sign: (BREAKING) Changed the order of several endpoint parameters for more effective queries. Now, each endpoint function has a set of parameters that can be set as positional arguments for exploratory filtering, while niche filters and IDs have become keyword only parameters.
-  - `audiences`:
-    - Positional filters: `name`, `active`, `public`
-    - Keyword filters: `audience_id`, `private`, `groups`
-  - `brand_metrics`:
-    - Positional filters: `name`, `active`, `public`
-    - Keyword filters: `metric_id`, `private`, `groups`
-  - `brand_metric_groups`:
-    - Positional filters: `name`, `active`
-    - Keyword filters: `group_id`
-  - `brands`:
-    - Positional filters: `name`, `country_codes`, `year_numbers`
-    - Keyword filters: `brand_id`, `studies`
-  - `brandscape_data`:
-    - Positional filters: `country_code`, `year_number`, `audiences`, `brand_name`
-    - Keyword filters: `studies`
-  - `categories`:
-    - Positional filters: `name`, `sector`
-    - Keyword filters: `category_id`
-  - `collections`:
-    - Positional filters: `name`, `public`
-    - Keyword filters: `collection_id`, `shared_with_me`, `mine`
-  - `sectors`:
-    - Positional filters: `name`, `in_most_influential`
-    - Keyword filters: `sector_id`
-  - `studies`:
-    - Positional filters: `country_codes`, `year_numbers`, `full_year`
-    - Keyword filters: `study_id`
+    - `audiences`:
+        - Positional filters: `name`, `active`, `public`
+        - Keyword filters: `audience_id`, `private`, `groups`
+    - `brand_metrics`:
+        - Positional filters: `name`, `active`, `public`
+        - Keyword filters: `metric_id`, `private`, `groups`
+    - `brand_metric_groups`:
+        - Positional filters: `name`, `active`
+        - Keyword filters: `group_id`
+    - `brands`:
+        - Positional filters: `name`, `country_codes`, `year_numbers`
+        - Keyword filters: `brand_id`, `studies`
+    - `brandscape_data`:
+        - Positional filters: `country_code`, `year_number`, `audiences`, `brand_name`
+        - Keyword filters: `studies`
+    - `categories`:
+        - Positional filters: `name`, `sector`
+        - Keyword filters: `category_id`
+    - `collections`:
+        - Positional filters: `name`, `public`
+        - Keyword filters: `collection_id`, `shared_with_me`, `mine`
+    - `sectors`:
+        - Positional filters: `name`, `in_most_influential`
+        - Keyword filters: `sector_id`
+    - `studies`:
+        - Positional filters: `country_codes`, `year_numbers`, `full_year`
+        - Keyword filters: `study_id`
 
 #### Error Messages
 
@@ -144,7 +153,7 @@ Another change is that the order of parameters has been altered. The main reason
 
 #### Internal
 
-- :bug: Fixed typing of `tuple` internal `docs_deploy` function annotations not being compatible with Python <3.9.
+- :bug: Fixed typing of `tuple` internal `docs_deploy` function annotations not being compatible with Python `<3.9`.
 - :rocket: Removed slow and unnecessary test for the `verbose` parameter in `HTTPClient`.
 - :rocket: Refactored tests that instantiate `httpx.AsyncClient` instances for a 20x reduction in test run time.
 
