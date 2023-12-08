@@ -1,3 +1,5 @@
+"""Backport of `itertools.batched` class from Python 3.12 for older versions of Python"""
+
 # pylint: disable=invalid-name, too-few-public-methods
 
 import itertools

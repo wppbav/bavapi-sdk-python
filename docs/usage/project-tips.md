@@ -55,7 +55,10 @@ def make_batched_brand_request(
 
     # Loop if max_pages hasn't been reached OR n_items (per page) still equals per_page
     while not collected_all(results) or n_items == per_page:
-        res = bavapi.brands(query=query.with_page(page, per_page, batch_size))
+        try:
+            res = bavapi.brands(query=query.with_page(page, per_page, batch_size))
+        except DataNotFoundError:
+            break  # If no more data found, in case last page has the same items as per_page
         results.append(res)
         page += batch_size
         n_items = res["id"].nunique()  # Supports `stack_data` functionality
@@ -146,7 +149,7 @@ You can save and load Query objects to be used with any endpoint function or met
 
 ```py
 # continuing from code above...
-bavapi.brands(TOKEN, query=loaded) # (1)
+bavapi.brands("TOKEN", query=loaded) # (1)
 ```
 
 1. Will use the query parameters loaded from the `my_query.json` file.

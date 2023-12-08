@@ -2,7 +2,17 @@
 
 # pylint: disable=no-name-in-module, too-few-public-methods
 
-from typing import Final, Generic, Iterator, Optional, Set, TypeVar, cast
+from typing import (
+    Final,
+    Generic,
+    Iterator,
+    MutableMapping,
+    Optional,
+    Set,
+    TypeVar,
+    Union,
+    cast,
+)
 
 from pydantic import BaseModel, Field
 
@@ -13,12 +23,15 @@ from bavapi.typing import (
     BaseParamsDict,
     BaseParamsDictValues,
     BaseParamsMapping,
+    BaseSequenceOrValues,
     OptionalListOr,
 )
 
 __all__ = ("Query",)
 
 F = TypeVar("F", bound=_filters.FountFilters)
+
+QueryParamValues = Union[BaseSequenceOrValues, _filters.FiltersOrMapping[F]]
 
 
 class Query(BaseModel, Generic[F]):
@@ -206,3 +219,35 @@ class Query(BaseModel, Generic[F]):
         return self.max_pages == 1 or (
             bool(self.page) and not (self.per_page or self.max_pages)
         )
+
+    @classmethod
+    def ensure(
+        cls, query: "Optional[Query[F]]" = None, **kwargs: QueryParamValues[F]
+    ) -> "Query[F]":
+        """Ensure `Query` instance with possible additional parameters.
+
+        Defaults to parameters passed in `query` instance when any additional
+        parameters overlap.
+
+        Parameters
+        ----------
+        query : Query, optional
+            Query object to combine with additional parameters, default None
+        **kwargs : SequenceOrValues, optional
+            Additional parameters to add to the new `Query` instance.
+
+        Returns
+        -------
+        Query
+            `Query` class with additional parameters added if any
+        """
+        params = {k: v for k, v in kwargs.items() if v}
+
+        if query is None:
+            return cls(**params)  # type: ignore[arg-type]
+
+        new_params = cast(MutableMapping[str, QueryParamValues[F]], params.copy())
+        new_params.update(query.model_dump(exclude={"filters"}, exclude_defaults=True))
+        new_params.update({"filters": query.filters})  # type: ignore[arg-type]
+
+        return cls(**new_params)  # type: ignore[arg-type]

@@ -26,7 +26,7 @@ The above example may work, but it is highly discouraged.
 
 # pylint: disable=no-name-in-module, too-few-public-methods
 
-from typing import Dict, Literal, Mapping, Optional, Type, TypeVar, Union
+from typing import Dict, Literal, Optional, Type, TypeVar, Union
 
 from pydantic import BaseModel, field_validator, model_validator
 
@@ -105,19 +105,21 @@ class FountFilters(BaseModel):
             `FountFilters` class or `None` if `filters` is `None`
             and no additional filters are passed.
         """
-        addl_filters = {k: v for k, v in addl_filters.items() if v}
+        new_filters: Dict[str, InputSequenceOrValues] = {
+            k: v for k, v in addl_filters.items() if v
+        }
 
         if filters is None:
-            if not addl_filters:
+            if not new_filters:
                 return None
-            return cls(**addl_filters)  # type: ignore[arg-type]
+            return cls(**new_filters)  # type: ignore[arg-type]
 
-        new_filters = addl_filters.copy()
-
-        if isinstance(filters, Mapping):
-            new_filters.update(filters)
-        else:
+        if isinstance(filters, FountFilters):
+            if not new_filters:
+                return cls(**filters.model_dump(exclude_defaults=True))
             new_filters.update(filters.model_dump(exclude_defaults=True))
+        else:
+            new_filters.update(filters)
 
         return cls(**new_filters)  # type: ignore[arg-type]
 

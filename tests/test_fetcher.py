@@ -2,10 +2,10 @@
 # pylint: disable=protected-access
 
 import asyncio
+import warnings
 from dataclasses import dataclass
 from typing import Optional
 from unittest import mock
-import warnings
 
 import pytest
 from tqdm import tqdm

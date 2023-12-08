@@ -386,23 +386,23 @@ class Client:
         pandas.DataFrame
             DataFrame with `brands` endpoint results.
         """
-        if query is None:
-            filters = _filters.AudiencesFilters.ensure(
-                filters,
-                name=name,
-                active=active,
-                public=public,
-                private=private,
-                groups=groups,
-            )
+        filters = _filters.AudiencesFilters.ensure(
+            filters,
+            name=name,
+            active=active,
+            public=public,
+            private=private,
+            groups=groups,
+        )
 
-            query = Query(
-                id=audience_id,
-                filters=filters,
-                fields=fields,
-                include=include,
-                **kwargs,
-            )
+        query = Query.ensure(
+            query,
+            id=audience_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
 
         items = await self._client.query("audiences", query)
 
@@ -483,23 +483,23 @@ class Client:
         pandas.DataFrame
             DataFrame with `brand-metrics` endpoint results.
         """
-        if query is None:
-            filters = _filters.BrandMetricsFilters.ensure(
-                filters,
-                name=name,
-                active=active,
-                public=public,
-                private=private,
-                groups=groups,
-            )
+        filters = _filters.BrandMetricsFilters.ensure(
+            filters,
+            name=name,
+            active=active,
+            public=public,
+            private=private,
+            groups=groups,
+        )
 
-            query = Query(
-                id=metric_id,
-                filters=filters,
-                fields=fields,
-                include=include,
-                **kwargs,
-            )
+        query = Query.ensure(
+            query,
+            id=metric_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
 
         items = await self._client.query("brand-metrics", query)
 
@@ -571,20 +571,20 @@ class Client:
         pandas.DataFrame
             DataFrame with `brand-metric-groups` endpoint results.
         """
-        if query is None:
-            filters = _filters.BrandMetricGroupsFilters.ensure(
-                filters,
-                name=name,
-                active=active,
-            )
+        filters = _filters.BrandMetricGroupsFilters.ensure(
+            filters,
+            name=name,
+            active=active,
+        )
 
-            query = Query(
-                id=group_id,
-                filters=filters,
-                fields=fields,
-                include=include,
-                **kwargs,
-            )
+        query = Query.ensure(
+            query,
+            id=group_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
 
         items = await self._client.query("brand-metric-groups", query)
 
@@ -662,22 +662,22 @@ class Client:
         pandas.DataFrame
             DataFrame with `brands` endpoint results.
         """
-        if query is None:
-            filters = _filters.BrandsFilters.ensure(
-                filters,
-                name=name,
-                country_codes=country_codes,
-                year_numbers=year_numbers,
-                studies=studies,
-            )
+        filters = _filters.BrandsFilters.ensure(
+            filters,
+            name=name,
+            country_codes=country_codes,
+            year_numbers=year_numbers,
+            studies=studies,
+        )
 
-            query = Query(
-                id=brand_id,
-                filters=filters,
-                fields=fields,
-                include=include,
-                **kwargs,
-            )
+        query = Query.ensure(
+            query,
+            id=brand_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
 
         items = await self._client.query("brands", query)
 
@@ -726,6 +726,10 @@ class Client:
         - `audience`
 
         Any additional valid includes will be added to the default set.
+
+        Also note that due to a name clash in the "brand" `include`, brand columns
+        will be prefixed with `"global_"`. Thus, these columns will refer to the global
+        brand, while the `brand_name` column will refer to the local brand/spelling.
 
         If any of the default includes are used in `include`, then only that resource
         will be retrieved. This is to allow requesting individual includes if they are
@@ -799,24 +803,24 @@ class Client:
         ValidationError
             If used with an invalid combination of parameters (see above)
         """
-        if query is None:
-            filters = _filters.BrandscapeFilters.ensure(
-                filters,
-                country_code=country_code,
-                year_number=year_number,
-                audiences=audiences,
-                brand_name=brand_name,
-                studies=studies,
-            )
+        filters = _filters.BrandscapeFilters.ensure(
+            filters,
+            country_code=country_code,
+            year_number=year_number,
+            audiences=audiences,
+            brand_name=brand_name,
+            studies=studies,
+        )
 
-            query = Query(
-                filters=filters,
-                fields=fields,
-                include=_default_include(include, BRANDSCAPE_DEFAULTS),
-                metric_keys=metric_keys,
-                metric_group_keys=metric_group_keys,
-                **kwargs,
-            )
+        query = Query.ensure(
+            query,
+            filters=filters,
+            fields=fields,
+            include=_default_include(include, BRANDSCAPE_DEFAULTS),
+            metric_keys=metric_keys,
+            metric_group_keys=metric_group_keys,
+            **kwargs,
+        )
 
         items = await self._client.query("brandscape-data", query)
 
@@ -898,20 +902,20 @@ class Client:
         pandas.DataFrame
             DataFrame with `categories` endpoint results.
         """
-        if query is None:
-            filters = _filters.CategoriesFilters.ensure(
-                filters,
-                name=name,
-                sector=sector,
-            )
+        filters = _filters.CategoriesFilters.ensure(
+            filters,
+            name=name,
+            sector=sector,
+        )
 
-            query = Query(
-                id=category_id,
-                filters=filters,
-                fields=fields,
-                include=_default_include(include, CATEGORIES_DEFAULTS),
-                **kwargs,
-            )
+        query = Query.ensure(
+            query,
+            id=category_id,
+            filters=filters,
+            fields=fields,
+            include=_default_include(include, CATEGORIES_DEFAULTS),
+            **kwargs,
+        )
 
         items = await self._client.query("categories", query)
 
@@ -989,22 +993,22 @@ class Client:
         pandas.DataFrame
             DataFrame with `collections` endpoint results.
         """
-        if query is None:
-            filters = _filters.CollectionsFilters.ensure(
-                filters,
-                name=name,
-                public=public,
-                shared_with_me=shared_with_me,
-                mine=mine,
-            )
+        filters = _filters.CollectionsFilters.ensure(
+            filters,
+            name=name,
+            public=public,
+            shared_with_me=shared_with_me,
+            mine=mine,
+        )
 
-            query = Query(
-                id=collection_id,
-                filters=filters,
-                fields=fields,
-                include=include,
-                **kwargs,
-            )
+        query = Query.ensure(
+            query,
+            id=collection_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
 
         items = await self._client.query("collections", query)
 
@@ -1076,20 +1080,20 @@ class Client:
         pandas.DataFrame
             DataFrame with `sectors` endpoint results.
         """
-        if query is None:
-            filters = _filters.SectorsFilters.ensure(
-                filters,
-                name=name,
-                in_most_influential=in_most_influential,
-            )
+        filters = _filters.SectorsFilters.ensure(
+            filters,
+            name=name,
+            in_most_influential=in_most_influential,
+        )
 
-            query = Query(
-                id=sector_id,
-                filters=filters,
-                fields=fields,
-                include=include,
-                **kwargs,
-            )
+        query = Query.ensure(
+            query,
+            id=sector_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
 
         items = await self._client.query("sectors", query)
 
@@ -1172,23 +1176,23 @@ class Client:
         pandas.DataFrame
             DataFrame with `studies` endpoint results.
         """
-        if query is None:
-            filters = _filters.StudiesFilters.ensure(
-                filters,
-                country_codes=country_codes,
-                year_numbers=year_numbers,
-                full_year=full_year,
-                released=released,
-                bav_study=bav_study,
-            )
+        filters = _filters.StudiesFilters.ensure(
+            filters,
+            country_codes=country_codes,
+            year_numbers=year_numbers,
+            full_year=full_year,
+            released=released,
+            bav_study=bav_study,
+        )
 
-            query = Query(
-                id=study_id,
-                filters=filters,
-                fields=fields,
-                include=include,
-                **kwargs,
-            )
+        query = Query.ensure(
+            query,
+            id=study_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
 
         items = await self._client.query("studies", query)
 
