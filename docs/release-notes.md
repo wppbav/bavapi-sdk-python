@@ -2,7 +2,7 @@
 
 ## `0.13`
 
-### `0.13.0` (December XXth, 2023)
+### `0.13.0` (December 11th, 2023)
 
 This version of `bavapi` is expected to be the last **beta** version before a release candidate.
 
