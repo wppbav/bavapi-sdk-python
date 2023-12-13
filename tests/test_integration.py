@@ -60,9 +60,13 @@ def test_with_filters_one_page():
         ("brands", {}),
         ("brandscape_data", {"studies": 546}),
         ("categories", {}),
+        ("cities", {}),
         ("collections", {}),
+        ("companies", {}),
+        ("countries", {}),
         ("sectors", {}),
         ("studies", {}),
+        ("years", {}),
     ),
 )
 def test_endpoints(endpoint: str, filters: Dict[str, Any]):

@@ -58,9 +58,14 @@ def test_raw_query(mock_async_client: mock.MagicMock):
         ("brands", {}),
         ("brandscape_data", {"studies": 1}),
         ("categories", {}),
+        ("cities", {}),
         ("collections", {}),
+        ("companies", {}),
+        ("countries", {}),
+        ("regions", {}),
         ("sectors", {}),
         ("studies", {}),
+        ("years", {}),
     ),
 )
 def test_function(

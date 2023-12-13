@@ -53,10 +53,15 @@ __all__ = (
     "brands",
     "brandscape_data",
     "categories",
+    "cities",
     "collections",
+    "companies",
+    "countries",
+    "regions",
     "raw_query",
     "sectors",
     "studies",
+    "years",
 )
 
 P = ParamSpec("P")
@@ -297,7 +302,7 @@ async def brand_metrics(
     metric_id : int, optional
         Fount metric ID, default None
 
-        If an metric ID is provided, only that metric will be returned
+        If a metric ID is provided, only that metric will be returned
     private : Literal[0, 1], optional
         Return inactive brand metrics only if set to `1`, default 0
     groups : int or list[int], optional
@@ -805,6 +810,8 @@ async def categories(
 
     Parameters
     ----------
+    token : str
+        WPPBAV Fount API token
     name : str, optional
         Search categories by name, default None
     sector : int or list[int], optional
@@ -812,7 +819,7 @@ async def categories(
     category_id : int, optional
         Fount category ID, default None
 
-        If an category ID is provided, only that category will be returned
+        If a category ID is provided, only that category will be returned
     filters : CategoriesFilters or dict of filters, optional
         CategoriesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
@@ -890,6 +897,126 @@ async def categories(
 
 
 @_coro
+async def cities(
+    token: str,
+    name: Optional[str] = None,
+    capitals: Literal[0, 1] = 0,
+    countries: OptionalListOr[int] = None,
+    in_best_countries: OptionalListOr[int] = None,
+    *,
+    city_id: Optional[int] = None,
+    filters: OptionalFiltersOrMapping[_filters.CitiesFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.CitiesFilters]] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = 2,
+    retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `cities` endpoint.
+
+    Parameters
+    ----------
+    token : str
+        WPPBAV Fount API token
+    name : str, optional
+        Search cities by name, default None
+    capitals: Literal[0, 1], optional
+        Return capitals only, default 0
+    countries: int or list[int], optional
+        Fount country ID or list of country IDs, default None
+    in_best_countries: int or list[int], optional
+        Year number(s) of the Best Countries reports, default None
+
+        Only return cities that appear in the Best Countries reports for those years
+    city_id : int, optional
+        Fount city ID, default None
+
+        If a city ID is provided, only that city will be returned
+    filters : CitiesFilters or dict of filters, optional
+        CitiesFilters object or dictionary of filter parameters, default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, default None
+    query : Query[CitiesFilters], optional
+        Query object to perform request with, default None
+
+        If query is used, all parameters listed before `query` will be ignored.
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, default False
+    timeout : float, optional
+        Maximum timeout for requests in seconds, default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default 2
+    retries : int, optional
+        Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, default None
+    per_page : int, optional
+        Number of results per page, default None
+    max_pages : int, optional
+        Max number of results to return, default None
+    sort : str, optional
+        Sort response by field, default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `cities` endpoint results.
+    """
+
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+        on_errors=on_errors,
+    ) as client:
+        return await client.cities(
+            name,
+            capitals,
+            countries,
+            in_best_countries,
+            city_id=city_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            query=query,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
 async def collections(
     token: str,
     name: Optional[str] = None,
@@ -915,6 +1042,8 @@ async def collections(
 
     Parameters
     ----------
+    token : str
+        WPPBAV Fount API token
     name : str, optional
         Search collections by name, default None
     public : Literal[0, 1], optional
@@ -1006,6 +1135,356 @@ async def collections(
 
 
 @_coro
+async def companies(
+    token: str,
+    name: Optional[str] = None,
+    public: Literal[0, 1] = 0,
+    private: Literal[0, 1] = 0,
+    brands: OptionalListOr[int] = None,
+    *,
+    company_id: Optional[int] = None,
+    filters: OptionalFiltersOrMapping[_filters.CompaniesFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.CompaniesFilters]] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = 2,
+    retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `countries` endpoint.
+
+    Parameters
+    ----------
+    token : str
+        WPPBAV Fount API token
+    name : str, optional
+        Search companies by name, default None
+    public: Literal[0, 1], optional
+        Return public (listed) companies only, default 0
+    private: Literal[0, 1], optional
+        Return private (not listed) companies only, default 0
+    brands: int or list[int], optional
+        Fount brand ID or list of brand IDs, default None
+
+        Only return companies that own the specified brands
+    company_id : int, optional
+        Fount company ID, default None
+
+        If a company ID is provided, only that company will be returned
+    filters : CompaniesFilters or dict of filters, optional
+        CompaniesFilters object or dictionary of filter parameters, default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, default None
+    query : Query[CompaniesFilters], optional
+        Query object to perform request with, default None
+
+        If query is used, all parameters listed before `query` will be ignored.
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, default False
+    timeout : float, optional
+        Maximum timeout for requests in seconds, default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default 2
+    retries : int, optional
+        Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, default None
+    per_page : int, optional
+        Number of results per page, default None
+    max_pages : int, optional
+        Max number of results to return, default None
+    sort : str, optional
+        Sort response by field, default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `companies` endpoint results.
+    """
+
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+        on_errors=on_errors,
+    ) as client:
+        return await client.companies(
+            name,
+            public,
+            private,
+            brands,
+            company_id=company_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            query=query,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
+async def countries(
+    token: str,
+    name: Optional[str] = None,
+    active: Literal[0, 1] = 0,
+    regions: OptionalListOr[int] = None,
+    with_studies: Literal[0, 1] = 0,
+    *,
+    country_id: Optional[int] = None,
+    with_recent_studies: Optional[int] = None,
+    filters: OptionalFiltersOrMapping[_filters.CountriesFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.CountriesFilters]] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = 2,
+    retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `countries` endpoint.
+
+    Parameters
+    ----------
+    token : str
+        WPPBAV Fount API token
+    name : str, optional
+        Search countries by name, default None
+    active : Literal[0, 1], optional
+        Return active countries only, default 0
+    regions: int or list[int], optional
+        Fount region ID or list of region IDs, default None
+    with_studies: Literal[0, 1], optional
+        Only return countries which have had a BAV study, default 0
+    country_id : int, optional
+        Fount country ID, default None
+
+        If a country ID is provided, only that country will be returned
+    with_recent_studies: int, optional
+        Years of recency of studies in a specific country, default None
+
+        Only return countries which have had a BAV study in the past X years
+    filters : CountriesFilters or dict of filters, optional
+        CountriesFilters object or dictionary of filter parameters, default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, default None
+    query : Query[CountriesFilters], optional
+        Query object to perform request with, default None
+
+        If query is used, all parameters listed before `query` will be ignored.
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, default False
+    timeout : float, optional
+        Maximum timeout for requests in seconds, default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default 2
+    retries : int, optional
+        Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, default None
+    per_page : int, optional
+        Number of results per page, default None
+    max_pages : int, optional
+        Max number of results to return, default None
+    sort : str, optional
+        Sort response by field, default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `countries` endpoint results.
+    """
+
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+        on_errors=on_errors,
+    ) as client:
+        return await client.countries(
+            name,
+            active,
+            regions,
+            with_studies,
+            country_id=country_id,
+            with_recent_studies=with_recent_studies,
+            filters=filters,
+            fields=fields,
+            include=include,
+            query=query,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
+async def regions(
+    token: str,
+    name: Optional[str] = None,
+    *,
+    region_id: Optional[int] = None,
+    filters: OptionalFiltersOrMapping[_filters.RegionsFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.RegionsFilters]] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = 2,
+    retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `regions` endpoint.
+
+    Parameters
+    ----------
+    token : str
+        WPPBAV Fount API token
+    name : str, optional
+        Search regions by name, default None
+    region_id : int, optional
+        Fount region ID, default None
+
+        If a region ID is provided, only that region will be returned
+    filters : RegionsFilters or dict of filters, optional
+        RegionsFilters object or dictionary of filter parameters, default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, default None
+    query : Query[RegionsFilters], optional
+        Query object to perform request with, default None
+
+        If query is used, all parameters listed before `query` will be ignored.
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, default False
+    timeout : float, optional
+        Maximum timeout for requests in seconds, default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default 2
+    retries : int, optional
+        Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, default None
+    per_page : int, optional
+        Number of results per page, default None
+    max_pages : int, optional
+        Max number of results to return, default None
+    sort : str, optional
+        Sort response by field, default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `regions` endpoint results.
+    """
+
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+        on_errors=on_errors,
+    ) as client:
+        return await client.regions(
+            name,
+            region_id=region_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            query=query,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
 async def sectors(
     token: str,
     name: Optional[str] = None,
@@ -1029,6 +1508,8 @@ async def sectors(
 
     Parameters
     ----------
+    token : str
+        WPPBAV Fount API token
     name : str, optional
         Search categories by name, default None
     in_most_influential : Literal[0, 1], optional
@@ -1228,6 +1709,112 @@ async def studies(
             released,
             bav_study,
             study_id=study_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            query=query,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
+async def years(
+    token: str,
+    year: Optional[int] = None,
+    *,
+    year_id: Optional[int] = None,
+    filters: OptionalFiltersOrMapping[_filters.YearsFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.YearsFilters]] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = 2,
+    retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `years` endpoint.
+
+    Parameters
+    ----------
+    token : str
+        WPPBAV Fount API token
+    year : int, optional
+        Search years by year number, default None
+    year_id : int, optional
+        Fount year ID, default None
+
+        If a year ID is provided, only that year will be returned
+    filters : YearsFilters or dict of filters, optional
+        YearsFilters object or dictionary of filter parameters, default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, default None
+    query : Query[YearsFilters], optional
+        Query object to perform request with, default None
+
+        If query is used, all parameters listed before `query` will be ignored.
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, default False
+    timeout : float, optional
+        Maximum timeout for requests in seconds, default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default 2
+    retries : int, optional
+        Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, default None
+    per_page : int, optional
+        Number of results per page, default None
+    max_pages : int, optional
+        Max number of results to return, default None
+    sort : str, optional
+        Sort response by field, default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `years` endpoint results
+    """
+
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+        on_errors=on_errors,
+    ) as client:
+        return await client.years(
+            year,
+            year_id=year_id,
             filters=filters,
             fields=fields,
             include=include,
