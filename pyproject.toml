@@ -85,7 +85,7 @@ omit = ["tests/test_integration.py"]
 [tool.coverage.report]
 show_missing = true
 fail_under = 100
-exclude_lines = ["pragma: no cover", "@overload", "TYPE_CHECKING", "Protocol"]
+exclude_lines = ["pragma: no cover", "@overload", "TYPE_CHECKING", "Protocol", "raise NotImplementedError"]
 
 [tool.mypy]
 plugins = "pydantic.mypy"
