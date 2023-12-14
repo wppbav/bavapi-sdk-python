@@ -1,5 +1,34 @@
 # Release Notes
 
+## `1.0`
+
+### `1.0.0-rc.1` (January XXth, 2024)
+
+This version is the first release candidate for `bavapi`. The package will be fully released in two weeks if no issues are found.
+
+#### Feature
+
+- :tada: Added five new endpoints to `bavapi`:
+    - `cities`
+    - `companies`
+    - `countries`
+    - `regions`
+    - `years`
+
+#### Docs
+
+- :broom: Reordered some sections in the [Basic usage](usage/basic.md) section of the documentation, where some additional query parameters were rendered in a different section.
+- :broom: Updated and standardized Jupyter notebook demo.
+- :broom: Clarified when a query is considered to be a single-page query in the [`bavapi.Query.is_single_page`][query.Query.is_single_page] docstring.
+- :broom: Fixed some minor errors in `bavapi.Client` method docstrings.
+- :tada: Added examples of the batch logic in the Jupyter demo notebook.
+
+#### Internal
+
+- :info: Cleaned up and added comments to documentation scripts.
+- :sparkles: Removed `tqdm` as a dependency for the batched logic.
+- :info: Added comments to `nox` session for deploying the docs.
+
 ## `0.13`
 
 ### `0.13.0` (December 11th, 2023)
@@ -194,11 +223,11 @@ Another change is that the order of parameters has been altered. The main reason
 #### Feature
 
 - :rocket: The following endpoints have been fully implmented with type hints and validation:
-  - [`brand-metrics`](endpoints/brand-metrics.md)
-  - [`brand-metric-groups`](endpoints/brand-metric-groups.md)
-  - [`categories`](endpoints/categories.md)
-  - [`collections`](endpoints/collections.md)
-  - [`sectors`](endpoints/sectors.md)
+    - [`brand-metrics`](endpoints/brand-metrics.md)
+    - [`brand-metric-groups`](endpoints/brand-metric-groups.md)
+    - [`categories`](endpoints/categories.md)
+    - [`collections`](endpoints/collections.md)
+    - [`sectors`](endpoints/sectors.md)
 
 #### Docs
 
