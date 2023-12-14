@@ -3,6 +3,7 @@ name: docs
 on:
   release:
       types: [published]
+  workflow_dispatch:
 
 jobs:
   docs-build:
