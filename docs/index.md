@@ -58,9 +58,13 @@ See [Installation](getting-started/installation.md) for more detailed instructio
         - `brands`
         - `brandscape-data`
         - `categories`
+        - `cities`
         - `collections`
+        - `companies`
+        - `countries`
         - `sectors`
         - `studies`
+        - `years`
     - Other endpoints are available via the `raw_query` functions and methods.
 - Validates query parameters are of the correct types and provides type hints for better IDE support.
 - Retrieve multiple pages of data simultaneously, monitoring and preventing exceeding API rate limit.

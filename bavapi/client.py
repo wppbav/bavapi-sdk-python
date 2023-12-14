@@ -34,7 +34,7 @@ Use `Client.raw_query` (with `bavapi.Query`) for endpoints that aren't fully sup
 ...     result = await bav.raw_query("companies", query=query)
 """
 
-# pylint: disable=too-many-arguments, too-many-lines
+# pylint: disable=too-many-arguments, too-many-lines, too-many-public-methods
 
 from typing import (
     TYPE_CHECKING,
@@ -437,7 +437,7 @@ class Client:
         metric_id : int, optional
             Fount metric ID, default None
 
-            If an metric ID is provided, only that metric will be returned
+            If a metric ID is provided, only that metric will be returned
         private : Literal[0, 1], optional
             Return inactive brand metrics only if set to `1`, default 0
         groups : int or list[int], optional
@@ -529,7 +529,7 @@ class Client:
         group_id : int, optional
             Fount metric group ID, default None
 
-            If an metric group ID is provided, only that metric group will be returned
+            If a metric group ID is provided, only that metric group will be returned
         filters : BrandMetricGroupsFilters or dict of filters, optional
             BrandMetricGroupsFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
@@ -860,7 +860,7 @@ class Client:
         category_id : int, optional
             Fount category ID, default None
 
-            If an category ID is provided, only that category will be returned
+            If a category ID is provided, only that category will be returned
         filters : CategoriesFilters or dict of filters, optional
             CategoriesFilters object or dictionary of filter parameters, default None
         fields : str or list[str], optional
@@ -921,6 +921,101 @@ class Client:
 
         return parse_response(items, expand=stack_data)
 
+    async def cities(
+        self,
+        name: Optional[str] = None,
+        capitals: Literal[0, 1] = 0,
+        countries: OptionalListOr[int] = None,
+        in_best_countries: OptionalListOr[int] = None,
+        *,
+        city_id: Optional[int] = None,
+        filters: OptionalFiltersOrMapping[_filters.CitiesFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.CitiesFilters]] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `cities` endpoint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search cities by name, default None
+        capitals: Literal[0, 1], optional
+            Return capitals only, default 0
+        countries: int or list[int], optional
+            Fount country ID or list of country IDs, default None
+        in_best_countries: int or list[int], optional
+            Year number(s) of the Best Countries reports, default None
+
+            Only return cities that appear in the Best Countries reports for those years
+        city_id : int, optional
+            Fount city ID, default None
+
+            If a city ID is provided, only that city will be returned
+        filters : CitiesFilters or dict of filters, optional
+            CitiesFilters object or dictionary of filter parameters, default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, default None
+        query : Query[CitiesFilters], optional
+            Query object to perform request with, default None
+
+            If query is used, all parameters listed before `query` will be ignored.
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, default None
+        per_page : int, optional
+            Number of results per page, default None
+        max_pages : int, optional
+            Max number of results to return, default None
+        sort : str, optional
+            Sort response by field, default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `cities` endpoint results.
+        """
+        filters = _filters.CitiesFilters.ensure(
+            filters,
+            name=name,
+            capitals=capitals,
+            countries=countries,
+            in_best_countries=in_best_countries,
+        )
+
+        query = Query.ensure(
+            query,
+            id=city_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("cities", query)
+
+        return parse_response(items, expand=stack_data)
+
     async def collections(
         self,
         name: Optional[str] = None,
@@ -947,7 +1042,7 @@ class Client:
         collection_id : int, optional
             Fount collection ID, default None
 
-            If an collection ID is provided, only that collection will be returned
+            If a collection ID is provided, only that collection will be returned
         shared_with_me : Literal[0, 1], optional
             Only return collections that have been shared with the user, default 0
         mine : Literal[0, 1], optional
@@ -1011,6 +1106,281 @@ class Client:
         )
 
         items = await self._client.query("collections", query)
+
+        return parse_response(items, expand=stack_data)
+
+    async def companies(
+        self,
+        name: Optional[str] = None,
+        public: Literal[0, 1] = 0,
+        private: Literal[0, 1] = 0,
+        brands: OptionalListOr[int] = None,
+        *,
+        company_id: Optional[int] = None,
+        filters: OptionalFiltersOrMapping[_filters.CompaniesFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.CompaniesFilters]] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `companies` endpoint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search companies by name, default None
+        public: Literal[0, 1], optional
+            Return public (listed) companies only, default 0
+        private: Literal[0, 1], optional
+            Return private (not listed) companies only, default 0
+        brands: int or list[int], optional
+            Fount brand ID or list of brand IDs, default None
+
+            Only return companies that own the specified brands
+        company_id : int, optional
+            Fount company ID, default None
+
+            If a company ID is provided, only that company will be returned
+        filters : CompaniesFilters or dict of filters, optional
+            CompaniesFilters object or dictionary of filter parameters, default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, default None
+        query : Query[CompaniesFilters], optional
+            Query object to perform request with, default None
+
+            If query is used, all parameters listed before `query` will be ignored.
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, default None
+        per_page : int, optional
+            Number of results per page, default None
+        max_pages : int, optional
+            Max number of results to return, default None
+        sort : str, optional
+            Sort response by field, default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `companies` endpoint results.
+        """
+        filters = _filters.CompaniesFilters.ensure(
+            filters,
+            name=name,
+            public=public,
+            private=private,
+            brands=brands,
+        )
+
+        query = Query.ensure(
+            query,
+            id=company_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("companies", query)
+
+        return parse_response(items, expand=stack_data)
+
+    async def countries(
+        self,
+        name: Optional[str] = None,
+        active: Literal[0, 1] = 0,
+        regions: OptionalListOr[int] = None,
+        with_studies: Literal[0, 1] = 0,
+        *,
+        country_id: Optional[int] = None,
+        with_recent_studies: Optional[int] = None,
+        filters: OptionalFiltersOrMapping[_filters.CountriesFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.CountriesFilters]] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `countries` endpoint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search countries by name, default None
+        active : Literal[0, 1], optional
+            Return active countries only, default 0
+        regions: int or list[int], optional
+            Fount region ID or list of region IDs, default None
+        with_studies: Literal[0, 1], optional
+            Only return countries which have had a BAV study, default 0
+        with_recent_studies: int, optional
+            Years of recency of studies in a specific country, default None
+
+            Only return countries which have had a BAV study in the past X years
+        country_id : int, optional
+            Fount country ID, default None
+
+            If a country ID is provided, only that country will be returned
+        filters : CountriesFilters or dict of filters, optional
+            CountriesFilters object or dictionary of filter parameters, default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, default None
+        query : Query[CountriesFilters], optional
+            Query object to perform request with, default None
+
+            If query is used, all parameters listed before `query` will be ignored.
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, default None
+        per_page : int, optional
+            Number of results per page, default None
+        max_pages : int, optional
+            Max number of results to return, default None
+        sort : str, optional
+            Sort response by field, default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `countries` endpoint results.
+        """
+        filters = _filters.CountriesFilters.ensure(
+            filters,
+            name=name,
+            active=active,
+            regions=regions,
+            with_studies=with_studies,
+            with_recent_studies=with_recent_studies,
+        )
+
+        query = Query.ensure(
+            query,
+            id=country_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("countries", query)
+
+        return parse_response(items, expand=stack_data)
+
+    async def regions(
+        self,
+        name: Optional[str] = None,
+        *,
+        region_id: Optional[int] = None,
+        filters: OptionalFiltersOrMapping[_filters.RegionsFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.RegionsFilters]] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `regions` endpoint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search regions by name, default None
+        region_id : int, optional
+            Fount region ID, default None
+
+            If a region ID is provided, only that region will be returned
+        filters : RegionsFilters or dict of filters, optional
+            RegionsFilters object or dictionary of filter parameters, default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, default None
+        query : Query[RegionsFilters], optional
+            Query object to perform request with, default None
+
+            If query is used, all parameters listed before `query` will be ignored.
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, default None
+        per_page : int, optional
+            Number of results per page, default None
+        max_pages : int, optional
+            Max number of results to return, default None
+        sort : str, optional
+            Sort response by field, default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `regions` endpoint results.
+        """
+        filters = _filters.RegionsFilters.ensure(
+            filters,
+            name=name,
+        )
+
+        query = Query.ensure(
+            query,
+            id=region_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("regions", query)
 
         return parse_response(items, expand=stack_data)
 
@@ -1195,6 +1565,87 @@ class Client:
         )
 
         items = await self._client.query("studies", query)
+
+        return parse_response(items, expand=stack_data)
+
+    async def years(
+        self,
+        year: Optional[int] = None,
+        *,
+        year_id: Optional[int] = None,
+        filters: OptionalFiltersOrMapping[_filters.YearsFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.YearsFilters]] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `years` endpoint.
+
+        Parameters
+        ----------
+        year : int, optional
+            Search years by year number, default None
+        year_id : int, optional
+            Fount year ID, default None
+
+            If a year ID is provided, only that year will be returned
+        filters : YearsFilters or dict of filters, optional
+            YearsFilters object or dictionary of filter parameters, default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, default None
+        query : Query[YearsFilters], optional
+            Query object to perform request with, default None
+
+            If query is used, all parameters listed before `query` will be ignored.
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, default None
+        per_page : int, optional
+            Number of results per page, default None
+        max_pages : int, optional
+            Max number of results to return, default None
+        sort : str, optional
+            Sort response by field, default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `regions` endpoint results.
+        """
+        filters = _filters.YearsFilters.ensure(
+            filters,
+            year=year,
+        )
+
+        query = Query.ensure(
+            query,
+            id=year_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("years", query)
 
         return parse_response(items, expand=stack_data)
 

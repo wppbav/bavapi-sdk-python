@@ -61,7 +61,7 @@ class FountFilters(BaseModel):
 
     Can be used with `raw_query` endpoints.
 
-    Attributes
+    Parameters
     ----------
     updated_since : str, date or datetime, optional
         Request items that have been updated since the specified date, default None
@@ -130,7 +130,7 @@ class AudiencesFilters(FountFilters):
     See <https://developer.wppbav.com/docs/2.x/core-resources/audiences>
     for more info.
 
-    Attributes
+    Parameters
     ----------
     active : Literal[0, 1], optional
         Return active audiences only if set to `1`, default 0
@@ -165,7 +165,7 @@ class BrandsFilters(FountFilters):
     See <https://developer.wppbav.com/docs/2.x/core-resources/brands>
     for more info.
 
-    Attributes
+    Parameters
     ----------
     country_codes : str or list[str], optional
         Two-letter ISO-3166 country code or list of country codes, default None
@@ -208,7 +208,7 @@ class BrandMetricsFilters(FountFilters):
     See <https://developer.wppbav.com/docs/2.x/core-resources/brand-metrics>
     for more info.
 
-    Attributes
+    Parameters
     ----------
     active : Literal[0, 1], optional
         Return active brand metrics when set to `1`, default 0
@@ -252,7 +252,7 @@ class BrandMetricGroupsFilters(FountFilters):
     See <https://developer.wppbav.com/docs/2.x/core-resources/brand-metric-groups>
     for more info.
 
-    Attributes
+    Parameters
     ----------
     active : Literal[0, 1], optional
         Return active brand metrics when set to `1`, default 0
@@ -288,7 +288,7 @@ class BrandscapeFilters(FountFilters):
 
     The `Audiences` class is provided to make it easier to filter audiences.
 
-    Attributes
+    Parameters
     ----------
     country_code : str or list[str], optional
         Two-letter ISO-3166 country code or list of country codes, default None
@@ -370,7 +370,7 @@ class CategoriesFilters(FountFilters):
     See <https://developer.wppbav.com/docs/2.x/core-resources/categories>
     for more info.
 
-    Attributes
+    Parameters
     ----------
     sector : int or list[int], optional
         Fount sector ID or list of sector IDs, default None
@@ -384,13 +384,103 @@ class CategoriesFilters(FountFilters):
     sector: OptionalListOr[int] = None
 
 
+class CitiesFilters(FountFilters):
+    """Filters for the `cities` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/cities>
+    for more info.
+
+    Parameters
+    ----------
+    capitals: Literal[0, 1], optional
+        Return capitals only, default 0
+    regions: int or list[int], optional
+        Fount region ID or list of region IDs, default None
+    countries: int or list[int], optional
+        Fount country ID or list of country IDs, default None
+    in_best_countries: int or list[int], optional
+        Year number(s) of the Best Countries reports, default None
+
+        Only return cities that appear in the Best Countries reports for those years
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, default None
+    """
+
+    capitals: Literal[0, 1] = 0
+    regions: OptionalListOr[int] = None
+    countries: OptionalListOr[int] = None
+    in_best_countries: OptionalListOr[int] = None
+
+
+class CompaniesFilters(FountFilters):
+    """Filters for the `companies` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/companies>
+    for more info.
+
+    Parameters
+    ----------
+    public: Literal[0, 1], optional
+        Return public (listed) companies only, default 0
+    private: Literal[0, 1], optional
+        Return private (not listed) companies only, default 0
+    brands: int or list[int], optional
+        Fount brand ID or list of brand IDs, default None
+
+        Only return companies that own the specified brands
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, default None
+    """
+
+    public: Literal[0, 1] = 0
+    private: Literal[0, 1] = 0
+    brands: OptionalListOr[int] = None
+
+
+class CountriesFilters(FountFilters):
+    """Filters for the `countries` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/countries>
+    for more info.
+
+    Parameters
+    ----------
+    active: Literal[0, 1], optional
+        Return active countries only, default 0
+    regions: int or list[int], optional
+        Fount region ID or list of region IDs, default None
+    with_studies: Literal[0, 1], optional
+        Only return countries which have had a BAV study, default 0
+    with_recent_studies: int, optional
+        Years of recency of studies in a specific country, default None
+
+        Only return countries which have had a BAV study in the past X years
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, default None
+    """
+
+    active: Literal[0, 1] = 0
+    regions: OptionalListOr[int] = None
+    with_studies: Literal[0, 1] = 0
+    with_recent_studies: Optional[int] = None
+
+
 class CollectionsFilters(FountFilters):
     """Filters for the `collections` endpoint.
 
     See <https://developer.wppbav.com/docs/2.x/core-resources/collections>
     for more info.
 
-    Attributes
+    Parameters
     ----------
     public : Literal[0, 1], optional
         Return public collections only, default 0
@@ -410,13 +500,28 @@ class CollectionsFilters(FountFilters):
     mine: Literal[0, 1] = 0
 
 
+class RegionsFilters(FountFilters):
+    """Filters for the `regions` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/regions>
+    for more info.
+
+    There are currently no specific filters for the `regions` endpoint
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, default None
+    """
+
+
 class SectorsFilters(FountFilters):
     """Filters for the `sectors` endpoint.
 
     See <https://developer.wppbav.com/docs/2.x/core-resources/sectors>
     for more info.
 
-    Attributes
+    Parameters
     ----------
     in_most_influential : Literal[0, 1], optional
         Sectors that are part of the Most Influential lists, default 0
@@ -441,7 +546,7 @@ class StudiesFilters(FountFilters):
     See <https://developer.wppbav.com/docs/2.x/core-resources/studies>
     for more info.
 
-    Attributes
+    Parameters
     ----------
     country_codes : str or list[str], optional
         Two-letter ISO-3166 country code or list of country codes, default None
@@ -496,3 +601,18 @@ class StudiesFilters(FountFilters):
         if value is None:
             return value
         return parse_date(value)
+
+
+class YearsFilters(FountFilters):
+    """Filters for the `years` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/years>
+    for more info.
+
+    There are currently no specific filters for the `years` endpoint
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, default None
+    """

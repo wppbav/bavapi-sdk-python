@@ -21,7 +21,7 @@ Use top-level endpoint functions for quickly downloading BAV data:
 For more advanced usage (and async compatibility), use the `bavapi.Client` class:
 
 >>> import bavapi
->>> async with bavapi.Client("API_TOKEN") as bav:
+>>> async with bavapi.Client("TOKEN") as bav:
 ...     result = await bav.brands(name="Facebook")
 """
 
@@ -38,10 +38,15 @@ from bavapi.sync import (
     brands,
     brandscape_data,
     categories,
+    cities,
     collections,
+    companies,
+    countries,
+    regions,
     raw_query,
     sectors,
     studies,
+    years,
 )
 
 __all__ = (
@@ -51,10 +56,15 @@ __all__ = (
     "brands",
     "brandscape_data",
     "categories",
+    "cities",
     "collections",
+    "companies",
+    "countries",
+    "regions",
     "raw_query",
     "sectors",
     "studies",
+    "years",
     "Client",
     "Query",
     "filters",

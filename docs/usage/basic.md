@@ -69,9 +69,13 @@ Each endpoint function has a filter class associated with it, as each endpoint h
 | [`brands`][sync.brands]                           | [`BrandsFilters`][filters.BrandsFilters]                       |
 | [`brandscape_data`][sync.brandscape_data]         | [`BrandscapeFilters`][filters.BrandscapeFilters]               |
 | [`categories`][sync.categories]                   | [`CategoriesFilters`][filters.CategoriesFilters]               |
+| [`cities`][sync.cities]                           | [`CitiesFilters`][filters.CitiesFilters]                       |
 | [`collections`][sync.collections]                 | [`CollectionsFilters`][filters.CollectionsFilters]             |
+| [`companies`][sync.companies]                     | [`CompaniesFilters`][filters.CompaniesFilters]                 |
+| [`countries`][sync.countries]                     | [`CountriesFilters`][filters.CountriesFilters]                 |
 | [`sectors`][sync.sectors]                         | [`SectorsFilters`][filters.SectorsFilters]                     |
 | [`studies`][sync.studies]                         | [`StudiesFilters`][filters.StudiesFilters]                     |
+| [`years`][sync.years]                             | [`YearsFilters`][filters.YearsFilters]                         |
 
 !!! warning
     Using a filters class not meant for a specific endpoint won't raise any errors from the outset, but it also won't provide IDE type support or type validation to the parameters that are associated with each endpoint.
@@ -184,6 +188,70 @@ result = bavapi.brands(name="Swatch", includes="company")
 !!! note "Default `includes`"
     The `brandscape_data` function includes `study`, `brand`, `category` and `audience` by default, to align functionality with other sources of data like the Fount website and the Cultural Rank Tool. More [info](../endpoints/brandscape-data.md#default-includes). The `categories` function also has [default includes](../endpoints/categories.md#default-includes).
 
+### Pagination
+
+!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/pagination)"
+
+All requests to the Fount are "paginated", meaning that one must request and receive from the server one page at a time. `bavapi` then combines all responses into one data table.
+
+!!! abstract "New in `v0.12.0`"
+
+Pagination is controlled by three parameters:
+
+- `page`
+- `per_page`
+- `max_pages`
+
+If only `page` is set to an integer greater than `0`, that single page will be requested.
+
+```py
+bavapi.studies(page=1)  # Will request a single page of data
+```
+
+If either `per_page` or `max_pages` are set, `bavapi` will request the appropriate pages from the Fount API.
+
+While the Fount API default is `25`, the default `per_page` set by `bavapi` is `100`.
+
+!!! info
+    The maximum number of elements per page allowed by the Fount API is `1000`.
+
+`bavapi` will calculate the number of pages from the total items reported by the Fount.
+
+It is also possible to set the number of `max_pages`, which will limit the number of pages requested regardless of the reported total.
+
+The `page` value will be used as the starting page for the request. Therefore, if `page=10` and, for example, `max_pages=30`, `bavapi` will request pages `10` to `40`.
+
+```py
+# Request pages with 50 items per page
+# up to pages calculated from total reported
+bavapi.studies("TOKEN", per_page=50)
+
+# Request pages with 100 items (default) per page up to 10 pages
+# or pages calculated from total reported, whichever is smaller
+bavapi.studies("TOKEN", max_pages=10)
+
+# Request pages with 10 items per page up to 100 pages
+# or pages calculated from total reported, whichever is smaller
+bavapi.studies("TOKEN", per_page=10, max_pages=100)
+
+# Request pages with 100 items (default) per page from page 3 to 33
+# or pages calculated from total reported, whichever is smaller
+bavapi.studies("TOKEN", page=3, max_pages=30)
+```
+
+### Metric and metric group keys
+
+!!! abstract "New in `v0.12.0`"
+
+!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/core-resources/brandscape-data#additional-column-customizations)"
+
+`metric_keys` and `metric_group_keys` are special filters to specify the data *columns* that the response should contain.
+
+The API response will include all score types for that metric or metric group.
+
+!!! note
+    Currently, only the `brandscape-data` endpoint supports the use of metric and metric group keys. All other endpoints will ignore this parameter. More info in the [`brandscape-data`](../endpoints/brandscape-data.md#metric-and-metric-group-keys) endpoint section.
+
 ## Using *Reference* classes
 
 `bavapi` provides reference classes to make API queries easier to construct.
@@ -287,70 +355,6 @@ bavapi.brands("TOKEN", retries=5)  # Will retry pages 5 times after original fai
 
 !!! tip
     There are some additional, advanced options for controlling the behavior of `bavapi` requests. More info in the [Control `bavapi` behavior](advanced.md#control-bavapi-behavior) section from the Advanced Usage documentation.
-
-### Pagination
-
-!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/pagination)"
-
-All requests to the Fount are "paginated", meaning that one must request and receive from the server one page at a time. `bavapi` then combines all responses into one data table.
-
-!!! abstract "New in `v0.12.0`"
-
-Pagination is controlled by three parameters:
-
-- `page`
-- `per_page`
-- `max_pages`
-
-If only `page` is set to an integer greater than `0`, that single page will be requested.
-
-```py
-bavapi.studies(page=1)  # Will request a single page of data
-```
-
-If either `per_page` or `max_pages` are set, `bavapi` will request the appropriate pages from the Fount API.
-
-While the Fount API default is `25`, the default `per_page` set by `bavapi` is `100`.
-
-!!! info
-    The maximum number of elements per page allowed by the Fount API is `1000`.
-
-`bavapi` will calculate the number of pages from the total items reported by the Fount.
-
-It is also possible to set the number of `max_pages`, which will limit the number of pages requested regardless of the reported total.
-
-The `page` value will be used as the starting page for the request. Therefore, if `page=10` and, for example, `max_pages=30`, `bavapi` will request pages `10` to `40`.
-
-```py
-# Request pages with 50 items per page
-# up to pages calculated from total reported
-bavapi.studies("TOKEN", per_page=50)
-
-# Request pages with 100 items (default) per page up to 10 pages
-# or pages calculated from total reported, whichever is smaller
-bavapi.studies("TOKEN", max_pages=10)
-
-# Request pages with 10 items per page up to 100 pages
-# or pages calculated from total reported, whichever is smaller
-bavapi.studies("TOKEN", per_page=10, max_pages=100)
-
-# Request pages with 100 items (default) per page from page 3 to 33
-# or pages calculated from total reported, whichever is smaller
-bavapi.studies("TOKEN", page=3, max_pages=30)
-```
-
-### Metric and metric group keys
-
-!!! abstract "New in `v0.12.0`"
-
-!!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/core-resources/brandscape-data#additional-column-customizations)"
-
-`metric_keys` and `metric_group_keys` are special filters to specify the data *columns* that the response should contain.
-
-The API response will include all score types for that metric or metric group.
-
-!!! note
-    Currently, only the `brandscape-data` endpoint supports the use of metric and metric group keys. All other endpoints will ignore this parameter. More info in the [`brandscape-data`](../endpoints/brandscape-data.md#metric-and-metric-group-keys) endpoint section.
 
 ## Using `Query` objects
 

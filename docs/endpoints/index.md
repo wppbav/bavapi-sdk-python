@@ -12,9 +12,13 @@ As of `v0.13`, there are four endpoints that have been fully implemented in `bav
 - [`brands`](brands.md)
 - [`brandscape-data`](brandscape-data.md)
 - [`categories`](categories.md)
+- [`cities`](cities.md)
 - [`collections`](collections.md)
+- [`companies`](companies.md)
+- [`countries`](countries.md)
 - [`sectors`](sectors.md)
 - [`studies`](studies.md)
+- [`years`](years.md)
 
 "Implemented" in this case means that the endpoint has a corresponding function, `Client` method, and filters class associated with them. More info in each endpoint's respective section linked above.
 
