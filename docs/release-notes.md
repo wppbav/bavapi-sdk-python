@@ -29,6 +29,11 @@ This version is the first release candidate for `bavapi`. The package will be fu
 - :sparkles: Removed `tqdm` as a dependency for the batched logic.
 - :info: Added comments to `nox` session for deploying the docs.
 
+#### CI
+
+- :recycle: CI won't run unless a package or test file is changed, or the CI action file is changed.
+- :sparkles: Added manual trigger to documentation so deploying fixes to the docs doesn't require a version change.
+
 ## `0.13`
 
 ### `0.13.0` (December 11th, 2023)
