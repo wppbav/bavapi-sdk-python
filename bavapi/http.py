@@ -243,22 +243,24 @@ class HTTPClient:
             List of response objects.
         """
         get_func = aretry(self.get, self.retries, delay=0.25)
-        pbar = tqdm(desc=f"{endpoint} query", total=n_pages) if self.verbose else None
-        fetcher: PageFetcher[httpx.Response] = PageFetcher(pbar, self.on_errors)
         queue: asyncio.Queue[Iterable[_Query]] = asyncio.Queue()
 
         for batch in batched(query.paginated(n_pages), self.batch_size):
             queue.put_nowait(batch)
 
-        workers = [
-            asyncio.create_task(fetcher.worker(get_func, endpoint, queue))
-            for _ in range(self.n_workers)
-        ]
+        pbar = tqdm(desc=f"{endpoint} query", total=n_pages) if self.verbose else None
+        try:
+            fetcher: PageFetcher[httpx.Response] = PageFetcher(pbar, self.on_errors)
 
-        await asyncio.gather(*workers)
+            workers = [
+                asyncio.create_task(fetcher.worker(get_func, endpoint, queue))
+                for _ in range(self.n_workers)
+            ]
 
-        if pbar:
-            pbar.close()
+            await asyncio.gather(*workers)
+        finally:
+            if pbar:
+                pbar.close()
 
         fetcher.warn_if_errors()
 
