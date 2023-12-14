@@ -208,8 +208,9 @@ class Query(BaseModel, Generic[F]):
 
         Conditions for being a single page:
 
-        - self.page is not `None` or `0` OR
-        - self.per_page AND self.max_pages are both `None` or `0`
+        - self.max_pages is `1` OR
+        - self.per_page is not `None` or `0`
+          AND (self.max_pages OR self.per_page) are not `None` or `0`
 
         Returns
         -------
