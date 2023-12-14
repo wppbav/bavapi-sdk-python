@@ -1,8 +1,7 @@
 """Patch string representation of pre-3.11 Python to provide a string of the code integers.
 
-Read more at <https://peps.python.org/pep-0663/>."""
-
-# pylint: disable=useless-import-alias
+Read more at <https://peps.python.org/pep-0663/>.
+"""
 
 import sys
 from enum import IntEnum as _IntEnum

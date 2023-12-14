@@ -53,7 +53,7 @@ jobs:
 
       - name: Make badge
         if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
-        uses: schneegans/dynamic-badges-action@v1.6.0
+        uses: schneegans/dynamic-badges-action@v1.7.0
         with:
           auth: ${{ secrets.COV_GIST_TOKEN }}
           gistID: 325c52d8f996801f615921912c08195d

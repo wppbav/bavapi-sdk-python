@@ -31,8 +31,6 @@ from typing import (
     TypeVar,
 )
 
-from tqdm import tqdm
-
 from bavapi.typing import ParamSpec
 
 T = TypeVar("T")
@@ -44,6 +42,11 @@ AsyncCallable = Callable[P, Coroutine[None, None, T]]
 
 class _Query(Protocol):
     page: Optional[int]
+
+
+class _PbarWithUpdate(Protocol):
+    def update(self, n: Optional[float] = 1) -> Optional[bool]:
+        """Update progress bar with n ticks"""
 
 
 class Error(NamedTuple):
@@ -108,7 +111,7 @@ class PageFetcher(Generic[T]):
 
     def __init__(
         self,
-        pbar: Optional[tqdm] = None,
+        pbar: Optional[_PbarWithUpdate] = None,
         on_errors: Literal["warn", "raise"] = "warn",
         *,
         _results: Optional[List[Result[T]]] = None,

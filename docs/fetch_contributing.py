@@ -9,6 +9,7 @@ DOCS_URL_PAT = (
     r"\(https://wppbav\.github\.io/bavapi-sdk-python/latest/"
     r"(?P<rel>[^#\)]+)(?P<section>[^\)]*)\)"
 )
+URL_REPLACE_PAT = r"(\g<rel>.md\g<section>)"
 
 MKDOCS_HEADER = """---
 hide:
@@ -23,7 +24,7 @@ with open("./CONTRIBUTING.md", encoding="utf-8") as file:
 
 # Substitute found docs links with relative docs path
 # Add ".md" to final relative URL before section index
-contributing = re.sub(DOCS_URL_PAT, r"(\g<rel>.md\g<section>)", contributing)
+contributing = re.sub(DOCS_URL_PAT, URL_REPLACE_PAT, contributing)
 
 with open("./docs/contributing.md", "w", encoding="utf-8") as file:
     file.write("\n".join((MKDOCS_HEADER, contributing)))

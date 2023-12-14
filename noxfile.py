@@ -5,7 +5,7 @@
 import json
 import os
 import pathlib
-from typing import Tuple, cast
+from typing import Iterable, Tuple, cast
 
 import nox
 
@@ -183,21 +183,22 @@ def docs_deploy(session: nox.Session) -> None:
 
     Examples
     --------
-    Run docs_deploy locally
+    Run docs_deploy locally:
 
     `nox -s docs_deploy`
 
-    Run docs_deploy for remote branch
+    Run docs_deploy for remote branch:
 
     `nox -s docs_deploy -- --push`
 
-    Override package version
+    Override package version:
 
     `nox -s docs_deploy -- --version=2.0.0`
     """
     try:
         import tomllib
     except ImportError:
+        # Usually runs on latest version of python, just in case
         print("`tomllib` not found in system. Installing `tomli`...")
         session.run("pip", "install", "tomli")
         import tomli as tomllib
@@ -205,22 +206,18 @@ def docs_deploy(session: nox.Session) -> None:
     def version_tuple(version: str) -> Tuple[int, ...]:
         return tuple(int(i) for i in version.split("."))
 
-    def get_versions(
-        list_args: Tuple[str, ...], rebase: bool = False
-    ) -> set[Tuple[int, ...]]:
+    def get_versions(args: Iterable[str], rebase: bool = False) -> set[Tuple[int, ...]]:
         if rebase:
-            list_args = tuple(["--rebase"] + list(list_args))
+            args = tuple(["--rebase"] + list(args))
 
-        out = cast(str, session.run("mike", "list", *list_args, silent=True))
+        out = cast(str, session.run("mike", "list", *args, silent=True))
         return {
             tuple(int(i) for i in v.partition(" ")[0].split("."))
             for v in out.splitlines()
         }
 
-    # Get current package version
-    if not any(
-        version_args := [i for i in session.posargs if i.startswith("--version=")]
-    ):
+    if not (version_args := [i for i in session.posargs if i.startswith("--version=")]):
+        # Get current package version
         with open("pyproject.toml", "rb") as file:
             version = version_tuple(tomllib.load(file)["project"]["version"])
     else:
@@ -237,6 +234,10 @@ def docs_deploy(session: nox.Session) -> None:
     try:
         versions = get_versions(list_args)
     except ValueError:
+        # Raises ValueError when list command returns bad version string
+        # when checking remote versions if `--push` is specified
+        # because local is not synced to remote, so a rebase is required
+        # Might not be necessary in `mike>=2.0`
         versions = get_versions(list_args, rebase=True)
 
     if version[:2] in versions:
