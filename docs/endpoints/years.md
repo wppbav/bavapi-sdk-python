@@ -1,6 +1,6 @@
 # Years
 
-!!! abstract "New in `v1.0.0`"
+!!! abstract "New in `v1.0`"
 
 The `years` endpoint has full support, including query validation.
 

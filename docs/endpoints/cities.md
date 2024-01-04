@@ -1,6 +1,6 @@
 # Cities
 
-!!! abstract "New in `v1.0.0`"
+!!! abstract "New in `v1.0`"
 
 The `cities` endpoint has full support, including query validation.
 

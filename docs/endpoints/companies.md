@@ -1,6 +1,6 @@
 # Companies
 
-!!! abstract "New in `v1.0.0`"
+!!! abstract "New in `v1.0`"
 
 The `companies` endpoint has full support, including query validation.
 

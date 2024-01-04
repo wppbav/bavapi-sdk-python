@@ -1,6 +1,6 @@
 # Countries
 
-!!! abstract "New in `v1.0.0`"
+!!! abstract "New in `v1.0`"
 
 The `countries` endpoint has full support, including query validation.
 
