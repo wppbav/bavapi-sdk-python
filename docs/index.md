@@ -41,7 +41,7 @@ See [Installation](getting-started/installation.md) for more detailed instructio
 >>> result
 ```
 
-1. :lock: Replace "TOKEN" with your token.
+1. :lock: Replace `"TOKEN"` with your Fount API token.
 
 |     | sector_id | sector_name           | id   | name   | ... |
 | --: | :-------- | :-------------------- | :--- | :----- | :-- |
@@ -52,20 +52,20 @@ See [Installation](getting-started/installation.md) for more detailed instructio
 
 - Support for all endpoints in the Fount API.
     - Extended support for the following endpoints:
-        - `audiences`
-        - `brand-metrics`
-        - `brand-metric-groups`
-        - `brands`
-        - `brandscape-data`
-        - `categories`
-        - `cities`
-        - `collections`
-        - `companies`
-        - `countries`
-        - `sectors`
-        - `studies`
-        - `years`
-    - Other endpoints are available via the `raw_query` functions and methods.
+        - [`audiences`](endpoints/audiences.md)
+        - [`brand-metrics`](endpoints/brand-metrics.md)
+        - [`brand-metric-groups`](endpoints/brand-metric-groups.md)
+        - [`brands`](endpoints/brands.md)
+        - [`brandscape-data`](endpoints/brandscape-data.md)
+        - [`categories`](endpoints/categories.md)
+        - [`cities`](endpoints/cities.md)
+        - [`collections`](endpoints/collections.md)
+        - [`companies`](endpoints/companies.md)
+        - [`countries`](endpoints/countries.md)
+        - [`sectors`](endpoints/sectors.md)
+        - [`studies`](endpoints/studies.md)
+        - [`years`](endpoints/years.md)
+    - Other endpoints are available via the [`raw_query`](endpoints/index.md#other-endpoints) functions and methods.
 - Validates query parameters are of the correct types and provides type hints for better IDE support.
 - Retrieve multiple pages of data simultaneously, monitoring and preventing exceeding API rate limit.
 - Both synchronous and asynchronous APIs for accessing BAV data.

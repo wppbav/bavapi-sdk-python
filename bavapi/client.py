@@ -270,7 +270,7 @@ class Client:
 
     @property
     def on_errors(self) -> Literal["warn", "raise"]:
-        """Number of times to retry a request."""
+        """Raise immediately on errors or warn at the end of the request."""
         return self._client.on_errors
 
     @on_errors.setter

@@ -22,6 +22,13 @@ theme:
     - navigation.tabs
     - navigation.tabs.sticky
   palette:
+
+  # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
@@ -81,13 +88,13 @@ nav:
   - Getting Started:
       - Authentication: getting-started/authentication.md
       - Installation: getting-started/installation.md
-      - Install Reference classes: getting-started/reference-classes.md
+      - Reference classes: getting-started/reference-classes.md
   - Usage:
       - Basic Usage: usage/basic.md
       - Advanced Usage: usage/advanced.md
       - Usage Tips for Projects: usage/project-tips.md
   - Endpoints: endpoints/
-  - Code Reference: reference/
+  - SDK API Reference: reference/
   - Contributing: contributing.md
   - Fount API Reference: https://developer.wppbav.com/docs/2.x/intro
 

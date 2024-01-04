@@ -157,3 +157,15 @@ async def test_aretry_no_iter():
     await retry_func()
 
     assert mock_coro.await_count == 1
+
+
+@pytest.mark.anyio
+async def test_aretry_other_exception():
+    mock_coro = mock.AsyncMock()
+    mock_coro.side_effect = [TypeError, None]
+    retry_func = aretry(mock_coro, exc_types=(ValueError,))
+
+    with pytest.raises(TypeError):
+        await retry_func()
+
+    assert mock_coro.await_count == 1
