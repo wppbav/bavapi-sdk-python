@@ -2,32 +2,37 @@
 
 ## `1.0`
 
-### `1.0.0-rc.1` (January XXth, 2024)
-
-This version is the first release candidate for `bavapi`. The package will be fully released in two weeks if no issues are found.
+### `1.0.0` (January XXth, 2024)
 
 #### Feature
 
-- :tada: Added five new endpoints to `bavapi`:
-    - `cities`
-    - `companies`
-    - `countries`
-    - `regions`
-    - `years`
+- :tada: Added five new endpoints to `bavapi` with accompanying `FountFilters` classes:
+    - [`cities`](endpoints/cities.md)
+    - [`companies`](endpoints/companies.md)
+    - [`countries`](endpoints/countries.md)
+    - [`regions`](endpoints/regions.md)
+    - [`years`](endpoints/years.md)
+
+#### Changes
+
+- :recycle: Initial handshake API request will now be retried on SSL errors.
 
 #### Docs
 
-- :broom: Reordered some sections in the [Basic usage](usage/basic.md) section of the documentation, where some additional query parameters were rendered in a different section.
+- :broom: Reordered some sections in the [Basic usage](usage/basic.md) and [Advanced usage](usage/advanced.md) sections of the documentation.
 - :broom: Updated and standardized Jupyter notebook demo.
 - :broom: Clarified when a query is considered to be a single-page query in the [`bavapi.Query.is_single_page`][query.Query.is_single_page] docstring.
 - :broom: Fixed some minor errors in `bavapi.Client` method docstrings.
 - :tada: Added examples of the batch logic in the Jupyter demo notebook.
+- :broom: Repurposed the getting started section on reference classes as the primary documentation page for the references functionality, rather than keeping a section in Basic usage.
 
 #### Internal
 
 - :info: Cleaned up and added comments to documentation scripts.
-- :sparkles: Removed `tqdm` as a dependency for the batched logic.
+- :sparkles: Removed `tqdm` as a dependency from the batching logic.
 - :info: Added comments to `nox` session for deploying the docs.
+- :broom: Simplified some logic in `Query.ensure`.
+- :tada: Added support for specifying exceptions to retry on for `aretry` internal function.
 
 #### CI
 
