@@ -2,7 +2,7 @@
 
 ## `1.0`
 
-### `1.0.0` (January XXth, 2024)
+### `1.0.0` (2024-01-04)
 
 #### Feature
 
@@ -25,6 +25,7 @@
 - :broom: Fixed some minor errors in `bavapi.Client` method docstrings.
 - :tada: Added examples of the batch logic in the Jupyter demo notebook.
 - :broom: Repurposed the getting started section on reference classes as the primary documentation page for the references functionality, rather than keeping a section in Basic usage.
+- :sparkles: Changed Release notes dates to ISO-8601 format.
 
 #### Internal
 
@@ -41,7 +42,7 @@
 
 ## `0.13`
 
-### `0.13.0` (December 11th, 2023)
+### `0.13.0` (2023-12-11)
 
 This version of `bavapi` is expected to be the last **beta** version before a release candidate.
 
@@ -84,7 +85,7 @@ This version of `bavapi` is expected to be the last **beta** version before a re
 
 ## `0.12`
 
-### `0.12.1` (November 21st, 2023)
+### `0.12.1` (2023-11-21)
 
 #### Fix
 
@@ -108,7 +109,7 @@ This version of `bavapi` is expected to be the last **beta** version before a re
 - :broom: Fixed incorrect warning about mixing filters and endpoints.
 - :white_check_mark: Normalized docstring default definitions to follow `numpydoc` spec.
 
-### `0.12.0` (November 15th, 2023)
+### `0.12.0` (2023-11-15)
 
 #### Feature
 
@@ -135,7 +136,7 @@ This version of `bavapi` is expected to be the last **beta** version before a re
 
 ## `0.11`
 
-### `0.11.0` (October 27th, 2023)
+### `0.11.0` (2023-09-27)
 
 In preparation for a stable release of `bavapi`, some aspects of the endpoint function/method interface have been normalized across the library.
 
@@ -209,7 +210,7 @@ Another change is that the order of parameters has been altered. The main reason
 
 ## `0.10`
 
-### `0.10.1` (October 17th, 2023)
+### `0.10.1` (2023-10-17)
 
 #### Fix
 
@@ -228,7 +229,7 @@ Another change is that the order of parameters has been altered. The main reason
 - :notebook: Added more clarity around expected environment variables when storing API keys. `bavapi` will always look for an API key in the `BAV_API_KEY` environment variable.
 - :gear: Refactored code reference generation to support renaming of `reference` module.
 
-### `0.10.0` (October 16th, 2023)
+### `0.10.0` (2023-10-16)
 
 #### Feature
 
@@ -251,7 +252,7 @@ Another change is that the order of parameters has been altered. The main reason
 
 ## `0.9`
 
-### `0.9.0` (October 11th, 2023)
+### `0.9.0` (2023-10-11)
 
 #### Feature
 
@@ -285,7 +286,7 @@ Another change is that the order of parameters has been altered. The main reason
 
 ## `0.8`
 
-### `0.8.1` (September 29th, 2023)
+### `0.8.1` (2023-09-29)
 
 #### Performance
 
@@ -304,7 +305,7 @@ Another change is that the order of parameters has been altered. The main reason
 
 - :lock: Renamed `jupyter` compatibility module as private. This will remove it from the code reference docs.
 
-### `0.8.0` (September 15th, 2023)
+### `0.8.0` (2023-09-15)
 
 #### Feature
 
@@ -332,7 +333,7 @@ Another change is that the order of parameters has been altered. The main reason
 
 ## `0.7`
 
-### `0.7.0` (August 22nd, 2023)
+### `0.7.0` (2023-08-22)
 
 #### Feature
 
@@ -354,7 +355,7 @@ Another change is that the order of parameters has been altered. The main reason
 
 ## `0.6`
 
-### `0.6.1` (July 19th, 2023)
+### `0.6.1` (2023-07-19)
 
 #### Fix
 
@@ -373,7 +374,7 @@ Another change is that the order of parameters has been altered. The main reason
 
 - :notebook: Added warning about potential SSL errors outside of `bavapi` when using the Fount API.
 
-### `0.6.0` (July 13th, 2023)
+### `0.6.0` (2023-07-13)
 
 #### Internal
 
