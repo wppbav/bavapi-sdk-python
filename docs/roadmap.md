@@ -1,5 +1,7 @@
 # `bavapi` Roadmap
 
+!!! success "`bavapi` has now reached **stable** status"
+
 ## Release Roadmap
 
 This is a non-exhaustive list of potential features & changes to `bavapi` before it is ready for full release:
