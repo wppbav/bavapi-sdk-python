@@ -242,13 +242,14 @@ class Query(BaseModel, Generic[F]):
         Query
             `Query` class with additional parameters added if any
         """
-        params = {k: v for k, v in kwargs.items() if v}
+        params: MutableMapping[str, QueryParamValues[F]] = {
+            k: v for k, v in kwargs.items() if v
+        }
 
         if query is None:
             return cls(**params)  # type: ignore[arg-type]
 
-        new_params = cast(MutableMapping[str, QueryParamValues[F]], params.copy())
-        new_params.update(query.model_dump(exclude={"filters"}, exclude_defaults=True))
-        new_params.update({"filters": query.filters})  # type: ignore[arg-type]
+        params.update(query.model_dump(exclude={"filters"}, exclude_defaults=True))
+        params.update({"filters": query.filters})
 
-        return cls(**new_params)  # type: ignore[arg-type]
+        return cls(**params)  # type: ignore[arg-type]
