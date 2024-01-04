@@ -14,18 +14,18 @@ Once you have installed Python and have acquired your Fount API token, return to
 
 `bavapi` depends on the following excellent libraries:
 
-- `httpx` for communication with the Fount API.
-- `pandas` for processing retrieved data into tables.
-- `pydantic` to validate query and filter parameters.
-- `nest-asyncio` to support Jupyter notebooks.
-- `tqdm` to show helpful progress bars.
-- `typing-extensions` for type-checking compatibility in Python < 3.12.
+- [`httpx`](https://www.python-httpx.org/) for communication with the Fount API.
+- [`pandas`](https://pandas.pydata.org/docs/index.html) for processing retrieved data into tables.
+- [`pydantic`](https://docs.pydantic.dev/latest/) to validate query and filter parameters.
+- [`nest-asyncio`](https://github.com/erdewit/nest_asyncio) to support Jupyter notebooks.
+- [`tqdm`](https://tqdm.github.io/) to show helpful progress bars.
+- [`typing-extensions`](https://typing-extensions.readthedocs.io/en/latest/) for type-checking compatibility in Python < 3.12.
 
 These libraries will be installed automatically when you install `bavapi`.
 
 ## Installing `bavapi`
 
-Once you have your virtual environment activated, you can install `bavapi` with the following command:
+Once you have your virtual (or conda) environment activated, you can install `bavapi` with the following command:
 
 ```prompt
 pip install wpp-bavapi
@@ -34,7 +34,7 @@ pip install wpp-bavapi
 !!! tip "Installing with `conda`"
     `bavapi` is not currently available from `conda` directly, though it should be possible to install and use it within a `conda` environment.
 
-    Use the following commands to maximize compatibility between `conda` and `pip`:
+    You can use the following commands to maximize compatibility between `conda` and `pip`:
 
     ```prompt
     conda install httpx, pandas, pydantic, nest-asyncio, tqdm, typing_extensions
