@@ -4,6 +4,7 @@
 
 import asyncio
 import math
+import ssl
 from json import JSONDecodeError
 from typing import (
     TYPE_CHECKING,
@@ -296,7 +297,8 @@ class HTTPClient:
         """
         per_page = query.per_page or self.per_page
         init_per_page = per_page if query.is_single_page() else 1
-        resp = await self.get(endpoint, query.with_page(per_page=init_per_page))
+        handshake_func = aretry(self.get, self.retries, 0.25, (ssl.SSLError,))
+        resp = await handshake_func(endpoint, query.with_page(per_page=init_per_page))
 
         payload: Dict[str, JSONData] = resp.json()
         data: JSONData = payload["data"]
