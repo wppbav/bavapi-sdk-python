@@ -1,0 +1,3658 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://wppbav.github.io/bavapi-sdk-python/1.0/release-notes/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../roadmap/">
+      
+      
+      <link rel="icon" href="../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>Release Notes - BAV API Python SDK</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#release-notes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest version.
+  <a href="../..">
+    <strong>Click here to go to latest.</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),outdated=__md_get("__outdated",sessionStorage);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="BAV API Python SDK" class="md-header__button md-logo" aria-label="BAV API Python SDK" data-md-component="logo">
+      
+  <img src="../assets/wpp-bav-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            BAV API Python SDK
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Release Notes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wppbav/bavapi-sdk-python" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    wppbav/bavapi-sdk-python
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../getting-started/authentication/" class="md-tabs__link">
+          
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../usage/basic/" class="md-tabs__link">
+          
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../endpoints/" class="md-tabs__link">
+        
+  
+    
+  
+  Endpoints
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/sync/" class="md-tabs__link">
+          
+  
+  SDK API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../contributing/" class="md-tabs__link">
+        
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://developer.wppbav.com/docs/2.x/intro" class="md-tabs__link">
+        
+  
+    
+  
+  Fount API Reference
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="BAV API Python SDK" class="md-nav__button md-logo" aria-label="BAV API Python SDK" data-md-component="logo">
+      
+  <img src="../assets/wpp-bav-logo.svg" alt="logo">
+
+    </a>
+    BAV API Python SDK
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wppbav/bavapi-sdk-python" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    wppbav/bavapi-sdk-python
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Release Notes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Release Notes
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.0
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#100-2024-01-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.0.0 (2024-01-04)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 (2024-01-04)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#013" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.13
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0130-2023-12-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.13.0 (2023-12-11)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.13.0 (2023-12-11)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#012" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.12
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0121-2023-11-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.12.1 (2023-11-21)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12.1 (2023-11-21)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0120-2023-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.12.0 (2023-11-15)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12.0 (2023-11-15)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#011" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.11
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.11">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0110-2023-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.11.0 (2023-09-27)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.11.0 (2023-09-27)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Messages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.10
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0101-2023-10-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.10.1 (2023-10-17)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.1 (2023-10-17)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0100-2023-10-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.10.0 (2023-10-16)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.0 (2023-10-16)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#09" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.9
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#090-2023-10-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.9.0 (2023-10-11)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.0 (2023-10-11)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#08" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.8
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.8">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#081-2023-09-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.8.1 (2023-09-29)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.8.1 (2023-09-29)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#080-2023-09-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.8.0 (2023-09-15)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.8.0 (2023-09-15)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#07" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.7
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.7">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#070-2023-08-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.7.0 (2023-08-22)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.7.0 (2023-08-22)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.6
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.6">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#061-2023-07-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.6.1 (2023-07-19)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.6.1 (2023-07-19)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#060-2023-07-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.6.0 (2023-07-13)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.6.0 (2023-07-13)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Roadmap
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/authentication/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Authentication
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/reference-classes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reference classes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/basic/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basic Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/advanced/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Advanced Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../usage/project-tips/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Usage Tips for Projects
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../endpoints/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Endpoints
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Endpoints
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/audiences/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Audiences
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/brand-metric-groups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brand Metric Groups
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/brand-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brand Metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/brands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brands
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/brandscape-data/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Brandscape Data
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/categories/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Categories
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/cities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/collections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Collections
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/companies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Companies
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/countries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Countries
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/regions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Regions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/sectors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sectors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/studies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Studies
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endpoints/years/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Years
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    SDK API Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            SDK API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/sync/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    sync
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/client/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    client
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/exceptions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    exceptions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/filters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    filters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/http/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    http
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/parsing/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    parsing
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_6" id="__nav_5_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_6">
+            <span class="md-nav__icon md-icon"></span>
+            parsing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/parsing/params/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    params
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/parsing/responses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    responses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/query/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    query
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contributing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://developer.wppbav.com/docs/2.x/intro" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fount API Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.0
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#100-2024-01-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.0.0 (2024-01-04)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.0.0 (2024-01-04)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#013" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.13
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.13">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0130-2023-12-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.13.0 (2023-12-11)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.13.0 (2023-12-11)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Test
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#012" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.12
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0121-2023-11-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.12.1 (2023-11-21)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12.1 (2023-11-21)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0120-2023-11-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.12.0 (2023-11-15)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.12.0 (2023-11-15)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#011" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.11
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.11">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0110-2023-09-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.11.0 (2023-09-27)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.11.0 (2023-09-27)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Changes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Error Messages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.10
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#0101-2023-10-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.10.1 (2023-10-17)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.1 (2023-10-17)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0100-2023-10-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.10.0 (2023-10-16)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.10.0 (2023-10-16)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#09" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.9
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#090-2023-10-11" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.9.0 (2023-10-11)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.9.0 (2023-10-11)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#08" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.8
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.8">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#081-2023-09-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.8.1 (2023-09-29)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.8.1 (2023-09-29)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#080-2023-09-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.8.0 (2023-09-15)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.8.0 (2023-09-15)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#07" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.7
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.7">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#070-2023-08-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.7.0 (2023-08-22)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.7.0 (2023-08-22)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#feature_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Feature
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ci_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      CI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.6
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.6">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#061-2023-07-19" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.6.1 (2023-07-19)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.6.1 (2023-07-19)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fix_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fix
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tests_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docs_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#060-2023-07-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      0.6.0 (2023-07-13)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="0.6.0 (2023-07-13)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#internal_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Typing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
+<h2 id="10"><code>1.0</code><a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<h3 id="100-2024-01-04"><code>1.0.0</code> (2024-01-04)<a class="headerlink" href="#100-2024-01-04" title="Permanent link">&para;</a></h3>
+<h4 id="feature">Feature<a class="headerlink" href="#feature" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> Added five new endpoints to <code>bavapi</code> with accompanying <code>FountFilters</code> classes:<ul>
+<li><a href="../endpoints/cities/"><code>cities</code></a></li>
+<li><a href="../endpoints/companies/"><code>companies</code></a></li>
+<li><a href="../endpoints/countries/"><code>countries</code></a></li>
+<li><a href="../endpoints/regions/"><code>regions</code></a></li>
+<li><a href="../endpoints/years/"><code>years</code></a></li>
+</ul>
+</li>
+</ul>
+<h4 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="♻" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/267b.svg" title=":recycle:" /> Initial handshake API request will now be retried on SSL errors.</li>
+</ul>
+<h4 id="docs">Docs<a class="headerlink" href="#docs" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Reordered some sections in the <a href="../usage/basic/">Basic usage</a> and <a href="../usage/advanced/">Advanced usage</a> sections of the documentation.</li>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Updated and standardized Jupyter notebook demo.</li>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Clarified when a query is considered to be a single-page query in the <a class="autorefs autorefs-internal" href="../reference/query/#query.Query.is_single_page"><code>bavapi.Query.is_single_page</code></a> docstring.</li>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Fixed some minor errors in <code>bavapi.Client</code> method docstrings.</li>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> Added examples of the batch logic in the Jupyter demo notebook.</li>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Repurposed the getting started section on reference classes as the primary documentation page for the references functionality, rather than keeping a section in Basic usage.</li>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Changed Release notes dates to ISO-8601 format.</li>
+</ul>
+<h4 id="internal">Internal<a class="headerlink" href="#internal" title="Permanent link">&para;</a></h4>
+<ul>
+<li>:info: Cleaned up and added comments to documentation scripts.</li>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Removed <code>tqdm</code> as a dependency from the batching logic.</li>
+<li>:info: Added comments to <code>nox</code> session for deploying the docs.</li>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Simplified some logic in <code>Query.ensure</code>.</li>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> Added support for specifying exceptions to retry on for <code>aretry</code> internal function.</li>
+</ul>
+<h4 id="ci">CI<a class="headerlink" href="#ci" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="♻" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/267b.svg" title=":recycle:" /> CI won't run unless a package or test file is changed, or the CI action file is changed.</li>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Added manual trigger to documentation so deploying fixes to the docs doesn't require a version change.</li>
+</ul>
+<h2 id="013"><code>0.13</code><a class="headerlink" href="#013" title="Permanent link">&para;</a></h2>
+<h3 id="0130-2023-12-11"><code>0.13.0</code> (2023-12-11)<a class="headerlink" href="#0130-2023-12-11" title="Permanent link">&para;</a></h3>
+<p>This version of <code>bavapi</code> is expected to be the last <strong>beta</strong> version before a release candidate.</p>
+<h4 id="feature_1">Feature<a class="headerlink" href="#feature_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> <code>bavapi</code> will now <strong>retry</strong> page requests upon failure. You can control the number of retry attempts with the <code>retries</code> parameter in top-level functions and the <code>Client</code> interface.</li>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> It is now possible to control the behavior of errors in the request process. If <code>on_errors</code> is set to <code>"warn"</code> (default), successful requests will be returned and a warning will be issued detailing which pages resulted in errors and each exception associated with it. If <code>on_errors</code> is set to <code>"raise"</code> (old behavior) instead, an exception will be raised as soon as any request fails.</li>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> Added <code>bav_study</code> and <code>released</code> filters to <code>studies</code> endpoint function and method.</li>
+</ul>
+<h4 id="changes_1">Changes<a class="headerlink" href="#changes_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Reduced the size of the initial request to 1 item if a paginated request is detected for improved performance.</li>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Paginated requests are now performed in batches instead of starting every request from the start. This should mitigate several issues (like SSL errors) with large queries and improve overall run times. You can control this behavior through the <code>batch_size</code> and <code>n_workers</code> parameters in top-level functions and the <code>Client</code> interface.</li>
+<li><img alt="🔨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f528.svg" title=":hammer:" /> Instead of having failed requests immediately raise exceptions, <code>bavapi</code> will continue downloading pages, collect successful responses, and warn the user about the pages that failed to be collected. This can be controlled by the <code>on_errors</code> parameter in top-level functions and the <code>Client</code> interface.</li>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Using <code>bavapi.Query</code> instances in request functions and methods will now combine method parameters with parameters in the query object. Parameters specified in the query object will take precedence over parameters specified in the function or method. Filter values in the method parameters will be ignored if the query object contains filters.</li>
+</ul>
+<h4 id="fix">Fix<a class="headerlink" href="#fix" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Refactored the expanding step of the result parsing pipeline to fix undefined behavior when multiple expandable columns are found in the result.</li>
+</ul>
+<h4 id="internal_1">Internal<a class="headerlink" href="#internal_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Removed trailing whitespaces</li>
+<li><img alt="🔨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f528.svg" title=":hammer:" /> New data fetching algorithm based on asynchronous workers.</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fixed unmatched checkout action versions in <code>ci</code>.</li>
+<li><img alt="🔨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f528.svg" title=":hammer:" /> Refactored filter consolidation logic to avoid unnecessary copies of parameters.</li>
+</ul>
+<h4 id="docs_1">Docs<a class="headerlink" href="#docs_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Added clarification about prefixed column names in <code>brandscape-data</code> endpoint results.</li>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Various improvements to documentation, focused on warnings/tips and code snippets.</li>
+</ul>
+<h4 id="test">Test<a class="headerlink" href="#test" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9ea.svg" title=":test_tube:" /> Added tests for new <code>_batched</code> and <code>_fetcher</code> modules.</li>
+<li><img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9ea.svg" title=":test_tube:" /> Added new test case for <code>parsing.responses</code> to test correct behavior with multiple expandable columns in the response.</li>
+<li><img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9ea.svg" title=":test_tube:" /> Added new tests for query consolidation logic.</li>
+<li><img alt="🔧" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f527.svg" title=":wrench:" /> Fixed <code>HTTPClient</code> tests to work with new architecture.</li>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Simplified integration tests thanks to the new retry functionality</li>
+</ul>
+<h2 id="012"><code>0.12</code><a class="headerlink" href="#012" title="Permanent link">&para;</a></h2>
+<h3 id="0121-2023-11-21"><code>0.12.1</code> (2023-11-21)<a class="headerlink" href="#0121-2023-11-21" title="Permanent link">&para;</a></h3>
+<h4 id="fix_1">Fix<a class="headerlink" href="#fix_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Incorrect <code>datetime</code> format used when formatting string values.</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Removed unused testing helper code that could lead to recursion errors.</li>
+</ul>
+<h4 id="internal_2">Internal<a class="headerlink" href="#internal_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Removed unnecessary development flags for coverage and typing.</li>
+</ul>
+<h4 id="tests">Tests<a class="headerlink" href="#tests" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9ea.svg" title=":test_tube:" /> Add tests for all arguments in <code>bavapi-gen-refs</code> argument parser.</li>
+</ul>
+<h4 id="typing">Typing<a class="headerlink" href="#typing" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Improved typing of <code>generate_references</code> and <code>sync</code> modules.</li>
+</ul>
+<h4 id="docs_2">Docs<a class="headerlink" href="#docs_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Fixed incorrect warning about mixing filters and endpoints.</li>
+<li><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2705.svg" title=":white_check_mark:" /> Normalized docstring default definitions to follow <code>numpydoc</code> spec.</li>
+</ul>
+<h3 id="0120-2023-11-15"><code>0.12.0</code> (2023-11-15)<a class="headerlink" href="#0120-2023-11-15" title="Permanent link">&para;</a></h3>
+<h4 id="feature_2">Feature<a class="headerlink" href="#feature_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> Added support for <code>metric_group_keys</code>, for use with the <code>brandscape-data</code> endpoint.</li>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> It is now possible to use <code>page</code> as the start page of a paginated request. Use <code>per_page</code> and/or <code>max_pages</code> to change the behavior of the pagination. More info in the <a href="../usage/basic/#pagination">Basic Usage</a> section.</li>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> As a result of the new paginated behavior, it is now possible to chunk requests by setting the start and end of the request with <code>page</code> and <code>per_page</code>, respectively. See more info in the <a href="../usage/project-tips/">Project tips</a> section of the documentation.</li>
+</ul>
+<h4 id="changes_2">Changes<a class="headerlink" href="#changes_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/26a0.svg" title=":warning:" /> Exceptions <code>DataNotFoundError</code> and <code>RateLimitExceededError</code> are now subclasses of <code>APIError</code>.</li>
+<li><img alt="🔨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f528.svg" title=":hammer:" /> Refactored pagination logic to allow for control over the start and end of the paginated request to the Fount. Shouldn't break existing uses of <code>page</code> unless <code>per_page</code> and/or <code>max_pages</code> were also in use. More info in the <a href="../usage/basic/#pagination">Basic Usage</a> section.</li>
+<li><img alt="⚙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2699.svg" title=":gear:" /> <code>Query.with_page</code> parameters are now optional and default to <code>None</code>.</li>
+<li><img alt="🔧" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f527.svg" title=":wrench:" /> <code>Query</code> attributes <code>page</code>, <code>per_page</code>, and <code>max_pages</code> must be greater than <code>0</code>.</li>
+<li><img alt="🛑" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f6d1.svg" title=":stop_sign:" /> (BREAKING) <code>Query.paginated</code> parameter order has changed to make <code>per_page</code> optional.</li>
+</ul>
+<h4 id="fix_2">Fix<a class="headerlink" href="#fix_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="⚙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2699.svg" title=":gear:" /> Various issues and inconsistencies with pagination logic.</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fixed <code>per_page</code> not applying to single page results.</li>
+</ul>
+<h4 id="docs_3">Docs<a class="headerlink" href="#docs_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Added instructions for performing batched requests in the <a href="../usage/project-tips/#batch-requests">Project Tips</a> section.</li>
+</ul>
+<h2 id="011"><code>0.11</code><a class="headerlink" href="#011" title="Permanent link">&para;</a></h2>
+<h3 id="0110-2023-09-27"><code>0.11.0</code> (2023-09-27)<a class="headerlink" href="#0110-2023-09-27" title="Permanent link">&para;</a></h3>
+<p>In preparation for a stable release of <code>bavapi</code>, some aspects of the endpoint function/method interface have been normalized across the library.</p>
+<p>This means that all endpoints now support a <code>query</code> parameter directly, to allow for better reproducibility and parametrization of queries. <code>raw_query</code> now also uses <code>query</code> instead of <code>params</code>, with <code>query</code> being required unlike with other endpoints.</p>
+<p>Another change is that the order of parameters has been altered. The main reason for this is that parameters like <code>brand_id</code> were positional parameters before, when they are exclusive with almost all othe r parameters. This was also the case for parameters like <code>studies</code>, which are exclusive with <code>country_codes</code> and <code>year_numbers</code>. Now <code>{endpoint}_id</code> parameters and other exclusive or niche filters have been turned to keyword-only parameters. Filters like <code>inactive</code> and <code>not_in_most_influential</code> have been removed from endpoint functions. Use the <code>filters</code> parameter instead. See each <a href="../endpoints/">endpoint documentation</a> page for more information.</p>
+<h4 id="feature_3">Feature<a class="headerlink" href="#feature_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> It is now possible to pass a <a class="autorefs autorefs-internal" href="../reference/query/#query.Query"><code>bavapi.Query</code></a> object to all endpoint functions and methods with the <code>query</code> parameter. If <code>query</code> is used, all the parameters that would be used in the query (listed before <code>query</code> in each <a class="autorefs autorefs-internal" href="../reference/sync/#sync">endpoint documentation</a>) will be ignored.</li>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> It is now possible to specify a destination folder for the <code>bavapi-gen-refs</code> command with the <code>-d</code>/<code>--dest-folder</code> argument.</li>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> Reference classes generated via <code>bavapi-gen-refs</code> can now be imported with <code>from bavapi_refs import Countries</code> for example.</li>
+</ul>
+<h4 id="changes_3">Changes<a class="headerlink" href="#changes_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🛑" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f6d1.svg" title=":stop_sign:" /> (BREAKING) Changed <code>raw_query</code> <code>params</code> parameter name to <code>query</code> to match all other endpoints.</li>
+<li><img alt="🛑" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f6d1.svg" title=":stop_sign:" /> (BREAKING) Changed the order of several endpoint parameters for more effective queries. Now, each endpoint function has a set of parameters that can be set as positional arguments for exploratory filtering, while niche filters and IDs have become keyword only parameters.<ul>
+<li><code>audiences</code>:<ul>
+<li>Positional filters: <code>name</code>, <code>active</code>, <code>public</code></li>
+<li>Keyword filters: <code>audience_id</code>, <code>private</code>, <code>groups</code></li>
+</ul>
+</li>
+<li><code>brand_metrics</code>:<ul>
+<li>Positional filters: <code>name</code>, <code>active</code>, <code>public</code></li>
+<li>Keyword filters: <code>metric_id</code>, <code>private</code>, <code>groups</code></li>
+</ul>
+</li>
+<li><code>brand_metric_groups</code>:<ul>
+<li>Positional filters: <code>name</code>, <code>active</code></li>
+<li>Keyword filters: <code>group_id</code></li>
+</ul>
+</li>
+<li><code>brands</code>:<ul>
+<li>Positional filters: <code>name</code>, <code>country_codes</code>, <code>year_numbers</code></li>
+<li>Keyword filters: <code>brand_id</code>, <code>studies</code></li>
+</ul>
+</li>
+<li><code>brandscape_data</code>:<ul>
+<li>Positional filters: <code>country_code</code>, <code>year_number</code>, <code>audiences</code>, <code>brand_name</code></li>
+<li>Keyword filters: <code>studies</code></li>
+</ul>
+</li>
+<li><code>categories</code>:<ul>
+<li>Positional filters: <code>name</code>, <code>sector</code></li>
+<li>Keyword filters: <code>category_id</code></li>
+</ul>
+</li>
+<li><code>collections</code>:<ul>
+<li>Positional filters: <code>name</code>, <code>public</code></li>
+<li>Keyword filters: <code>collection_id</code>, <code>shared_with_me</code>, <code>mine</code></li>
+</ul>
+</li>
+<li><code>sectors</code>:<ul>
+<li>Positional filters: <code>name</code>, <code>in_most_influential</code></li>
+<li>Keyword filters: <code>sector_id</code></li>
+</ul>
+</li>
+<li><code>studies</code>:<ul>
+<li>Positional filters: <code>country_codes</code>, <code>year_numbers</code>, <code>full_year</code></li>
+<li>Keyword filters: <code>study_id</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="error-messages">Error Messages<a class="headerlink" href="#error-messages" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/26a0.svg" title=":warning:" /> Improved error message for <code>bavapi-gen-refs</code> command when neither <code>-a</code>/<code>--all</code> nor <code>-n</code>/<code>--name</code> arguments aren't used.</li>
+</ul>
+<h4 id="fix_3">Fix<a class="headerlink" href="#fix_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fixed that requests with <code>item_id</code> would ignore other query parameters.</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Addressed undefined behavior when <code>max_pages</code> is larger than the total number of pages as reported by the API. Now the max number of pages is always capped by the reported total.</li>
+</ul>
+<h4 id="internal_3">Internal<a class="headerlink" href="#internal_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fixed typing of <code>tuple</code> internal <code>docs_deploy</code> function annotations not being compatible with Python <code>&lt;3.9</code>.</li>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Removed slow and unnecessary test for the <code>verbose</code> parameter in <code>HTTPClient</code>.</li>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Refactored tests that instantiate <code>httpx.AsyncClient</code> instances for a 20x reduction in test run time.</li>
+</ul>
+<h4 id="docs_4">Docs<a class="headerlink" href="#docs_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Filter classes table in <a href="../usage/basic/#filtering-responses">Basic usage</a> page now points to each endpoint function docs.</li>
+<li><img alt="✨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2728.svg" title=":sparkles:" /> Automatically add comment to <code>docs/contributing.md</code> to edit <code>./CONTRIBUTING.md</code> instead.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Updated Jupyter notebook demo with latest features and conventions.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Documented the <a href="../usage/basic/#using-query-objects">use of <code>bavapi.Query</code></a> object in functions and methods.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Improved code example for the <a href="../usage/basic/#using-reference-classes">Using reference classes</a> section of the Basic usage page.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Clarified which endpoint filters are positional and keyword-only in respective <a href="../endpoints/">endpoint documentation</a> pages</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fixed incorrect rendering of tabs in the <a href="../usage/basic/#suppressing-progress-bars">Suppressing progess bar</a> section of the Basic usage page.</li>
+<li><img alt="❌" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/274c.svg" title=":x:" /> Removed <code>datetime</code> formatting section from the <a href="../usage/basic/">Basic usage</a> page.</li>
+</ul>
+<h2 id="010"><code>0.10</code><a class="headerlink" href="#010" title="Permanent link">&para;</a></h2>
+<h3 id="0101-2023-10-17"><code>0.10.1</code> (2023-10-17)<a class="headerlink" href="#0101-2023-10-17" title="Permanent link">&para;</a></h3>
+<h4 id="fix_4">Fix<a class="headerlink" href="#fix_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🛑" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f6d1.svg" title=":stop_sign:" /> (Breaking) Fix <code>metric_id</code> param to correct <code>group_id</code> name in <a class="autorefs autorefs-internal" href="../reference/sync/#sync.brand_metric_groups"><code>bavapi.brand_metric_groups</code></a> top level function.</li>
+</ul>
+<h4 id="internal_4">Internal<a class="headerlink" href="#internal_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🔒" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f512.svg" title=":lock:" /> Renamed <code>reference</code> module as private. This will remove it from the code reference docs.</li>
+<li><img alt="♻" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/267b.svg" title=":recycle:" /> Set new dependency minimum versions for compatibility.</li>
+</ul>
+<h4 id="docs_5">Docs<a class="headerlink" href="#docs_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🎉" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f389.svg" title=":tada:" /> Code reference section now directs to the <a class="autorefs autorefs-internal" href="../reference/sync/#sync"><code>sync</code></a> documentation by default.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Added all available filters to the summary table in the <a href="../usage/basic/">Basic Usage</a> section.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> More documentation for the <a class="autorefs autorefs-internal" href="../reference/sync/#sync"><code>sync</code></a> and <a class="autorefs autorefs-internal" href="../reference/client/#client"><code>client</code></a> modules.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Added more clarity around expected environment variables when storing API keys. <code>bavapi</code> will always look for an API key in the <code>BAV_API_KEY</code> environment variable.</li>
+<li><img alt="⚙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2699.svg" title=":gear:" /> Refactored code reference generation to support renaming of <code>reference</code> module.</li>
+</ul>
+<h3 id="0100-2023-10-16"><code>0.10.0</code> (2023-10-16)<a class="headerlink" href="#0100-2023-10-16" title="Permanent link">&para;</a></h3>
+<h4 id="feature_4">Feature<a class="headerlink" href="#feature_4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> The following endpoints have been fully implmented with type hints and validation:<ul>
+<li><a href="../endpoints/brand-metrics/"><code>brand-metrics</code></a></li>
+<li><a href="../endpoints/brand-metric-groups/"><code>brand-metric-groups</code></a></li>
+<li><a href="../endpoints/categories/"><code>categories</code></a></li>
+<li><a href="../endpoints/collections/"><code>collections</code></a></li>
+<li><a href="../endpoints/sectors/"><code>sectors</code></a></li>
+</ul>
+</li>
+</ul>
+<h4 id="docs_6">Docs<a class="headerlink" href="#docs_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Documentation for newly supported endpoints.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Documented the use of <code>"no_default"</code> as the <code>include</code> value for <code>brandscape_data</code> and <code>categories</code> functions/methods.</li>
+</ul>
+<h4 id="internal_5">Internal<a class="headerlink" href="#internal_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="⚙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2699.svg" title=":gear:" /> Generalized internal <code>_default_includes</code> function to be able to reuse it with the <code>categories</code> endpoint.</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> <code>nox</code> session <code>docs_build_and_serve</code> will now rebase local branch if local version data is not synced with GitHub.</li>
+</ul>
+<h2 id="09"><code>0.9</code><a class="headerlink" href="#09" title="Permanent link">&para;</a></h2>
+<h3 id="090-2023-10-11"><code>0.9.0</code> (2023-10-11)<a class="headerlink" href="#090-2023-10-11" title="Permanent link">&para;</a></h3>
+<h4 id="feature_5">Feature<a class="headerlink" href="#feature_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Official support for Python 3.12.</li>
+<li><img alt="⌚" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/231a.svg" title=":watch:" /> Added ability to <a href="../usage/basic/#suppressing-progress-bars">show/hide progress</a> bar when making requests with the <code>verbose</code> parameter. This is available for all top-level endpoint functions and when creating an instance of <code>bavapi.Client</code>. To hide the progress bar, set <code>verbose</code> to <code>False</code> (by default <code>True</code>).</li>
+</ul>
+<h4 id="docs_7">Docs<a class="headerlink" href="#docs_7" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="♻" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/267b.svg" title=":recycle:" /> Added a section to the <a href="../usage/project-tips/">Usage Tips</a> page explaining how to retry failed requests when an SSL exception is raised.</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fix absolute/relative documentation links in the GitHub <code>CONTRIBUTING.md</code> file and the synced docs version.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Added documentation for changing the User Agent for HTTP requests.</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fix incorrect code example in the <code>brandscape-data</code> endpoint page.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Added explicit documentation about which filters are available in top-level functions and methods to all <a href="../endpoints/">endpoint</a> pages.</li>
+</ul>
+<h4 id="internal_6">Internal<a class="headerlink" href="#internal_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/26a0.svg" title=":warning:" /> Fix deprecation warning due to timezone-aware <code>datetime</code> usage when generating reference classes in Python 3.12.</li>
+</ul>
+<h4 id="ci_1">CI<a class="headerlink" href="#ci_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="⬆" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2b06.svg" title=":arrow_up:" /> Upgraded <code>nox</code> GitHub Action versions.</li>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Added Python 3.12 to GitHub Actions CI/testing.</li>
+</ul>
+<h4 id="typing_1">Typing<a class="headerlink" href="#typing_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="✅" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2705.svg" title=":white_check_mark:" /> Enabled support for <a href="https://docs.python.org/3.12/whatsnew/3.12.html#whatsnew312-pep692">PEP 692</a> <code>TypedDict</code> kwargs via <code>Unpack</code> on all endpoint functions and methods.</li>
+</ul>
+<h4 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="⬆" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2b06.svg" title=":arrow_up:" /> Updated minimum required version of <code>typing-extensions</code> for Python versions below 3.12.</li>
+</ul>
+<h2 id="08"><code>0.8</code><a class="headerlink" href="#08" title="Permanent link">&para;</a></h2>
+<h3 id="081-2023-09-29"><code>0.8.1</code> (2023-09-29)<a class="headerlink" href="#081-2023-09-29" title="Permanent link">&para;</a></h3>
+<h4 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Improved response parsing performance by ~4x (about 0.6 seconds faster per Fount query).</li>
+</ul>
+<h4 id="fix_5">Fix<a class="headerlink" href="#fix_5" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fix required filters in <code>brandscape_data</code> functions and methods.</li>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Remove buried print statement in response flattening logic.</li>
+</ul>
+<h4 id="docs_8">Docs<a class="headerlink" href="#docs_8" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Fixed and clarified required filters in <code>brandscape_data</code> functions and methods.</li>
+</ul>
+<h4 id="internal_7">Internal<a class="headerlink" href="#internal_7" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🔒" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f512.svg" title=":lock:" /> Renamed <code>jupyter</code> compatibility module as private. This will remove it from the code reference docs.</li>
+</ul>
+<h3 id="080-2023-09-15"><code>0.8.0</code> (2023-09-15)<a class="headerlink" href="#080-2023-09-15" title="Permanent link">&para;</a></h3>
+<h4 id="feature_6">Feature<a class="headerlink" href="#feature_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> It is now possible to set a <code>timeout</code> parameter from top-level sync endpoint functions.</li>
+<li><img alt="🕵️‍♀️" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f575-fe0f-200d-2640-fe0f.svg" title=":woman_detective:" /> It is now possible to set a <code>user_agent</code> parameter when creating a <code>bavapi.Client</code> instance.</li>
+</ul>
+<h4 id="fix_6">Fix<a class="headerlink" href="#fix_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9ea.svg" title=":test_tube:" /> Fixed <code>bavapi-gen-refs</code> command tests overwriting reference files.</li>
+</ul>
+<h4 id="internal_8">Internal<a class="headerlink" href="#internal_8" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🕵️‍♂️" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f575-fe0f-200d-2642-fe0f.svg" title=":man_detective:" /> <code>'BAVAPI SDK Python'</code> is now the default <code>User-Agent</code> for <code>bavapi</code>.</li>
+</ul>
+<h4 id="docs_9">Docs<a class="headerlink" href="#docs_9" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Documentation for <code>timeout</code> usage.</li>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Automatically sync top level <code>CONTRIBUTING.md</code> file with the docs version.</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fixed instructions to generate reference classes while specifying a token in the CLI command.</li>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Added missing parameter documentation for <code>Query</code> methods.</li>
+</ul>
+<h4 id="ci_2">CI<a class="headerlink" href="#ci_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="⚙" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/2699.svg" title=":gear:" /> Removed end-to-end tests from CI pipeline due to various issues. They will have to be run manually in the near future.</li>
+</ul>
+<h2 id="07"><code>0.7</code><a class="headerlink" href="#07" title="Permanent link">&para;</a></h2>
+<h3 id="070-2023-08-22"><code>0.7.0</code> (2023-08-22)<a class="headerlink" href="#070-2023-08-22" title="Permanent link">&para;</a></h3>
+<h4 id="feature_7">Feature<a class="headerlink" href="#feature_7" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> It is now possible to specify a token with <code>-t</code>/<code>--token</code> when generating reference files via the <code>bavapi-gen-refs</code> command.</li>
+</ul>
+<h4 id="fix_7">Fix<a class="headerlink" href="#fix_7" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> <code>bavapi-gen-refs</code> would not run if <code>python-dotenv</code> was not installed. Now it will require an explicit token with <code>-t</code>/<code>--token</code> or, if <code>dotenv</code> is not installed, will prompt the user to install it and set the right environment variables.</li>
+</ul>
+<h4 id="docs_10">Docs<a class="headerlink" href="#docs_10" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fixed some links not pointing to the correct documentation pages.</li>
+<li><img alt="💡" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4a1.svg" title=":bulb:" /> Added a "Usage Tips" section describing how to save queries for later use.</li>
+</ul>
+<h4 id="ci_3">CI<a class="headerlink" href="#ci_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Set up automatic building of docs using <code>mike</code> and Github Actions.</li>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fix <code>deploy_docs</code> nox session to install dependencies and actually run the deploy command.</li>
+</ul>
+<h2 id="06"><code>0.6</code><a class="headerlink" href="#06" title="Permanent link">&para;</a></h2>
+<h3 id="061-2023-07-19"><code>0.6.1</code> (2023-07-19)<a class="headerlink" href="#061-2023-07-19" title="Permanent link">&para;</a></h3>
+<h4 id="fix_8">Fix<a class="headerlink" href="#fix_8" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fix <code>metric_keys</code> incorrectly categorized as a filter instead of a top-level parameter within the <code>Query</code> class.</li>
+</ul>
+<h4 id="internal_9">Internal<a class="headerlink" href="#internal_9" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🔧" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f527.svg" title=":wrench:" /> Changed the custom <code>IntEnum</code> implementation to not override the standard lib's <code>IntEnum.__str__</code>.</li>
+<li><img alt="🔨" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f528.svg" title=":hammer:" /> Added <code>nox</code> session for deploying docs.</li>
+</ul>
+<h4 id="tests_1">Tests<a class="headerlink" href="#tests_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🧪" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9ea.svg" title=":test_tube:" /> Added tests for checking that filters and parameters are assigned correctly in <code>Client</code> methods.</li>
+</ul>
+<h4 id="docs_11">Docs<a class="headerlink" href="#docs_11" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="📓" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f4d3.svg" title=":notebook:" /> Added warning about potential SSL errors outside of <code>bavapi</code> when using the Fount API.</li>
+</ul>
+<h3 id="060-2023-07-13"><code>0.6.0</code> (2023-07-13)<a class="headerlink" href="#060-2023-07-13" title="Permanent link">&para;</a></h3>
+<h4 id="internal_10">Internal<a class="headerlink" href="#internal_10" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🚀" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f680.svg" title=":rocket:" /> Upgraded <a href="https://pypi.org/project/pydantic/"><code>pydantic</code></a> to <code>v2</code>. Use <code>bavapi</code> <code>v0.5</code> for compatibility with <code>pydantic</code> <code>v1</code>.</li>
+</ul>
+<h4 id="typing_2">Typing<a class="headerlink" href="#typing_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><img alt="🐛" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f41b.svg" title=":bug:" /> Fixed use of <code>type</code> in type hints not compatible with Python 3.8.</li>
+<li><img alt="🧹" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/1f9f9.svg" title=":broom:" /> Cleaned up type hints in tests.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Introduction
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../roadmap/" class="md-footer__link md-footer__link--next" aria-label="Next: Roadmap">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Roadmap
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 WPPBAV
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+    
+  </body>
+</html>
