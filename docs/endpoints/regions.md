@@ -33,7 +33,7 @@ For more information on available filters and functionality, see the Fount docum
 
 These filters are available directly within the function/method:
 
-- Positional filters: None
+- Positional filters: `name`
 - Keyword filters: `region_id`
 
 For other filters, passing a `RegionsFilters` instance to the `filters` parameter is required.
