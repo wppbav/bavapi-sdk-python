@@ -62,7 +62,8 @@ These `raw_query` methods require the use of [`bavapi.Query`][query.Query] insta
 
 ```py
 import bavapi
-from bavapi import Query, FountFilters
+from bavapi import Query
+from bavapi.filters import FountFilters
 
 async with bavapi.Client("TOKEN") as bav:
     res = bav.raw_query("companies", Query(filters=FountFilters(name="Apple")))
@@ -91,7 +92,7 @@ The default values for the class are the same as the default values in the Fount
 query = bavapi.Query()
 
 async with bavapi.Client("TOKEN") as bav:
-    res = bav.raw_query("brand-metrics", query) # (1)
+    res = await bav.raw_query("brand-metrics", query) # (1)
 ```
 
 1. :material-expand-all: Returns all entries for `brand-metrics`. Similar to making a `GET` request with no parameters.

@@ -29,9 +29,9 @@
 
 #### Internal
 
-- :info: Cleaned up and added comments to documentation scripts.
+- :information_source: Cleaned up and added comments to documentation scripts.
 - :sparkles: Removed `tqdm` as a dependency from the batching logic.
-- :info: Added comments to `nox` session for deploying the docs.
+- :information_source: Added comments to `nox` session for deploying the docs.
 - :broom: Simplified some logic in `Query.ensure`.
 - :tada: Added support for specifying exceptions to retry on for `aretry` internal function.
 

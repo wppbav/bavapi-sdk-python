@@ -100,7 +100,6 @@ nav:
 
 plugins:
   - search
-  # - social
   - gen-files:
       scripts:
         - docs/gen_ref_pages.py
