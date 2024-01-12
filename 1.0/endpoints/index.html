@@ -1471,7 +1471,7 @@
 
 
 <h1 id="endpoints">Endpoints<a class="headerlink" href="#endpoints" title="Permanent link">&para;</a></h1>
-<p>As of <code>v0.13</code>, there are four endpoints that have been fully implemented in <code>bavapi</code>:</p>
+<p>As of <code>v1.0</code>, these are the endpoints that have been fully implemented in <code>bavapi</code>:</p>
 <ul>
 <li><a href="audiences/"><code>audiences</code></a></li>
 <li><a href="brand-metrics/"><code>brand-metrics</code></a></li>
@@ -1539,10 +1539,9 @@
 <div class="language-py highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">bavapi</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span> <span class="nn">bavapi.parsing.responses</span> <span class="kn">import</span> <span class="n">parse_response</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">async</span> <span class="k">with</span> <span class="n">bavapi</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="s2">&quot;TOKEN&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">bav</span><span class="p">:</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">bav</span><span class="o">.</span><span class="n">raw_query</span><span class="p">(</span><span class="s2">&quot;companies&quot;</span><span class="p">,</span> <span class="n">bavapi</span><span class="o">.</span><span class="n">Query</span><span class="p">())</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">parsed</span> <span class="o">=</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># will return a DataFrame</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">result</span> <span class="o">=</span> <span class="n">bavapi</span><span class="o">.</span><span class="n">raw_query</span><span class="p">(</span><span class="s2">&quot;companies&quot;</span><span class="p">,</span> <span class="n">bavapi</span><span class="o">.</span><span class="n">Query</span><span class="p">())</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">parsed</span> <span class="o">=</span> <span class="n">parse_response</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># will return a DataFrame</span>
 </span></code></pre></div>
 
 
