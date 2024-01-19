@@ -66,7 +66,7 @@ from bavapi import Query
 from bavapi.filters import FountFilters
 
 async with bavapi.Client("TOKEN") as bav:
-    res = bav.raw_query("companies", Query(filters=FountFilters(name="Apple")))
+    res = await bav.raw_query("companies", Query(filters=FountFilters(name="Apple")))
 ```
 
 These functions will return a list of JSON dictionaries, one for each entry retrieved from the Fount:
