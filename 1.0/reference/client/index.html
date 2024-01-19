@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
     
     
       
@@ -4553,7 +4553,7 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
 </span><span id="__span-0-830"><a id="__codelineno-0-830" name="__codelineno-0-830"></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">categories</span><span class="p">(</span>
 </span><span id="__span-0-831"><a id="__codelineno-0-831" name="__codelineno-0-831"></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="__span-0-832"><a id="__codelineno-0-832" name="__codelineno-0-832"></a>        <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-0-833"><a id="__codelineno-0-833" name="__codelineno-0-833"></a>        <span class="n">sector</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-0-833"><a id="__codelineno-0-833" name="__codelineno-0-833"></a>        <span class="n">sectors</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-834"><a id="__codelineno-0-834" name="__codelineno-0-834"></a>        <span class="o">*</span><span class="p">,</span>
 </span><span id="__span-0-835"><a id="__codelineno-0-835" name="__codelineno-0-835"></a>        <span class="n">category_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-836"><a id="__codelineno-0-836" name="__codelineno-0-836"></a>        <span class="n">filters</span><span class="p">:</span> <span class="n">OptionalFiltersOrMapping</span><span class="p">[</span><span class="n">_filters</span><span class="o">.</span><span class="n">CategoriesFilters</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -4578,7 +4578,7 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
 </span><span id="__span-0-855"><a id="__codelineno-0-855" name="__codelineno-0-855"></a><span class="sd">        ----------</span>
 </span><span id="__span-0-856"><a id="__codelineno-0-856" name="__codelineno-0-856"></a><span class="sd">        name : str, optional</span>
 </span><span id="__span-0-857"><a id="__codelineno-0-857" name="__codelineno-0-857"></a><span class="sd">            Search categories by name, default None</span>
-</span><span id="__span-0-858"><a id="__codelineno-0-858" name="__codelineno-0-858"></a><span class="sd">        sector : int or list[int], optional</span>
+</span><span id="__span-0-858"><a id="__codelineno-0-858" name="__codelineno-0-858"></a><span class="sd">        sectors : int or list[int], optional</span>
 </span><span id="__span-0-859"><a id="__codelineno-0-859" name="__codelineno-0-859"></a><span class="sd">            Filter categories by sector ID, default None</span>
 </span><span id="__span-0-860"><a id="__codelineno-0-860" name="__codelineno-0-860"></a><span class="sd">        category_id : int, optional</span>
 </span><span id="__span-0-861"><a id="__codelineno-0-861" name="__codelineno-0-861"></a><span class="sd">            Fount category ID, default None</span>
@@ -4628,7 +4628,7 @@ recommended to use <code>verbose=False</code> to avoid jumping progress bars.</p
 </span><span id="__span-0-905"><a id="__codelineno-0-905" name="__codelineno-0-905"></a>        <span class="n">filters</span> <span class="o">=</span> <span class="n">_filters</span><span class="o">.</span><span class="n">CategoriesFilters</span><span class="o">.</span><span class="n">ensure</span><span class="p">(</span>
 </span><span id="__span-0-906"><a id="__codelineno-0-906" name="__codelineno-0-906"></a>            <span class="n">filters</span><span class="p">,</span>
 </span><span id="__span-0-907"><a id="__codelineno-0-907" name="__codelineno-0-907"></a>            <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-</span><span id="__span-0-908"><a id="__codelineno-0-908" name="__codelineno-0-908"></a>            <span class="n">sector</span><span class="o">=</span><span class="n">sector</span><span class="p">,</span>
+</span><span id="__span-0-908"><a id="__codelineno-0-908" name="__codelineno-0-908"></a>            <span class="n">sectors</span><span class="o">=</span><span class="n">sectors</span><span class="p">,</span>
 </span><span id="__span-0-909"><a id="__codelineno-0-909" name="__codelineno-0-909"></a>        <span class="p">)</span>
 </span><span id="__span-0-910"><a id="__codelineno-0-910" name="__codelineno-0-910"></a>
 </span><span id="__span-0-911"><a id="__codelineno-0-911" name="__codelineno-0-911"></a>        <span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="o">.</span><span class="n">ensure</span><span class="p">(</span>
@@ -8092,7 +8092,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 
 
 <h3 id="client.Client.categories" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">categories</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -8139,7 +8139,7 @@ part of the default.</p>
           </td>
         </tr>
         <tr>
-          <td><code>sector</code></td>
+          <td><code>sectors</code></td>
           <td>
                 <code>int or list[int]</code>
           </td>
@@ -8441,7 +8441,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 <span class="normal"><a href="#__codelineno-0-922">922</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-830"><a id="__codelineno-0-830" name="__codelineno-0-830"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">categories</span><span class="p">(</span>
 </span><span id="__span-0-831"><a id="__codelineno-0-831" name="__codelineno-0-831"></a>    <span class="bp">self</span><span class="p">,</span>
 </span><span id="__span-0-832"><a id="__codelineno-0-832" name="__codelineno-0-832"></a>    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-0-833"><a id="__codelineno-0-833" name="__codelineno-0-833"></a>    <span class="n">sector</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-0-833"><a id="__codelineno-0-833" name="__codelineno-0-833"></a>    <span class="n">sectors</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-834"><a id="__codelineno-0-834" name="__codelineno-0-834"></a>    <span class="o">*</span><span class="p">,</span>
 </span><span id="__span-0-835"><a id="__codelineno-0-835" name="__codelineno-0-835"></a>    <span class="n">category_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-836"><a id="__codelineno-0-836" name="__codelineno-0-836"></a>    <span class="n">filters</span><span class="p">:</span> <span class="n">OptionalFiltersOrMapping</span><span class="p">[</span><span class="n">_filters</span><span class="o">.</span><span class="n">CategoriesFilters</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -8466,7 +8466,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-855"><a id="__codelineno-0-855" name="__codelineno-0-855"></a><span class="sd">    ----------</span>
 </span><span id="__span-0-856"><a id="__codelineno-0-856" name="__codelineno-0-856"></a><span class="sd">    name : str, optional</span>
 </span><span id="__span-0-857"><a id="__codelineno-0-857" name="__codelineno-0-857"></a><span class="sd">        Search categories by name, default None</span>
-</span><span id="__span-0-858"><a id="__codelineno-0-858" name="__codelineno-0-858"></a><span class="sd">    sector : int or list[int], optional</span>
+</span><span id="__span-0-858"><a id="__codelineno-0-858" name="__codelineno-0-858"></a><span class="sd">    sectors : int or list[int], optional</span>
 </span><span id="__span-0-859"><a id="__codelineno-0-859" name="__codelineno-0-859"></a><span class="sd">        Filter categories by sector ID, default None</span>
 </span><span id="__span-0-860"><a id="__codelineno-0-860" name="__codelineno-0-860"></a><span class="sd">    category_id : int, optional</span>
 </span><span id="__span-0-861"><a id="__codelineno-0-861" name="__codelineno-0-861"></a><span class="sd">        Fount category ID, default None</span>
@@ -8516,7 +8516,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-905"><a id="__codelineno-0-905" name="__codelineno-0-905"></a>    <span class="n">filters</span> <span class="o">=</span> <span class="n">_filters</span><span class="o">.</span><span class="n">CategoriesFilters</span><span class="o">.</span><span class="n">ensure</span><span class="p">(</span>
 </span><span id="__span-0-906"><a id="__codelineno-0-906" name="__codelineno-0-906"></a>        <span class="n">filters</span><span class="p">,</span>
 </span><span id="__span-0-907"><a id="__codelineno-0-907" name="__codelineno-0-907"></a>        <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
-</span><span id="__span-0-908"><a id="__codelineno-0-908" name="__codelineno-0-908"></a>        <span class="n">sector</span><span class="o">=</span><span class="n">sector</span><span class="p">,</span>
+</span><span id="__span-0-908"><a id="__codelineno-0-908" name="__codelineno-0-908"></a>        <span class="n">sectors</span><span class="o">=</span><span class="n">sectors</span><span class="p">,</span>
 </span><span id="__span-0-909"><a id="__codelineno-0-909" name="__codelineno-0-909"></a>    <span class="p">)</span>
 </span><span id="__span-0-910"><a id="__codelineno-0-910" name="__codelineno-0-910"></a>
 </span><span id="__span-0-911"><a id="__codelineno-0-911" name="__codelineno-0-911"></a>    <span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="o">.</span><span class="n">ensure</span><span class="p">(</span>
@@ -12432,10 +12432,10 @@ For any filters, use the <code>filters</code> parameter.</p>
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.7389ff0e.min.js"></script>
       
     
   </body>

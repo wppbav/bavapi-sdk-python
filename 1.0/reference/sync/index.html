@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
     
     
       
@@ -5082,7 +5082,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 
 
 <h2 id="sync.categories" class="doc doc-heading">
-          <code class="highlight language-python"><span class="n">categories</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sector</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">on_errors</span><span class="o">=</span><span class="s1">&#39;warn&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+          <code class="highlight language-python"><span class="n">categories</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sectors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">category_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">include</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stack_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">on_errors</span><span class="o">=</span><span class="s1">&#39;warn&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
   
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-async"><code>async</code></small>
@@ -5140,7 +5140,7 @@ For any filters, use the <code>filters</code> parameter.</p>
           </td>
         </tr>
         <tr>
-          <td><code>sector</code></td>
+          <td><code>sectors</code></td>
           <td>
                 <code>int or list[int]</code>
           </td>
@@ -5547,7 +5547,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-785"><a id="__codelineno-0-785" name="__codelineno-0-785"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">categories</span><span class="p">(</span>
 </span><span id="__span-0-786"><a id="__codelineno-0-786" name="__codelineno-0-786"></a>    <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 </span><span id="__span-0-787"><a id="__codelineno-0-787" name="__codelineno-0-787"></a>    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-0-788"><a id="__codelineno-0-788" name="__codelineno-0-788"></a>    <span class="n">sector</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="__span-0-788"><a id="__codelineno-0-788" name="__codelineno-0-788"></a>    <span class="n">sectors</span><span class="p">:</span> <span class="n">OptionalListOr</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-789"><a id="__codelineno-0-789" name="__codelineno-0-789"></a>    <span class="o">*</span><span class="p">,</span>
 </span><span id="__span-0-790"><a id="__codelineno-0-790" name="__codelineno-0-790"></a>    <span class="n">category_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="__span-0-791"><a id="__codelineno-0-791" name="__codelineno-0-791"></a>    <span class="n">filters</span><span class="p">:</span> <span class="n">OptionalFiltersOrMapping</span><span class="p">[</span><span class="n">_filters</span><span class="o">.</span><span class="n">CategoriesFilters</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -5576,7 +5576,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-814"><a id="__codelineno-0-814" name="__codelineno-0-814"></a><span class="sd">        WPPBAV Fount API token</span>
 </span><span id="__span-0-815"><a id="__codelineno-0-815" name="__codelineno-0-815"></a><span class="sd">    name : str, optional</span>
 </span><span id="__span-0-816"><a id="__codelineno-0-816" name="__codelineno-0-816"></a><span class="sd">        Search categories by name, default None</span>
-</span><span id="__span-0-817"><a id="__codelineno-0-817" name="__codelineno-0-817"></a><span class="sd">    sector : int or list[int], optional</span>
+</span><span id="__span-0-817"><a id="__codelineno-0-817" name="__codelineno-0-817"></a><span class="sd">    sectors : int or list[int], optional</span>
 </span><span id="__span-0-818"><a id="__codelineno-0-818" name="__codelineno-0-818"></a><span class="sd">        Filter categories by sector ID, default 0</span>
 </span><span id="__span-0-819"><a id="__codelineno-0-819" name="__codelineno-0-819"></a><span class="sd">    category_id : int, optional</span>
 </span><span id="__span-0-820"><a id="__codelineno-0-820" name="__codelineno-0-820"></a><span class="sd">        Fount category ID, default None</span>
@@ -5647,7 +5647,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-885"><a id="__codelineno-0-885" name="__codelineno-0-885"></a>    <span class="p">)</span> <span class="k">as</span> <span class="n">client</span><span class="p">:</span>
 </span><span id="__span-0-886"><a id="__codelineno-0-886" name="__codelineno-0-886"></a>        <span class="k">return</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">categories</span><span class="p">(</span>
 </span><span id="__span-0-887"><a id="__codelineno-0-887" name="__codelineno-0-887"></a>            <span class="n">name</span><span class="p">,</span>
-</span><span id="__span-0-888"><a id="__codelineno-0-888" name="__codelineno-0-888"></a>            <span class="n">sector</span><span class="p">,</span>
+</span><span id="__span-0-888"><a id="__codelineno-0-888" name="__codelineno-0-888"></a>            <span class="n">sectors</span><span class="p">,</span>
 </span><span id="__span-0-889"><a id="__codelineno-0-889" name="__codelineno-0-889"></a>            <span class="n">category_id</span><span class="o">=</span><span class="n">category_id</span><span class="p">,</span>
 </span><span id="__span-0-890"><a id="__codelineno-0-890" name="__codelineno-0-890"></a>            <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">,</span>
 </span><span id="__span-0-891"><a id="__codelineno-0-891" name="__codelineno-0-891"></a>            <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span>
@@ -10885,10 +10885,10 @@ For any filters, use the <code>filters</code> parameter.</p>
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.7389ff0e.min.js"></script>
       
     
   </body>
