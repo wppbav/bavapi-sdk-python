@@ -830,7 +830,7 @@ class Client:
     async def categories(
         self,
         name: Optional[str] = None,
-        sector: OptionalListOr[int] = None,
+        sectors: OptionalListOr[int] = None,
         *,
         category_id: Optional[int] = None,
         filters: OptionalFiltersOrMapping[_filters.CategoriesFilters] = None,
@@ -855,7 +855,7 @@ class Client:
         ----------
         name : str, optional
             Search categories by name, default None
-        sector : int or list[int], optional
+        sectors : int or list[int], optional
             Filter categories by sector ID, default None
         category_id : int, optional
             Fount category ID, default None
@@ -905,7 +905,7 @@ class Client:
         filters = _filters.CategoriesFilters.ensure(
             filters,
             name=name,
-            sector=sector,
+            sectors=sectors,
         )
 
         query = Query.ensure(
