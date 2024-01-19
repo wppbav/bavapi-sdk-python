@@ -253,7 +253,7 @@ async def test_brandscape_data(
     (
         None,
         Query(
-            filters=filters.CategoriesFilters(sector=1),
+            filters=filters.CategoriesFilters(sectors=1),
             fields="test",
             include=["sector"],
         ),
@@ -263,12 +263,12 @@ async def test_brandscape_data(
 async def test_categories(
     mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
 ):
-    await fount.categories(sector=1, fields="test", query=query)
+    await fount.categories(sectors=1, fields="test", query=query)
 
     mock_query.assert_awaited_once_with(
         "categories",
         Query(
-            filters=filters.CategoriesFilters(sector=1),
+            filters=filters.CategoriesFilters(sectors=1),
             fields="test",
             include=["sector"],
         ),
