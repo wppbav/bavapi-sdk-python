@@ -2,6 +2,12 @@
 
 ## `1.0`
 
+### `1.0.1` (2024-01-19)
+
+#### Fix
+
+- :bug: Fixed typo in `sectors` (previously spelled `sector`) parameter for `categories` endpoint queries.
+
 ### `1.0.0` (2024-01-04)
 
 #### Feature
