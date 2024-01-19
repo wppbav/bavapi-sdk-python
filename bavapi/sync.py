@@ -785,7 +785,7 @@ async def brandscape_data(
 async def categories(
     token: str,
     name: Optional[str] = None,
-    sector: OptionalListOr[int] = None,
+    sectors: OptionalListOr[int] = None,
     *,
     category_id: Optional[int] = None,
     filters: OptionalFiltersOrMapping[_filters.CategoriesFilters] = None,
@@ -814,7 +814,7 @@ async def categories(
         WPPBAV Fount API token
     name : str, optional
         Search categories by name, default None
-    sector : int or list[int], optional
+    sectors : int or list[int], optional
         Filter categories by sector ID, default 0
     category_id : int, optional
         Fount category ID, default None
@@ -885,7 +885,7 @@ async def categories(
     ) as client:
         return await client.categories(
             name,
-            sector,
+            sectors,
             category_id=category_id,
             filters=filters,
             fields=fields,

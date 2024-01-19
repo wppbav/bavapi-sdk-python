@@ -372,7 +372,7 @@ class CategoriesFilters(FountFilters):
 
     Attributes
     ----------
-    sector : int or list[int], optional
+    sectors : int or list[int], optional
         Fount sector ID or list of sector IDs, default None
 
     Other Parameters
@@ -381,7 +381,7 @@ class CategoriesFilters(FountFilters):
         Request items that have been updated since the specified date, default None
     """
 
-    sector: OptionalListOr[int] = None
+    sectors: OptionalListOr[int] = None
 
 
 class CitiesFilters(FountFilters):
