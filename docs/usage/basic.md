@@ -188,7 +188,7 @@ result = bavapi.brands(name="Swatch", includes="company")
 
 All requests to the Fount are "paginated", meaning that one must request and receive from the server one page at a time. `bavapi` then combines all responses into one data table.
 
-!!! abstract "New in `v0.12.0`"
+!!! abstract "New in `v0.12`"
 
 Pagination is controlled by three parameters:
 
@@ -235,7 +235,7 @@ bavapi.studies("TOKEN", page=3, max_pages=30)
 
 ### Metric and metric group keys
 
-!!! abstract "New in `v0.12.0`"
+!!! abstract "New in `v0.12`"
 
 !!! info "Read more in the [API documentation](https://developer.wppbav.com/docs/2.x/core-resources/brandscape-data#additional-column-customizations)"
 
@@ -248,7 +248,7 @@ The API response will include all score types for that metric or metric group.
 
 ## Using `Query` objects
 
-!!! abstract "New in `v0.11.0`"
+!!! abstract "New in `v0.11`"
 
 While the available parameters in endpoint functions and methods are provided for convenience, it is possible to use [`bavapi.Query`][query.Query] objects directly inside function calls.
 

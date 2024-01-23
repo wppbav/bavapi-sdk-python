@@ -108,7 +108,7 @@ As a result, you will see a set of columns, extracted from the `"brand"` include
 
 ## Metric and metric group keys
 
-!!! abstract "New in `v0.12.0`"
+!!! abstract "New in `v0.12`"
 
 `brandscape-data` functions and methods provide two parameters to specify the data *columns* that the response should contain: `metric_keys` and `metric_group_keys`.
 

@@ -28,7 +28,7 @@ This will attempt to make the request 3 times upon failure. If none of the tries
 
     If you are using an older version of `bavapi`, or you want to work around API rate limits, this tip should still apply.
 
-!!! abstract "New in `v0.12.0`"
+!!! abstract "New in `v0.12`"
 
 Thanks to the new pagination logic, it is now possible to batch large requests to manage rate limits using `page`, `per_page` and `max_pages`.
 
@@ -143,7 +143,7 @@ When saving and re-loading `Query` objects, its filters will be loaded as the ba
 
 For that reason, it is recommended *NOT* to create the filters and query in JSON directly, but to create the query in Python and then dump to JSON, so the values get validated before saving the query to a JSON file.
 
-!!! abstract "New in `v0.11.0`"
+!!! abstract "New in `v0.11`"
 
 You can save and load Query objects to be used with any endpoint function or method.
 
