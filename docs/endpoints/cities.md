@@ -33,7 +33,7 @@ For more information on available filters and functionality, see the Fount docum
 
 These filters are available directly within the function/method:
 
-- Positional filters: `capitals`, `countries`, `in_best_countries`
+- Positional filters: `name`, `capitals`, `countries`, `in_best_countries`
 - Keyword filters: `city_id`
 
 For other filters, passing a `CitiesFilters` instance to the `filters` parameter is required.
