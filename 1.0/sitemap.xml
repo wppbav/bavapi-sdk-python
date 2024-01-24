@@ -2,177 +2,177 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/contributing/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/release-notes/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/roadmap/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/audiences/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/brand-metric-groups/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/brand-metrics/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/brands/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/brandscape-data/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/categories/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/cities/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/collections/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/companies/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/countries/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/regions/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/sectors/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/studies/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/endpoints/years/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/getting-started/authentication/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/getting-started/installation/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/getting-started/reference-classes/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/SUMMARY/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/client/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/exceptions/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/filters/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/http/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/query/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/sync/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/parsing/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/parsing/params/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/reference/parsing/responses/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/usage/advanced/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/usage/basic/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://wppbav.github.io/bavapi-sdk-python/1.0/usage/project-tips/</loc>
-         <lastmod>2024-01-19</lastmod>
+         <lastmod>2024-01-24</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
