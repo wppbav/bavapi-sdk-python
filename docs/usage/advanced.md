@@ -193,7 +193,7 @@ The query from the examples above will result in *25* concurrent API requests (5
 
 ## User Agent
 
-!!! abstract "New in `v0.8.0`"
+!!! abstract "New in `v0.8`"
 
 It is possible to set the `User Agent` parameter for HTTP requests.
 

@@ -41,7 +41,7 @@ And could be used to have better visibility and readability when filtering API r
 
 ## Generate Reference classes
 
-!!! abstract "New in `v0.7.0`"
+!!! abstract "New in `v0.7`"
 
 To generate these reference classes, there are two options for authenticating your requests:
 
@@ -72,7 +72,7 @@ To update existing reference classes with the latest data, re-run `bavapi-gen-re
 
 ### Specify destination folder
 
-!!! abstract "New in `v0.11.0`"
+!!! abstract "New in `v0.11`"
 
 Finally, you can specify the destination folder with `-d`/`--dest-folder` where you want to store the reference classes. This will determine the name required for import (`from {dest_folder} import {Reference}`).
 

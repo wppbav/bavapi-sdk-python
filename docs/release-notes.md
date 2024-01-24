@@ -8,6 +8,17 @@
 
 - :bug: Fixed typo in `sectors` (previously spelled `sector`) parameter for `categories` endpoint queries.
 
+#### Docs
+
+- :sparkles: Fixed docs update script to execute only when the `CONTRIBUTING.md` file changes.
+- :sparkles: Fixed version numbers to only have `major.minor` format in docs.
+- :bug: Fix external library/package links.
+- :notebook: Fix missing `name` parameter from various endpoint documentation pages.
+
+#### Internal
+
+- :sparkles: Cleaned up docs sessions in `nox` file, now will only use `mkdocs serve` for local development.
+
 ### `1.0.0` (2024-01-04)
 
 #### Feature

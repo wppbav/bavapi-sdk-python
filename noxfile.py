@@ -206,10 +206,7 @@ def docs_deploy(session: nox.Session) -> None:
     def version_tuple(version: str) -> Tuple[int, ...]:
         return tuple(int(i) for i in version.split("."))
 
-    def get_versions(args: Iterable[str], rebase: bool = False) -> set[Tuple[int, ...]]:
-        if rebase:
-            args = tuple(["--rebase"] + list(args))
-
+    def get_versions(args: Iterable[str]) -> set[Tuple[int, ...]]:
         out = cast(str, session.run("mike", "list", *args, silent=True))
         return {
             tuple(int(i) for i in v.partition(" ")[0].split("."))
@@ -230,15 +227,7 @@ def docs_deploy(session: nox.Session) -> None:
     list_args = ("-b", "gh-pages") if remote else ()
     deploy_args = ["--push", minor_str] if remote else [minor_str]
 
-    # Get deployed versions from branch
-    try:
-        versions = get_versions(list_args)
-    except ValueError:
-        # Raises ValueError when list command returns bad version string
-        # when checking remote versions if `--push` is specified
-        # because local is not synced to remote, so a rebase is required
-        # Might not be necessary in `mike>=2.0`
-        versions = get_versions(list_args, rebase=True)
+    versions = get_versions(list_args)
 
     if version[:2] in versions:
         print(f"Updating docs {remote_str}for version {minor_str}...")
@@ -254,11 +243,4 @@ def docs_deploy(session: nox.Session) -> None:
 @nox.session(python=False)
 def docs_serve(session: nox.Session) -> None:
     """Serve documentation. Suitable for local development."""
-    session.run("mike", "serve")
-
-
-@nox.session(python=False)
-def docs_build_and_serve(session: nox.Session) -> None:
-    """Build and serve documentation. Suitable for local development."""
-    session.notify("docs_deploy", session.posargs)
-    session.notify("docs_serve")
+    session.run("mkdocs", "serve")

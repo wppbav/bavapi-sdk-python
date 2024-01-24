@@ -112,10 +112,12 @@ plugins:
       handlers:
         python:
           import:
-            - https://docs.python-requests.org/en/master/objects.inv
+            - https://docs.python.org/3/objects.inv
+            - https://docs.pydantic.dev/latest/objects.inv
           paths: [bavapi]
           options:
             docstring_style: numpy
+            merge_init_into_class: true
 
 watch:
   - bavapi

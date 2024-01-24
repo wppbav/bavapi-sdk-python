@@ -33,7 +33,7 @@ For more information on available filters and functionality, see the Fount docum
 
 These filters are available directly within the function/method:
 
-- Positional filters: `public`, `private`, `brands`
+- Positional filters: `name`, `public`, `private`, `brands`
 - Keyword filters: `company_id`
 
 For other filters, passing a `CompaniesFilters` instance to the `filters` parameter is required.
