@@ -185,7 +185,7 @@ async def audiences(
         Return inactive audiences only if set to `1`, default 0
     groups : int or list[int], optional
         Audience group ID or list of audience group IDs, default None
-    filters : AudiencesFilters or dict of filters, optional
+    filters : AudiencesFilters or dict[str, Any], optional
         AudiencesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -236,7 +236,7 @@ async def audiences(
     Returns
     -------
     pandas.DataFrame
-        DataFrame with `brands` endpoint results
+        DataFrame with `audiences` endpoint results
     """
 
     async with Client(
@@ -307,7 +307,7 @@ async def brand_metrics(
         Return inactive brand metrics only if set to `1`, default 0
     groups : int or list[int], optional
         Brand metrics group ID or list of brand metrics group IDs, default None
-    filters : BrandMetricsFilters or dict of filters, optional
+    filters : BrandMetricsFilters or dict[str, Any], optional
         BrandMetricsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -420,7 +420,7 @@ async def brand_metric_groups(
         Fount brand metric group ID, default None
 
         If a metric group ID is provided, only that metric group will be returned
-    filters : BrandMetricGroupsFilters or dict of filters, optional
+    filters : BrandMetricGroupsFilters or dict[str, Any], optional
         BrandMetricGroupsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -536,7 +536,7 @@ async def brands(
         If a brand ID is provided, only that brand will be returned
     studies : int or list[int], optional
         Fount study IDs, default None
-    filters : BrandsFilters or dict of filters, optional
+    filters : BrandsFilters or dict[str, Any], optional
         BrandsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -690,7 +690,7 @@ async def brandscape_data(
         Search by brand name, default None
     studies : int or list[int], optional
         Fount studies IDs, default None
-    filters : BrandscapeFilters or dict of filters, optional
+    filters : BrandscapeFilters or dict[str, Any], optional
         BrandscapeFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -820,7 +820,7 @@ async def categories(
         Fount category ID, default None
 
         If a category ID is provided, only that category will be returned
-    filters : CategoriesFilters or dict of filters, optional
+    filters : CategoriesFilters or dict[str, Any], optional
         CategoriesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -938,7 +938,7 @@ async def cities(
         Fount city ID, default None
 
         If a city ID is provided, only that city will be returned
-    filters : CitiesFilters or dict of filters, optional
+    filters : CitiesFilters or dict[str, Any], optional
         CitiesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -1056,7 +1056,7 @@ async def collections(
         Only return collections that have been shared with the user, default 0
     mine : Literal[0, 1], optional
         Only return collections created by the user, default 0
-    filters : CollectionsFilters or dict of filters, optional
+    filters : CollectionsFilters or dict[str, Any], optional
         CollectionsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -1176,7 +1176,7 @@ async def companies(
         Fount company ID, default None
 
         If a company ID is provided, only that company will be returned
-    filters : CompaniesFilters or dict of filters, optional
+    filters : CompaniesFilters or dict[str, Any], optional
         CompaniesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -1299,7 +1299,7 @@ async def countries(
         Years of recency of studies in a specific country, default None
 
         Only return countries which have had a BAV study in the past X years
-    filters : CountriesFilters or dict of filters, optional
+    filters : CountriesFilters or dict[str, Any], optional
         CountriesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -1409,7 +1409,7 @@ async def regions(
         Fount region ID, default None
 
         If a region ID is provided, only that region will be returned
-    filters : RegionsFilters or dict of filters, optional
+    filters : RegionsFilters or dict[str, Any], optional
         RegionsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -1518,7 +1518,7 @@ async def sectors(
         Fount sectors ID, default None
 
         If a sector ID is provided, only that sector will be returned
-    filters : SectorsFilters or dict of filters, optional
+    filters : SectorsFilters or dict[str, Any], optional
         SectorsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -1639,7 +1639,7 @@ async def studies(
     study_id : int, optional
         Fount study ID, default None
         If a study ID is provided, only that study will be returned
-    filters : StudiesFilters or dict of filters, optional
+    filters : StudiesFilters or dict[str, Any], optional
         StudiesFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
@@ -1749,7 +1749,7 @@ async def years(
         Fount year ID, default None
 
         If a year ID is provided, only that year will be returned
-    filters : YearsFilters or dict of filters, optional
+    filters : YearsFilters or dict[str, Any], optional
         YearsFilters object or dictionary of filter parameters, default None
     fields : str or list[str], optional
         Fields to retrieve in API response, default None
