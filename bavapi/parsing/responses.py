@@ -163,5 +163,30 @@ def parse_response(
             index=index,
         )
         .dropna(axis=1, how="all")
-        .transform(pd.to_numeric, errors="ignore")
+        .transform(convert_numeric)
     )
+
+
+def convert_numeric(series: pd.Series) -> pd.Series:
+    """Convert pandas series into appropriate numeric types.
+    
+    - Float and int values are returned directly with no conversion.
+    - String values are converted to int if possible, else float. Otherwise, return the
+    series with no conversion.
+
+    Parameters
+    ----------
+    series : pd.Series
+        Pandas series to convert to numeric type
+
+    Returns
+    -------
+    pd.Series
+        Pandas series with numeric dtype, or current dtype if coercion is not possible
+    """
+    if series.dtype in (float, int):
+        return series
+    try:
+        return series.astype(int)
+    except ValueError:
+        return series.astype(float, errors="ignore")
