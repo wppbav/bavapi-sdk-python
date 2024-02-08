@@ -2,6 +2,24 @@
 
 ## `1.0`
 
+### `1.0.2` (2024-02-08)
+
+#### Fix
+
+- :warning: Fix deprecation warning when parsing responses into dataframes with `pandas>=2.2`.
+
+#### Docs
+
+- :sparkles: Add ability to copy code blocks from the documentation.
+
+#### Test
+
+- :test_tube: Added tests for correct dtype conversions.
+
+#### Internal
+
+- :broom: Cleaned up unused and ignored logging for development scripts.
+
 ### `1.0.1` (2024-01-19)
 
 #### Fix

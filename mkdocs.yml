@@ -4,7 +4,7 @@ site_url: https://wppbav.github.io/bavapi-sdk-python
 repo_name: wppbav/bavapi-sdk-python
 repo_url: https://github.com/wppbav/bavapi-sdk-python
 
-copyright: Copyright &copy; 2023 WPPBAV
+copyright: Copyright &copy; 2024 WPPBAV
 
 theme:
   name: material
@@ -15,6 +15,7 @@ theme:
     repo: fontawesome/brands/github
   features:
     - content.code.annotate
+    - content.code.copy
     - navigation.footer
     - navigation.instant
     - navigation.instant.progress
@@ -27,7 +28,7 @@ theme:
     - media: "(prefers-color-scheme)"
       toggle:
         icon: material/brightness-auto
-        name: Switch to light mode
+        name: Switch to dark mode
 
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: dark)"
@@ -45,7 +46,7 @@ theme:
       accent: indigo
       toggle:
         icon: material/brightness-7
-        name: Switch to dark mode
+        name: Use system setting
 
 extra_css: [extra.css]
 
@@ -96,7 +97,7 @@ nav:
   - Endpoints: endpoints/
   - SDK API Reference: reference/
   - Contributing: contributing.md
-  - Fount API Reference: https://developer.wppbav.com/docs/2.x/intro
+  - ↗ Fount API Documentation: https://developer.wppbav.com/docs/2.x/intro
 
 plugins:
   - search

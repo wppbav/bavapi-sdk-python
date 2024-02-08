@@ -117,4 +117,12 @@ def test_parse_response(mock_dropna: mock.Mock, mock_transform: mock.Mock):
 
     assert res.shape == (2, 1)
     mock_dropna.assert_called_once_with(axis=1, how="all")
-    mock_transform.assert_called_once_with(pd.to_numeric, errors="ignore")
+    mock_transform.assert_called_once_with(responses.convert_numeric)
+
+
+def test_convert_numeric():
+    assert responses.convert_numeric(pd.Series(["a", "b"])).dtype == object
+    assert responses.convert_numeric(pd.Series(["1", "2"])).dtype == int
+    assert responses.convert_numeric(pd.Series(["nan", "2.5"])).dtype == float
+    assert responses.convert_numeric(pd.Series([None, 2.5])).dtype == float
+    assert responses.convert_numeric(pd.Series([1, 2])).dtype == int

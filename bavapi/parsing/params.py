@@ -67,7 +67,7 @@ def list_to_str(mapping: BaseMutableParamsMapping) -> BaseMutableParamsMappingVa
     Returns
     -------
     ParamsMappingValues
-        Dictionary without strings
+        Dictionary with lists converted to comma-separated strings
     """
     for key, value in mapping.items():
         if not isinstance(value, str) and isinstance(value, Sequence):
