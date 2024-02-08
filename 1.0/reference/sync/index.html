@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/favicon.svg">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.8">
     
     
       
@@ -26,7 +26,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f2e4d321.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -142,9 +142,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
-      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9h-1.9M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69m-9.15 3.96h2.3L12 9l-1.15 3.65Z"/></svg>
       </label>
     
@@ -162,9 +162,9 @@
     
     
     
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_2">
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="indigo"  aria-label="Use system setting"  type="radio" name="__palette" id="__palette_2">
     
-      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+      <label class="md-header__button md-icon" title="Use system setting" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
       </label>
     
@@ -353,7 +353,7 @@
   
     
   
-  Fount API Reference
+  ↗ Fount API Documentation
 
       </a>
     </li>
@@ -1573,7 +1573,7 @@
         
   
   <span class="md-ellipsis">
-    Fount API Reference
+    ↗ Fount API Documentation
   </span>
   
 
@@ -1949,7 +1949,7 @@ consider using the <code>bavapi.Client</code> interface.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>AudiencesFilters or dict of filters</code>
+                <code>AudiencesFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2200,7 +2200,7 @@ For any filters, use the <code>filters</code> parameter.</p>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>DataFrame with <code>brands</code> endpoint results</p>
+              <p>DataFrame with <code>audiences</code> endpoint results</p>
             </div>
           </td>
         </tr>
@@ -2371,7 +2371,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-185"><a id="__codelineno-0-185" name="__codelineno-0-185"></a><span class="sd">        Return inactive audiences only if set to `1`, default 0</span>
 </span><span id="__span-0-186"><a id="__codelineno-0-186" name="__codelineno-0-186"></a><span class="sd">    groups : int or list[int], optional</span>
 </span><span id="__span-0-187"><a id="__codelineno-0-187" name="__codelineno-0-187"></a><span class="sd">        Audience group ID or list of audience group IDs, default None</span>
-</span><span id="__span-0-188"><a id="__codelineno-0-188" name="__codelineno-0-188"></a><span class="sd">    filters : AudiencesFilters or dict of filters, optional</span>
+</span><span id="__span-0-188"><a id="__codelineno-0-188" name="__codelineno-0-188"></a><span class="sd">    filters : AudiencesFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-189"><a id="__codelineno-0-189" name="__codelineno-0-189"></a><span class="sd">        AudiencesFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-190"><a id="__codelineno-0-190" name="__codelineno-0-190"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-191"><a id="__codelineno-0-191" name="__codelineno-0-191"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -2422,7 +2422,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-236"><a id="__codelineno-0-236" name="__codelineno-0-236"></a><span class="sd">    Returns</span>
 </span><span id="__span-0-237"><a id="__codelineno-0-237" name="__codelineno-0-237"></a><span class="sd">    -------</span>
 </span><span id="__span-0-238"><a id="__codelineno-0-238" name="__codelineno-0-238"></a><span class="sd">    pandas.DataFrame</span>
-</span><span id="__span-0-239"><a id="__codelineno-0-239" name="__codelineno-0-239"></a><span class="sd">        DataFrame with `brands` endpoint results</span>
+</span><span id="__span-0-239"><a id="__codelineno-0-239" name="__codelineno-0-239"></a><span class="sd">        DataFrame with `audiences` endpoint results</span>
 </span><span id="__span-0-240"><a id="__codelineno-0-240" name="__codelineno-0-240"></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="__span-0-241"><a id="__codelineno-0-241" name="__codelineno-0-241"></a>
 </span><span id="__span-0-242"><a id="__codelineno-0-242" name="__codelineno-0-242"></a>    <span class="k">async</span> <span class="k">with</span> <span class="n">Client</span><span class="p">(</span>
@@ -2546,7 +2546,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>BrandMetricGroupsFilters or dict of filters</code>
+                <code>BrandMetricGroupsFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -2947,7 +2947,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-420"><a id="__codelineno-0-420" name="__codelineno-0-420"></a><span class="sd">        Fount brand metric group ID, default None</span>
 </span><span id="__span-0-421"><a id="__codelineno-0-421" name="__codelineno-0-421"></a>
 </span><span id="__span-0-422"><a id="__codelineno-0-422" name="__codelineno-0-422"></a><span class="sd">        If a metric group ID is provided, only that metric group will be returned</span>
-</span><span id="__span-0-423"><a id="__codelineno-0-423" name="__codelineno-0-423"></a><span class="sd">    filters : BrandMetricGroupsFilters or dict of filters, optional</span>
+</span><span id="__span-0-423"><a id="__codelineno-0-423" name="__codelineno-0-423"></a><span class="sd">    filters : BrandMetricGroupsFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-424"><a id="__codelineno-0-424" name="__codelineno-0-424"></a><span class="sd">        BrandMetricGroupsFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-425"><a id="__codelineno-0-425" name="__codelineno-0-425"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-426"><a id="__codelineno-0-426" name="__codelineno-0-426"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -3161,7 +3161,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>BrandMetricsFilters or dict of filters</code>
+                <code>BrandMetricsFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -3583,7 +3583,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-307"><a id="__codelineno-0-307" name="__codelineno-0-307"></a><span class="sd">        Return inactive brand metrics only if set to `1`, default 0</span>
 </span><span id="__span-0-308"><a id="__codelineno-0-308" name="__codelineno-0-308"></a><span class="sd">    groups : int or list[int], optional</span>
 </span><span id="__span-0-309"><a id="__codelineno-0-309" name="__codelineno-0-309"></a><span class="sd">        Brand metrics group ID or list of brand metrics group IDs, default None</span>
-</span><span id="__span-0-310"><a id="__codelineno-0-310" name="__codelineno-0-310"></a><span class="sd">    filters : BrandMetricsFilters or dict of filters, optional</span>
+</span><span id="__span-0-310"><a id="__codelineno-0-310" name="__codelineno-0-310"></a><span class="sd">    filters : BrandMetricsFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-311"><a id="__codelineno-0-311" name="__codelineno-0-311"></a><span class="sd">        BrandMetricsFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-312"><a id="__codelineno-0-312" name="__codelineno-0-312"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-313"><a id="__codelineno-0-313" name="__codelineno-0-313"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -3786,7 +3786,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>BrandsFilters or dict of filters</code>
+                <code>BrandsFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -4201,7 +4201,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-536"><a id="__codelineno-0-536" name="__codelineno-0-536"></a><span class="sd">        If a brand ID is provided, only that brand will be returned</span>
 </span><span id="__span-0-537"><a id="__codelineno-0-537" name="__codelineno-0-537"></a><span class="sd">    studies : int or list[int], optional</span>
 </span><span id="__span-0-538"><a id="__codelineno-0-538" name="__codelineno-0-538"></a><span class="sd">        Fount study IDs, default None</span>
-</span><span id="__span-0-539"><a id="__codelineno-0-539" name="__codelineno-0-539"></a><span class="sd">    filters : BrandsFilters or dict of filters, optional</span>
+</span><span id="__span-0-539"><a id="__codelineno-0-539" name="__codelineno-0-539"></a><span class="sd">    filters : BrandsFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-540"><a id="__codelineno-0-540" name="__codelineno-0-540"></a><span class="sd">        BrandsFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-541"><a id="__codelineno-0-541" name="__codelineno-0-541"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-542"><a id="__codelineno-0-542" name="__codelineno-0-542"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -4428,7 +4428,7 @@ part of the default.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>BrandscapeFilters or dict of filters</code>
+                <code>BrandscapeFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -4981,7 +4981,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-690"><a id="__codelineno-0-690" name="__codelineno-0-690"></a><span class="sd">        Search by brand name, default None</span>
 </span><span id="__span-0-691"><a id="__codelineno-0-691" name="__codelineno-0-691"></a><span class="sd">    studies : int or list[int], optional</span>
 </span><span id="__span-0-692"><a id="__codelineno-0-692" name="__codelineno-0-692"></a><span class="sd">        Fount studies IDs, default None</span>
-</span><span id="__span-0-693"><a id="__codelineno-0-693" name="__codelineno-0-693"></a><span class="sd">    filters : BrandscapeFilters or dict of filters, optional</span>
+</span><span id="__span-0-693"><a id="__codelineno-0-693" name="__codelineno-0-693"></a><span class="sd">    filters : BrandscapeFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-694"><a id="__codelineno-0-694" name="__codelineno-0-694"></a><span class="sd">        BrandscapeFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-695"><a id="__codelineno-0-695" name="__codelineno-0-695"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-696"><a id="__codelineno-0-696" name="__codelineno-0-696"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -5171,7 +5171,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>CategoriesFilters or dict of filters</code>
+                <code>CategoriesFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -5582,7 +5582,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-820"><a id="__codelineno-0-820" name="__codelineno-0-820"></a><span class="sd">        Fount category ID, default None</span>
 </span><span id="__span-0-821"><a id="__codelineno-0-821" name="__codelineno-0-821"></a>
 </span><span id="__span-0-822"><a id="__codelineno-0-822" name="__codelineno-0-822"></a><span class="sd">        If a category ID is provided, only that category will be returned</span>
-</span><span id="__span-0-823"><a id="__codelineno-0-823" name="__codelineno-0-823"></a><span class="sd">    filters : CategoriesFilters or dict of filters, optional</span>
+</span><span id="__span-0-823"><a id="__codelineno-0-823" name="__codelineno-0-823"></a><span class="sd">    filters : CategoriesFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-824"><a id="__codelineno-0-824" name="__codelineno-0-824"></a><span class="sd">        CategoriesFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-825"><a id="__codelineno-0-825" name="__codelineno-0-825"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-826"><a id="__codelineno-0-826" name="__codelineno-0-826"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -5783,7 +5783,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>CitiesFilters or dict of filters</code>
+                <code>CitiesFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -6202,7 +6202,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-938"><a id="__codelineno-0-938" name="__codelineno-0-938"></a><span class="sd">        Fount city ID, default None</span>
 </span><span id="__span-0-939"><a id="__codelineno-0-939" name="__codelineno-0-939"></a>
 </span><span id="__span-0-940"><a id="__codelineno-0-940" name="__codelineno-0-940"></a><span class="sd">        If a city ID is provided, only that city will be returned</span>
-</span><span id="__span-0-941"><a id="__codelineno-0-941" name="__codelineno-0-941"></a><span class="sd">    filters : CitiesFilters or dict of filters, optional</span>
+</span><span id="__span-0-941"><a id="__codelineno-0-941" name="__codelineno-0-941"></a><span class="sd">    filters : CitiesFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-942"><a id="__codelineno-0-942" name="__codelineno-0-942"></a><span class="sd">        CitiesFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-943"><a id="__codelineno-0-943" name="__codelineno-0-943"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-944"><a id="__codelineno-0-944" name="__codelineno-0-944"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -6404,7 +6404,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>CollectionsFilters or dict of filters</code>
+                <code>CollectionsFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -6819,7 +6819,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-1056"><a id="__codelineno-0-1056" name="__codelineno-0-1056"></a><span class="sd">        Only return collections that have been shared with the user, default 0</span>
 </span><span id="__span-0-1057"><a id="__codelineno-0-1057" name="__codelineno-0-1057"></a><span class="sd">    mine : Literal[0, 1], optional</span>
 </span><span id="__span-0-1058"><a id="__codelineno-0-1058" name="__codelineno-0-1058"></a><span class="sd">        Only return collections created by the user, default 0</span>
-</span><span id="__span-0-1059"><a id="__codelineno-0-1059" name="__codelineno-0-1059"></a><span class="sd">    filters : CollectionsFilters or dict of filters, optional</span>
+</span><span id="__span-0-1059"><a id="__codelineno-0-1059" name="__codelineno-0-1059"></a><span class="sd">    filters : CollectionsFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-1060"><a id="__codelineno-0-1060" name="__codelineno-0-1060"></a><span class="sd">        CollectionsFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-1061"><a id="__codelineno-0-1061" name="__codelineno-0-1061"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-1062"><a id="__codelineno-0-1062" name="__codelineno-0-1062"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -7022,7 +7022,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>CompaniesFilters or dict of filters</code>
+                <code>CompaniesFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -7441,7 +7441,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-1176"><a id="__codelineno-0-1176" name="__codelineno-0-1176"></a><span class="sd">        Fount company ID, default None</span>
 </span><span id="__span-0-1177"><a id="__codelineno-0-1177" name="__codelineno-0-1177"></a>
 </span><span id="__span-0-1178"><a id="__codelineno-0-1178" name="__codelineno-0-1178"></a><span class="sd">        If a company ID is provided, only that company will be returned</span>
-</span><span id="__span-0-1179"><a id="__codelineno-0-1179" name="__codelineno-0-1179"></a><span class="sd">    filters : CompaniesFilters or dict of filters, optional</span>
+</span><span id="__span-0-1179"><a id="__codelineno-0-1179" name="__codelineno-0-1179"></a><span class="sd">    filters : CompaniesFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-1180"><a id="__codelineno-0-1180" name="__codelineno-0-1180"></a><span class="sd">        CompaniesFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-1181"><a id="__codelineno-0-1181" name="__codelineno-0-1181"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-1182"><a id="__codelineno-0-1182" name="__codelineno-0-1182"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -7658,7 +7658,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>CountriesFilters or dict of filters</code>
+                <code>CountriesFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -8084,7 +8084,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-1299"><a id="__codelineno-0-1299" name="__codelineno-0-1299"></a><span class="sd">        Years of recency of studies in a specific country, default None</span>
 </span><span id="__span-0-1300"><a id="__codelineno-0-1300" name="__codelineno-0-1300"></a>
 </span><span id="__span-0-1301"><a id="__codelineno-0-1301" name="__codelineno-0-1301"></a><span class="sd">        Only return countries which have had a BAV study in the past X years</span>
-</span><span id="__span-0-1302"><a id="__codelineno-0-1302" name="__codelineno-0-1302"></a><span class="sd">    filters : CountriesFilters or dict of filters, optional</span>
+</span><span id="__span-0-1302"><a id="__codelineno-0-1302" name="__codelineno-0-1302"></a><span class="sd">    filters : CountriesFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-1303"><a id="__codelineno-0-1303" name="__codelineno-0-1303"></a><span class="sd">        CountriesFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-1304"><a id="__codelineno-0-1304" name="__codelineno-0-1304"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-1305"><a id="__codelineno-0-1305" name="__codelineno-0-1305"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -8544,7 +8544,7 @@ instead of a <code>pandas</code> DataFrame.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>RegionsFilters or dict of filters</code>
+                <code>RegionsFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -8938,7 +8938,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-1409"><a id="__codelineno-0-1409" name="__codelineno-0-1409"></a><span class="sd">        Fount region ID, default None</span>
 </span><span id="__span-0-1410"><a id="__codelineno-0-1410" name="__codelineno-0-1410"></a>
 </span><span id="__span-0-1411"><a id="__codelineno-0-1411" name="__codelineno-0-1411"></a><span class="sd">        If a region ID is provided, only that region will be returned</span>
-</span><span id="__span-0-1412"><a id="__codelineno-0-1412" name="__codelineno-0-1412"></a><span class="sd">    filters : RegionsFilters or dict of filters, optional</span>
+</span><span id="__span-0-1412"><a id="__codelineno-0-1412" name="__codelineno-0-1412"></a><span class="sd">    filters : RegionsFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-1413"><a id="__codelineno-0-1413" name="__codelineno-0-1413"></a><span class="sd">        RegionsFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-1414"><a id="__codelineno-0-1414" name="__codelineno-0-1414"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-1415"><a id="__codelineno-0-1415" name="__codelineno-0-1415"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -9109,7 +9109,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>SectorsFilters or dict of filters</code>
+                <code>SectorsFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -9510,7 +9510,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-1518"><a id="__codelineno-0-1518" name="__codelineno-0-1518"></a><span class="sd">        Fount sectors ID, default None</span>
 </span><span id="__span-0-1519"><a id="__codelineno-0-1519" name="__codelineno-0-1519"></a>
 </span><span id="__span-0-1520"><a id="__codelineno-0-1520" name="__codelineno-0-1520"></a><span class="sd">        If a sector ID is provided, only that sector will be returned</span>
-</span><span id="__span-0-1521"><a id="__codelineno-0-1521" name="__codelineno-0-1521"></a><span class="sd">    filters : SectorsFilters or dict of filters, optional</span>
+</span><span id="__span-0-1521"><a id="__codelineno-0-1521" name="__codelineno-0-1521"></a><span class="sd">    filters : SectorsFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-1522"><a id="__codelineno-0-1522" name="__codelineno-0-1522"></a><span class="sd">        SectorsFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-1523"><a id="__codelineno-0-1523" name="__codelineno-0-1523"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-1524"><a id="__codelineno-0-1524" name="__codelineno-0-1524"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -9726,7 +9726,7 @@ If a study ID is provided, only that study will be returned</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>StudiesFilters or dict of filters</code>
+                <code>StudiesFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -10152,7 +10152,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-1639"><a id="__codelineno-0-1639" name="__codelineno-0-1639"></a><span class="sd">    study_id : int, optional</span>
 </span><span id="__span-0-1640"><a id="__codelineno-0-1640" name="__codelineno-0-1640"></a><span class="sd">        Fount study ID, default None</span>
 </span><span id="__span-0-1641"><a id="__codelineno-0-1641" name="__codelineno-0-1641"></a><span class="sd">        If a study ID is provided, only that study will be returned</span>
-</span><span id="__span-0-1642"><a id="__codelineno-0-1642" name="__codelineno-0-1642"></a><span class="sd">    filters : StudiesFilters or dict of filters, optional</span>
+</span><span id="__span-0-1642"><a id="__codelineno-0-1642" name="__codelineno-0-1642"></a><span class="sd">    filters : StudiesFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-1643"><a id="__codelineno-0-1643" name="__codelineno-0-1643"></a><span class="sd">        StudiesFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-1644"><a id="__codelineno-0-1644" name="__codelineno-0-1644"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-1645"><a id="__codelineno-0-1645" name="__codelineno-0-1645"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -10313,7 +10313,7 @@ For any filters, use the <code>filters</code> parameter.</p>
         <tr>
           <td><code>filters</code></td>
           <td>
-                <code>YearsFilters or dict of filters</code>
+                <code>YearsFilters or <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, Any]</code>
           </td>
           <td>
             <div class="doc-md-description">
@@ -10707,7 +10707,7 @@ For any filters, use the <code>filters</code> parameter.</p>
 </span><span id="__span-0-1749"><a id="__codelineno-0-1749" name="__codelineno-0-1749"></a><span class="sd">        Fount year ID, default None</span>
 </span><span id="__span-0-1750"><a id="__codelineno-0-1750" name="__codelineno-0-1750"></a>
 </span><span id="__span-0-1751"><a id="__codelineno-0-1751" name="__codelineno-0-1751"></a><span class="sd">        If a year ID is provided, only that year will be returned</span>
-</span><span id="__span-0-1752"><a id="__codelineno-0-1752" name="__codelineno-0-1752"></a><span class="sd">    filters : YearsFilters or dict of filters, optional</span>
+</span><span id="__span-0-1752"><a id="__codelineno-0-1752" name="__codelineno-0-1752"></a><span class="sd">    filters : YearsFilters or dict[str, Any], optional</span>
 </span><span id="__span-0-1753"><a id="__codelineno-0-1753" name="__codelineno-0-1753"></a><span class="sd">        YearsFilters object or dictionary of filter parameters, default None</span>
 </span><span id="__span-0-1754"><a id="__codelineno-0-1754" name="__codelineno-0-1754"></a><span class="sd">    fields : str or list[str], optional</span>
 </span><span id="__span-0-1755"><a id="__codelineno-0-1755" name="__codelineno-0-1755"></a><span class="sd">        Fields to retrieve in API response, default None</span>
@@ -10862,7 +10862,7 @@ For any filters, use the <code>filters</code> parameter.</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2023 WPPBAV
+      Copyright &copy; 2024 WPPBAV
     </div>
   
   
@@ -10885,10 +10885,10 @@ For any filters, use the <code>filters</code> parameter.</p>
       <div class="md-progress" data-md-component="progress" role="progressbar"></div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c18c5fb9.min.js"></script>
+      <script src="../../assets/javascripts/bundle.8fd75fb4.min.js"></script>
       
     
   </body>
