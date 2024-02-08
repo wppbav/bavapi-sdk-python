@@ -169,7 +169,7 @@ def parse_response(
 
 def convert_numeric(series: pd.Series) -> pd.Series:
     """Convert pandas series into appropriate numeric types.
-    
+
     - Float and int values are returned directly with no conversion.
     - String values are converted to int if possible, else float. Otherwise, return the
     series with no conversion.
