@@ -188,5 +188,5 @@ def convert_numeric(series: pd.Series) -> pd.Series:
         return series
     try:
         return series.astype(int)
-    except ValueError:
+    except (ValueError, TypeError):
         return series.astype(float, errors="ignore")
