@@ -2,6 +2,12 @@
 
 ## `1.0`
 
+### `1.0.3` (2024-02-09)
+
+#### Fix
+
+- :bug: Fix bug in custom dtype conversion within the response parsing logic.
+
 ### `1.0.2` (2024-02-08)
 
 #### Fix
