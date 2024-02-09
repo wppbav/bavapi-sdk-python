@@ -1,4 +1,4 @@
-# pylint: disable=import-outside-toplevel, invalid-name
+# pylint: disable=import-outside-toplevel
 
 """Package tooling session definitions for `nox`"""
 
@@ -9,117 +9,82 @@ from typing import Iterable, Tuple, cast
 
 import nox
 
-python_versions = ("3.8", "3.9", "3.10", "3.11", "3.12")
-python_latest = python_versions[-1]
+PY_VERSIONS = ("3.8", "3.9", "3.10", "3.11", "3.12")
+PY_LATEST = PY_VERSIONS[-1]
+
+COV_ARGS = ("coverage", "run", "-m", "--parallel")
+PYTEST_ARGS = ("pytest", "-k")
 
 
-@nox.session(python=python_versions)
+@nox.session(python=PY_VERSIONS)
 def tests(session: nox.Session) -> None:
     """Run tests on CI/CD pipeline."""
     session.install("-e", ".[test]")
 
-    session.run(
-        "coverage",
-        "run",
-        "-m",
-        "--parallel",
-        "pytest",
-        "-m",
-        "not e2e",
-        *session.posargs,
-    )
+    session.run(*COV_ARGS, *PYTEST_ARGS, "not e2e", *session.posargs)
 
 
-@nox.session(python=python_versions)
+@nox.session(python=PY_VERSIONS)
 def tests_nocov(session: nox.Session) -> None:
     """Run tests on CI/CD pipeline with no coverage."""
     session.install("-e", ".[test]")
 
-    session.run("pytest", "-m", "not e2e", *session.posargs)
+    session.run(*PYTEST_ARGS, "not e2e", *session.posargs)
 
 
-@nox.session(python=python_latest)
+@nox.session(python=PY_LATEST)
 def tests_e2e(session: nox.Session) -> None:
     """Run end to end tests on CI/CD pipeline."""
     session.install("-e", ".[test]")
 
-    session.run(
-        "coverage",
-        "run",
-        "-m",
-        "--parallel",
-        "pytest",
-        "-m",
-        "e2e",
-        *session.posargs,
-    )
+    session.run(*COV_ARGS, *PYTEST_ARGS, "e2e", *session.posargs)
 
 
-@nox.session(python=python_latest)
+@nox.session(python=PY_LATEST)
 def tests_e2e_nocov(session: nox.Session) -> None:
     """Run end to end tests on CI/CD pipeline with no coverage."""
     session.install("-e", ".[test]")
 
-    session.run("pytest", "-m", "e2e", *session.posargs)
+    session.run(*PYTEST_ARGS, "e2e", *session.posargs)
 
 
-@nox.session(python=python_versions, venv_backend="mamba", reuse_venv=True)
+@nox.session(python=PY_VERSIONS, venv_backend="mamba", reuse_venv=True)
 def tests_mamba(session: nox.Session) -> None:
     """Run tests locally with `mamba` as the backend."""
     session.conda_install("--file", "requirements.txt", channel="conda-forge")
     session.install("-e", ".[test]")
 
-    session.run(
-        "coverage",
-        "run",
-        "-m",
-        "--parallel",
-        "pytest",
-        "-m",
-        "not e2e",
-        *session.posargs,
-        external=True,
-    )
+    session.run(*COV_ARGS, *PYTEST_ARGS, "not e2e", *session.posargs)
 
 
-@nox.session(python=python_versions, venv_backend="mamba", reuse_venv=True)
+@nox.session(python=PY_VERSIONS, venv_backend="mamba", reuse_venv=True)
 def tests_mamba_nocov(session: nox.Session) -> None:
     """Run tests locally with `mamba` as the backend with no coverage."""
     session.conda_install("--file", "requirements.txt", channel="conda-forge")
     session.install("-e", ".[test]")
 
-    session.run("pytest", "-m", "not e2e", *session.posargs, external=True)
+    session.run(*PYTEST_ARGS, "not e2e", *session.posargs, external=True)
 
 
-@nox.session(python=python_latest, venv_backend="mamba", reuse_venv=True)
+@nox.session(python=PY_LATEST, venv_backend="mamba", reuse_venv=True)
 def tests_mamba_e2e(session: nox.Session) -> None:
     """Run end to end tests locally with `mamba` as the backend."""
     session.conda_install("--file", "requirements.txt", channel="conda-forge")
     session.install("-e", ".[test]")
 
-    session.run(
-        "coverage",
-        "run",
-        "-m",
-        "--parallel",
-        "pytest",
-        "-m",
-        "e2e",
-        *session.posargs,
-        external=True,
-    )
+    session.run(*COV_ARGS, *PYTEST_ARGS, "e2e", *session.posargs)
 
 
-@nox.session(python=python_latest, venv_backend="mamba", reuse_venv=True)
+@nox.session(python=PY_LATEST, venv_backend="mamba", reuse_venv=True)
 def tests_mamba_e2e_nocov(session: nox.Session) -> None:
     """Run end to end tests locally with `mamba` as the backend with no coverage."""
     session.conda_install("--file", "requirements.txt", channel="conda-forge")
     session.install("-e", ".[test]")
 
-    session.run("pytest", "-m", "e2e", *session.posargs, external=True)
+    session.run(*PYTEST_ARGS, "e2e", *session.posargs, external=True)
 
 
-@nox.session(python=python_latest)
+@nox.session(python=PY_LATEST)
 def coverage(session: nox.Session) -> None:
     """Compile and process coverage reports."""
     args = session.posargs or ["report"]
@@ -146,12 +111,12 @@ def coverage(session: nox.Session) -> None:
             file.write(f"### Total coverage: {total}%")
 
 
-@nox.session(python=python_latest)
+@nox.session(python=PY_LATEST)
 def lint(session: nox.Session) -> None:
     """Lint package."""
     session.install("-e", ".[lint]")
 
-    session.run("isort", "-l", "100", ".")
+    session.run("isort", "--profile", "black", ".")
     session.run("black", ".")
     session.run("mypy", "bavapi")
     session.run("pylint", "bavapi")
