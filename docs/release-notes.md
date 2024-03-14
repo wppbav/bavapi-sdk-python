@@ -1,5 +1,18 @@
 # Release Notes
 
+## `1.1`
+
+### `1.1.X` (2024-??-??)
+
+#### Test
+
+- :test_tube: Ported testing of `http` and `client` modules to use dependency injection instead of mocks.
+
+#### Typing
+
+- :duck: Moved commonly used protocols to `typing` module.
+- :bug: Changed type of `exc_type` argument in the `aretry` function to correct `Tuple` instead of `Iterable`.
+
 ## `1.0`
 
 ### `1.0.3` (2024-02-09)
