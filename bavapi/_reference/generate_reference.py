@@ -296,7 +296,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         CLI exit code
 
     Raises
-    ______
+    ------
     ValueError
         If Fount API token is not set or `python-dotenv` is not installed
     """
