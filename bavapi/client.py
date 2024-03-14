@@ -52,7 +52,13 @@ from bavapi import filters as _filters
 from bavapi.http import HTTPClient
 from bavapi.parsing.responses import parse_response
 from bavapi.query import Query
-from bavapi.typing import CommonQueryParams, JSONDict, OptionalListOr, Unpack
+from bavapi.typing import (
+    CommonQueryParams,
+    JSONDict,
+    OptionalListOr,
+    Unpack,
+    _HTTPClient,
+)
 
 if TYPE_CHECKING:
     from types import TracebackType
@@ -70,6 +76,8 @@ CATEGORIES_DEFAULTS: Final[List[str]] = ["sector"]
 F = TypeVar("F", bound=_filters.FountFilters)
 
 OptionalFiltersOrMapping = Optional[_filters.FiltersOrMapping[F]]
+
+HTTPClientType = Union[HTTPClient, _HTTPClient]
 
 
 class Client:
@@ -177,7 +185,7 @@ class Client:
     def __init__(
         self,
         *,
-        client: HTTPClient = ...,
+        client: HTTPClientType = ...,
         verbose: bool = True,
         batch_size: int = 10,
         n_workers: int = 2,
@@ -194,7 +202,7 @@ class Client:
         verify: Union[bool, str] = True,
         user_agent: str = "",
         *,
-        client: Optional[HTTPClient] = None,
+        client: Optional[HTTPClientType] = None,
         verbose: bool = True,
         batch_size: int = 10,
         n_workers: int = 2,

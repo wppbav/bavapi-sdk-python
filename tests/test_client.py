@@ -12,7 +12,7 @@ from bavapi.http import HTTPClient
 from bavapi.query import Query
 from bavapi.typing import OptionalListOr
 
-from .helpers import wraps
+from .helpers import MockHTTPClient
 
 # CLASS INIT TESTS
 
@@ -130,41 +130,42 @@ def test_on_errors(fount: Client):
 
 
 @pytest.mark.anyio
-async def test_context_manager(mock_async_client: mock.MagicMock):
-    _fount = Client(client=HTTPClient(client=mock_async_client))
-    async with _fount as fount_ctx:
+async def test_context_manager(fount: Client, http_client: MockHTTPClient):
+    async with fount as fount_ctx:
         assert isinstance(fount_ctx, Client)
 
-    assert _fount._client.client.is_closed
+    assert http_client.is_closed
 
 
 @pytest.mark.anyio
-async def test_aclose(fount: Client):
-    with mock.patch("bavapi.client.HTTPClient.aclose", wraps=wraps()) as mock_aclose:
-        await fount.aclose()
+async def test_aclose(fount: Client, http_client: MockHTTPClient):
+    await fount.aclose()
 
-    mock_aclose.assert_called_once()
+    assert http_client.is_closed
 
 
 @pytest.mark.anyio
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1}]))
-async def test_raw_query(mock_query: mock.AsyncMock, fount: Client):
-    await fount.raw_query("request", Query())
+async def test_raw_query(fount: Client, http_client: MockHTTPClient):
+    http_client.add_response(data=[{"1": 1}])
 
-    mock_query.assert_awaited_once_with("request", Query())
+    res = await fount.raw_query("request", Query())
+
+    assert res == [{"1": 1}]
+    http_client.mock_query.assert_awaited_once_with("request", Query())
 
 
 @pytest.mark.anyio
 @pytest.mark.parametrize(
     "query", (None, Query(filters=filters.AudiencesFilters(active=1), fields="test"))
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1}]))
 async def test_audiences(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client, query: Optional[Query], http_client: MockHTTPClient
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.audiences(active=1, fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "audiences", Query(filters=filters.AudiencesFilters(active=1), fields="test")
     )
 
@@ -174,13 +175,14 @@ async def test_audiences(
     "query",
     (None, Query(filters=filters.BrandsFilters(country_codes="test"), fields="test")),
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_brands(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client, query: Optional[Query], http_client: MockHTTPClient
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.brands(country_codes="test", fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "brands",
         Query(filters=filters.BrandsFilters(country_codes="test"), fields="test"),
     )
@@ -190,13 +192,16 @@ async def test_brands(
 @pytest.mark.parametrize(
     "query", (None, Query(filters=filters.BrandMetricsFilters(active=1), fields="test"))
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_brand_metrics(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.brand_metrics(active=1, fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "brand-metrics",
         Query(filters=filters.BrandMetricsFilters(active=1), fields="test"),
     )
@@ -207,13 +212,16 @@ async def test_brand_metrics(
     "query",
     (None, Query(filters=filters.BrandMetricGroupsFilters(active=1), fields="test")),
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_brand_metric_groups(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.brand_metric_groups(active=1, fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "brand-metric-groups",
         Query(filters=filters.BrandMetricGroupsFilters(active=1), fields="test"),
     )
@@ -231,13 +239,16 @@ async def test_brand_metric_groups(
         ),
     ),
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_brandscape_data(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.brandscape_data(studies=1, metric_keys="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "brandscape-data",
         Query(
             filters=filters.BrandscapeFilters(studies=1),
@@ -259,13 +270,16 @@ async def test_brandscape_data(
         ),
     ),
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_categories(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.categories(sectors=1, fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "categories",
         Query(
             filters=filters.CategoriesFilters(sectors=1),
@@ -280,13 +294,16 @@ async def test_categories(
     "query",
     (None, Query(filters=filters.CitiesFilters(countries=1), fields="test")),
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_cities(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.cities(countries=1, fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "cities",
         Query(filters=filters.CitiesFilters(countries=1), fields="test"),
     )
@@ -296,13 +313,16 @@ async def test_cities(
 @pytest.mark.parametrize(
     "query", (None, Query(filters=filters.CollectionsFilters(public=1), fields="test"))
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_collections(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.collections(public=1, fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "collections",
         Query(filters=filters.CollectionsFilters(public=1), fields="test"),
     )
@@ -313,13 +333,16 @@ async def test_collections(
     "query",
     (None, Query(filters=filters.CompaniesFilters(public=1), fields="test")),
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_companies(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.companies(public=1, fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "companies",
         Query(filters=filters.CompaniesFilters(public=1), fields="test"),
     )
@@ -330,13 +353,16 @@ async def test_companies(
     "query",
     (None, Query(filters=filters.CountriesFilters(active=1), fields="test")),
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_countries(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.countries(active=1, fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "countries",
         Query(filters=filters.CountriesFilters(active=1), fields="test"),
     )
@@ -347,13 +373,16 @@ async def test_countries(
     "query",
     (None, Query(filters=filters.RegionsFilters(name="a"), fields="test")),  # type: ignore
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_regions(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.regions(name="a", fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "regions",
         Query(filters=filters.RegionsFilters(name="a"), fields="test"),  # type: ignore
     )
@@ -364,13 +393,16 @@ async def test_regions(
     "query",
     (None, Query(filters=filters.SectorsFilters(in_most_influential=1), fields="test")),
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_sectors(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.sectors(in_most_influential=1, fields="test", query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "sectors",
         Query(filters=filters.SectorsFilters(in_most_influential=1), fields="test"),
     )
@@ -380,13 +412,16 @@ async def test_sectors(
 @pytest.mark.parametrize(
     "query", (None, Query(filters=filters.StudiesFilters(full_year=1), fields="test"))
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
 async def test_studies(
-    mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
 ):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.studies(fields="test", full_year=1, query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "studies", Query(filters=filters.StudiesFilters(full_year=1), fields="test")
     )
 
@@ -396,11 +431,16 @@ async def test_studies(
     "query",
     (None, Query(filters=filters.YearsFilters(year=2023), fields="test")),  # type: ignore
 )
-@mock.patch("bavapi.http.HTTPClient.query", wraps=wraps([{"1": 1, "2": 2}]))
-async def test_years(mock_query: mock.AsyncMock, fount: Client, query: Optional[Query]):
+async def test_years(
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
+):
+    http_client.add_response(data=[{"1": 1}])
+
     await fount.years(fields="test", year=2023, query=query)
 
-    mock_query.assert_awaited_once_with(
+    http_client.mock_query.assert_awaited_once_with(
         "years",
         Query(filters=filters.YearsFilters(year=2023), fields="test"),  # type: ignore
     )
