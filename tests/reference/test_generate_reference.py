@@ -12,7 +12,7 @@ from bavapi._reference import generate_reference as uref
 from bavapi.client import Client
 from bavapi.query import Query
 
-from ..helpers import wraps, MockHTTPClient
+from ..helpers import MockHTTPClient, wraps
 
 TEST_DT = datetime.datetime(2023, 1, 1, 12, 0, 0)
 

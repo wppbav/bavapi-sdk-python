@@ -2,6 +2,7 @@
 
 import httpx
 import pytest
+
 from bavapi.query import Query
 from tests.helpers import MockAsyncClient, MockHTTPClient, wraps
 
