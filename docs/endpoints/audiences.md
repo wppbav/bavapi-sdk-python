@@ -34,4 +34,4 @@ These filters are available directly within the function/method:
 - Positional filters: `name`, `active`, `public`
 - Keyword filters: `audience_id`, `private`, `groups`
 
-For other filters, passing an `AudienceFilters` instance to the `filters` parameter is required.
+For other filters, passing an `AudiencesFilters` instance to the `filters` parameter is required.
