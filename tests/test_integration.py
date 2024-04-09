@@ -55,6 +55,7 @@ def test_with_filters_one_page():
     ("endpoint", "filters"),
     (
         ("audiences", {}),
+        ("audience_groups", {}),
         ("brand_metric_groups", {}),
         ("brand_metrics", {}),
         ("brands", {}),

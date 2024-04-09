@@ -53,6 +53,7 @@ def test_raw_query(mock_async_client: mock.MagicMock):
     ("endpoint", "filters"),
     (
         ("audiences", {}),
+        ("audience_groups", {}),
         ("brand_metrics", {}),
         ("brand_metric_groups", {}),
         ("brands", {}),

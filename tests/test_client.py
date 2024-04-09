@@ -173,6 +173,26 @@ async def test_audiences(
 @pytest.mark.anyio
 @pytest.mark.parametrize(
     "query",
+    (None, Query(filters=filters.AudienceGroupsFilters(name="a"), fields="test")),  # type: ignore
+)
+async def test_audience_groups(
+    fount: Client,
+    query: Optional[Query],
+    http_client: MockHTTPClient,
+):
+    http_client.add_response(data=[{"1": 1}])
+
+    await fount.audience_groups(name="a", fields="test", query=query)
+
+    http_client.mock_query.assert_awaited_once_with(
+        "audience-groups",
+        Query(filters=filters.AudienceGroupsFilters(name="a"), fields="test"),  # type: ignore
+    )
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    "query",
     (None, Query(filters=filters.BrandsFilters(country_codes="test"), fields="test")),
 )
 async def test_brands(

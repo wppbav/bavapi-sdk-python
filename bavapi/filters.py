@@ -125,7 +125,7 @@ class FountFilters(BaseModel):
 
 
 class AudiencesFilters(FountFilters):
-    """Filters for the `brands` endpoint.
+    """Filters for the `audiences` endpoint.
 
     See <https://developer.wppbav.com/docs/2.x/core-resources/audiences>
     for more info.
@@ -154,6 +154,21 @@ class AudiencesFilters(FountFilters):
     public: Literal[0, 1] = 0
     private: Literal[0, 1] = 0
     groups: OptionalListOr[int] = None
+
+
+class AudienceGroupsFilters(FountFilters):
+    """Filters for the `brands` endpoint.
+
+    See <https://developer.wppbav.com/docs/2.x/core-resources/audience-groups>
+    for more info.
+
+    There are currently no specific filters for the `audience-groups` endpoint
+
+    Other Parameters
+    ----------------
+    updated_since : str, date or datetime, optional
+        Request items that have been updated since the specified date, default None
+    """
 
 
 class BrandsFilters(FountFilters):
