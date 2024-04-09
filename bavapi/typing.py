@@ -97,11 +97,14 @@ H = TypeVar("H", bound="_HTTP")
 class _HTTP(Protocol):
     is_closed: bool
 
-    async def __aenter__(self: H) -> H: ...
+    async def __aenter__(self: H) -> H:
+        ...
 
-    async def __aexit__(self, *_, **__) -> None: ...
+    async def __aexit__(self, *_, **__) -> None:
+        ...
 
-    async def aclose(self) -> None: ...
+    async def aclose(self) -> None:
+        ...
 
     async def get(
         self,
@@ -110,7 +113,8 @@ class _HTTP(Protocol):
         headers: Optional[Mapping[str, str]] = None,
         params: Optional[Mapping[str, BaseSequenceOrValues]] = None,
         **kwargs,
-    ) -> "httpx.Response": ...
+    ) -> "httpx.Response":
+        ...
 
 
 AsyncClientType = Union["httpx.AsyncClient", _HTTP]
@@ -160,9 +164,11 @@ class _HTTPClient(Protocol):
     on_errors: Literal["warn", "raise"]
     client: AsyncClientType
 
-    async def __aenter__(self: C) -> C: ...
+    async def __aenter__(self: C) -> C:
+        ...
 
-    async def __aexit__(self, *_, **__) -> None: ...
+    async def __aexit__(self, *_, **__) -> None:
+        ...
 
     async def aclose(self) -> None:
         """Close the connection"""
