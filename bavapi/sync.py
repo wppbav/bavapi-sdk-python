@@ -265,6 +265,112 @@ async def audiences(
 
 
 @_coro
+async def audience_groups(
+    token: str,
+    name: Optional[str] = None,
+    *,
+    audience_group_id: Optional[int] = None,
+    filters: OptionalFiltersOrMapping[_filters.AudienceGroupsFilters] = None,
+    fields: OptionalListOr[str] = None,
+    include: OptionalListOr[str] = None,
+    query: Optional[Query[_filters.AudienceGroupsFilters]] = None,
+    stack_data: bool = False,
+    timeout: float = 30.0,
+    verbose: bool = True,
+    batch_size: int = 10,
+    n_workers: int = 2,
+    retries: int = 3,
+    on_errors: Literal["warn", "raise"] = "warn",
+    **kwargs: Unpack[CommonQueryParams],
+) -> "DataFrame":
+    """Query the Fount `audience-groups` endpoint.
+
+    Parameters
+    ----------
+    token : str
+        WPPBAV Fount API token
+    name : str, optional
+        Search audiences by name, default None
+    audience_group_id : int, optional
+        Fount audience group ID, default None
+
+        If an audience group ID is provided, only that audience group will be returned
+    filters : AudienceGroupsFilters or dict[str, Any], optional
+        AudienceGroupsFilters object or dictionary of filter parameters, default None
+    fields : str or list[str], optional
+        Fields to retrieve in API response, default None
+
+        Only specified fields are returned.
+        If `fields` is None, all fields are returned.
+    include : str or list[str], optional
+        Additional resources to include in API response, default None
+    query : Query[AudienceGroupsFilters], optional
+        Query object to perform request with, default None
+
+        If query is used, all parameters listed before `query` will be ignored.
+    stack_data : bool, optional
+        Whether to expand nested lists into new dictionaries, default False
+    timeout : float, optional
+        Maximum timeout for requests in seconds, default 30.0
+    verbose : bool, optional
+        Set to False to disable progress bar, default True
+    batch_size : int, optional
+        Size of batches to make requests with, default 10
+    n_workers : int, optional
+        Number of workers to make requests, default 2
+    retries : int, optional
+        Number of times to retry a request, default 3
+    on_errors : Literal["warn", "raise"], optional
+        Warn about failed requests or raise immediately on failure, default `"warn"`
+    **kwargs
+        Additional parameters to pass to the Query. See `Other Parameters`.
+        For any filters, use the `filters` parameter.
+
+    Other Parameters
+    ----------------
+    page : int, optional
+        Page number to fetch, default None
+    per_page : int, optional
+        Number of results per page, default None
+    max_pages : int, optional
+        Max number of results to return, default None
+    sort : str, optional
+        Sort response by field, default None
+
+        To sort in descending (highest first) order, use a `-` before the field name:
+
+        `sort="-differentiation_rank"`
+
+        Sorts by item ID by default.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with `audience-groups` endpoint results
+    """
+
+    async with Client(
+        token,
+        timeout=timeout,
+        verbose=verbose,
+        batch_size=batch_size,
+        n_workers=n_workers,
+        retries=retries,
+        on_errors=on_errors,
+    ) as client:
+        return await client.audience_groups(
+            name,
+            audience_group_id=audience_group_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            query=query,
+            stack_data=stack_data,
+            **kwargs,
+        )
+
+
+@_coro
 async def brand_metrics(
     token: str,
     name: Optional[str] = None,

@@ -2,6 +2,31 @@
 
 ## `1.0`
 
+### `1.0.4` (2024-04-09)
+
+#### Feature
+
+- :sparkles: Added new [Audience Groups](endpoints/audience-groups.md) endpoint to `bavapi`.
+
+#### Docs
+
+- :rocket: Added `v2` roadmap to the documentation.
+- :notebook: Added documentation for Audience Groups.
+- :broom: Fixed various typos.
+
+#### Test
+
+- :test_tube: Clean up testing of `http` and `client` modules through dependency injection.
+
+#### Typing
+
+- :duck: Moved commonly used protocols to `typing` module.
+- :bug: Changed type of `exc_type` argument in the `aretry` function to correct `Tuple` instead of `Iterable`.
+
+#### Internal
+
+- :broom: Removed old `testing` code for reproducing SSL issues in earlier versions of `bavapi`.
+
 ### `1.0.3` (2024-02-09)
 
 #### Fix

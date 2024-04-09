@@ -29,6 +29,7 @@ from typing import (
     NamedTuple,
     Optional,
     Protocol,
+    Tuple,
     Type,
     TypeVar,
 )
@@ -201,7 +202,7 @@ def aretry(
     func: AsyncCallable[P, T],
     retries: int = 3,
     delay: float = 0,
-    exc_types: Iterable[Type[Exception]] = (Exception,),
+    exc_types: Tuple[Type[Exception], ...] = (Exception,),
 ) -> AsyncCallable[P, T]:
     """Retry an asynchronous function upon failure a number of times.
 
@@ -217,7 +218,7 @@ def aretry(
         If the value is 0 or negative, the function will only be tried once
     delay : float, optional
         Time to wait between retries, default 0
-    exc_types: Iterable[type[Exception]], optional
+    exc_types: tuple[type[Exception], ...], optional
         Exception types to retry on, default (Exception,)
 
     Returns

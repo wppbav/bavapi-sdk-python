@@ -14,7 +14,6 @@ from typing import (
     List,
     Literal,
     Optional,
-    Protocol,
     Type,
     TypeVar,
     Union,
@@ -28,44 +27,12 @@ from tqdm import tqdm
 from bavapi._batched import batched
 from bavapi._fetcher import PageFetcher, aretry
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
-from bavapi.typing import BaseParamsMapping, JSONData, JSONDict
+from bavapi.typing import AsyncClientType, JSONData, JSONDict, _Query
 
 if TYPE_CHECKING:
     from types import TracebackType
 
 __all__ = ("HTTPClient",)
-
-
-class _Query(Protocol):
-    """Protocol for Query objects with pagination support"""
-
-    item_id: Optional[int]
-    max_pages: Optional[int]
-    per_page: Optional[int]
-    page: Optional[int]
-
-    def to_params(self, endpoint: str) -> BaseParamsMapping:
-        """HTTP-compatible params dictionary"""
-        raise NotImplementedError
-
-    def paginated(
-        self, n_pages: int, per_page: Optional[int] = None
-    ) -> Iterator["_Query"]:
-        """Yields Query objects with page parameters for paginated queries"""
-        raise NotImplementedError
-
-    def is_single_page(self) -> bool:
-        """True if query is for a single page, False for multiple"""
-        raise NotImplementedError
-
-    def with_page(
-        self,
-        page: Optional[int] = None,
-        per_page: Optional[int] = None,
-        max_pages: Optional[int] = None,
-    ) -> "_Query":
-        """Returns Query with new pagination parameters"""
-        raise NotImplementedError
 
 
 class HTTPClient:
@@ -132,7 +99,7 @@ class HTTPClient:
     def __init__(
         self,
         *,
-        client: httpx.AsyncClient = ...,
+        client: AsyncClientType = ...,
         per_page: int = 100,
         verbose: bool = True,
         batch_size: int = 10,
@@ -150,7 +117,7 @@ class HTTPClient:
         verify: Union[bool, str] = True,
         *,
         headers: Optional[Dict[str, str]] = None,
-        client: Optional[httpx.AsyncClient] = None,
+        client: Optional[AsyncClientType] = None,
         verbose: bool = True,
         batch_size: int = 10,
         n_workers: int = 2,

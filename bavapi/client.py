@@ -52,7 +52,13 @@ from bavapi import filters as _filters
 from bavapi.http import HTTPClient
 from bavapi.parsing.responses import parse_response
 from bavapi.query import Query
-from bavapi.typing import CommonQueryParams, JSONDict, OptionalListOr, Unpack
+from bavapi.typing import (
+    CommonQueryParams,
+    JSONDict,
+    OptionalListOr,
+    Unpack,
+    _HTTPClient,
+)
 
 if TYPE_CHECKING:
     from types import TracebackType
@@ -70,6 +76,8 @@ CATEGORIES_DEFAULTS: Final[List[str]] = ["sector"]
 F = TypeVar("F", bound=_filters.FountFilters)
 
 OptionalFiltersOrMapping = Optional[_filters.FiltersOrMapping[F]]
+
+HTTPClientType = Union[HTTPClient, _HTTPClient]
 
 
 class Client:
@@ -177,7 +185,7 @@ class Client:
     def __init__(
         self,
         *,
-        client: HTTPClient = ...,
+        client: HTTPClientType = ...,
         verbose: bool = True,
         batch_size: int = 10,
         n_workers: int = 2,
@@ -194,7 +202,7 @@ class Client:
         verify: Union[bool, str] = True,
         user_agent: str = "",
         *,
-        client: Optional[HTTPClient] = None,
+        client: Optional[HTTPClientType] = None,
         verbose: bool = True,
         batch_size: int = 10,
         n_workers: int = 2,
@@ -405,6 +413,87 @@ class Client:
         )
 
         items = await self._client.query("audiences", query)
+
+        return parse_response(items, expand=stack_data)
+
+    async def audience_groups(
+        self,
+        name: Optional[str] = None,
+        *,
+        audience_group_id: Optional[int] = None,
+        filters: OptionalFiltersOrMapping[_filters.AudienceGroupsFilters] = None,
+        fields: OptionalListOr[str] = None,
+        include: OptionalListOr[str] = None,
+        query: Optional[Query[_filters.AudienceGroupsFilters]] = None,
+        stack_data: bool = False,
+        **kwargs: Unpack[CommonQueryParams],
+    ) -> "DataFrame":
+        """Query the Fount `audience-groups` endpoint.
+
+        Parameters
+        ----------
+        name : str, optional
+            Search audiences by name, default None
+        audience_group_id : int, optional
+            Fount audience group ID, default None
+
+            If an audience group ID is provided, only that audience group will be returned
+        filters : AudienceGroupsFilters or dict[str, Any], optional
+            AudienceGroupsFilters object or dictionary of filter parameters, default None
+        fields : str or list[str], optional
+            Fields to retrieve in API response, default None
+
+            Only specified fields are returned.
+            If `fields` is None, all fields are returned.
+        include : str or list[str], optional
+            Additional resources to include in API response, default None
+        query : Query[AudienceGroupsFilters], optional
+            Query object to perform request with, default None
+
+            If query is used, all parameters listed before `query` will be ignored.
+        stack_data : bool, optional
+            Whether to expand nested lists into new dictionaries, default False
+        **kwargs
+            Additional parameters to pass to the Query. See `Other Parameters`.
+            For any filters, use the `filters` parameter.
+
+        Other Parameters
+        ----------------
+        page : int, optional
+            Page number to fetch, default None
+        per_page : int, optional
+            Number of results per page, default None
+        max_pages : int, optional
+            Max number of results to return, default None
+        sort : str, optional
+            Sort response by field, default None
+
+            To sort in descending (highest first) order, use a `-` before the field name:
+
+            `sort="-differentiation_rank"`
+
+            Sorts by item ID by default.
+
+        Returns
+        -------
+        pandas.DataFrame
+            DataFrame with `audience-groups` endpoint results.
+        """
+        filters = _filters.AudienceGroupsFilters.ensure(
+            filters,
+            name=name,
+        )
+
+        query = Query.ensure(
+            query,
+            id=audience_group_id,
+            filters=filters,
+            fields=fields,
+            include=include,
+            **kwargs,
+        )
+
+        items = await self._client.query("audience-groups", query)
 
         return parse_response(items, expand=stack_data)
 

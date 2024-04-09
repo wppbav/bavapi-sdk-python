@@ -60,6 +60,7 @@ Each endpoint function has a filter class associated with it, as each endpoint h
 | Endpoint Function                                 | Filters class                                                  |
 | ------------------------------------------------- | -------------------------------------------------------------- |
 | [`audiences`][sync.audiences]                     | [`AudiencesFilters`][filters.AudiencesFilters]                 |
+| [`audience_groups`][sync.audience_groups]                     | [`AudienceGroupsFilters`][filters.AudienceGroupsFilters]                 |
 | [`brand_metric_groups`][sync.brand_metric_groups] | [`BrandMetricGroupsFilters`][filters.BrandMetricGroupsFilters] |
 | [`brand_metrics`][sync.brand_metrics]             | [`BrandMetricsFilters`][filters.BrandMetricsFilters]           |
 | [`brands`][sync.brands]                           | [`BrandsFilters`][filters.BrandsFilters]                       |

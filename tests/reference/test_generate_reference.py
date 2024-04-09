@@ -12,7 +12,7 @@ from bavapi._reference import generate_reference as uref
 from bavapi.client import Client
 from bavapi.query import Query
 
-from ..helpers import wraps
+from ..helpers import MockHTTPClient, wraps
 
 TEST_DT = datetime.datetime(2023, 1, 1, 12, 0, 0)
 
@@ -26,17 +26,16 @@ def test_parse_reference():
 
 
 @pytest.mark.anyio
-async def test_get_references(fount: Client):
+async def test_get_references(fount: Client, http_client: MockHTTPClient):
+    http_client.add_response(data=[{"id": 1, "name": "A"}, {"id": 2, "name": "B"}])
+
     def func(val: pd.Series) -> Dict[str, str]:
         return {str(k): str(v) for k, v in val.to_dict().items()}  # pragma: no cover
 
-    with mock.patch(
-        "bavapi.client.Client.raw_query",
-        return_value=[{"id": 1, "name": "A"}, {"id": 2, "name": "B"}],
-    ):
-        items = await uref.get_references(fount, [uref.RefConfig("test", "", func)])
+    items = await uref.get_references(fount, [uref.RefConfig("test", "", func)])
 
     assert items == [[{"id": 1, "name": "A"}, {"id": 2, "name": "B"}]]
+    http_client.mock_query.assert_awaited_once_with("test", Query())
 
 
 def test_process_items():
