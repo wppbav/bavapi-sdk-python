@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 import bavapi
 from bavapi import filters
 from bavapi.query import Query
+from bavapi.tools import ToolsClient
+from bavapi.typing import JSONDict
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -83,3 +85,46 @@ def test_endpoints(endpoint: str, filters: Dict[str, Any]):
 
     assert 0 < result.shape[0] <= 50
     assert "id" in result
+
+
+@pytest.mark.e2e
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("endpoint", "params"),
+    (
+        ("brand_personality_match", {"brands": 3100, "studies": 650}),
+        ("brand_vulnerability_map", {"brand": 3100}),
+        ("commitment_funnel", {"brands": 3100, "studies": 650}),
+        ("love_plus", {"brands": 3100, "studies": 650}),
+    ),
+)
+async def test_tools_no_metadata(endpoint: str, params: Dict[str, Any]):
+    async with ToolsClient(os.environ["BAV_API_KEY"]) as client:
+        result: pd.DataFrame = await getattr(client, endpoint)(**params)
+
+    assert not result.empty
+
+
+@pytest.mark.e2e
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("endpoint", "params"),
+    (
+        ("brand_worth_map", {"brands": 3100, "studies": 650}),
+        ("category_worth_map", {"categories": 1, "studies": 650}),
+        ("cost_of_entry", {"brand": 3100, "study": 650, "categories": 1}),
+        (
+            "partnership_exchange_map",
+            {"brands": 3100, "studies": 650, "comparison_brands": 31447},
+        ),
+        ("swot", {"brands": 3100, "studies": 650, "categories": 1}),
+    ),
+)
+async def test_tools_with_metadata(endpoint: str, params: Dict[str, Any]):
+    meta: JSONDict
+    result: pd.DataFrame
+    async with ToolsClient(os.environ["BAV_API_KEY"]) as client:
+        meta, result = await getattr(client, endpoint)(**params)
+
+    assert meta
+    assert not result.empty
