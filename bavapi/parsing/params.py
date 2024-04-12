@@ -3,7 +3,7 @@
 import datetime as dt
 from typing import Dict, Mapping, Sequence, TypeVar, Union, cast
 
-from bavapi.typing import BaseMutableParamsMapping, BaseMutableParamsMappingValues
+from bavapi.typing import MutableParamsMapping, SequenceOrValues
 
 T = TypeVar("T")
 
@@ -56,7 +56,9 @@ def to_fount_params(data: Mapping[str, T], param: str) -> Dict[str, T]:
     return {f"{param}[{k}]": v for k, v in data.items()}
 
 
-def list_to_str(mapping: BaseMutableParamsMapping) -> BaseMutableParamsMappingValues:
+def list_to_str(
+    mapping: MutableParamsMapping[SequenceOrValues[Union[T, str]]]
+) -> MutableParamsMapping[Union[T, str]]:
     """Convert any lists in a dictionary to a string with comma-separated elements.
 
     Parameters
@@ -73,4 +75,4 @@ def list_to_str(mapping: BaseMutableParamsMapping) -> BaseMutableParamsMappingVa
         if not isinstance(value, str) and isinstance(value, Sequence):
             mapping[key] = ",".join(str(i) for i in value)
 
-    return cast(BaseMutableParamsMappingValues, mapping)
+    return cast(MutableParamsMapping[Union[T, str]], mapping)
