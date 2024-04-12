@@ -9,14 +9,13 @@ This is a non-exhaustive list of potential features & changes to `bavapi` for th
 
 ### New features
 
-- [ ] Support for the `tools` BAV API namespace and endpoints
+- [x] `v1.1.0` ~~Support for the `tools` BAV API namespace and endpoints~~
 - [ ] Support for the `best-countries` BAV API endpoint
 - [ ] Support for retrieval of custom aggregations generated via background process in the Fount
 
 ### Deprecations
 
 - [ ] Filters and query parameters specified as function arguments. `Query` and the classes in the `bavapi.filters` module should be used instead.
-- [ ] Reference generation functionality. It was conceived when references like Audience and Country were static, but custom audiences will remove its usefulness.
 
 #### Changes to filters and query parameters
 
@@ -24,45 +23,59 @@ In `v1`, it is possible to create these valid function calls (all equivalent):
 
 ```python
 # No pydantic models
-bavapi.brands(TOKEN, "Facebook", "US", 2022, filters={"studies": [1, 2, 3]}, include="category")
+bavapi.brands(TOKEN,
+    "Facebook",
+    "US",
+    2022,
+    filters={"studies": [1, 2, 3]},
+    include="category",
+)
 
 # Filters as arguments, query as pydantic model
-bavapi.brands(TOKEN, "Facebook", "US", 2022, filters={"studies": [1, 2, 3]}, query=Query(include="category"))
+bavapi.brands(
+    TOKEN,
+    "Facebook",
+    "US",
+    2022,
+    filters={"studies": [1, 2, 3]},
+    query=bavapi.Query(include="category"),
+)
 
 # Combined filters into pydantic model
 bavapi.brands(
     TOKEN,
-    filters=BrandsFilters(
+    filters=bavapi.filters.BrandsFilters(
         name="Facebook",
         country_codes="US",
         year_numbers=2022,
         studies=[1, 2, 3]
     ),
-    include="category")
+    include="category",
+)
 
 # Filters and query as pydantic models, passed separately
 bavapi.brands(
     TOKEN,
-    filters=BrandsFilters(
+    filters=bavapi.filters.BrandsFilters(
         name="Facebook",
         country_codes="US",
         year_numbers=2022,
         studies=[1, 2, 3]
     ),
-    query=Query(include="category")
+    query=bavapi.Query(include="category"),
 )
 
 # Filters as parameter to query, query as pydantic model
 bavapi.brands(
     TOKEN,
-    query=Query(
-        filters=BrandsFilters(
+    query=bavapi.Query(
+        filters=bavapi.filters.BrandsFilters(
             name="Facebook",
             country_codes="US",
             year_numbers=2022,
             studies=[1, 2, 3]
         ),
-        include="category"
+        include="category",
     )
 )
 
@@ -71,7 +84,27 @@ async with bavapi.Client(TOKEN) as bav:
     client.brands("Facebook", "US", 2022, filters={"studies": [1, 2, 3]}, query=Query(include="category"))
 ```
 
-It is still undecided which way should be the appropriate call, but it is likely that this will change in favor of a more standardized approach.
+In `v2`, only this format will be supported:
+
+```py
+bavapi.brands(
+    TOKEN,
+    query=bavapi.Query(
+        filters=bavapi.filters.BrandsFilters(
+            name="Facebook",
+            country_codes="US",
+            year_numbers=2022,
+            studies=[1, 2, 3]
+        ),
+        include="category",
+    ),
+    verbose=True,
+    on_errors="raise",
+)
+```
+
+!!! note
+    You will still be able to use a dictionary to set *filters*, but it's still recommended to use the `pydantic` class.
 
 ## `v1` Roadmap - COMPLETED
 
