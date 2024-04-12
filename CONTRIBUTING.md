@@ -52,6 +52,7 @@ In order to run integration tests and the `bavapi-gen-refs` [command](https://wp
 - Full test coverage using [`coverage`](https://coverage.readthedocs.io/en/).
 - Run development scripts in multiple Python versions with [`nox`](https://nox.thea.codes/en/stable/).
 - Documentation using [`mkdocs-material`](https://squidfunk.github.io/mkdocs-material/).
+- Import sorting with [`isort`](https://pycqa.github.io/isort/).
 - Code auto-formatting with [`black`](https://black.readthedocs.io/en/stable/).
 - Linting with [`pylint`](https://docs.pylint.org/).
 
