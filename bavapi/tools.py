@@ -324,7 +324,7 @@ class ToolsClient:
 
         resp = await self._get("brand-personality-match", params=_to_url_params(params))
 
-        with raise_if_fails():
+        with _raise_if_fails():
             payload = cast(List[JSONDict], resp["data"])
             return parse_response(payload)
 
@@ -356,7 +356,7 @@ class ToolsClient:
 
         resp = await self._get("brand-vulnerability-map", params=params)
 
-        with raise_if_fails():
+        with _raise_if_fails():
             payload = cast(List[JSONDict], resp["data"])
             return parse_response(payload)
 
@@ -398,7 +398,7 @@ class ToolsClient:
 
         resp = await self._get("brand-worth-map", params=_to_url_params(params))
 
-        with raise_if_fails():
+        with _raise_if_fails():
             payload = cast(JSONDict, resp["data"])
             data = cast(List[JSONDict], payload.pop("data"))
             return payload, parse_response(data)
@@ -441,7 +441,7 @@ class ToolsClient:
 
         resp = await self._get("category-worth-map", params=_to_url_params(params))
 
-        with raise_if_fails():
+        with _raise_if_fails():
             payload = cast(JSONDict, resp["data"])
             data = cast(List[JSONDict], payload.pop("data"))
             return payload, parse_response(data)
@@ -492,7 +492,7 @@ class ToolsClient:
             )
             return parsed
 
-        with raise_if_fails():
+        with _raise_if_fails():
             payload = cast(List[JSONDict], resp["data"])
             return pd.DataFrame([parse_entry(entry) for entry in payload])
 
@@ -576,7 +576,7 @@ class ToolsClient:
 
         resp = await self._get("cost-of-entry", params=_to_url_params(params))
 
-        with raise_if_fails():
+        with _raise_if_fails():
             payload = cast(JSONDict, resp["data"])
             data = cast(List[JSONDict], payload.pop("data"))
             return payload, parse_response(data)
@@ -630,7 +630,7 @@ class ToolsClient:
             )
             return parsed
 
-        with raise_if_fails():
+        with _raise_if_fails():
             payload = cast(List[JSONDict], resp["data"])
             return pd.DataFrame([parse_entry(entry) for entry in payload])
 
@@ -675,7 +675,7 @@ class ToolsClient:
             "partnership-exchange-map", params=_to_url_params(params)
         )
 
-        with raise_if_fails():
+        with _raise_if_fails():
             payload = cast(JSONDict, resp["data"])
             data = cast(List[JSONDict], payload.pop("data"))
             return payload, parse_response(data)
@@ -760,7 +760,7 @@ class ToolsClient:
 
         resp = await self._get("swot", params=_to_url_params(params))
 
-        with raise_if_fails():
+        with _raise_if_fails():
             payload = cast(JSONDict, resp["data"])
             data = cast(List[JSONDict], payload.pop("data"))
             return payload, parse_response(data)
@@ -808,7 +808,7 @@ class ToolsClient:
 
 
 @contextlib.contextmanager
-def raise_if_fails() -> Generator[None, None, None]:
+def _raise_if_fails() -> Generator[None, None, None]:
     try:
         yield
     except (ValueError, TypeError, KeyError) as exc:

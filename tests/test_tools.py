@@ -8,7 +8,7 @@ import pandas as pd
 import pytest
 
 from bavapi.exceptions import APIError
-from bavapi.tools import ToolsClient, raise_if_fails
+from bavapi.tools import ToolsClient, _raise_if_fails
 from tests.helpers import MockAsyncClient
 
 
@@ -358,13 +358,13 @@ async def test_toplist_market(client: ToolsClient, http: MockAsyncClient):
 
 
 def test_raise_if_fails_passes():
-    with raise_if_fails():
+    with _raise_if_fails():
         pass
 
 
 def test_raise_if_fails_raises():
     with pytest.raises(APIError) as exc_info:
-        with raise_if_fails():
+        with _raise_if_fails():
             raise ValueError
 
     assert exc_info.value.args == ("Could not parse response",)
