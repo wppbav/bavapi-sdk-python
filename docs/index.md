@@ -53,6 +53,7 @@ See [Installation](getting-started/installation.md) for more detailed instructio
 - Support for all endpoints in the Fount API.
     - Extended support for the following endpoints:
         - [`audiences`](endpoints/audiences.md)
+        - [`audience-groups`](endpoints/audience-groups.md)
         - [`brand-metrics`](endpoints/brand-metrics.md)
         - [`brand-metric-groups`](endpoints/brand-metric-groups.md)
         - [`brands`](endpoints/brands.md)
@@ -66,6 +67,7 @@ See [Installation](getting-started/installation.md) for more detailed instructio
         - [`studies`](endpoints/studies.md)
         - [`years`](endpoints/years.md)
     - Other endpoints are available via the [`raw_query`](endpoints/index.md#other-endpoints) functions and methods.
+    - Extended support for Fount API [Tools/TurboPitch](usage/tools.md) endpoints.
 - Validates query parameters are of the correct types and provides type hints for better IDE support.
 - Retrieve multiple pages of data simultaneously, monitoring and preventing exceeding API rate limit.
 - Both synchronous and asynchronous APIs for accessing BAV data.

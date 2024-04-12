@@ -77,6 +77,7 @@ Once you have acquired a token, you can start using this library directly in pyt
 - Support for all endpoints in the WPPBAV Fount API.
   - Extended support for the following endpoints:
     - `audiences`
+    - `audience-groups`
     - `brand-metrics`
     - `brand-metric-groups`
     - `brands`
