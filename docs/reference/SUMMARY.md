@@ -7,3 +7,4 @@
     * [params](parsing/params.md)
     * [responses](parsing/responses.md)
 * [query](query.md)
+* [tools](tools.md)
