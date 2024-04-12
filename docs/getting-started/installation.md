@@ -2,9 +2,9 @@
 
 ## Pre-requisites
 
-`bavapi` requires python 3.8 or higher to run.
+`bavapi` requires Python 3.8 or higher to run.
 
-If you don't have python installed, you can download it from the official Python [website](https://www.python.org/downloads/) or [Anaconda](https://www.anaconda.com/).
+If you don't have Python installed, you can download it from the official Python [website](https://www.python.org/downloads/) or [Anaconda](https://www.anaconda.com/).
 
 You will also need a Fount API bearer token to peform requests to the Fount. For instructions on how to get your own API token, see the [Authentication](authentication.md) section.
 
