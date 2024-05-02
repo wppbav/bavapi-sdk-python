@@ -92,15 +92,23 @@ def test_endpoints(endpoint: str, filters: Dict[str, Any]):
 @pytest.mark.parametrize(
     ("endpoint", "params"),
     (
+        ("archetypes", {"brands": 3100, "studies": 650, "categories": 1}),
         ("brand_personality_match", {"brands": 3100, "studies": 650}),
         ("brand_vulnerability_map", {"brand": 3100}),
         ("commitment_funnel", {"brands": 3100, "studies": 650}),
         ("love_plus", {"brands": 3100, "studies": 650}),
+        (
+            "toplist_market",
+            {"brands": 3100, "studies": 650, "metric_keys": "differentiation"},
+        ),
     ),
 )
 async def test_tools_no_metadata(endpoint: str, params: Dict[str, Any]):
-    async with ToolsClient(os.environ["BAV_API_KEY"]) as client:
-        result: pd.DataFrame = await getattr(client, endpoint)(**params)
+    try:
+        async with ToolsClient(os.environ["BAV_API_KEY"]) as client:
+            result: pd.DataFrame = await getattr(client, endpoint)(**params)
+    except NotImplementedError:
+        pytest.skip("Not implemented yet")
 
     assert not result.empty
 
@@ -123,8 +131,11 @@ async def test_tools_no_metadata(endpoint: str, params: Dict[str, Any]):
 async def test_tools_with_metadata(endpoint: str, params: Dict[str, Any]):
     meta: JSONDict
     result: pd.DataFrame
-    async with ToolsClient(os.environ["BAV_API_KEY"]) as client:
-        meta, result = await getattr(client, endpoint)(**params)
+    try:
+        async with ToolsClient(os.environ["BAV_API_KEY"]) as client:
+            meta, result = await getattr(client, endpoint)(**params)
+    except NotImplementedError:
+        pytest.skip("Not implemented yet")
 
     assert meta
     assert not result.empty

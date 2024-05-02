@@ -10,8 +10,17 @@ This is a non-exhaustive list of potential features & changes to `bavapi` for th
 ### New features
 
 - [x] `v1.1.0` ~~Support for the `tools` BAV API namespace and endpoints~~
-- [ ] Support for the `best-countries` BAV API endpoint
-- [ ] Support for retrieval of custom aggregations generated via background process in the Fount
+- [ ] Support for the following BAV API endpoints:
+    - [ ] `cee-opinions`
+    - [ ] `best-countries-metrics`
+    - [ ] `best-countries-metric-groups`
+    - [ ] `best-countries-factors`
+    - [ ] `best-countries-data`
+    - [ ] `gics-sectors`
+    - [ ] `operating-companies`
+    - [ ] `stock-exchanges`
+    - [ ] `stock-prices`
+- [ ] Support for retrieval of custom aggregations (audiences) generated via background process in the Fount
 
 ### Deprecations
 

@@ -28,11 +28,13 @@ For more advanced usage (and async compatibility), use the `bavapi.Client` class
 # pylint: disable=R0801
 
 from bavapi import filters
+from bavapi import tools
 from bavapi.client import Client
 from bavapi.exceptions import APIError, DataNotFoundError, RateLimitExceededError
 from bavapi.query import Query
 from bavapi.sync import (
     audiences,
+    audience_groups,
     brand_metric_groups,
     brand_metrics,
     brands,
@@ -51,6 +53,7 @@ from bavapi.sync import (
 
 __all__ = (
     "audiences",
+    "audience_groups",
     "brand_metrics",
     "brand_metric_groups",
     "brands",
@@ -68,6 +71,7 @@ __all__ = (
     "Client",
     "Query",
     "filters",
+    "tools",
     "APIError",
     "DataNotFoundError",
     "RateLimitExceededError",

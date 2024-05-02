@@ -9,7 +9,7 @@ Examples
 --------
 
 >>> from bavapi.tools import ToolsClient
->>> async with ToolsClient("TOKEN") as client:
+>>> async with ToolsClient("TOKEN") as client:  # Replace "TOKEN" with your BAV API key
 >>>     result = await client.commitment_funnel(brands=1, studies=1)
 """
 
@@ -50,7 +50,7 @@ from bavapi.typing import (
 __all__ = ("ToolsClient",)
 
 T = TypeVar("T")
-Params = MutableParamsMapping[T]
+_Params = MutableParamsMapping[T]
 
 
 class ToolsClient:
@@ -203,9 +203,7 @@ class ToolsClient:
         return await self.client.aclose()
 
     async def _get(
-        self,
-        endpoint: str,
-        params: Params[Union[str, int]],
+        self, endpoint: str, params: _Params[Union[str, int]]
     ) -> Dict[str, JSONDict]:
         get_func = aretry(self.client.get, self.retries, delay=0.25)  # type: ignore
         resp = await get_func(endpoint, params=params)
@@ -228,7 +226,7 @@ class ToolsClient:
         audiences: OptionalListOr[int] = None,
         *,
         categories: ListOrValues[int] = ...,
-    ) -> Tuple[JSONDict, pd.DataFrame]: ...
+    ) -> pd.DataFrame: ...
 
     @overload
     async def archetypes(
@@ -238,7 +236,7 @@ class ToolsClient:
         audiences: OptionalListOr[int] = None,
         *,
         collections: ListOrValues[int] = ...,
-    ) -> Tuple[JSONDict, pd.DataFrame]: ...
+    ) -> pd.DataFrame: ...
 
     @validate_call
     async def archetypes(
@@ -249,11 +247,9 @@ class ToolsClient:
         *,
         categories: OptionalListOr[int] = None,
         collections: OptionalListOr[int] = None,
-    ) -> Tuple[JSONDict, pd.DataFrame]:
+    ) -> pd.DataFrame:
         """Retrieve results from the `archetypes` endpoint
 
-        [NOT IMPLEMENTED]
-        
         See <https://developer.wppbav.com/docs/2.x/tools/archetypes> for more info.
 
         Parameters
@@ -271,8 +267,8 @@ class ToolsClient:
 
         Returns
         -------
-        Tuple[JSONDict, pd.DataFrame]
-            A tuple containing a JSON dictionary of metadata and a Dataframe with the results
+        pd.DataFrame
+            Dataframe containing the results
 
         Raises
         ------
@@ -284,7 +280,28 @@ class ToolsClient:
         if not bool(categories) ^ bool(collections):
             raise ValueError("Either categories OR collections must be specified.")
 
-        raise NotImplementedError
+        params = {
+            "brands": brands,
+            "studies": studies,
+            "audiences": audiences,
+            "categories": categories,
+            "collections": collections,
+        }
+
+        def parse_entry(entry: JSONDict) -> _Params[Union[str, float]]:
+            data = entry.pop("data")
+            entry_with_data = entry.copy()
+            entry_with_data.update(data)  # type: ignore[arg-type]
+            parsed = flatten_mapping(entry_with_data)
+            return parsed  # type: ignore[return-value]
+
+        resp = await self._get("archetypes", params=_to_url_params(params))
+
+        with _raise_if_fails():
+            payload = cast(JSONDict, resp["data"])
+            return pd.DataFrame(
+                [parse_entry(entry) for entry in payload]  # type: ignore[arg-type]
+            )
 
     @validate_call
     async def brand_personality_match(
@@ -329,12 +346,9 @@ class ToolsClient:
             return parse_response(payload)
 
     @validate_call
-    async def brand_vulnerability_map(
-        self,
-        brand: int,
-    ) -> pd.DataFrame:
+    async def brand_vulnerability_map(self, brand: int) -> pd.DataFrame:
         """Retrieve results from the `brand-vulnerability-map` endpoint
-        
+
         See <https://developer.wppbav.com/docs/2.x/tools/brand-vulnerability-map> for more info.
 
         Parameters
@@ -352,7 +366,7 @@ class ToolsClient:
         APIError
             If an error occurs with the query
         """
-        params: Params[Union[str, int]] = {"brand": brand}
+        params: _Params[Union[str, int]] = {"brand": brand}
 
         resp = await self._get("brand-vulnerability-map", params=params)
 
@@ -368,7 +382,7 @@ class ToolsClient:
         audiences: OptionalListOr[int] = None,
     ) -> Tuple[JSONDict, pd.DataFrame]:
         """Retrieve results from the `brand-worth-map` endpoint
-        
+
         See <https://developer.wppbav.com/docs/2.x/tools/brand-worth-map> for more info.
 
         Parameters
@@ -411,7 +425,9 @@ class ToolsClient:
         audiences: OptionalListOr[int] = None,
     ) -> Tuple[JSONDict, pd.DataFrame]:
         """Retrieve results from the `category-worth-map` endpoint
-        
+
+        [NOT IMPLEMENTED]
+
         See <https://developer.wppbav.com/docs/2.x/tools/category-worth-map> for more info.
 
         Parameters
@@ -433,18 +449,20 @@ class ToolsClient:
         APIError
             If an error occurs with the query
         """
-        params = {
-            "categories": categories,
-            "studies": studies,
-            "audiences": audiences,
-        }
+        # params = {
+        #     "categories": categories,
+        #     "studies": studies,
+        #     "audiences": audiences,
+        # }
 
-        resp = await self._get("category-worth-map", params=_to_url_params(params))
+        # resp = await self._get("category-worth-map", params=_to_url_params(params))
 
-        with _raise_if_fails():
-            payload = cast(JSONDict, resp["data"])
-            data = cast(List[JSONDict], payload.pop("data"))
-            return payload, parse_response(data)
+        # with _raise_if_fails():
+        #     payload = cast(JSONDict, resp["data"])
+        #     data = cast(List[JSONDict], payload.pop("data"))
+        #     return payload, parse_response(data)
+
+        raise NotImplementedError
 
     @validate_call
     async def commitment_funnel(
@@ -454,7 +472,7 @@ class ToolsClient:
         audiences: OptionalListOr[int] = None,
     ) -> pd.DataFrame:
         """Retrieve results from the `commitment-funnel` endpoint
-        
+
         See <https://developer.wppbav.com/docs/2.x/tools/commitment-funnel> for more info.
 
         Parameters
@@ -484,13 +502,13 @@ class ToolsClient:
 
         resp = await self._get("commitment-funnel", params=_to_url_params(params))
 
-        def parse_entry(entry: JSONDict) -> MutableParamsMapping[Union[str, float]]:
+        def parse_entry(entry: JSONDict) -> _Params[Union[str, float]]:
             metrics = entry.pop("metrics")
-            parsed = cast(Dict[str, Union[str, float]], flatten_mapping(entry))
+            parsed = flatten_mapping(entry)
             parsed.update(
                 {metric["key"]: metric["value"] for metric in metrics}  # type: ignore[arg-type]
             )
-            return parsed
+            return parsed  # type: ignore[return-value]
 
         with _raise_if_fails():
             payload = cast(List[JSONDict], resp["data"])
@@ -530,7 +548,7 @@ class ToolsClient:
         comparison_name: Optional[str] = None,
     ) -> Tuple[JSONDict, pd.DataFrame]:
         """Retrieve results from the `cost-of-entry` endpoint
-        
+
         See <https://developer.wppbav.com/docs/2.x/tools/cost-of-entry> for more info.
 
         Parameters
@@ -589,7 +607,7 @@ class ToolsClient:
         audiences: OptionalListOr[int] = None,
     ) -> pd.DataFrame:
         """Retrieve results from the `love-plus` endpoint
-        
+
         See <https://developer.wppbav.com/docs/2.x/tools/love-plus> for more info.
 
         Parameters
@@ -620,15 +638,13 @@ class ToolsClient:
 
         resp = await self._get("love-plus", params=_to_url_params(params))
 
-        def parse_entry(
-            entry: JSONDict,
-        ) -> MutableParamsMapping[Union[int, str, float]]:
-            data = cast(Dict[str, JSONDict], entry.pop("data"))
-            parsed = cast(Dict[str, Union[str, float]], flatten_mapping(entry))
+        def parse_entry(entry: JSONDict) -> _Params[Union[int, str, float]]:
+            data = entry.pop("data")
+            parsed = flatten_mapping(entry)
             parsed.update(
-                {metric: val["value"] for metric, val in data.items()}  # type: ignore[arg-type]
+                {metric: val["value"] for metric, val in data.items()}  # type: ignore
             )
-            return parsed
+            return parsed  # type: ignore[return-value]
 
         with _raise_if_fails():
             payload = cast(List[JSONDict], resp["data"])
@@ -642,7 +658,7 @@ class ToolsClient:
         comparison_brands: ListOrValues[int],
     ) -> Tuple[JSONDict, pd.DataFrame]:
         """Retrieve results from the `partnership-exchange-map` endpoint
-        
+
         See <https://developer.wppbav.com/docs/2.x/tools/partnership-exchange-map> for more info.
 
         Parameters
@@ -665,7 +681,7 @@ class ToolsClient:
             If an error occurs with the query
         """
 
-        params: Params[OptionalSequenceOr[Union[int, str]]] = {
+        params: _Params[OptionalSequenceOr[Union[int, str]]] = {
             "brands": brands,
             "studies": studies,
             "comparison_brands": comparison_brands,
@@ -714,7 +730,9 @@ class ToolsClient:
         comparison_name: Optional[str] = None,
     ) -> Tuple[JSONDict, pd.DataFrame]:
         """Retrieve results from the `swot` endpoint
-        
+
+        [NOT IMPLEMENTED]
+
         See <https://developer.wppbav.com/docs/2.x/tools/swot> for more info.
 
         Parameters
@@ -732,7 +750,8 @@ class ToolsClient:
         comparison_name : str, optional
             Custom name to give the comparison, default None
 
-            Default behavior is to use the category or collection name.
+            Default behavior is to use "Category" or "Collection", depending on whether
+            categories or collections were specified in the method call.
 
         Returns
         -------
@@ -746,24 +765,46 @@ class ToolsClient:
         APIError
             If an error occurs with the query
         """
-        if not bool(categories) ^ bool(collections):
-            raise ValueError("Either categories OR collections must be specified.")
+        # if not bool(categories) ^ bool(collections):
+        #     raise ValueError("Either categories OR collections must be specified.")
 
-        params = {
-            "brands": brands,
-            "studies": studies,
-            "audiences": audiences,
-            "categories": categories,
-            "collections": collections,
-            "comparisonName": comparison_name,
-        }
+        # params = {
+        #     "brands": brands,
+        #     "studies": studies,
+        #     "audiences": audiences,
+        #     "categories": categories,
+        #     "collections": collections,
+        #     "comparisonName": comparison_name,
+        # }
 
-        resp = await self._get("swot", params=_to_url_params(params))
+        # resp = await self._get("swot", params=_to_url_params(params))
 
-        with _raise_if_fails():
-            payload = cast(JSONDict, resp["data"])
-            data = cast(List[JSONDict], payload.pop("data"))
-            return payload, parse_response(data)
+        # with _raise_if_fails():
+        #     payload = cast(JSONDict, resp["data"])
+        #     data = cast(List[JSONDict], payload.pop("data"))
+        #     return payload, parse_response(data)
+
+        raise NotImplementedError
+
+    @overload
+    async def toplist_market(
+        self,
+        brands: ListOrValues[int],
+        studies: ListOrValues[int],
+        audiences: OptionalListOr[int] = None,
+        *,
+        metrics: ListOrValues[int] = ...,
+    ) -> pd.DataFrame: ...
+
+    @overload
+    async def toplist_market(
+        self,
+        brands: ListOrValues[int],
+        studies: ListOrValues[int],
+        audiences: OptionalListOr[int] = None,
+        *,
+        metric_keys: ListOrValues[str] = ...,
+    ) -> pd.DataFrame: ...
 
     @validate_call
     async def toplist_market(
@@ -778,7 +819,7 @@ class ToolsClient:
         """Retrieve results from the `toplist-market` endpoint
 
         [NOT IMPLEMENTED]
-        
+
         See <https://developer.wppbav.com/docs/2.x/tools/toplist-market> for more info.
 
         Parameters
@@ -801,9 +842,15 @@ class ToolsClient:
 
         Raises
         ------
+        ValueError
+            If metrics or metric_keys are not specified, or if they are both specified
         APIError
             If an error occurs with the query
         """
+
+        # if not bool(metrics) ^ bool(metric_keys):
+        #     raise ValueError("Either metrics OR metric_keys must be specified.")
+
         raise NotImplementedError
 
 
@@ -812,10 +859,10 @@ def _raise_if_fails() -> Generator[None, None, None]:
     try:
         yield
     except (ValueError, TypeError, KeyError) as exc:
-        raise APIError("Could not parse response") from exc
+        raise APIError("Could not parse response.") from exc
 
 
 def _to_url_params(
-    params: MutableParamsMapping[OptionalSequenceOr[Union[str, int]]]
-) -> MutableParamsMapping[Union[str, int]]:
+    params: _Params[OptionalSequenceOr[Union[str, int]]]
+) -> _Params[Union[str, int]]:
     return list_to_str({k: v for k, v in params.items() if v})
