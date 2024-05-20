@@ -323,7 +323,7 @@ async def test_partnership_exchange_map(client: ToolsClient, http: MockAsyncClie
     )
 
     pd.testing.assert_frame_equal(
-        data,
+        data.astype({"value": "int32"}),
         pd.DataFrame({"key": ["A", "B"], "value": [1, 2]}).astype({"value": "int32"}),
     )
     assert meta == {"test": 1}
