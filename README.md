@@ -77,6 +77,7 @@ Once you have acquired a token, you can start using this library directly in pyt
 - Support for all endpoints in the WPPBAV Fount API.
   - Extended support for the following endpoints:
     - `audiences`
+    - `audience-groups`
     - `brand-metrics`
     - `brand-metric-groups`
     - `brands`
@@ -90,6 +91,7 @@ Once you have acquired a token, you can start using this library directly in pyt
     - `studies`
     - `years`
   - Other endpoints are available via the `raw_query` functions and methods.
+  - Extended support for Fount API Tools/TurboPitch endpoints.
 - Validates query parameters are of the correct types and provides type hints for better IDE support.
 - Retrieve multiple pages of data simultaneously, monitoring and preventing exceeding API rate limit.
 - Both synchronous and asynchronous APIs for accessing BAV data.

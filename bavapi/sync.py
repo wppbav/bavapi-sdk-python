@@ -753,7 +753,7 @@ async def brandscape_data(
     - Brand + Audience + Country + Year
 
     You should read these from left to right. A combination of "Study + Audience"
-    worksjust as well as "Study + Audience + Brand".
+    works just as well as "Study + Audience + Brand".
     However, "Category + Audience" will not.
 
     If you use Country or Year filters, you must use both filters together.

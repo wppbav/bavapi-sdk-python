@@ -17,7 +17,7 @@ for path in sorted(SOURCE_PATH.rglob("*.py")):
     parts = module_path.parts
     end_part = parts[-1]
     if (
-        end_part in {"__main__", "typing"}
+        end_part in {"__main__", "typing", "config"}
         or (end_part != "__init__" and end_part.startswith("_"))
         or any(part.startswith("_") for part in parts[:-1])
     ):
@@ -41,7 +41,7 @@ for path in sorted(SOURCE_PATH.rglob("*.py")):
     mkdocs_gen_files.set_edit_path(full_doc_path, path)
 
 nav_lines = list(nav.build_literate_nav())
-nav_lines.insert(0, nav_lines.pop())  # move `sync` to the top
+nav_lines.insert(0, nav_lines.pop(-2))  # move `sync` to the top
 
 with mkdocs_gen_files.open(REFERENCE_PATH / "SUMMARY.md", "w") as nav_file:
     nav_file.writelines(nav_lines)

@@ -49,6 +49,7 @@ from typing import (
 )
 
 from bavapi import filters as _filters
+from bavapi.config import BASE_URL, USER_AGENT
 from bavapi.http import HTTPClient
 from bavapi.parsing.responses import parse_response
 from bavapi.query import Query
@@ -66,9 +67,6 @@ if TYPE_CHECKING:
     from pandas import DataFrame
 
 __all__ = ("Client",)
-
-BASE_URL: Final[str] = "https://fount.wppbav.com/api/v2/"
-USER_AGENT: Final[str] = "BAVAPI SDK Python"
 
 BRANDSCAPE_DEFAULTS: Final[List[str]] = ["study", "brand", "category", "audience"]
 CATEGORIES_DEFAULTS: Final[List[str]] = ["sector"]
@@ -798,7 +796,7 @@ class Client:
         - Brand + Audience + Country + Year
 
         You should read these from left to right. A combination of "Study + Audience"
-        worksjust as well as "Study + Audience + Brand".
+        works just as well as "Study + Audience + Brand".
         However, "Category + Audience" will not.
 
         If you use Country or Year filters, you must use both filters together.

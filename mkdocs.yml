@@ -93,6 +93,7 @@ nav:
   - Usage:
       - Basic Usage: usage/basic.md
       - Advanced Usage: usage/advanced.md
+      - Tools/TurboPitch: usage/tools.md
       - Usage Tips for Projects: usage/project-tips.md
   - Endpoints: endpoints/
   - SDK API Reference: reference/
@@ -115,6 +116,7 @@ plugins:
           import:
             - https://docs.python.org/3/objects.inv
             - https://docs.pydantic.dev/latest/objects.inv
+            - https://pandas.pydata.org/docs/objects.inv
           paths: [bavapi]
           options:
             docstring_style: numpy

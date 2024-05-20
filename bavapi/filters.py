@@ -26,6 +26,7 @@ The above example may work, but it is highly discouraged.
 
 # pylint: disable=no-name-in-module, too-few-public-methods
 
+# import warnings
 from typing import Dict, Literal, Optional, Type, TypeVar, Union
 
 from pydantic import BaseModel, field_validator, model_validator
@@ -54,6 +55,8 @@ __all__ = (
 F = TypeVar("F", bound="FountFilters")
 
 FiltersOrMapping = Union[F, InputParamsMapping]
+
+# warnings.filterwarnings("default", category=DeprecationWarning, module="bavapi")
 
 
 class FountFilters(BaseModel):
@@ -108,6 +111,14 @@ class FountFilters(BaseModel):
         new_filters: Dict[str, InputSequenceOrValues] = {
             k: v for k, v in addl_filters.items() if v
         }
+
+        # if addl_filters:
+        #     warnings.warn(
+        #         f"Using the {list(new_filters.keys())} function parameter(s) is deprecated. "
+        #         f"Use the `filters` parameter with a {cls.__name__} instance instead.",
+        #         DeprecationWarning,
+        #         2,
+        #     )
 
         if filters is None:
             if not new_filters:

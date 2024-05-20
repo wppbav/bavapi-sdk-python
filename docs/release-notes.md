@@ -1,5 +1,27 @@
 # Release Notes
 
+## `1.1`
+
+### `1.1.0` (2024-05-20)
+
+#### Feature
+
+- :sparkles: Added new `bavapi.tools` module to support the [Tools/TurboPitch](usage/tools.md) endpoints in the BAV API.
+
+#### Docs
+
+- :broom: Fixed minor typos in docstrings for `bavapi.Client` and `sync` methods.
+- :notebook: Blocked `config` module from appearing in API reference docs.
+- :sparkles: Added documentation cross-linkage support for `pydantic` and `pandas`. References to `pydantic` and `pandas` functions or classes now link to their documentation page.
+
+#### Internal
+
+- :broom: New `config` module to hold the user agent and URL to use with the package.
+
+#### Typing
+
+- :bug: Fixed too-strict type definitions for `parsing.params.list_to_str`.
+
 ## `1.0`
 
 ### `1.0.4` (2024-04-09)
