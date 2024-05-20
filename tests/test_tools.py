@@ -138,7 +138,7 @@ async def test_brand_personality_match(client: ToolsClient, http: MockAsyncClien
     resp = await client.brand_personality_match(brands=1, studies=[1, 2])
 
     pd.testing.assert_frame_equal(
-        resp,
+        resp.astype("int32"),
         pd.DataFrame({"test": [1], "metric1": [1], "metric2": [2]}).astype("int32"),
     )
     http.mock_get.assert_called_once_with(
@@ -157,7 +157,7 @@ async def test_brand_vulnerability_map(client: ToolsClient, http: MockAsyncClien
     resp = await client.brand_vulnerability_map(brand=1)
 
     pd.testing.assert_frame_equal(
-        resp,
+        resp.astype("int32"),
         pd.DataFrame({"test": [1], "metric1": [1], "metric2": [2]}).astype("int32"),
     )
     http.mock_get.assert_called_once_with(
@@ -179,7 +179,7 @@ async def test_brand_worth_map(client: ToolsClient, http: MockAsyncClient):
     meta, data = await client.brand_worth_map(brands=1, studies=[1, 2])
 
     pd.testing.assert_frame_equal(
-        data,
+        data.astype({"value": "int32"}),
         pd.DataFrame({"key": ["A", "B"], "value": [1, 2]}).astype({"value": "int32"}),
     )
     assert meta == {"test": 1}
@@ -273,7 +273,7 @@ async def test_cost_of_entry(
     meta, data = await client.cost_of_entry(**kwargs)
 
     pd.testing.assert_frame_equal(
-        data,
+        data.astype({"value": "int32"}),
         pd.DataFrame({"key": ["A", "B"], "value": [1, 2]}).astype({"value": "int32"}),
     )
     assert meta == {"test": 1}
