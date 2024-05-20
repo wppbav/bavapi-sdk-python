@@ -2,7 +2,7 @@
 
 ## `1.1`
 
-### `1.1.0` (2024-??-??)
+### `1.1.0` (2024-05-20)
 
 #### Feature
 
@@ -16,7 +16,6 @@
 
 #### Internal
 
-- :warning: Started setting up deprecation functionality for `v2`.
 - :broom: New `config` module to hold the user agent and URL to use with the package.
 
 #### Typing
